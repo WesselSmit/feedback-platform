@@ -31,7 +31,7 @@
             <input v-model.trim="signUpForm.name" type="text" placeholder="John Doe" id="signUpName" />
 
             <label for="signUpRole">I'm a</label>
-            <select id="signUpRole">
+            <select v-model="signUpForm.role" id="signUpRole">
               <option value="student" selected>Student</option>
               <option value="coach">Coach</option>
             </select>
@@ -53,7 +53,6 @@
 
 <script>
 import PasswordReset from '@/components/PasswordReset.vue';
-// TODO: add logout
 // TODO: make login + signUp separate components
 // TODO: split store code in modules (https://vuex.vuejs.org/guide/modules.html#module-local-state)
 export default {
@@ -90,19 +89,11 @@ export default {
     },
     signup() {
       // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn
-      this.$store.dispatch('signUp', {
-        name: this.signUpForm.name,
-        role: this.signUpForm.role,
-        email: this.signUpForm.email,
-        password: this.signUpForm.password,
-      });
+      this.$store.dispatch('signUp', this.signUpForm);
     },
     login() {
       // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn
-      this.$store.dispatch('login', {
-        email: this.loginForm.email,
-        password: this.loginForm.password,
-      });
+      this.$store.dispatch('login', this.loginForm);
     },
   },
 };
