@@ -1,6 +1,6 @@
 <template>
   <section>
-    <form @submit.prevent>
+    <form v-if="showLoginForm" @submit.prevent>
       <fieldset>
         <h1>Login</h1>
 
@@ -11,10 +11,11 @@
         <input v-model.trim="loginForm.password" type="password" placeholder="******" id="loginPassword">
 
         <button @click="login()">Log In</button>
+        <button @click="toggleFormView()">Create an account</button>
       </fieldset>
     </form>
 
-    <form @submit.prevent>
+    <form v-else @submit.prevent>
       <fieldset>
         <h1>Sign up</h1>
         <div>
@@ -30,6 +31,7 @@
           <input v-model.trim="signUpForm.password" type="password" placeholder="min length is 6" id="signUpPassword" />
         </div>
         <button @click="signup()" class="button">Sign Up</button>
+        <button @click="toggleFormView()">Go to login</button>
       </fieldset>
     </form>
   </section>
@@ -39,6 +41,7 @@
 export default {
   data() {
     return {
+      showLoginForm: true,
       loginForm: {
         email: '',
         password: '',
@@ -51,6 +54,9 @@ export default {
     };
   },
   methods: {
+    toggleFormView() {
+      this.showLoginForm = !this.showLoginForm;
+    },
     signup() {
       this.$store.dispatch('signUp', {
         email: this.signUpForm.email,
