@@ -4,7 +4,7 @@ import router from '@/router';
 
 export default createStore({
   state: {
-    userProfile: {},
+    user: {},
     error: {},
   },
 
@@ -14,7 +14,7 @@ export default createStore({
 
   mutations: {
     setUserProfile(state, val) {
-      state.userProfile = val;
+      state.user = val;
     },
     setError(state, val) {
       state.error = val;
@@ -29,6 +29,7 @@ export default createStore({
 
         // Create user profile in db
         await firebase.usersRef.doc(user.uid).set({
+          uid: user.uid,
           name: form.name,
         });
 
@@ -36,7 +37,6 @@ export default createStore({
         dispatch('getUserProfile', user);
       } catch (err) {
         dispatch('setError', err);
-        console.error(err);
       }
     },
 
@@ -49,15 +49,12 @@ export default createStore({
         dispatch('getUserProfile', user);
       } catch (err) {
         dispatch('setError', err);
-        console.error(err);
       }
     },
 
     async getUserProfile({ commit }, user) {
       // Get user profile from db
       const userProfile = await firebase.usersRef.doc(user.uid).get();
-
-      console.log('user data:', userProfile);
 
       // Set user profile in state
       commit('setUserProfile', userProfile.data());
@@ -68,6 +65,7 @@ export default createStore({
 
     setError({ commit }, error) {
       commit('setError', error);
+      console.error(error);
     },
   },
 
