@@ -30,6 +30,12 @@
             <label for="signUpName">Name</label>
             <input v-model.trim="signUpForm.name" type="text" placeholder="John Doe" id="signUpName" />
 
+            <label for="signUpRole">I'm a</label>
+            <select id="signUpRole">
+              <option value="student" selected>Student</option>
+              <option value="coach">Coach</option>
+            </select>
+
             <label for="signUpEmail">Email</label>
             <input v-model.trim="signUpForm.email" type="text" placeholder="you@email.com" id="signUpEmail" />
 
@@ -64,6 +70,7 @@ export default {
       },
       signUpForm: {
         name: '',
+        role: 'student',
         email: '',
         password: '',
       },
@@ -84,9 +91,10 @@ export default {
     signup() {
       // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn
       this.$store.dispatch('signUp', {
+        name: this.signUpForm.name,
+        role: this.signUpForm.role,
         email: this.signUpForm.email,
         password: this.signUpForm.password,
-        name: this.signUpForm.name,
       });
     },
     login() {

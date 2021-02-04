@@ -31,6 +31,8 @@ export default createStore({
         await usersRef.doc(user.uid).set({
           uid: user.uid,
           name: form.name,
+          mail: form.email,
+          role: form.role,
         });
 
         // fetch user profile and set in state
