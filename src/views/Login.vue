@@ -3,7 +3,9 @@
 
     <h1 v-if="error.message">{{ error.message }}</h1>
 
-    <div :class="{ 'login-form': showLoginForm }">
+    <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
+
+    <div v-if="!showPasswordReset" :class="{ 'login-form': showLoginForm }">
       <form v-if="showLoginForm" @submit.prevent>
         <fieldset>
           <h1>Login</h1>
@@ -14,8 +16,10 @@
           <label for="loginPassword">Password</label>
           <input v-model.trim="loginForm.password" type="password" placeholder="******" id="loginPassword">
 
+          <a @click="togglePasswordReset()">Forgot password</a>
+
           <button @click="login()">Log In</button>
-          <button @click="toggleFormView()">Create an account</button>
+          <button @click="toggleForm()">Create an account</button>
         </fieldset>
       </form>
 
@@ -33,20 +37,26 @@
             <input v-model.trim="signUpForm.password" type="password" placeholder="min length is 6" id="signUpPassword" />
 
           <button @click="signup()" class="button">Sign Up</button>
-          <button @click="toggleFormView()">Go to login</button>
+          <button @click="toggleForm()">Go to login</button>
         </fieldset>
       </form>
     </div>
+
   </section>
 </template>
 
 <script>
+import PasswordReset from '@/components/PasswordReset.vue';
 // TODO: add logout + password reset options
 // TODO: split store code in modules (https://vuex.vuejs.org/guide/modules.html#module-local-state)
 export default {
+  components: {
+    PasswordReset,
+  },
   data() {
     return {
       showLoginForm: true,
+      showPasswordReset: false,
       loginForm: {
         email: '',
         password: '',
@@ -64,8 +74,11 @@ export default {
     },
   },
   methods: {
-    toggleFormView() {
+    toggleForm() {
       this.showLoginForm = !this.showLoginForm;
+    },
+    togglePasswordReset() {
+      this.showPasswordReset = !this.showPasswordReset;
     },
     signup() {
       // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn
