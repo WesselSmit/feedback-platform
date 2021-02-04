@@ -41,6 +41,8 @@
 </template>
 
 <script>
+// TODO: add logout + password reset options
+// TODO: split store code in modules (https://vuex.vuejs.org/guide/modules.html#module-local-state)
 export default {
   data() {
     return {

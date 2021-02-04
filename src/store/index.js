@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import * as firebase from '@/firebase';
+import { auth, usersRef } from '@/firebase';
 import router from '@/router';
 
 export default createStore({
@@ -25,10 +25,10 @@ export default createStore({
     async signUp({ dispatch }, form) {
       try {
         // Create user account in firebase authentication
-        const { user } = await firebase.auth.createUserWithEmailAndPassword(form.email, form.password);
+        const { user } = await auth.createUserWithEmailAndPassword(form.email, form.password);
 
         // Create user profile in db
-        await firebase.usersRef.doc(user.uid).set({
+        await usersRef.doc(user.uid).set({
           uid: user.uid,
           name: form.name,
         });
@@ -43,7 +43,7 @@ export default createStore({
     async login({ dispatch }, form) {
       try {
         // sign user in
-        const { user } = await firebase.auth.signInWithEmailAndPassword(form.email, form.password);
+        const { user } = await auth.signInWithEmailAndPassword(form.email, form.password);
 
         // Fetch user profile and set in state
         dispatch('getUserProfile', user);
@@ -54,7 +54,7 @@ export default createStore({
 
     async getUserProfile({ commit }, user) {
       // Get user profile from db
-      const userProfile = await firebase.usersRef.doc(user.uid).get();
+      const userProfile = await usersRef.doc(user.uid).get();
 
       // Set user profile in state
       commit('setUserProfile', userProfile.data());
