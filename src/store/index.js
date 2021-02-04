@@ -32,7 +32,7 @@ export default createStore({
           uid: user.uid,
           name: form.name,
           mail: form.email,
-          role: form.role,
+          role: 'student',
         });
 
         // fetch user profile and set in state
