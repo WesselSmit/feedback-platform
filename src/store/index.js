@@ -13,7 +13,7 @@ export default createStore({
   },
 
   mutations: {
-    setUserProfile(state, val) {
+    setUser(state, val) {
       state.user = val;
     },
     setError(state, val) {
@@ -59,7 +59,7 @@ export default createStore({
       const userProfile = await usersRef.doc(user.uid).get();
 
       // Set user profile in state
-      commit('setUserProfile', userProfile.data());
+      commit('setUser', userProfile.data());
 
       // Navigate user to homepage
       if (router.currentRoute.value.name === 'login') {
@@ -71,7 +71,7 @@ export default createStore({
       await auth.signOut();
 
       // clear userProfile and redirect to /login
-      commit('setUserProfile', {});
+      commit('setUser', {});
       router.push('/login');
     },
 
