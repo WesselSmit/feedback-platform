@@ -14,5 +14,7 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-use-before-define': 'warn',
+    'max-len': 'off',
+    'vue/max-len': 'off',
   },
 };
