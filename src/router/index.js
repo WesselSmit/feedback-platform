@@ -5,7 +5,7 @@ import { auth } from '@/firebase';
 const routes = [
   {
     path: '/',
-    name: 'Dashboard',
+    name: 'dashboard',
     component: Dashboard,
     meta: {
       requiresAuth: true,
@@ -13,12 +13,12 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
   },
   {
     path: '/settings',
-    name: 'Settings',
+    name: 'settings',
     component: () => import(/* webpackChunkName: "settings" */ '@/views/Settings.vue'),
     meta: {
       requiresAuth: true,
