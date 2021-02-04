@@ -60,7 +60,9 @@ export default createStore({
       commit('setUserProfile', userProfile.data());
 
       // Navigate user to homepage
-      router.push('/');
+      if (router.currentRoute.value.name === 'login') {
+        router.push('/');
+      }
     },
 
     async logout({ commit }) {
