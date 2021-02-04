@@ -1,9 +1,11 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA11RU9wX76_8S95XtupC2c4ItCc7bvBpM',
   authDomain: 'feedback-platform-82621.firebaseapp.com',
+  databaseURL: 'https://feedback-platform-82621-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'feedback-platform-82621',
   storageBucket: 'feedback-platform-82621.appspot.com',
   messagingSenderId: '145686348099',
@@ -11,10 +13,11 @@ const firebaseConfig = {
   measurementId: 'G-KFZCMJKNNV',
 };
 
-// Initialized firebase app
 firebase.initializeApp(firebaseConfig);
 
-// Firebase services
-const projectAuth = firebase.auth();
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-export { firebase, projectAuth };
+const usersRef = db.collection('users');
+
+export { auth, db, usersRef };
