@@ -47,7 +47,8 @@
 
 <script>
 import PasswordReset from '@/components/PasswordReset.vue';
-// TODO: add logout + password reset options
+// TODO: add logout
+// TODO: make login + signUp separate components
 // TODO: split store code in modules (https://vuex.vuejs.org/guide/modules.html#module-local-state)
 export default {
   components: {

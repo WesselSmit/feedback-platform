@@ -63,6 +63,14 @@ export default createStore({
       router.push('/');
     },
 
+    async logout({ commit }) {
+      await auth.signOut();
+
+      // clear userProfile and redirect to /login
+      commit('setUserProfile', {});
+      router.push('/login');
+    },
+
     setError({ commit }, error) {
       commit('setError', error);
       console.error(error);

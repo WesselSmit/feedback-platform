@@ -1,14 +1,22 @@
 <template>
-  <div id="nav">
-
-  </div>
-
-  <router-view/>
+  <Navigation v-if="showNav" />
+  <router-view />
 </template>
 
 <script>
-export default {
+import Navigation from '@/components/Navigation.vue';
+import { mapState } from 'vuex';
 
+export default {
+  components: {
+    Navigation,
+  },
+  computed: {
+    ...mapState(['user']),
+    showNav() {
+      return Object.keys(this.user).length > 1;
+    },
+  },
 };
 </script>
 
