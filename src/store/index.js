@@ -9,6 +9,7 @@ export default createStore({
   },
 
   getters: {
+    user: (state) => state.user,
     error: (state) => state.error,
   },
 
@@ -24,10 +25,9 @@ export default createStore({
   actions: {
     async signUp({ dispatch }, form) {
       try {
-        // Create user account in firebase authentication
         const { user } = await auth.createUserWithEmailAndPassword(form.email, form.password);
 
-        // Create user profile in db
+        // store user profile in db
         await usersRef.doc(user.uid).set({
           uid: user.uid,
           name: form.name,
@@ -36,7 +36,7 @@ export default createStore({
         });
 
         // fetch user profile and set in state
-        dispatch('getUserProfile', user);
+        dispatch('getUser', user);
       } catch (err) {
         dispatch('setError', err);
       }
@@ -44,24 +44,21 @@ export default createStore({
 
     async login({ dispatch }, form) {
       try {
-        // sign user in
         const { user } = await auth.signInWithEmailAndPassword(form.email, form.password);
 
-        // Fetch user profile and set in state
-        dispatch('getUserProfile', user);
+        // fetch user profile and set in state
+        dispatch('getUser', user);
       } catch (err) {
         dispatch('setError', err);
       }
     },
 
-    async getUserProfile({ commit }, user) {
-      // Get user profile from db
+    async getUser({ commit }, user) {
       const userProfile = await usersRef.doc(user.uid).get();
 
-      // Set user profile in state
       commit('setUser', userProfile.data());
 
-      // Navigate user to homepage
+      // navigate user to homepage
       if (router.currentRoute.value.name === 'login') {
         router.push('/');
       }
@@ -70,7 +67,7 @@ export default createStore({
     async logout({ commit }) {
       await auth.signOut();
 
-      // clear userProfile and redirect to /login
+      // reset userProfile and redirect to /login
       commit('setUser', {});
       router.push('/login');
     },
