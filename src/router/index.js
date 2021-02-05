@@ -35,6 +35,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((route) => route.meta.requiresAuth);
 
+  // TODO: denk goed na over hoe je de routes gaat protecten
+  // TODO: alleen coach/admin roles mogen alle projecten zien, student role moet beperkt zijn tot eigen projecten en de projecten die met hem gedeeld zijn
+
   if (requiresAuth && !auth.currentUser) {
     next('/login');
   } else {
