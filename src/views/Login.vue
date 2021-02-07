@@ -50,7 +50,7 @@ import PasswordReset from '@/components/PasswordReset.vue';
 import { mapGetters } from 'vuex';
 
 // TODO: make login + signUp separate components
-// TODO: maybe move some of the action logic to methods (because they are only used in this component)
+// TODO: maybe move some of the action logic to methods (because they are only used in this component) (like it is done in PasswordReset.vue)
 
 export default {
   components: {

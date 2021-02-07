@@ -56,15 +56,9 @@ export default {
     },
 
     async getUser({ commit }, user) {
-      // console.log(user);
-
       const userProfile = await usersRef.doc(user.uid).get();
 
-      // console.log(userProfile);
-
       commit('setUser', userProfile.data());
-
-      // console.log(this.state.user.user);
 
       // navigate user to homepage
       if (router.currentRoute.value.name === 'login') {
