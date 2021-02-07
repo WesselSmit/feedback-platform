@@ -67,7 +67,6 @@ export default {
   },
   data() {
     return {
-      ready: false,
       groupNames: [],
       showLoginForm: true,
       showPasswordReset: false,
@@ -113,7 +112,6 @@ export default {
     const snapshot = await groupsRef.get();
     const groupNames = snapshot.docs.map((doc) => doc.id);
     this.groupNames = groupNames;
-    this.ready = true;
   },
 };
 </script>
