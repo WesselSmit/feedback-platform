@@ -31,6 +31,10 @@ const routes = [
     name: '404',
     component: () => import(/* webpackChunkName: "404" */ '@/views/404.vue'),
   },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: { name: 'dashboard' },
+  },
 ];
 
 const router = createRouter({
@@ -55,7 +59,7 @@ router.beforeEach(async (to, from, next) => {
       const { role } = await store.dispatch('getUser', auth.currentUser).then(() => store.getters.user);
 
       if (role && allowedRoles.includes(role)) { // check if user has permission
-        console.log('user is allowed to view; ', role);
+        console.log('user is allowed to view');
         next();
       } else {
         console.log('user does not have the required permissions');
@@ -63,7 +67,6 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
-    console.log('all went well');
     next();
   }
 });
