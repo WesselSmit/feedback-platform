@@ -53,10 +53,7 @@
 <script>
 import PasswordReset from '@/components/PasswordReset.vue';
 import { mapGetters, mapActions } from 'vuex';
-import { groupsRef } from '@/firebase';
 
-// TODO: verplaats de code in mounted naar de groupStore
-// TODO: voeg gebruiker toe in firestore group (in een array met uid's + namen van alle users die onderdeel zijn)
 // TODO: make login + signUp separate components
 // TODO: login moet overal logIn worden
 // TODO: maybe move some of the action logic to methods (because they are only used in this component) (like it is done in PasswordReset.vue)
@@ -67,7 +64,6 @@ export default {
   },
   data() {
     return {
-      groupNames: [],
       showLoginForm: true,
       showPasswordReset: false,
       loginForm: {
@@ -83,7 +79,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('group', { groups: 'groups' }),
+    ...mapGetters('group', { groupNames: 'groupNames' }),
     ...mapGetters('user', {
       user: 'user', // TODO: test of user wel gebruikt word of dat hij weg kan
       error: 'error',
@@ -91,7 +87,7 @@ export default {
   },
   methods: {
     ...mapActions('group', {
-      getGroups: 'getGroups',
+      fetchGroups: 'fetchGroups',
     }),
     toggleForm() {
       this.showLoginForm = !this.showLoginForm;
@@ -108,10 +104,8 @@ export default {
       this.$store.dispatch('user/login', this.loginForm);
     },
   },
-  async mounted() {
-    const snapshot = await groupsRef.get();
-    const groupNames = snapshot.docs.map((doc) => doc.id);
-    this.groupNames = groupNames;
+  created() {
+    this.fetchGroups();
   },
 };
 </script>
