@@ -1,7 +1,7 @@
 <template>
   <section>
 
-    <!-- <h1 v-if="error.message">{{ error.message }}</h1> -->
+    <h1 v-if="this.error">{{ this.error.message }}</h1>
 
     <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
 
@@ -47,9 +47,11 @@
 
 <script>
 import PasswordReset from '@/components/PasswordReset.vue';
+import { mapGetters } from 'vuex';
+
 // TODO: make login + signUp separate components
-// TODO: split store code in modules (https://vuex.vuejs.org/guide/modules.html#module-local-state)
-// TODO: use a Vuex library that persists across page loads
+// TODO: maybe move some of the action logic to methods (because they are only used in this component)
+
 export default {
   components: {
     PasswordReset,
@@ -69,11 +71,12 @@ export default {
       },
     };
   },
-  // computed: {
-  //   error() {
-  //     return this.$store.getters.error;
-  //   },
-  // },
+  computed: {
+    ...mapGetters('user', {
+      user: 'user',
+      error: 'error',
+    }),
+  },
   methods: {
     toggleForm() {
       this.showLoginForm = !this.showLoginForm;

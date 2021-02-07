@@ -6,12 +6,13 @@ export default {
 
   state: {
     user: {},
-    error: { placeholder: 'placeholder' },
+    error: {},
   },
 
   getters: {
     user: (state) => state.user,
-    error: (state) => state.error.placeholder,
+    role: (state) => state.user.role,
+    error: (state) => state.error,
   },
 
   mutations: {
@@ -75,7 +76,7 @@ export default {
 
     setError({ commit }, error) {
       commit('setError', error);
-      console.error(error);
+      console.error('Error in userStore:', error);
     },
   },
 };
