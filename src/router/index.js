@@ -47,13 +47,10 @@ router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((route) => route.meta.requiresAuth);
   const { allowedRoles } = to.meta;
 
-  // TODO: note: Vuex state word gereset wanneer de page refreshed (https://stackoverflow.com/questions/43027499/vuex-state-on-page-refresh#:~:text=Vuex%20state%20is%20kept%20in,does%20not%20persist%20on%20reload.)
-  // TODO: miss is het een idee om een een functie te maken (in App.vue?) die altijd meteen de user fetched van firebase en deze in de store zet
-
   if (requiresAuth && !auth.currentUser) {
     console.log('requires authorisation and user is not authorised');
     next('/login');
-  } else if (allowedRoles) { // TODO make separate function for all code inside 'else if (allowedRules)'
+  } else if (allowedRoles) {
     if (!auth.currentUser) { // if role/permission is required authorisation is also required
       console.log('requires permission and user is not authorised');
       next('/login');
@@ -62,7 +59,7 @@ router.beforeEach(async (to, from, next) => {
       const role = await store.dispatch('user/getUser', auth.currentUser).then(() => store.getters['user/role']);
 
       if (role && allowedRoles.includes(role)) { // check if user has permission
-        console.log('user is allowed to view');
+        console.log('user is allowed to view page');
         next();
       } else {
         console.log('user does not have the required permissions');
