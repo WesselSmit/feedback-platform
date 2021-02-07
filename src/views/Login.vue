@@ -1,7 +1,9 @@
 <template>
   <section>
 
-    <h1 v-if="this.error">{{ this.error.message }}</h1>
+    <h1 v-if="this.userError">{{ this.userError.message }}</h1>
+
+    <h1 v-if="this.groupError">{{ this.groupError.message }}</h1>
 
     <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
 
@@ -79,10 +81,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('group', { groupNames: 'groupNames' }),
+    ...mapGetters('group', {
+      groupNames: 'groupNames',
+      groupError: 'error',
+    }),
     ...mapGetters('user', {
       user: 'user', // TODO: test of user wel gebruikt word of dat hij weg kan
-      error: 'error',
+      userError: 'error',
     }),
   },
   methods: {

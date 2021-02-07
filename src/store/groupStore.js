@@ -23,17 +23,18 @@ export default {
       state.groupNames = val;
     },
     setError(state, val) {
-      state.groupNames = val;
+      state.error = val;
     },
   },
 
   actions: {
     async fetchGroups({ dispatch, commit }) {
-      // TODO: voeg gebruiker toe in firestore group (in een array met uid's + namen van alle users die onderdeel zijn)
       try {
         const snapshot = await groupsRef.get();
         const groups = snapshot.docs.map((doc) => doc.data());
         const groupNames = snapshot.docs.map((doc) => doc.id);
+
+        // TODO: voeg gebruiker toe in firestore group (in een array met uid's + namen van alle users die onderdeel zijn). Gebruik hiervoor een 2e action
 
         commit('setGroups', groups);
         commit('setGroupNames', groupNames);
