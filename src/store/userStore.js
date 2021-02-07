@@ -12,6 +12,7 @@ export default {
   getters: {
     user: (state) => state.user,
     role: (state) => state.user.role,
+    group: (state) => state.user.group,
     error: (state) => state.error,
   },
 
@@ -34,6 +35,7 @@ export default {
           uid: user.uid,
           name: form.name,
           mail: form.email,
+          group: form.group,
           role: 'student',
         });
 

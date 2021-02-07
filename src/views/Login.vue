@@ -30,6 +30,11 @@
             <label for="signUpName">Name</label>
             <input v-model.trim="signUpForm.name" type="text" placeholder="John Doe" id="signUpName" />
 
+            <label for="signUpGroup">I'm part of group</label>
+            <select v-model="signUpForm.group" id="signUpGroup">
+              <option v-for="group in groupNames" :key="group" :value="group">{{ group }}</option>
+            </select>
+
             <label for="signUpEmail">Email</label>
             <input v-model.trim="signUpForm.email" type="text" placeholder="you@email.com" id="signUpEmail" />
 
@@ -47,9 +52,13 @@
 
 <script>
 import PasswordReset from '@/components/PasswordReset.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import { groupsRef } from '@/firebase';
 
+// TODO: verplaats de code in mounted naar de groupStore
+// TODO: voeg gebruiker toe in firestore group (in een array met uid's + namen van alle users die onderdeel zijn)
 // TODO: make login + signUp separate components
+// TODO: login moet overal logIn worden
 // TODO: maybe move some of the action logic to methods (because they are only used in this component) (like it is done in PasswordReset.vue)
 
 export default {
@@ -58,6 +67,8 @@ export default {
   },
   data() {
     return {
+      ready: false,
+      groupNames: [],
       showLoginForm: true,
       showPasswordReset: false,
       loginForm: {
@@ -66,18 +77,23 @@ export default {
       },
       signUpForm: {
         name: '',
+        group: '',
         email: '',
         password: '',
       },
     };
   },
   computed: {
+    ...mapGetters('group', { groups: 'groups' }),
     ...mapGetters('user', {
-      user: 'user',
+      user: 'user', // TODO: test of user wel gebruikt word of dat hij weg kan
       error: 'error',
     }),
   },
   methods: {
+    ...mapActions('group', {
+      getGroups: 'getGroups',
+    }),
     toggleForm() {
       this.showLoginForm = !this.showLoginForm;
     },
@@ -92,6 +108,12 @@ export default {
       // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
       this.$store.dispatch('user/login', this.loginForm);
     },
+  },
+  async mounted() {
+    const snapshot = await groupsRef.get();
+    const groupNames = snapshot.docs.map((doc) => doc.id);
+    this.groupNames = groupNames;
+    this.ready = true;
   },
 };
 </script>

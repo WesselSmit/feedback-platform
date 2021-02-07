@@ -6,6 +6,7 @@
     <p>obj: {{ this.user }}</p>
     <p>User: {{ this.user.name }}</p>
     <p>Role: {{ this.userRole }}</p>
+    <p>Group: {{ this.userGroup }}</p>
     <p>Uid: {{ this.user.uid }}</p>
   </div>
 </template>
@@ -22,6 +23,7 @@ export default {
     ...mapGetters('user', {
       user: 'user',
       userRole: 'role',
+      userGroup: 'group',
       userError: 'error',
     }),
     isLoggedIn() {

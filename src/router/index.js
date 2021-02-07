@@ -23,7 +23,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "settings" */ '@/views/Settings.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: ['coach', 'admin'],
+    },
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import(/* webpackChunkName: "settings" */ '@/views/Admin.vue'),
+    meta: {
+      requiresAuth: true,
+      allowedRoles: ['admin'],
     },
   },
   {
