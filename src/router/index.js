@@ -42,6 +42,7 @@ const router = createRouter({
   routes,
 });
 
+// TODO make separate function for all code inside 'else if (allowedRules)'
 // Check if user should be able to see page, otherwise redirect to login page
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((route) => route.meta.requiresAuth);
@@ -55,19 +56,16 @@ router.beforeEach(async (to, from, next) => {
       console.log('requires permission and user is not authorised');
       next('/login');
     } else {
-      console.log('ja');
-      next();
+      // this needs to dispatch first because of racing conditions with main.js
+      const role = await store.dispatch('user/getUser', auth.currentUser).then(() => store.getters['user/role']);
 
-      // this needs to dispatch first because of racing conditions
-      // const { role } = await store.dispatch('user/getUser', auth.currentUser).then(() => store.getters.user);
-
-      // if (role && allowedRoles.includes(role)) { // check if user has permission
-      //   console.log('user is allowed to view');
-      //   next();
-      // } else {
-      //   console.log('user does not have the required permissions');
-      //   next('/404');
-      // }
+      if (role && allowedRoles.includes(role)) { // check if user has permission
+        console.log('user is allowed to view');
+        next();
+      } else {
+        console.log('user does not have the required permissions');
+        next('/404');
+      }
     }
   } else {
     next();
