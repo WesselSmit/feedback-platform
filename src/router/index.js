@@ -55,16 +55,19 @@ router.beforeEach(async (to, from, next) => {
       console.log('requires permission and user is not authorised');
       next('/login');
     } else {
-      // this needs to dispatch first because of racing conditions
-      const { role } = await store.dispatch('getUser', auth.currentUser).then(() => store.getters.user);
+      console.log('ja');
+      next();
 
-      if (role && allowedRoles.includes(role)) { // check if user has permission
-        console.log('user is allowed to view');
-        next();
-      } else {
-        console.log('user does not have the required permissions');
-        next('/404');
-      }
+      // this needs to dispatch first because of racing conditions
+      // const { role } = await store.dispatch('user/getUser', auth.currentUser).then(() => store.getters.user);
+
+      // if (role && allowedRoles.includes(role)) { // check if user has permission
+      //   console.log('user is allowed to view');
+      //   next();
+      // } else {
+      //   console.log('user does not have the required permissions');
+      //   next('/404');
+      // }
     }
   } else {
     next();

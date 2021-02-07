@@ -1,7 +1,7 @@
 <template>
   <section>
 
-    <h1 v-if="error.message">{{ error.message }}</h1>
+    <!-- <h1 v-if="error.message">{{ error.message }}</h1> -->
 
     <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
 
@@ -69,11 +69,11 @@ export default {
       },
     };
   },
-  computed: {
-    error() {
-      return this.$store.getters.error;
-    },
-  },
+  // computed: {
+  //   error() {
+  //     return this.$store.getters.error;
+  //   },
+  // },
   methods: {
     toggleForm() {
       this.showLoginForm = !this.showLoginForm;
@@ -83,11 +83,11 @@ export default {
     },
     signup() {
       // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
-      this.$store.dispatch('signUp', this.signUpForm);
+      this.$store.dispatch('user/signUp', this.signUpForm);
     },
     login() {
       // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
-      this.$store.dispatch('login', this.loginForm);
+      this.$store.dispatch('user/login', this.loginForm);
     },
   },
 };

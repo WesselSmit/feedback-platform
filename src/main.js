@@ -15,6 +15,6 @@ auth.onAuthStateChanged((user) => {
   }
 
   if (user) {
-    store.dispatch('getUser', user);
+    store.dispatch('user/getUser', user);
   }
 });
