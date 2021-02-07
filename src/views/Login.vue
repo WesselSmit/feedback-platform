@@ -49,6 +49,7 @@
 import PasswordReset from '@/components/PasswordReset.vue';
 // TODO: make login + signUp separate components
 // TODO: split store code in modules (https://vuex.vuejs.org/guide/modules.html#module-local-state)
+// TODO: use a Vuex library that persists across page loads
 export default {
   components: {
     PasswordReset,
@@ -81,11 +82,11 @@ export default {
       this.showPasswordReset = !this.showPasswordReset;
     },
     signup() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn
+      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
       this.$store.dispatch('signUp', this.signUpForm);
     },
     login() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn
+      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
       this.$store.dispatch('login', this.loginForm);
     },
   },
