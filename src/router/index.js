@@ -18,11 +18,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
   },
   {
-    path: '/disallowed',
-    name: 'disallowed',
-    component: () => import(/* webpackChunkName: "disallowed" */ '@/views/Disallowed.vue'),
-  },
-  {
     path: '/settings',
     name: 'settings',
     component: () => import(/* webpackChunkName: "settings" */ '@/views/Settings.vue'),
@@ -31,20 +26,22 @@ const routes = [
       allowedRoles: ['coach', 'admin'],
     },
   },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import(/* webpackChunkName: "404" */ '@/views/404.vue'),
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  store,
 });
 
 // Check if user should be able to see page, otherwise redirect to login page
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((route) => route.meta.requiresAuth);
   const { allowedRoles } = to.meta;
-
-  console.log(allowedRoles);
 
   if (requiresAuth && !auth.currentUser) {
     console.log('requires authorisation and user is not authorised');
@@ -57,12 +54,12 @@ router.beforeEach(async (to, from, next) => {
       // this needs to dispatch first because of racing conditions
       const { role } = await store.dispatch('getUser', auth.currentUser).then(() => store.getters.user);
 
-      if (allowedRoles.includes(role)) { // check if user has permission
-        console.log('user is allowed to view');
+      if (role && allowedRoles.includes(role)) { // check if user has permission
+        console.log('user is allowed to view; ', role);
         next();
       } else {
         console.log('user does not have the required permissions');
-        next('/disallowed');
+        next('/404');
       }
     }
   } else {

@@ -1,5 +1,5 @@
 <template>
-  <p>you are not allowed to see this page</p>
+  <h1>404</h1>
 </template>
 
 <script>
