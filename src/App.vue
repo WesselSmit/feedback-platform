@@ -1,8 +1,8 @@
 <template>
-  <Navigation v-if="showNav" />
+  <Navigation v-if="isLoggedIn" />
   <router-view />
 
-  <div>
+  <div v-if="isLoggedIn">
     <p>obj: {{ this.user }}</p>
     <p>User: {{ this.user.name }}</p>
     <p>Role: {{ this.userRole }}</p>
@@ -24,7 +24,8 @@ export default {
       userRole: 'role',
       userError: 'error',
     }),
-    showNav() {
+    isLoggedIn() {
+      // use Object.keys() because this.user returns a Proxy
       return Object.keys(this.user).length > 1;
     },
   },
