@@ -1,7 +1,7 @@
 <template>
   <section>
 
-    <h1 v-if="error.message">{{ error.message }}</h1>
+    <h1 v-if="this.error">{{ this.error.message }}</h1>
 
     <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
 
@@ -47,8 +47,11 @@
 
 <script>
 import PasswordReset from '@/components/PasswordReset.vue';
+import { mapGetters } from 'vuex';
+
 // TODO: make login + signUp separate components
-// TODO: split store code in modules (https://vuex.vuejs.org/guide/modules.html#module-local-state)
+// TODO: maybe move some of the action logic to methods (because they are only used in this component) (like it is done in PasswordReset.vue)
+
 export default {
   components: {
     PasswordReset,
@@ -69,9 +72,10 @@ export default {
     };
   },
   computed: {
-    error() {
-      return this.$store.getters.error;
-    },
+    ...mapGetters('user', {
+      user: 'user',
+      error: 'error',
+    }),
   },
   methods: {
     toggleForm() {
@@ -81,12 +85,12 @@ export default {
       this.showPasswordReset = !this.showPasswordReset;
     },
     signup() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn
-      this.$store.dispatch('signUp', this.signUpForm);
+      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
+      this.$store.dispatch('user/signUp', this.signUpForm);
     },
     login() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn
-      this.$store.dispatch('login', this.loginForm);
+      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
+      this.$store.dispatch('user/login', this.loginForm);
     },
   },
 };

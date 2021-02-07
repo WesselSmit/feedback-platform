@@ -4,7 +4,6 @@ import router from '@/router';
 import store from '@/store';
 import { auth } from '@/firebase';
 
-// Ensure firebase is initialized before loading the app (to prevent unauthorized access)
 let app;
 
 auth.onAuthStateChanged((user) => {
@@ -16,6 +15,6 @@ auth.onAuthStateChanged((user) => {
   }
 
   if (user) {
-    store.dispatch('getUserProfile', user);
+    store.dispatch('user/getUser', user);
   }
 });

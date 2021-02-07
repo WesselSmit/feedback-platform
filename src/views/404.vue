@@ -1,7 +1,5 @@
 <template>
-  <p>settings</p>
-
-  <small>if you see this page you have atleast coach permission</small>
+  <h1>404</h1>
 </template>
 
 <script>
