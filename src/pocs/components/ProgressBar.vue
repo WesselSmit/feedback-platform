@@ -23,10 +23,6 @@ export default {
 @import '@/styles';
 
 .progress-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-
   &__container {
     height: 5px;
     width: $sidebar-width;

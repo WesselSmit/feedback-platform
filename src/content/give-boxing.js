@@ -18,27 +18,65 @@ export default {
     steps: [{
         index: 1,
         sidebarType: 'simple',
-        content: []
+        content: [],
+        navigation: [{
+            label: 'Done',
+            hasOutline: true
+          }
+        ]
       },
       {
         index: 2,
         sidebarType: 'overlay',
-        content: []
+        content: [],
+        navigation: [{
+            label: 'Done',
+            hasOutline: true
+          }
+        ]
       },
     {
         index: 3,
         sidebarType: 'complex',
-        content: []
+        content: [],
+        navigation: [
+          {
+            label: 'Previous'
+          },
+          {
+            label: 'Next',
+            hasOutline: true
+          }
+        ]
       },
     {
         index: 4,
         sidebarType: 'complex',
-        content: []
+        content: [],
+        navigation: [
+          {
+            label: 'Previous',
+
+          },
+          {
+            label: 'Next',
+            hasOutline: true
+          }
+        ]
       },
     {
         index: 5,
         sidebarType: 'complex',
-        content: []
+        content: [],
+        navigation: [
+          {
+            label: 'Previous'
+          },
+          {
+            label: 'Next',
+            hasOutline: true
+          }
+        ]
       },
     ],
   },

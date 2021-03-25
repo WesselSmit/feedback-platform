@@ -21,7 +21,7 @@ export default {
 @import '@/styles';
 
 .visualisation {
-  margin: $size--lg 0 $size--xl;
+  margin: $space--lg 0 $space--xl;
 
   &__title-container {
     margin: auto;
@@ -35,7 +35,7 @@ export default {
       max-height: 95vh;
 
     &-container {
-      margin: 0 $size--sm-md;
+      margin: 0 $space--sm-md;
     }
   }
 }

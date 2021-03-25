@@ -14,6 +14,6 @@ export default {
 @import '@/styles';
 
 .menu {
-  min-height: $size--xl;
+  min-height: $space--xl;
 }
 </style>

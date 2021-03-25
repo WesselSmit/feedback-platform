@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      stepIndex: 1, // from DB
+      stepIndex: 1, // from DB (+ in store)
     };
   },
   computed: {

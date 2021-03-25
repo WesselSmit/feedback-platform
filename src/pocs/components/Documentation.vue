@@ -65,7 +65,7 @@ export default {
 
   &__subheading {
     &:not(:first-of-type) {
-      margin-top: $size--lg;
+      margin-top: $space--lg;
     }
   }
 }

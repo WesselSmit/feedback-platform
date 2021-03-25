@@ -18,27 +18,27 @@ h1 {
     font-family: $font;
     font-size: 26px;
     color: $black;
-    margin: 0 0 $size--sm;
+    margin: 0 0 $space--sm;
 }
 
 h2 {
     font-family: $font;
     font-size: 18px;
     color: $black;
-    margin: 0 0 $size--sm;
+    margin: 0 0 $space--sm;
 }
 
 p {   
-    margin: 0 0 $size--sm;
+    margin: 0 0 $space--sm;
 }
 
 ul {
-    margin-left: $size--md;
+    margin-left: $space--md;
     list-style-type: disc;
 }
 
 li {
     &:not(:last-of-type) {
-        margin-bottom: $size--xsm;
+        margin-bottom: $space--xsm;
     }
 }
