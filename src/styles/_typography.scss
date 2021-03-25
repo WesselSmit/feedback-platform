@@ -38,5 +38,7 @@ ul {
 }
 
 li {
-    margin-bottom: $size--xsm;
+    &:not(:last-of-type) {
+        margin-bottom: $size--xsm;
+    }
 }

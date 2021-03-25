@@ -1,6 +1,6 @@
 <template>
   <section class="visualisation">
-    <div class="visualisation__inner">
+    <div class="visualisation__title-container">
       <h2>{{ title }}</h2>
     </div>
 
@@ -21,9 +21,9 @@ export default {
 @import '@/styles';
 
 .visualisation {
-  margin: $size--md 0 $size--lg;
+  margin: $size--lg 0 $size--xl;
 
-  &__inner {
+  &__title-container {
     margin: auto;
     max-width: $documentation-width;
   }

@@ -1,14 +1,14 @@
 <template>
   <main class="base">
-    <Documentation :documentation="documentation" />
-    <Sidebar />
+    <Documentation :content="documentation" />
+    <Sidebar :content="sidebar" :stepIndex="stepIndex" />
   </main>
 </template>
 
 <script>
 import content from '@/content/give-boxing';
-import Documentation from './components/Documentation';
-import Sidebar from './components/Sidebar';
+import Documentation from '@/pocs/components/Documentation';
+import Sidebar from '@/pocs/components/Sidebar';
 
 export default {
   name: 'Give',
@@ -16,9 +16,17 @@ export default {
     Documentation,
     Sidebar,
   },
+  data() {
+    return {
+      stepIndex: 1, // from DB
+    };
+  },
   computed: {
     documentation() {
       return content.documentation;
+    },
+    sidebar() {
+      return content.sidebar;
     },
   },
 };
@@ -29,6 +37,6 @@ export default {
 
 .base {
   display: grid;
-  grid-template-columns: 1fr 450px;
+  grid-template-columns: 1fr $sidebar-width;
 }
 </style>

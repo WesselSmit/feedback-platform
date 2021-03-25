@@ -1,18 +1,20 @@
 <template>
   <section class="documentation">
+    <Menu />
+
     <div class="documentation__inner">
       <h1>{{ title }}</h1>
 
       <h2 class="documentation__subheading">Explanation</h2>
       <p>{{ explanation }}</p>
 
-      <h2 class="documentation__subheading">Feedback direction</h2>
-      <ul v-for="(direction, index) in feedbackDirections" :key="index">
-        <li>{{ direction }}</li>
+      <h2 class="documentation__subheading">Feedback questions</h2>
+      <ul>
+        <li v-for="(question, index) in questions" :key="index">{{ question }}</li>
       </ul>
 
-      <h2 class="documentation__subheading">Feedback scope</h2>
-      <p>{{ feedbackScope }}</p>
+      <h2 class="documentation__subheading">Feedback limits</h2>
+      <p>{{ limits }}</p>
     </div>
 
     <Visualisation :title="title" :visualisation="visualisation" />
@@ -20,29 +22,31 @@
 </template>
 
 <script>
-import Visualisation from '@/pocs/components/Visualisation';
+import Menu from './Menu';
+import Visualisation from './Visualisation';
 
 export default {
   name: 'Documentation',
   components: {
+    Menu,
     Visualisation,
   },
-  props: ['documentation'],
+  props: ['content'],
   computed: {
     title() {
-      return this.documentation.title;
+      return this.content.title;
     },
     explanation() {
-      return this.documentation.explanation;
+      return this.content.explanation;
     },
-    feedbackDirections() {
-      return this.documentation.feedbackDirections;
+    questions() {
+      return this.content.questions;
     },
-    feedbackScope() {
-      return this.documentation.feedbackScope;
+    limits() {
+      return this.content.limits;
     },
     visualisation() {
-      return this.documentation.visualisation;
+      return this.content.visualisation;
     },
   },
 };
@@ -55,7 +59,7 @@ export default {
   min-height: 100vh;
 
   &__inner {
-    margin: $size--lg auto 0;
+    margin: 0 auto;
     max-width: $documentation-width;
   }
 
