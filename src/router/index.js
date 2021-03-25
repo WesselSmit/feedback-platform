@@ -5,6 +5,11 @@ import store from '@/store';
 
 const routes = [
   {
+    path: '/poc/give',
+    name: 'give',
+    component: () => import(/* webpackChunkName: "login" */ '@/pocs/Give.vue'),
+  },
+  {
     path: '/',
     name: 'dashboard',
     component: Dashboard,
