@@ -1,7 +1,12 @@
 <template>
   <section class="visualisation">
-    <h2>{{ title }}</h2>
-    <img :src="require(`@/content/visualisations/${visualisation}.png`)" class="visualisation__image">
+    <div class="visualisation__inner">
+      <h2>{{ title }}</h2>
+    </div>
+
+    <div class="visualisation__image-container">
+      <img :src="require(`@/content/visualisations/${visualisation}.png`)" class="visualisation__image">
+    </div>
   </section>
 </template>
 
@@ -13,10 +18,25 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/styles';
+
 .visualisation {
+  margin: $size--md 0 $size--lg;
+
+  &__inner {
+    margin: auto;
+    max-width: $documentation-width;
+  }
 
   &__image {
-    width: 100%;
+    display: block;
+      margin: auto;
+      width: 100%;
+      max-height: 95vh;
+
+    &-container {
+      margin: 0 $size--sm-md;
+    }
   }
 }
 </style>

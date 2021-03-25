@@ -20,7 +20,7 @@ export default {
     },
   },
   documentation: {
-    title: `Boxing heavyweight championship history`,
+    title: `Boxing heavyweight championships`,
     explanation: `The history of the different boxing heavyweight championships through the years.`,
     //todo: iterations
     feedbackDirections: [

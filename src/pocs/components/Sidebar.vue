@@ -11,8 +11,11 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles";
+
 .sidebar {
-  background-color: red;
   min-height: 100vh;
+  padding: $size--sm-md;
+  border-left: 1px solid $gray--light;
 }
 </style>

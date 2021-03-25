@@ -2,13 +2,20 @@
   <section class="documentation">
     <div class="documentation__inner">
       <h1>{{ title }}</h1>
+
+      <h2 class="documentation__subheading">Explanation</h2>
       <p>{{ explanation }}</p>
-      <!-- <ul v-for="(direction, index) in feedbackDirections" :key="index">
+
+      <h2 class="documentation__subheading">Feedback direction</h2>
+      <ul v-for="(direction, index) in feedbackDirections" :key="index">
         <li>{{ direction }}</li>
       </ul>
-      <h3>{{ feedbackScope }}</h3> -->
-      <Visualisation :title="title" :visualisation="visualisation" />
+
+      <h2 class="documentation__subheading">Feedback scope</h2>
+      <p>{{ feedbackScope }}</p>
     </div>
+
+    <Visualisation :title="title" :visualisation="visualisation" />
   </section>
 </template>
 
@@ -48,10 +55,14 @@ export default {
   min-height: 100vh;
 
   &__inner {
-    width: 100%;
-    margin: $margin--lg auto;
-    max-width: 80%;
-    background-color: orange;
+    margin: $size--lg auto 0;
+    max-width: $documentation-width;
+  }
+
+  &__subheading {
+    &:not(:first-of-type) {
+      margin-top: $size--lg;
+    }
   }
 }
 </style>

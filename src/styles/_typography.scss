@@ -1,3 +1,4 @@
+@import 'variables';
 @import 'colors';
 
 @font-face {
@@ -7,9 +8,9 @@
 
 $font: 'Roboto', Arial, Helvetica, sans-serif;
 
-body {   
+body {
     font-family: $font;
-    font-size: 18px;
+    font-size: 16px;
     color: $gray--dark;
 }
 
@@ -17,10 +18,25 @@ h1 {
     font-family: $font;
     font-size: 26px;
     color: $black;
+    margin: 0 0 $size--sm;
 }
 
 h2 {
     font-family: $font;
     font-size: 18px;
     color: $black;
+    margin: 0 0 $size--sm;
+}
+
+p {   
+    margin: 0 0 $size--sm;
+}
+
+ul {
+    margin-left: $size--md;
+    list-style-type: disc;
+}
+
+li {
+    margin-bottom: $size--xsm;
 }
