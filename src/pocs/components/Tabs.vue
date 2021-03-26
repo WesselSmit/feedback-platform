@@ -61,10 +61,6 @@ export default {
     text-transform: uppercase;
     cursor: pointer;
 
-    &::selection {
-      background: none;
-    }
-
     &:hover {
       background-color: $purple--opacity;
     }

@@ -7,7 +7,7 @@
       <div v-for="(section, name) in sections" :key="section">
         <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" class="sidebar__section" />
         <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
-        <FeedbackTips v-if="name === 'feedbackTips'" :content="section" class="sidebar__section" />
+        <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
       </div>
 
       <NavigationButtons v-if="navigation && isCentered" :buttons="navigation" />
@@ -22,7 +22,7 @@ import ProgressBar from './ProgressBar';
 import Tabs from './Tabs';
 import ConfirmInstructions from './ConfirmInstructions';
 import ReadInstructions from './ReadInstructions';
-import FeedbackTips from './FeedbackTips';
+import FeedbackHelper from './FeedbackHelper';
 import NavigationButtons from './NavigationButtons';
 
 export default {
@@ -32,7 +32,7 @@ export default {
     Tabs,
     ConfirmInstructions,
     ReadInstructions,
-    FeedbackTips,
+    FeedbackHelper,
     NavigationButtons,
   },
   props: ['content', 'stepIndex'],
@@ -70,6 +70,10 @@ export default {
 
 <style lang="scss">
 @import "@/styles";
+
+*::selection {
+  background: none;
+}
 
 .sidebar {
   position: fixed;

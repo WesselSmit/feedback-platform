@@ -65,7 +65,7 @@ export default {
               }
             ],
           },
-          feedbackTips: {
+          feedbackHelper: {
             title: `Negative feedback tips`,
             body: ``,
             tips: [

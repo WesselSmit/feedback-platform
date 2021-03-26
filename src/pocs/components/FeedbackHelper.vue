@@ -1,5 +1,5 @@
 <template>
-  <section class="feedback-tips">
+  <section class="feedback-helper">
       <h1 v-if="title">{{ title }}</h1>
       <p v-if="body">{{ body }}</p>
       <ul v-if="tips">
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'FeedbackTips',
+  name: 'feedbackHelper',
   props: ['content'],
   computed: {
     title() {

@@ -1,6 +1,11 @@
 <template>
   <section class="read-instructions">
-      <h1 v-if="title">{{ title }}</h1>
+    <div class="read-instructions__header" :class="{ 'read-instructions__header--rotated': isCollapsed }">
+      <h1 v-if="title" class="read-instructions__header-title">{{ title }}</h1>
+      <ToggleIcon class="read-instructions__header-toggle" @click="handleClick($event)" />
+    </div>
+
+    <div v-show="!isCollapsed">
       <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
 
       <ul v-if="legend" class="read-instructions__legend">
@@ -27,19 +32,27 @@
           {{ question }}
         </li>
       </ul>
+    </div>
   </section>
 </template>
 
 <script>
+import ToggleIcon from '@/assets/icons/ToggleIcon';
 import LimitIcon from '@/assets/icons/LimitIcon';
 import QuestionIcon from '@/assets/icons/QuestionIcon';
 
 export default {
   name: 'ReadInstructions',
-  props: ['content', 'legendData'],
   components: {
+    ToggleIcon,
     LimitIcon,
     QuestionIcon,
+  },
+  props: ['content', 'legendData'],
+  data() {
+    return {
+      isCollapsed: false,
+    };
   },
   computed: {
     title() {
@@ -58,6 +71,11 @@ export default {
       return this.legendData.questions;
     },
   },
+  methods: {
+    handleClick(e) {
+      this.isCollapsed = !this.isCollapsed;
+    },
+  },
 };
 </script>
 
@@ -66,6 +84,49 @@ export default {
 
 .read-instructions {
   border-bottom: 1px solid $gray--light;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    &-toggle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: $space--md;
+      width: $space--md;
+      fill: $black;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      transition: all 500ms $ease;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $purple--opacity;
+        fill: $purple;
+      }
+
+      svg {
+        transition: all 500ms $ease;
+      }
+    }
+
+    &--rotated .read-instructions__header {
+      &-title {
+        margin-bottom: 0;
+      }
+
+      &-toggle svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__inner {
+    &--hide {
+      display: none;
+    }
+  }
 
   &__body {
     &--no-margin-bottom {
