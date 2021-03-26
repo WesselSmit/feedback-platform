@@ -2,7 +2,7 @@ export default {
   namespaced: true,
 
   state: {
-    stepIndex: 1, // moet uit DB opgehaald worden
+    stepIndex: 3, // moet uit DB opgehaald worden
   },
 
   getters: {

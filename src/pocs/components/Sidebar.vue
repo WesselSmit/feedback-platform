@@ -6,6 +6,7 @@
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
       <div v-for="(section, name) in sections" :key="section">
         <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" />
+        <ReadInstructions v-if="name === 'readInstructions'" :content="section" />
       </div>
 
       <NavigationButtons v-if="navigation && isCentered" :buttons="navigation" />
@@ -19,6 +20,7 @@
 import ProgressBar from './ProgressBar';
 import Tabs from './Tabs';
 import ConfirmInstructions from './ConfirmInstructions';
+import ReadInstructions from './ReadInstructions';
 import NavigationButtons from './NavigationButtons';
 
 export default {
@@ -27,6 +29,7 @@ export default {
     ProgressBar,
     Tabs,
     ConfirmInstructions,
+    ReadInstructions,
     NavigationButtons,
   },
   props: ['content', 'stepIndex'],
@@ -46,11 +49,11 @@ export default {
     sections() {
       return this.step.content;
     },
-    navigation() {
-      return this.step.navigation;
-    },
     isCentered() {
       return this.step.isCentered;
+    },
+    navigation() {
+      return this.step.navigation;
     },
   },
 };

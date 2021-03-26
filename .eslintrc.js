@@ -18,6 +18,7 @@ module.exports = {
     'vue/max-len': 'off',
     'no-unused-vars': 'off',
     'import/no-cycle': 'off',
+    'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'consistent-return': 'off',
     'no-prototype-builtins': 'off',
