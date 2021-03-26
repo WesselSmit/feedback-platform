@@ -25,7 +25,8 @@ export default {
 
   &__title-container {
     margin: auto;
-    max-width: $documentation-width;
+    padding: 0 $space--sm-md;
+    max-width: calc(#{$documentation-width} - (2 * #{$space--sm-md}));
   }
 
   &__image {

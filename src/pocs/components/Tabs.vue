@@ -89,4 +89,3 @@ export default {
 </style>
 
 //todo: buttonBox + button samenvoegen
-//todo: op kleiner desktop scherm ervoor zorgen dat de documentation aan de zijkanten een padding heeft van 20px
