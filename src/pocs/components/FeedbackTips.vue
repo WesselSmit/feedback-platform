@@ -1,13 +1,16 @@
 <template>
-  <section class="read-instructions">
+  <section class="feedback-tips">
       <h1 v-if="title">{{ title }}</h1>
       <p v-if="body">{{ body }}</p>
+      <ul v-if="tips">
+        <li v-for="tip in tips" :key="tip">{{ tip }}</li>
+      </ul>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'ReadInstructions',
+  name: 'FeedbackTips',
   props: ['content'],
   computed: {
     title() {
@@ -16,14 +19,13 @@ export default {
     body() {
       return this.content.body;
     },
+    tips() {
+      return this.content.tips;
+    },
   },
 };
 </script>
 
 <style lang="scss">
-@import '@/styles';
 
-.read-instructions {
-  border-bottom: 1px solid $gray--light;
-}
 </style>

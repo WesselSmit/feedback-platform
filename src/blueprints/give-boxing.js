@@ -58,6 +58,12 @@ export default {
           feedbackTips: {
             title: `Negative feedback tips`,
             body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+            tips: [
+              `Lorem ipsum`,
+              `Lorem ipsum`,
+              `Lorem ipsum`,
+              `Lorem ipsum`
+            ]
           }
         },
         navigation: [

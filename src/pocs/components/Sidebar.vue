@@ -5,8 +5,9 @@
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
       <div v-for="(section, name) in sections" :key="section">
-        <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" />
-        <ReadInstructions v-if="name === 'readInstructions'" :content="section" />
+        <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" class="sidebar__section" />
+        <ReadInstructions v-if="name === 'readInstructions'" :content="section" class="sidebar__section" />
+        <FeedbackTips v-if="name === 'feedbackTips'" :content="section" class="sidebar__section" />
       </div>
 
       <NavigationButtons v-if="navigation && isCentered" :buttons="navigation" />
@@ -21,6 +22,7 @@ import ProgressBar from './ProgressBar';
 import Tabs from './Tabs';
 import ConfirmInstructions from './ConfirmInstructions';
 import ReadInstructions from './ReadInstructions';
+import FeedbackTips from './FeedbackTips';
 import NavigationButtons from './NavigationButtons';
 
 export default {
@@ -30,6 +32,7 @@ export default {
     Tabs,
     ConfirmInstructions,
     ReadInstructions,
+    FeedbackTips,
     NavigationButtons,
   },
   props: ['content', 'stepIndex'],
@@ -77,13 +80,16 @@ export default {
     flex-grow: 1;
     overflow-x: hidden;
     overflow-y: scroll;
-    padding: $space--sm-md;
 
     &--centered {
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
+  }
+
+  &__section {
+    padding: $space--sm-md;
   }
 }
 </style>
