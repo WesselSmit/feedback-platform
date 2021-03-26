@@ -1,5 +1,5 @@
 <template>
-  <button class="button" :class="{ button__outline: hasOutline }">
+  <button class="button" :class="{ 'button--outline': hasOutline }" @click="handleClick()">
     {{ label }}
   </button>
 </template>
@@ -14,6 +14,18 @@ export default {
     },
     hasOutline() {
       return this.button.hasOutline;
+    },
+    action() {
+      return this.button.action;
+    },
+  },
+  methods: {
+    handleClick() {
+      if (this.action.hasOwnProperty('target')) {
+        this.$router.push(this.action.target);
+      } else if (this.action === 'previousStep' || this.action === 'nextStep') {
+        this.$store.dispatch('step/updateStepIndex', this.action);
+      }
     },
   },
 };
@@ -32,13 +44,13 @@ export default {
   border-radius: 5px;
   cursor: pointer;
 
-  &__outline {
-    border: 2px solid $purple;
-  }
-
   &:hover,
   &:focus {
     background-color: $purple--opacity;
+  }
+
+  &--outline {
+    border: 2px solid $purple;
   }
 }
 </style>

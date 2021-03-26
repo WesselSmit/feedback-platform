@@ -9,6 +9,7 @@
 import content from '@/content/give-boxing';
 import Documentation from '@/pocs/components/Documentation';
 import Sidebar from '@/pocs/components/Sidebar';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Give',
@@ -16,12 +17,10 @@ export default {
     Documentation,
     Sidebar,
   },
-  data() {
-    return {
-      stepIndex: 1, // from DB (+ in store)
-    };
-  },
   computed: {
+    ...mapGetters('step', {
+      stepIndex: 'stepIndex',
+    }),
     documentation() {
       return content.documentation;
     },

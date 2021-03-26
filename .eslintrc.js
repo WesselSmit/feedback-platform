@@ -20,5 +20,7 @@ module.exports = {
     'import/no-cycle': 'off',
     'import/extensions': 'off',
     'consistent-return': 'off',
+    'no-prototype-builtins': 'off',
+    'no-param-reassign': 'off',
   },
 };

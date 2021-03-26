@@ -1,6 +1,6 @@
 <template>
-  <section class="button-box">
-    <Button v-for="(button, name) in buttons" :key="name" :button="button" :importance="name" />
+  <section class="button-box" :class="{ multiple: hasMultiple  }">
+    <Button v-for="(button, name) in buttons" :key="name" :button="button" />
   </section>
 </template>
 
@@ -13,6 +13,11 @@ export default {
     Button,
   },
   props: ['buttons'],
+  computed: {
+    hasMultiple() {
+      return this.buttons.length > 1;
+    },
+  },
 };
 </script>
 
@@ -21,7 +26,11 @@ export default {
 
 .button-box {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin: $space--lg $space--sm-md $space--sm-md;
+
+  &.multiple {
+    justify-content: space-between;
+  }
 }
 </style>

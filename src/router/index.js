@@ -10,6 +10,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '@/pocs/Give.vue'),
   },
   {
+    path: '/poc/done',
+    name: 'done',
+    component: () => import(/* webpackChunkName: "login" */ '@/pocs/Done.vue'),
+  },
+  {
     path: '/',
     name: 'dashboard',
     component: Dashboard,

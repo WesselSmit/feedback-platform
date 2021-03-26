@@ -17,92 +17,65 @@ export default {
     hasProgressBar: true,
     steps: [{
         index: 1,
-        sidebarType: 'simple',
-        content: [],
         navigation: [{
             label: 'Done',
-            hasOutline: true
+            action: 'nextStep'
           }
         ]
       },
       {
         index: 2,
-        sidebarType: 'overlay',
-        content: [],
         navigation: [{
             label: 'Done',
-            hasOutline: true
+            action: 'nextStep'
           }
         ]
       },
     {
         index: 3,
-        sidebarType: 'complex',
-        content: [],
         navigation: [
           {
-            label: 'Previous'
+            label: 'Previous',
+            action: 'previousStep'
           },
           {
             label: 'Next',
-            hasOutline: true
+            hasOutline: true,
+            action: 'nextStep'
           }
         ]
       },
     {
         index: 4,
-        sidebarType: 'complex',
-        content: [],
         navigation: [
           {
             label: 'Previous',
+            action: 'previousStep'
 
           },
           {
             label: 'Next',
-            hasOutline: true
+            hasOutline: true,
+            action: 'nextStep'
           }
         ]
       },
     {
         index: 5,
-        sidebarType: 'complex',
-        content: [],
         navigation: [
           {
-            label: 'Previous'
+            label: 'Previous',
+            action: 'previousStep'
           },
           {
             label: 'Next',
-            hasOutline: true
+            hasOutline: true,
+            action: {
+              target: 'Done'
+            }
           }
         ]
       },
     ],
   },
 };
-
-
-/* 3 type sidebars: [name (figma frame voorbeeld)]
-- simple (informatie lezen)
-- overlay (feedback geven - pop-up)
-- dialogue (feedback geven - negatief zero/default/detail)
-
-simple {
-  title,
-  body,
-  primary button,
-  secondary button (optioneel)
-}
-
-overlay {
-  title,
-  body,
-  primary button,
-  secondary button (optioneel)
-}
-
-dialogue {
-
-}
-*/
