@@ -54,10 +54,20 @@ export default {
           readInstructions: {
             title: `Give Negative feedback`,
             body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+            legend: [
+              {
+                icon: 'limit',
+                label: `Don't give feedback`
+              },
+              {
+                icon: 'question',
+                label: `Do give feedback`
+              }
+            ],
           },
           feedbackTips: {
             title: `Negative feedback tips`,
-            body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+            body: ``,
             tips: [
               `Lorem ipsum`,
               `Lorem ipsum`,

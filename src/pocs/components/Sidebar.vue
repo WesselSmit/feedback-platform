@@ -6,7 +6,7 @@
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
       <div v-for="(section, name) in sections" :key="section">
         <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" class="sidebar__section" />
-        <ReadInstructions v-if="name === 'readInstructions'" :content="section" class="sidebar__section" />
+        <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
         <FeedbackTips v-if="name === 'feedbackTips'" :content="section" class="sidebar__section" />
       </div>
 
@@ -38,13 +38,19 @@ export default {
   props: ['content', 'stepIndex'],
   computed: {
     step() {
-      return this.content.steps[this.stepIndex - 1];
+      return this.content.sidebar.steps[this.stepIndex - 1];
+    },
+    legendData() {
+      return {
+        limits: this.content.documentation.limits,
+        questions: this.content.documentation.questions,
+      };
     },
     hasProgressBar() {
-      return this.content.hasProgressBar;
+      return this.content.sidebar.hasProgressBar;
     },
     totalSteps() {
-      return this.content.steps.length;
+      return this.content.sidebar.steps.length;
     },
     tabs() {
       return this.step.tabs;
@@ -95,3 +101,4 @@ export default {
 </style>
 
 //todo: overlay/pop-up moet niet een aparte stap zijn maar moet een pop-up property op de step zijn
+//todo: de 'X'Instructions componenten kunnen samengevoegd worden in een template door gebruik te maken van de v-if's (dan moet je wel in de blueprint content de objecten een goede naam geven)

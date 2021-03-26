@@ -1,7 +1,7 @@
 <template>
   <main class="base">
     <Documentation :content="documentation" />
-    <Sidebar :content="sidebar" :stepIndex="stepIndex" />
+    <Sidebar :content="{ documentation, sidebar }" :stepIndex="stepIndex" />
   </main>
 </template>
 

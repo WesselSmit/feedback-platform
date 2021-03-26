@@ -1,6 +1,3 @@
-@import 'variables';
-@import 'colors';
-
 @font-face {
     font-family: 'Roboto';
     src: url('/assets/fonts/Roboto-Regular.woff') format('font-woff');
@@ -9,38 +6,3 @@
 //todo: heading fronts moeten zwaarder/dikker zijn
 
 $font: 'Roboto', Arial, Helvetica, sans-serif;
-
-body {
-    font-family: $font;
-    font-size: 16px;
-    color: $gray--dark;
-}
-
-h1 {
-    font-family: $font;
-    font-size: 26px;
-    color: $black;
-    margin: 0 0 $space--sm;
-}
-
-h2 {
-    font-family: $font;
-    font-size: 18px;
-    color: $black;
-    margin: 0 0 $space--sm;
-}
-
-p {   
-    margin: 0 0 $space--sm;
-}
-
-ul {
-    margin-left: $space--md;
-    list-style-type: disc;
-}
-
-li {
-    &:not(:last-of-type) {
-        margin-bottom: $space--xsm;
-    }
-}
