@@ -111,7 +111,6 @@ export default {
 
     &-label {
       display: flex;
-      align-items: center;
       padding-left: 0;
     }
 
@@ -128,7 +127,7 @@ export default {
         display: flex;
         justify-content: center;
         width: 15px;
-        margin-right: $space--sm;
+        margin: 3px $space--sm 0 0;
       }
     }
   }
