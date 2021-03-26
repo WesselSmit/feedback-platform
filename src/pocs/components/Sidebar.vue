@@ -3,25 +3,31 @@
     <ProgressBar v-if="hasProgressBar" :total="totalSteps" :index="this.stepIndex" />
     <Tabs v-if="tabs" :tabs="tabs" />
 
-    <div class="sidebar__inner">
-      <!-- TODO: hier komt de inhoud van de sidebar (instructies + feedback helper etc) -->
+    <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
+      <div v-for="(section, name) in sections" :key="section">
+        <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" />
+      </div>
+
+      <NavigationButtons v-if="navigation && isCentered" :buttons="navigation" />
     </div>
 
-    <Navigation v-if="navigation" :buttons="navigation" />
+    <NavigationButtons v-if="navigation && !isCentered" :buttons="navigation" />
   </section>
 </template>
 
 <script>
 import ProgressBar from './ProgressBar';
 import Tabs from './Tabs';
-import Navigation from './Navigation';
+import ConfirmInstructions from './ConfirmInstructions';
+import NavigationButtons from './NavigationButtons';
 
 export default {
   name: 'Sidebar',
   components: {
     ProgressBar,
     Tabs,
-    Navigation,
+    ConfirmInstructions,
+    NavigationButtons,
   },
   props: ['content', 'stepIndex'],
   computed: {
@@ -37,8 +43,14 @@ export default {
     tabs() {
       return this.step.tabs;
     },
+    sections() {
+      return this.step.content;
+    },
     navigation() {
       return this.step.navigation;
+    },
+    isCentered() {
+      return this.step.isCentered;
     },
   },
 };
@@ -63,6 +75,12 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
     padding: $space--sm-md;
+
+    &--centered {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 }
 </style>

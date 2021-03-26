@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import content from '@/content/give-boxing';
+import content from '@/blueprints/give-boxing';
 import Documentation from '@/pocs/components/Documentation';
 import Sidebar from '@/pocs/components/Sidebar';
 import { mapGetters } from 'vuex';

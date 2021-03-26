@@ -17,6 +17,13 @@ export default {
     hasProgressBar: true,
     steps: [{
         index: 1,
+        isCentered: true,
+        content: {
+          confirmInstructions: {
+            title: `Read the documentation`,
+            body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt vestibulum nibh cum dui. Et morbi enim urna vestibulum. `,
+          }
+        },
         navigation: [{
             label: 'Done',
             action: 'nextStep'
@@ -43,6 +50,16 @@ export default {
             value: 'view'
           }
         ],
+        content: {
+          readInstructions: {
+            title: `Give Negative feedback`,
+            body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+          },
+          feedbackTips: {
+            title: `Negative feedback tips`,
+            body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+          }
+        },
         navigation: [
           {
             label: 'Previous',

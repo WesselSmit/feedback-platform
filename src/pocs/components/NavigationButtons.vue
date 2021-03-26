@@ -1,8 +1,8 @@
 <template>
-  <section class="button-box" :class="{ 'button-box--multiple': hasMultiple  }">
+  <section class="navigation-buttons" :class="{ 'navigation-buttons--multiple': hasMultiple  }">
       <button v-for="(button, name) in buttons"
-        :key="name" class="button-box__button"
-        :class="{ 'button-box__button--outline': button.hasOutline }"
+        :key="name" class="navigation-buttons__button"
+        :class="{ 'navigation-buttons__button--outline': button.hasOutline }"
         @click="handleClick(button)">
         {{ button.label }}
       </button>
@@ -35,7 +35,7 @@ export default {
 <style lang="scss">
 @import '@/styles';
 
-.button-box {
+.navigation-buttons {
   display: flex;
   justify-content: flex-end;
   margin: $space--lg $space--sm-md $space--sm-md;
@@ -52,6 +52,7 @@ export default {
     text-transform: uppercase;
     border: 2px solid transparent;
     border-radius: 5px;
+    transition: background-color 500ms $ease;
     cursor: pointer;
 
     &:hover {

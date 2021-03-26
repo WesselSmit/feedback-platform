@@ -80,7 +80,7 @@ export default {
     width: calc(#{$sidebar-width} / 2);
     height: 2px;
     background-color: $purple;
-    transition: left 500ms cubic-bezier(.23, .75, .26, .9);
+    transition: left 500ms $ease;
 
     &--left {
       left: 0;

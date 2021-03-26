@@ -32,7 +32,7 @@ export default {
   &__value{
     height: 5px;
     background-color: $purple;
-    transition: width 1s cubic-bezier(.23, .75, .26, .9);
+    transition: width 1s $ease;
   }
 }
 </style>

@@ -5,7 +5,7 @@
     </div>
 
     <div class="visualisation__image-container">
-      <img :src="require(`@/content/visualisations/${visualisation}.png`)" class="visualisation__image">
+      <img :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image">
     </div>
   </section>
 </template>
