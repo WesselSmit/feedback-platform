@@ -1,7 +1,8 @@
 <template>
   <section class="read-instructions">
       <h1 v-if="title">{{ title }}</h1>
-      <p v-if="body">{{ body }}</p>
+      <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
+
       <ul v-if="legend" class="read-instructions__legend">
         <li v-for="item in legend" :key="item" class="read-instructions__legend-label">
           <span class="read-instructions__legend-icon-container">
@@ -65,6 +66,12 @@ export default {
 
 .read-instructions {
   border-bottom: 1px solid $gray--light;
+
+  &__body {
+    &--no-margin-bottom {
+      margin-bottom: 0;
+    }
+  }
 
   &__legend {
     display: flex;
@@ -133,6 +140,3 @@ export default {
   }
 }
 </style>
-
-//todo: de icon + label kunnen weg in de js file als je ze vervangt met de documentation data
-//todo: als er geen legenda/content na de body komt dan moet de body geen margin-bottom hebben
