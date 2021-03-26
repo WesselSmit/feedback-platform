@@ -44,8 +44,7 @@ export default {
   border-radius: 5px;
   cursor: pointer;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: $purple--opacity;
   }
 
