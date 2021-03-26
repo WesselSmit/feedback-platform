@@ -33,6 +33,16 @@ export default {
       },
     {
         index: 3,
+        tabs: [
+          {
+            label: 'Give feedback',
+            value: 'give'
+          },
+          {
+            label: 'View feedback',
+            value: 'view'
+          }
+        ],
         navigation: [
           {
             label: 'Previous',
@@ -47,6 +57,16 @@ export default {
       },
     {
         index: 4,
+        tabs: [
+          {
+            label: 'Give feedback',
+            value: 'give'
+          },
+          {
+            label: 'View feedback',
+            value: 'view'
+          }
+        ],
         navigation: [
           {
             label: 'Previous',
@@ -62,6 +82,16 @@ export default {
       },
     {
         index: 5,
+        tabs: [
+          {
+            label: 'Give feedback',
+            value: 'give'
+          },
+          {
+            label: 'View feedback',
+            value: 'view'
+          }
+        ],
         navigation: [
           {
             label: 'Previous',
