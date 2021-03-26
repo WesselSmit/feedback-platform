@@ -7,21 +7,21 @@
       <!-- TODO: hier komt de inhoud van de sidebar (instructies + feedback helper etc) -->
     </div>
 
-    <ButtonBox v-if="navigation" :buttons="navigation" />
+    <Navigation v-if="navigation" :buttons="navigation" />
   </section>
 </template>
 
 <script>
 import ProgressBar from './ProgressBar';
 import Tabs from './Tabs';
-import ButtonBox from './ButtonBox';
+import Navigation from './Navigation';
 
 export default {
   name: 'Sidebar',
   components: {
     ProgressBar,
     Tabs,
-    ButtonBox,
+    Navigation,
   },
   props: ['content', 'stepIndex'],
   computed: {
@@ -66,3 +66,5 @@ export default {
   }
 }
 </style>
+
+//todo: overlay/pop-up moet niet een aparte stap zijn maar moet een pop-up property op de step zijn

@@ -1,6 +1,11 @@
 <template>
   <section class="tabs">
-    <div v-for="(tab, index) in tabs" :key="index" class="tabs__tab" :class="{ 'tabs__tab--active': tab.value === activeTab }" @click="handleClick(tab.value, index)">{{ tab.label }}</div>
+    <div v-for="(tab, index) in tabs"
+      :key="index" class="tabs__tab"
+      :class="{ 'tabs__tab--active': tab.value === activeTab }"
+      @click="handleClick(tab.value, index)">
+      {{ tab.label }}
+    </div>
     <div class="tabs__indicator" :class="tabIndicatorPosition"></div>
   </section>
 </template>
@@ -87,5 +92,3 @@ export default {
   }
 }
 </style>
-
-//todo: buttonBox + button samenvoegen
