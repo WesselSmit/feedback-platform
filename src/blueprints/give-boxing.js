@@ -67,15 +67,18 @@ export default {
           },
           feedbackHelper: {
             title: `Negative feedback tips`,
-            body: ``,
-            tips: {
-              zero: [
+            sections: {
+              zero: {
+                body: ``,
+                tips: [
                 `Lorem ipsum`,
                 `Lorem ipsum`,
                 `Lorem ipsum`,
                 `Lorem ipsum`
-              ],
-              interactive: [
+              ]},
+              interactive: {
+                body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+                tips: [
                 {
                   heading: `Lorem ipsum dolor sit amet, consectetur adipiscing.`,
                   detail: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt vestibulum nibh cum dui. Et morbi enim urna vestibulum. Suspendisse ligula augue et odio mauris pharetra justo. Venenatis cursus pulvinar nunc nunc pretium ac eros in.`
@@ -88,7 +91,7 @@ export default {
                   heading: `Lorem ipsum dolor sit amet, consectetur adipiscing.`,
                   detail: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt vestibulum nibh cum dui. Et morbi enim urna vestibulum. Suspendisse ligula augue et odio mauris pharetra justo. Venenatis cursus pulvinar nunc nunc pretium ac eros in.`
                 }
-              ]
+              ]}
             }
           }
         },

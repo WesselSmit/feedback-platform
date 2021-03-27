@@ -33,7 +33,7 @@ export default {
   props: ['content'],
   data() {
     return {
-      showZero: false,
+      showZero: true,
       activeTipIndex: null,
     };
   },
@@ -42,13 +42,14 @@ export default {
       return this.content.title;
     },
     body() {
-      return this.content.body;
+      const currentSection = this.showZero ? 'zero' : 'interactive';
+      return this.content.sections[currentSection].body;
     },
     zeroTips() {
-      return this.content.tips.zero;
+      return this.content.sections.zero.tips;
     },
     interactiveTips() {
-      return this.content.tips.interactive;
+      return this.content.sections.interactive.tips;
     },
   },
   methods: {
@@ -133,4 +134,5 @@ export default {
 }
 </style>
 
+//todo: state van feedbackhelper + tabs moeten in de sidebarStore (dit is de stepStore maar dan hernoemt)
 //todo: de switch tussen de states moet bepaald worden door de feedbackInput component
