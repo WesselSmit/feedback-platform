@@ -18,7 +18,7 @@ export default {
     Sidebar,
   },
   computed: {
-    ...mapGetters('step', {
+    ...mapGetters('sidebar', {
       stepIndex: 'stepIndex',
     }),
     documentation() {

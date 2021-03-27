@@ -1,13 +1,13 @@
-  <template>
+<template>
   <section class="feedback-helper">
       <h1 v-if="title">{{ title }}</h1>
       <p v-if="body">{{ body }}</p>
 
-      <ul v-if="zeroTips" v-show="showZero">
+      <ul v-if="zeroTips" v-show="showFeedbackHelperZero">
         <li v-for="tip in zeroTips" :key="tip">{{ tip }}</li>
       </ul>
 
-      <ul v-if="interactiveTips" v-show="!showZero" class="feedback-helper__tips-list">
+      <ul v-if="interactiveTips" v-show="!showFeedbackHelperZero" class="feedback-helper__tips-list">
         <li v-for="(tip, index) in interactiveTips" :key="tip" class="feedback-helper__tips-tip"
           :class="{ 'feedback-helper__tips-tip--expanded': activeTipIndex === index }" @click="handleClick(index)">
           <span class="feedback-helper__tips-tip-icon-container">
@@ -24,6 +24,7 @@
 
 <script>
 import ToggleIcon from '@/assets/icons/ToggleIcon';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'feedbackHelper',
@@ -33,16 +34,18 @@ export default {
   props: ['content'],
   data() {
     return {
-      showZero: true,
       activeTipIndex: null,
     };
   },
   computed: {
+    ...mapGetters('sidebar', {
+      showFeedbackHelperZero: 'showFeedbackHelperZero',
+    }),
     title() {
       return this.content.title;
     },
     body() {
-      const currentSection = this.showZero ? 'zero' : 'interactive';
+      const currentSection = this.showFeedbackHelperZero ? 'zero' : 'interactive';
       return this.content.sections[currentSection].body;
     },
     zeroTips() {

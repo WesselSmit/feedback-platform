@@ -25,7 +25,7 @@ export default {
       if (action.hasOwnProperty('target')) {
         this.$router.push(action.target);
       } else if (action === 'previousStep' || action === 'nextStep') {
-        this.$store.dispatch('step/updateStepIndex', action);
+        this.$store.dispatch('sidebar/updateStepIndex', action);
       }
     },
   },
