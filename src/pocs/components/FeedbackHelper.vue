@@ -42,8 +42,7 @@ export default {
   },
   methods: {
     handleClick(index) {
-      this.activeTipIndex = index;
-      console.log(this.activeTipIndex);
+      this.activeTipIndex = (this.activeTipIndex === index) ? null : index;
     },
   },
 };
