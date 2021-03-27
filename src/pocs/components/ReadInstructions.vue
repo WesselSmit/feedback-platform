@@ -85,7 +85,7 @@ export default {
 .read-instructions {
   border-bottom: 1px solid $gray--light;
 
-  &--collapsed .read-instructions {
+  &--collapsed & {
     &__header-toggle svg {
       transform: rotate(180deg);
     }
@@ -120,12 +120,6 @@ export default {
         transform-origin: center;
         transition: all 500ms $ease;
       }
-    }
-  }
-
-  &__inner {
-    &--hide {
-      display: none;
     }
   }
 

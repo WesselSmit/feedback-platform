@@ -29,3 +29,5 @@ export default {
 <style lang="scss">
 
 </style>
+
+//todo: de zero staat werkt nu, nu moet de collapsable feedback helper gemaakt worden
