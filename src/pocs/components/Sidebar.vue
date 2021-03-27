@@ -105,4 +105,3 @@ export default {
 </style>
 
 //todo: overlay/pop-up moet niet een aparte stap zijn maar moet een pop-up property op de step zijn
-//todo: de 'X'Instructions componenten kunnen samengevoegd worden in een template door gebruik te maken van de v-if's (dan moet je wel in de blueprint content de objecten een goede naam geven)

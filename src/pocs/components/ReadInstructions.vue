@@ -1,13 +1,13 @@
 <template>
-  <section class="read-instructions">
-    <div class="read-instructions__header" :class="{ 'read-instructions__header--rotated': isCollapsed }" @click="handleClick($event)">
+  <section class="read-instructions" :class="{ 'read-instructions--collapsed': isCollapsed }">
+    <div class="read-instructions__header" @click="handleClick($event)">
       <h1 v-if="title" class="read-instructions__header-title">{{ title }}</h1>
       <ToggleIcon class="read-instructions__header-toggle" />
     </div>
 
-    <div v-show="!isCollapsed">
-      <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
+    <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
 
+    <div v-show="!isCollapsed">
       <ul v-if="legend" class="read-instructions__legend">
         <li v-for="item in legend" :key="item" class="read-instructions__legend-label">
           <span class="read-instructions__legend-icon-container">
@@ -85,6 +85,16 @@ export default {
 .read-instructions {
   border-bottom: 1px solid $gray--light;
 
+  &--collapsed .read-instructions {
+    &__header-toggle svg {
+      transform: rotate(180deg);
+    }
+
+    &__body {
+      margin-bottom: 0;
+    }
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
@@ -109,16 +119,6 @@ export default {
       svg {
         transform-origin: center;
         transition: all 500ms $ease;
-      }
-    }
-
-    &--rotated .read-instructions__header {
-      &-title {
-        margin-bottom: 0;
-      }
-
-      &-toggle svg {
-        transform: rotate(180deg);
       }
     }
   }
