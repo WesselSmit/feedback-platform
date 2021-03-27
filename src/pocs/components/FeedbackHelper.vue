@@ -118,3 +118,5 @@ export default {
   }
 }
 </style>
+
+//todo: de switch tussen de states moet bepaald worden door de feedbackInput component
