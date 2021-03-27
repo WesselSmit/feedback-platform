@@ -1,8 +1,8 @@
 <template>
   <section class="read-instructions">
-    <div class="read-instructions__header" :class="{ 'read-instructions__header--rotated': isCollapsed }">
+    <div class="read-instructions__header" :class="{ 'read-instructions__header--rotated': isCollapsed }" @click="handleClick($event)">
       <h1 v-if="title" class="read-instructions__header-title">{{ title }}</h1>
-      <ToggleIcon class="read-instructions__header-toggle" @click="handleClick($event)" />
+      <ToggleIcon class="read-instructions__header-toggle" />
     </div>
 
     <div v-show="!isCollapsed">
@@ -88,6 +88,7 @@ export default {
   &__header {
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
 
     &-toggle {
       display: flex;
@@ -99,7 +100,6 @@ export default {
       border: 1px solid transparent;
       border-radius: 5px;
       transition: all 500ms $ease;
-      cursor: pointer;
 
       &:hover {
         background-color: $purple--opacity;
@@ -107,6 +107,7 @@ export default {
       }
 
       svg {
+        transform-origin: center;
         transition: all 500ms $ease;
       }
     }
