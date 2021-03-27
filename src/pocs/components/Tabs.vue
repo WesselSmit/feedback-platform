@@ -22,7 +22,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('tab', {
+    ...mapGetters('sidebar', {
       activeTab: 'activeTab',
     }),
     tabIndicatorPosition() {
@@ -35,7 +35,7 @@ export default {
       this.activeTabIndex = index;
 
       if (this.activeTab !== value) {
-        this.$store.dispatch('tab/updateActiveTab', value);
+        this.$store.dispatch('sidebar/updateActiveTab', value);
       }
     },
   },

@@ -137,5 +137,4 @@ export default {
 }
 </style>
 
-//todo: state van feedbackhelper + tabs moeten in de sidebarStore (dit is de stepStore maar dan hernoemt)
 //todo: de switch tussen de states moet bepaald worden door de feedbackInput component
