@@ -2,8 +2,16 @@
   <section class="feedback-helper">
       <h1 v-if="title">{{ title }}</h1>
       <p v-if="body">{{ body }}</p>
-      <ul v-if="tips">
-        <li v-for="tip in tips" :key="tip">{{ tip }}</li>
+
+      <ul v-if="zeroTips" v-show="!isActive">
+        <li v-for="tip in zeroTips" :key="tip">{{ tip }}</li>
+      </ul>
+
+      <ul v-if="interactiveTips" v-show="isActive">
+        <li v-for="(tip, index) in interactiveTips" :key="tip" @click="handleClick(index)">
+          {{ tip.heading }}
+          <span v-show="activeTipIndex === index">{{ tip.detail }}</span>
+        </li>
       </ul>
   </section>
 </template>
@@ -12,6 +20,12 @@
 export default {
   name: 'feedbackHelper',
   props: ['content'],
+  data() {
+    return {
+      isActive: false,
+      activeTipIndex: null,
+    };
+  },
   computed: {
     title() {
       return this.content.title;
@@ -19,8 +33,17 @@ export default {
     body() {
       return this.content.body;
     },
-    tips() {
-      return this.content.tips;
+    zeroTips() {
+      return this.content.tips.zero;
+    },
+    interactiveTips() {
+      return this.content.tips.interactive;
+    },
+  },
+  methods: {
+    handleClick(index) {
+      this.activeTipIndex = index;
+      console.log(this.activeTipIndex);
     },
   },
 };
@@ -29,5 +52,3 @@ export default {
 <style lang="scss">
 
 </style>
-
-//todo: de zero staat werkt nu, nu moet de collapsable feedback helper gemaakt worden

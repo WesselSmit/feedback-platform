@@ -1,6 +1,6 @@
 <template>
   <section class="read-instructions" :class="{ 'read-instructions--collapsed': isCollapsed }">
-    <div class="read-instructions__header" @click="handleClick($event)">
+    <div class="read-instructions__header" @click="handleClick()">
       <h1 v-if="title" class="read-instructions__header-title">{{ title }}</h1>
       <ToggleIcon class="read-instructions__header-toggle" />
     </div>
@@ -72,7 +72,7 @@ export default {
     },
   },
   methods: {
-    handleClick(e) {
+    handleClick() {
       this.isCollapsed = !this.isCollapsed;
     },
   },
