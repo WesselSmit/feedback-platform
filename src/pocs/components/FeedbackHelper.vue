@@ -79,6 +79,20 @@ export default {
         border-bottom: 1px solid $gray--light;
       }
 
+      &:hover & {
+        &-icon {
+          fill: $black;
+        }
+
+        &-detail {
+          color: $gray--dark;
+
+          &-container {
+            color: $black;
+          }
+        }
+      }
+
       &--expanded & {
         &-icon svg {
           transform: rotate(180deg);
@@ -112,7 +126,7 @@ export default {
         display: block;
         padding-top: $space--xsm;
         font-size: 14px;
-        line-height: 1.1;
+        line-height: 1.2;
       }
     }
   }
