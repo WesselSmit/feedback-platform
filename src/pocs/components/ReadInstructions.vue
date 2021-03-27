@@ -170,7 +170,7 @@ export default {
 
   &__points {
     list-style: none;
-    margin-left: 10px;
+    margin-left: $space--sm;
 
     &-label {
       display: flex;

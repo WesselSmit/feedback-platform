@@ -104,6 +104,7 @@ export default {
 }
 </style>
 
+//todo: feedbackhelper moet een body kunnen hebben terwijl de zero state geen body heeft en vice versa
 //todo: overlay/pop-up moet niet een aparte stap zijn maar moet een pop-up property op de step zijn
 //todo: state van feedbackhelper + tabs moeten in de sidebarStore (dit is de stepStore maar dan hernoemt)
 //todo: de check/cross bullet points moeten ook gebruikt worden in de documentation om het consistent te houden
