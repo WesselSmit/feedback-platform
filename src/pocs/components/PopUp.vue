@@ -7,8 +7,14 @@
       <div v-if="hasTipsSection">
         <h2>{{ tipHeading }}</h2>
 
-        <ul>
-          <li v-for="tip in tips" :key="tip">{{ tip.label }}</li>
+        <ul class="pop-up__tip-list">
+          <li v-for="tip in tips" :key="tip" class="pop-up__tip" :class="`pop-up__tip--${ tip.type }`">
+            <span v-if="tip.type !== 'normal'" class="pop-up__tip-icon-container">
+              <QuestionIcon v-if="tip.type === 'question'" class="pop-up__tip-icon--question" />
+              <LimitIcon v-if="tip.type === 'limit'" class="pop-up__tip-icon--limit" />
+            </span>
+            {{ tip.label }}
+          </li>
         </ul>
       </div>
 
@@ -18,8 +24,15 @@
 </template>
 
 <script>
+import LimitIcon from '@/assets/icons/LimitIcon';
+import QuestionIcon from '@/assets/icons/QuestionIcon';
+
 export default {
   name: 'PopUp',
+  components: {
+    LimitIcon,
+    QuestionIcon,
+  },
   props: ['content'],
   computed: {
     title() {
@@ -83,6 +96,34 @@ export default {
     }
   }
 
+  &__tip {
+    &--question,
+    &--limit {
+      position: relative;
+      left: -28px;
+      display: flex;
+      align-items: center;
+      list-style-type: none;
+    }
+
+    &-icon {
+      &--question {
+        fill: $green;
+      }
+
+      &--limit {
+        fill: $red;
+      }
+
+      &-container {
+        display: flex;
+        justify-content: center;
+        width: 15px;
+        margin: 3px 13px 0 0; // 13px to line icons up with the default bullet points
+      }
+    }
+  }
+
   &__button {
     display: block;
     margin: $space--lg 0 0 auto;
@@ -102,5 +143,3 @@ export default {
   }
 }
 </style>
-
-//todo (questions + limits) moeten weer iconen hebben maar het moet ook mogelijk zijn om standaard bullet points te gebruiken als het type 'normal' is
