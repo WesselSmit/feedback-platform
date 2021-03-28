@@ -105,7 +105,6 @@ export default {
 </style>
 
 //todo: overlay/pop-up (moet niet een aparte stap zijn maar moet een pop-up property op de step zijn)
-//todo: de headings moeten een zwaarder font hebben
 //todo: feedback van anderen in kunnen zien (feedback tab)
 //todo: feedback input
 //todo: feedback markers
