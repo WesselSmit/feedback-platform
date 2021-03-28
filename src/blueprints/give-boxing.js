@@ -15,7 +15,8 @@ export default {
   },
   sidebar: {
     hasProgressBar: true,
-    steps: [{
+    steps: [
+      {
         isCentered: true,
         content: {
           confirmInstructions: {
@@ -107,7 +108,8 @@ export default {
                 }
               ]}
             }
-          }
+          },
+          feedbackInput: true
         },
         navigation: [
           {

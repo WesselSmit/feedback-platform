@@ -8,6 +8,7 @@
         <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" class="sidebar__section" />
         <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
         <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
+        <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section" />
       </div>
 
       <NavigationButtons v-if="navigation && isCentered" :buttons="navigation" />
@@ -25,6 +26,7 @@ import Tabs from './Tabs';
 import ConfirmInstructions from './ConfirmInstructions';
 import ReadInstructions from './ReadInstructions';
 import FeedbackHelper from './FeedbackHelper';
+import FeedbackInput from './FeedbackInput';
 import NavigationButtons from './NavigationButtons';
 import PopUp from './PopUp';
 
@@ -36,6 +38,7 @@ export default {
     ConfirmInstructions,
     ReadInstructions,
     FeedbackHelper,
+    FeedbackInput,
     NavigationButtons,
     PopUp,
   },
@@ -113,8 +116,8 @@ export default {
   }
 }
 </style>
+
 //? vandaag
-//todo: overlay/pop-up (moet niet een aparte stap zijn maar moet een pop-up property op de step zijn)
 //todo: feedback input
 
 //? maandag

@@ -36,3 +36,17 @@ li {
         margin-bottom: $space--xsm;
     }
 }
+
+textarea {
+    width: 100%;
+    font-family: $font;
+    font-size: 16px;
+    color: $black;
+    resize: none;
+    border: 1px solid transparent;
+    border-radius: $border-radius;
+
+    &::-webkit-resizer {
+        display: none;
+    }
+}

@@ -5,9 +5,3 @@
     </svg>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'ToggleIcon',
-};
-</script>
