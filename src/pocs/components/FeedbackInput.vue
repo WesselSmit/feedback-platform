@@ -17,6 +17,9 @@
   </section>
 </template>
 
+//todo: commenten moet disabled zijn als de textArea leeg is
+//todo: als dit component focus heeft dan moet de FeedbackHelper helper state ipv de zero state getoond worden
+
 <script>
 import MarkerIcon from '@/assets/icons/MarkerIcon';
 import ImageIcon from '@/assets/icons/ImageIcon';

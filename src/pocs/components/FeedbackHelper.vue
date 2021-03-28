@@ -1,24 +1,24 @@
 <template>
   <section class="feedback-helper">
-      <h1 v-if="title">{{ title }}</h1>
-      <p v-if="body">{{ body }}</p>
+    <h1 v-if="title">{{ title }}</h1>
+    <p v-if="body">{{ body }}</p>
 
-      <ul v-if="zeroTips" v-show="showFeedbackHelperZero">
-        <li v-for="tip in zeroTips" :key="tip">{{ tip }}</li>
-      </ul>
+    <ul v-if="zeroTips" v-show="showFeedbackHelperZero">
+      <li v-for="tip in zeroTips" :key="tip">{{ tip }}</li>
+    </ul>
 
-      <ul v-if="interactiveTips" v-show="!showFeedbackHelperZero" class="feedback-helper__tips-list">
-        <li v-for="(tip, index) in interactiveTips" :key="tip" class="feedback-helper__tips-tip"
-          :class="{ 'feedback-helper__tips-tip--expanded': activeTipIndex === index }" @click="handleClick(index)">
-          <span class="feedback-helper__tips-tip-icon-container">
-            <ToggleIcon class="feedback-helper__tips-tip-icon" />
-          </span>
-          <span class="feedback-helper__tips-tip-detail-container">
-            {{ tip.heading }}
-            <span v-show="activeTipIndex === index"  class="feedback-helper__tips-tip-detail">{{ tip.detail }}</span>
-          </span>
-        </li>
-      </ul>
+    <ul v-if="interactiveTips" v-show="!showFeedbackHelperZero" class="feedback-helper__tips-list">
+      <li v-for="(tip, index) in interactiveTips" :key="tip" class="feedback-helper__tips-tip"
+        :class="{ 'feedback-helper__tips-tip--expanded': activeTipIndex === index }" @click="handleClick(index)">
+        <span class="feedback-helper__tips-tip-icon-container">
+          <ToggleIcon class="feedback-helper__tips-tip-icon" />
+        </span>
+        <span class="feedback-helper__tips-tip-detail-container">
+          {{ tip.heading }}
+          <span v-show="activeTipIndex === index"  class="feedback-helper__tips-tip-detail">{{ tip.detail }}</span>
+        </span>
+      </li>
+    </ul>
   </section>
 </template>
 
@@ -136,5 +136,3 @@ export default {
   }
 }
 </style>
-
-//todo: de switch tussen de states moet bepaald worden door de feedbackInput component

@@ -4,6 +4,7 @@ body {
     font-family: $font;
     font-size: 16px;
     color: $gray--dark;
+    line-height: $line-height;
 }
 
 h1 {
@@ -22,6 +23,7 @@ h2 {
 
 p {   
     margin: 0 0 $space--sm;
+    line-height: $line-height;
 }
 
 ul {
@@ -31,6 +33,7 @@ ul {
 
 li {
     padding-left: $space--xsm;
+    line-height: $line-height;
 
     &:not(:last-of-type) {
         margin-bottom: $space--xsm;
@@ -41,6 +44,7 @@ textarea {
     width: 100%;
     font-family: $font;
     font-size: 16px;
+    line-height: $line-height;
     color: $black;
     resize: none;
     border: 1px solid transparent;

@@ -4,11 +4,11 @@
     <Tabs v-if="tabs" :tabs="tabs" />
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
-      <div v-for="(section, name) in sections" :key="section">
+      <div v-for="(section, name) in sections" :key="section" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
         <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" class="sidebar__section" />
         <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
         <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
-        <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section" />
+        <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section" :class="{ 'sidebar__section--no-padding-bottom': name === 'feedbackInput' }" />
       </div>
 
       <NavigationButtons v-if="navigation && isCentered" :buttons="navigation" />
@@ -100,6 +100,8 @@ export default {
   border-left: $border--ui;
 
   &__inner {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -109,16 +111,23 @@ export default {
       flex-direction: column;
       justify-content: center;
     }
+
+    &-wrapper {
+      &--grow-bottom {
+        margin-top: auto;
+      }
+    }
   }
 
   &__section {
     padding: $space--sm-md;
+
+    &--no-padding-bottom {
+      padding-bottom: 0;
+    }
   }
 }
 </style>
-
-//? vandaag
-//todo: feedback input
 
 //? maandag
 //todo: feedback van anderen in kunnen zien (feedback tab)
