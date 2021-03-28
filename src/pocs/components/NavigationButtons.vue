@@ -1,5 +1,5 @@
 <template>
-  <section class="navigation-buttons" :class="{ 'navigation-buttons--multiple': hasMultiple  }">
+  <section class="navigation-buttons" :class="{ 'navigation-buttons--multiple': hasMultiple }">
       <button v-for="(button, name) in buttons"
         :key="name" class="navigation-buttons__button"
         :class="{ 'navigation-buttons__button--outline': button.hasOutline }"
@@ -38,7 +38,7 @@ export default {
 .navigation-buttons {
   display: flex;
   justify-content: flex-end;
-  margin: $space--lg $space--sm-md $space--sm-md;
+  margin: $space--lg $space--sm-md ;
 
   &--multiple {
     justify-content: space-between;
@@ -51,7 +51,7 @@ export default {
     color: $purple;
     text-transform: uppercase;
     border: 2px solid transparent;
-    border-radius: 5px;
+    border-radius: $border-radius;
     transition: background-color 500ms $ease;
     cursor: pointer;
 
@@ -60,7 +60,7 @@ export default {
     }
 
     &--outline {
-      border: 2px solid $purple;
+      border: $border--button;
     }
   }
 }

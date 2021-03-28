@@ -1,5 +1,6 @@
 // colors
 $white: #ffffff;
+$white--overlay: rgba(255, 255, 255, .9);
 $black: #212121;
 $gray--dark: #616161;
 $gray--light: #C9C9C9;
@@ -22,11 +23,18 @@ $space--xsm: 5px;
 // width
 $documentation-width: 900px;
 $sidebar-width: 450px;
+$popup-width: 630px;
 
 
 // height
 $tabs-height: 50px;
 $button-height: 45px;
+
+
+// border
+$border--ui: 1px solid $gray--light;
+$border--button: 2px solid $purple;
+$border-radius: 5px;
 
 
 // timing

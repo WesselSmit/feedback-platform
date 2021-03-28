@@ -48,7 +48,7 @@ export default {
 .tabs {
   position: relative;
   display: flex;
-  border-bottom: 1px solid $gray--light;
+  border-bottom: $border--ui;
 
   &__tab {
     display: flex;

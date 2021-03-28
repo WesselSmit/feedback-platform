@@ -80,7 +80,7 @@ export default {
       cursor: pointer;
 
       &:not(:last-of-type) {
-        border-bottom: 1px solid $gray--light;
+        border-bottom: $border--ui;
       }
 
       &:hover & {

@@ -30,6 +30,30 @@ export default {
         ]
       },
       {
+        popUp: {
+          title: `Explanation design critique`,
+          body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt vestibulum nibh cum dui. Et morbi enim urna vestibulum. Suspendisse ligula augue et odio mauris pharetra justo. Venenatis cursus pulvinar nunc nunc pretium ac eros in.`,
+          tipHeading: `Tips and pointers for giving feedback `,
+          tips: [
+            {
+              type: 'question',
+              label: `Lorem ipsum`
+            },
+            {
+              type: 'question',
+              label: `Lorem ipsum`
+            },
+            {
+              type: 'limit',
+              label: `Lorem ipsum`
+            },
+            {
+              type: 'normal',
+              label: `Lorem ipsum`
+            }
+          ],
+          buttonLabel: 'Done',
+        },
         tabs: [
           {
             label: 'Give feedback',

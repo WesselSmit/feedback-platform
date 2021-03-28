@@ -15,15 +15,18 @@
 
     <NavigationButtons v-if="navigation && !isCentered" :buttons="navigation" />
   </section>
+  <PopUp v-if="popUp && showPopUp" :content="popUp" />
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import ProgressBar from './ProgressBar';
 import Tabs from './Tabs';
 import ConfirmInstructions from './ConfirmInstructions';
 import ReadInstructions from './ReadInstructions';
 import FeedbackHelper from './FeedbackHelper';
 import NavigationButtons from './NavigationButtons';
+import PopUp from './PopUp';
 
 export default {
   name: 'Sidebar',
@@ -34,11 +37,18 @@ export default {
     ReadInstructions,
     FeedbackHelper,
     NavigationButtons,
+    PopUp,
   },
   props: ['content', 'stepIndex'],
   computed: {
+    ...mapGetters('sidebar', {
+      showPopUp: 'showPopUp',
+    }),
     step() {
       return this.content.sidebar.steps[this.stepIndex - 1];
+    },
+    popUp() {
+      return this.step.popUp;
     },
     legendData() {
       return {
@@ -84,7 +94,7 @@ export default {
   width: $sidebar-width;
   min-height: 100vh;
   max-height: 100vh;
-  border-left: 1px solid $gray--light;
+  border-left: $border--ui;
 
   &__inner {
     flex-grow: 1;
@@ -103,10 +113,14 @@ export default {
   }
 }
 </style>
-
+//? vandaag
 //todo: overlay/pop-up (moet niet een aparte stap zijn maar moet een pop-up property op de step zijn)
 //todo: feedback input
+
+//? maandag
 //todo: feedback van anderen in kunnen zien (feedback tab)
 //todo: feedback markers
+
+//? dinsdag
 //todo: feedback foto's
 //todo: feedback vergelijken

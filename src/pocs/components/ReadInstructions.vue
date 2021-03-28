@@ -83,7 +83,7 @@ export default {
 @import '@/styles';
 
 .read-instructions {
-  border-bottom: 1px solid $gray--light;
+  border-bottom: $border--ui;
 
   &--collapsed & {
     &__header-toggle svg {
@@ -108,7 +108,7 @@ export default {
       width: $space--md;
       fill: $black;
       border: 1px solid transparent;
-      border-radius: 5px;
+      border-radius: $border-radius;
       transition: all 500ms $ease;
 
       &:hover {
@@ -136,8 +136,8 @@ export default {
     margin: 0 0 10px;
     list-style: none;
     background-color: $gray--light-extra;
-    border: 1px solid $gray--light-extra;
-    border-radius: 5px;
+    border: 1px solid transparent;
+    border-radius: $border-radius;
 
     &-label {
       display: flex;
