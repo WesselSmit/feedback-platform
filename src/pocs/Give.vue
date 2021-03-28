@@ -39,5 +39,3 @@ export default {
   grid-template-columns: 1fr $sidebar-width;
 }
 </style>
-
-//todo: de check/cross bullet points moeten ook gebruikt worden in de documentation om het consistent te houden

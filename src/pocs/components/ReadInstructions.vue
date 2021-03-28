@@ -11,8 +11,8 @@
       <ul v-if="legend" class="read-instructions__legend">
         <li v-for="item in legend" :key="item" class="read-instructions__legend-label">
           <span class="read-instructions__legend-icon-container">
-            <QuestionIcon v-if="item.icon === 'question'" class="read-instructions__legend-icon read-instructions__legend-icon--question" />
-            <LimitIcon v-if="item.icon === 'limit'" class="read-instructions__legend-icon read-instructions__legend-icon--limit" />
+            <QuestionIcon v-if="item.type === 'question'" class="read-instructions__legend-icon read-instructions__legend-icon--question" />
+            <LimitIcon v-if="item.type === 'limit'" class="read-instructions__legend-icon read-instructions__legend-icon--limit" />
           </span>
           {{ item.label }}
         </li>

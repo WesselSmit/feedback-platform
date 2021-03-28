@@ -56,11 +56,11 @@ export default {
             body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
             legend: [
               {
-                icon: 'question',
+                type: 'question',
                 label: `Do give feedback`
               },
               {
-                icon: 'limit',
+                type: 'limit',
                 label: `Don't give feedback`
               }
             ],
