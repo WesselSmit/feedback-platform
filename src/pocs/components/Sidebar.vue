@@ -136,3 +136,4 @@ export default {
 //? dinsdag
 //todo: feedback foto's
 //todo: feedback vergelijken
+//todo: deploy
