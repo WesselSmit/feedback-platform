@@ -1,6 +1,6 @@
 <template>
   <section class="sidebar">
-    <ProgressBar v-if="hasProgressBar" :total="totalSteps" :index="this.stepIndex" />
+    <ProgressBar v-if="hasProgressBar" :total="totalSteps" :index="stepIndex" />
     <Tabs v-if="tabs" :tabs="tabs" />
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
@@ -105,8 +105,8 @@ export default {
 </style>
 
 //todo: overlay/pop-up (moet niet een aparte stap zijn maar moet een pop-up property op de step zijn)
-//todo: feedback van anderen in kunnen zien (feedback tab)
 //todo: feedback input
+//todo: feedback van anderen in kunnen zien (feedback tab)
 //todo: feedback markers
 //todo: feedback foto's
 //todo: feedback vergelijken

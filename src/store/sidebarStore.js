@@ -2,8 +2,8 @@ export default {
   namespaced: true,
 
   state: {
-    stepIndex: 3, // moet uit DB opgehaald worden
-    activeTab: 'give',
+    stepIndex: 1, // moet uit DB opgehaald worden
+    activeTab: 'give', // options: give, view
     showFeedbackHelperZero: true,
   },
 

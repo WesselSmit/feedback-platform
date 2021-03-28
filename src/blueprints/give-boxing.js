@@ -16,7 +16,6 @@ export default {
   sidebar: {
     hasProgressBar: true,
     steps: [{
-        index: 1,
         isCentered: true,
         content: {
           confirmInstructions: {
@@ -31,15 +30,6 @@ export default {
         ]
       },
       {
-        index: 2,
-        navigation: [{
-            label: 'Done',
-            action: 'nextStep'
-          }
-        ]
-      },
-    {
-        index: 3,
         tabs: [
           {
             label: 'Give feedback',
@@ -107,8 +97,7 @@ export default {
           }
         ]
       },
-    {
-        index: 4,
+      {
         tabs: [
           {
             label: 'Give feedback',
@@ -119,6 +108,12 @@ export default {
             value: 'view'
           }
         ],
+        content: {
+          confirmInstructions: {
+            title: `Answer the feedback questions`,
+            body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+          },
+        },
         navigation: [
           {
             label: 'Previous',
@@ -132,8 +127,7 @@ export default {
           }
         ]
       },
-    {
-        index: 5,
+      {
         tabs: [
           {
             label: 'Give feedback',
@@ -144,6 +138,12 @@ export default {
             value: 'view'
           }
         ],
+        content: {
+          confirmInstructions: {
+            title: `Give positive feedback`,
+            body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+          },
+        },
         navigation: [
           {
             label: 'Previous',
