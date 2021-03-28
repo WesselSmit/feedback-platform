@@ -11,25 +11,25 @@
       <ul v-if="legend" class="read-instructions__legend">
         <li v-for="item in legend" :key="item" class="read-instructions__legend-label">
           <span class="read-instructions__legend-icon-container">
-            <LimitIcon v-if="item.icon === 'limit'" class="read-instructions__legend-icon read-instructions__legend-icon--limit" />
             <QuestionIcon v-if="item.icon === 'question'" class="read-instructions__legend-icon read-instructions__legend-icon--question" />
+            <LimitIcon v-if="item.icon === 'limit'" class="read-instructions__legend-icon read-instructions__legend-icon--limit" />
           </span>
           {{ item.label }}
         </li>
       </ul>
 
       <ul v-if="legend" class="read-instructions__points">
-        <li v-if="limits" class="read-instructions__points-label">
-          <span class="read-instructions__points-icon-container">
-            <LimitIcon class="read-instructions__points-icon read-instructions__points-icon--limit" />
-          </span>
-          {{ limits }}
-        </li>
         <li v-for="question in questions" :key="question" class="read-instructions__points-label">
           <span class="read-instructions__points-icon-container">
             <QuestionIcon class="read-instructions__points-icon read-instructions__points-icon--question" />
           </span>
           {{ question }}
+        </li>
+        <li v-if="limits" class="read-instructions__points-label">
+          <span class="read-instructions__points-icon-container">
+            <LimitIcon class="read-instructions__points-icon read-instructions__points-icon--limit" />
+          </span>
+          {{ limits }}
         </li>
       </ul>
     </div>

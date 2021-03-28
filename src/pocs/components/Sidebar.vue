@@ -104,7 +104,4 @@ export default {
 }
 </style>
 
-//todo: store folder moet stores genoemd worden
-//todo: tabStore moet in sidebarStore
 //todo: overlay/pop-up moet niet een aparte stap zijn maar moet een pop-up property op de step zijn
-//todo: de check/cross bullet points moeten ook gebruikt worden in de documentation om het consistent te houden
