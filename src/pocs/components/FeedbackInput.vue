@@ -12,14 +12,13 @@
               <ImageIcon class="feedback-input__action-icon" />
               {{ imageLabel }}
             </button>
-          <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': textInput === '' }" @click="comment()">Comment</button>
+          <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">Comment</button>
         </div>
       </div>
   </section>
 </template>
 
-//todo: sla de comments op in een DB
-//todo: als dit component focus heeft dan moet de FeedbackHelper helper state ipv de zero state getoond worden
+//todo: add comment to post (localStorage of DB)
 
 <script>
 import MarkerIcon from '@/assets/icons/MarkerIcon';
@@ -33,7 +32,6 @@ export default {
   },
   data() {
     return {
-      textInput: '',
       labels: {
         marker: 'Add markers',
         image: 'Add image',
@@ -41,6 +39,14 @@ export default {
     };
   },
   computed: {
+    textInput: {
+      get() {
+        return this.$store.getters['sidebar/textInput'];
+      },
+      set(value) {
+        this.$store.dispatch('sidebar/updateTextInput', value);
+      },
+    },
     markerLabel() {
       return this.labels.marker;
     },
@@ -53,7 +59,7 @@ export default {
     addImage() {},
     comment() {
       if (this.textInput) {
-        console.log('ja');
+        console.log('this should be posted');
       }
     },
   },

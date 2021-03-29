@@ -6,6 +6,7 @@ export default {
     showPopUp: true,
     activeTab: 'give', // options: give, view
     showFeedbackHelperZero: true,
+    textInput: '',
   },
 
   getters: {
@@ -13,6 +14,7 @@ export default {
     showPopUp: (state) => state.showPopUp,
     activeTab: (state) => state.activeTab,
     showFeedbackHelperZero: (state) => state.showFeedbackHelperZero,
+    textInput: (state) => state.textInput,
   },
 
   mutations: {
@@ -27,6 +29,9 @@ export default {
     },
     setShowFeedbackHelperZero(state, val) {
       state.showFeedbackHelperZero = val;
+    },
+    setTextInput(state, val) {
+      state.textInput = val;
     },
   },
 
@@ -50,6 +55,12 @@ export default {
       }
 
       commit('setShowFeedbackHelperZero', value);
+    },
+    updateTextInput({ commit, dispatch }, value) {
+      const isEmpty = (value === '');
+
+      dispatch('updateShowFeedbackHelperZero', isEmpty);
+      commit('setTextInput', value);
     },
   },
 };
