@@ -210,7 +210,7 @@ export default {
       navigation: [
         {
           label: 'Cancel',
-          action: 'hideMarkerOverlay'
+          action: 'cancelMarkers'
         },
         {
           label: 'Add',
