@@ -31,12 +31,13 @@
     "sass-loader": "^8.0.2"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged --debug"
   },
   "lint-staged": {
-    "*.{js,jsx,vue}": [
+    "src/**.{js,jsx,vue,ts}": [
       "vue-cli-service lint",
       "git add"
     ]
   }
 }
+
