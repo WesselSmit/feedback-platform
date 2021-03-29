@@ -8,7 +8,7 @@
         <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" class="sidebar__section" />
         <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
         <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
-        <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section" :class="{ 'sidebar__section--no-padding-bottom': name === 'feedbackInput' }" />
+        <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section sidebar__section--no-padding-bottom" />
       </div>
 
       <NavigationButtons v-if="navigation && isCentered" :buttons="navigation" />
@@ -136,4 +136,3 @@ export default {
 //? dinsdag
 //todo: feedback foto's
 //todo: feedback vergelijken
-//todo: deploy

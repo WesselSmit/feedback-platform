@@ -38,7 +38,7 @@ export default {
 .navigation-buttons {
   display: flex;
   justify-content: flex-end;
-  margin: $space--lg $space--sm-md ;
+  margin: $space--lg $space--sm-md $space--sm-md;
 
   &--multiple {
     justify-content: space-between;

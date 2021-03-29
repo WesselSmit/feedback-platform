@@ -2,23 +2,23 @@
   <section class="feedback-input">
       <div class="feedback-input__container">
         <textarea rows="7" placeholder="Lorem ipsum" v-model.trim="textInput" class="feedback-input__input"></textarea>
+
         <div class="feedback-input__actions">
-          <button class="feedback-input__action feedback-input__action--marker" @click="addMarkers()">
+          <button class="feedback-input__action feedback-input__action-marker" @click="addMarkers()">
               <MarkerIcon class="feedback-input__action-icon" />
               {{ markerLabel }}
             </button>
-          <button class="feedback-input__action feedback-input__action--image" @click="addImage()">
+          <button class="feedback-input__action feedback-input__action-image" @click="addImage()">
               <ImageIcon class="feedback-input__action-icon" />
               {{ imageLabel }}
             </button>
-          <button class="feedback-input__action feedback-input__action--comment" @click="comment()">Comment</button>
+          <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': textInput === '' }" @click="comment()">Comment</button>
         </div>
       </div>
   </section>
 </template>
 
 //todo: sla de comments op in een DB
-//todo: commenten moet disabled zijn als de textArea leeg is
 //todo: als dit component focus heeft dan moet de FeedbackHelper helper state ipv de zero state getoond worden
 
 <script>
@@ -51,7 +51,11 @@ export default {
   methods: {
     addMarkers() {},
     addImage() {},
-    comment() {},
+    comment() {
+      if (this.textInput) {
+        console.log('ja');
+      }
+    },
   },
 };
 </script>
@@ -114,10 +118,17 @@ export default {
       }
     }
 
-    &--comment {
+    &-comment {
       margin-left: auto;
-      background-color: $purple--opacity;
       color: $purple;
+
+      &--disabled,
+      &--disabled:hover,
+      &--disabled:focus {
+        background-color: $gray--dark-opacity;
+        color: $gray--dark;
+        cursor: default;
+      }
     }
 
     &-icon {
