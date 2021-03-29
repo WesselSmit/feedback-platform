@@ -18,8 +18,8 @@
 </template>
 
 //todo: sla de comments op in een DB
-
 //todo: commenten moet disabled zijn als de textArea leeg is
+
 //todo: als dit component focus heeft dan moet de FeedbackHelper helper state ipv de zero state getoond worden
 
 <script>
