@@ -2,21 +2,21 @@
 
 body {
     font-family: $font;
-    font-size: 16px;
+    font-size: $font-size--md;
     color: $gray--dark;
     line-height: $line-height;
 }
 
 h1 {
     font-family: $font;
-    font-size: 26px;
+    font-size: $font-size--lg;
     color: $black;
     margin: 0 0 $space--sm;
 }
 
 h2 {
     font-family: $font;
-    font-size: 18px;
+    font-size: $font-size--md-lg;
     color: $black;
     margin: 0 0 $space--sm;
 }
@@ -43,7 +43,7 @@ li {
 textarea {
     width: 100%;
     font-family: $font;
-    font-size: 16px;
+    font-size: $font-size--md;
     line-height: $line-height;
     color: $black;
     resize: none;

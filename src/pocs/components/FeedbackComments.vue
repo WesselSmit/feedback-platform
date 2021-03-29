@@ -5,7 +5,14 @@
 
     <ul class="feedback-comments__list">
       <li v-for="comment in commentsByTime" :key="comment" class="feedback-comments__comment">
-        {{ comment.data }}
+        <span class="feedback-comments__comment-meta">
+          <span class="feedback-comments__comment-avatar">{{ getInitials(comment.data.user.name) }}</span>
+          <span class="feedback-comments__comment-user-text">
+            <h2 class="feedback-comments__comment-name">{{ comment.data.user.name }}</h2>
+            <span class="feedback-comments__comment-role">{{ comment.data.user.role }}</span>
+          </span>
+        </span>
+        {{ comment.data.text }}
       </li>
     </ul>
   </section>
@@ -34,6 +41,15 @@ export default {
       return this.content.body;
     },
   },
+  methods: {
+    getInitials(name) {
+      const nameParts = name.split(' ');
+      const hasMultipleParts = nameParts.length > 1;
+      const firstNamePart = nameParts[0][0];
+      const lastNamePart = nameParts[nameParts.length - 1][0];
+      return hasMultipleParts ? `${firstNamePart}${lastNamePart}` : firstNamePart;
+    },
+  },
   created() {
     this.$store.dispatch('feedback/getComments', this.projectId);
   },
@@ -55,10 +71,47 @@ export default {
   }
 
   &__comment {
+    display: flex;
+    flex-direction: column;
     padding: 0 $space--sm-md;
 
     &:not(:last-of-type) {
       margin-bottom: $space--md;
+    }
+
+    &-meta {
+      display: flex;
+      align-items: center;
+    }
+
+    &-avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: $space--sm;
+      height: 24px;
+      width: 24px;
+      background-color: $gray--light;
+      font-size: $font-size--sm;
+      text-transform: uppercase;
+      color: $black;
+      border-radius: 50%;
+      cursor: default;
+    }
+
+    &-user-text {
+      display: flex;
+      align-items: baseline;
+    }
+
+    &-name {
+      margin-bottom: 0;
+      margin-right: $space--sm;
+    }
+
+    &-role {
+      color: $gray--dark;
+      font-size: $font-size--sm;
     }
   }
 }

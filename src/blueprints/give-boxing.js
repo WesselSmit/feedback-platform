@@ -186,20 +186,20 @@ export default {
       },
     ],
     viewFeedbackSections: {
-      readInstructions: {
-        title: `Lorem Ipsum`,
-        body: ``,
-        legend: [
-          {
-            type: 'question',
-            label: `Do give feedback`
-          },
-          {
-            type: 'limit',
-            label: `Don't give feedback`
-          }
-        ],
-      },
+      // readInstructions: {
+      //   title: `Lorem Ipsum`,
+      //   body: ``,
+      //   legend: [
+      //     {
+      //       type: 'question',
+      //       label: `Do give feedback`
+      //     },
+      //     {
+      //       type: 'limit',
+      //       label: `Don't give feedback`
+      //     }
+      //   ],
+      // },
       feedbackComments: {
         title: `Feedback`,
         body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,

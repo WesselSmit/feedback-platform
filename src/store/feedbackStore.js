@@ -27,7 +27,12 @@ export default {
       try {
         await db.collection(`comments-${projectId}`).add({
           ts: Date.now(),
-          user: 'You',
+          user: { // todo: user moet uit userStore komen (gebruikt nu allemaal placeholder's)
+            id: 'TESTER',
+            name: 'TESTER',
+            role: 'TESTER',
+            color: 'TESTER',
+          },
           text: comment,
         });
       } catch (err) {
