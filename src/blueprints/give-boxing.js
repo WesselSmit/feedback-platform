@@ -202,7 +202,7 @@ export default {
       // },
       feedbackComments: {
         title: `Feedback`,
-        body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+        // body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
       }
     }
   },

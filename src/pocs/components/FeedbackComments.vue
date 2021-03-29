@@ -66,7 +66,7 @@ export default {
   }
 
   &__list {
-    margin: 0;
+    margin: $space--md 0 0 0;
     list-style: none;
   }
 
@@ -74,6 +74,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 0 $space--sm-md;
+    line-height: 1.2;
 
     &:not(:last-of-type) {
       margin-bottom: $space--md;
@@ -82,6 +83,7 @@ export default {
     &-meta {
       display: flex;
       align-items: center;
+      margin-bottom: $space--xsm;
     }
 
     &-avatar {
