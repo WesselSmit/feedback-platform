@@ -20,12 +20,10 @@ const db = firebase.firestore();
 
 const groupsRef = db.collection('groups');
 const usersRef = db.collection('users');
-const commentsRef = db.collection('comments');
 
 export {
   auth,
   db,
   groupsRef,
   usersRef,
-  commentsRef,
 };

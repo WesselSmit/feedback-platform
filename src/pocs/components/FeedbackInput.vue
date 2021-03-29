@@ -37,6 +37,9 @@ export default {
     };
   },
   computed: {
+    projectId() {
+      return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
+    },
     textInput: {
       get() {
         return this.$store.getters['sidebar/textInput'];
@@ -57,7 +60,8 @@ export default {
     addImage() {},
     comment() {
       if (this.textInput) {
-        this.$store.dispatch('feedback/postComment', this.textInput);
+        this.$store.dispatch('feedback/postComment', { projectId: this.projectId, comment: this.textInput });
+        this.textInput = '';
       }
     },
   },

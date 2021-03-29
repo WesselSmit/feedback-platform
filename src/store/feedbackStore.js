@@ -1,21 +1,21 @@
-import { commentsRef } from '@/firebase';
+import { db } from '@/firebase';
 
 export default {
   namespaced: true,
 
   state: {
-    feedback: [],
+    comments: [],
     error: {},
   },
 
   getters: {
-    feedback: (state) => state.feedback,
+    comments: (state) => state.comments,
     error: (state) => state.error,
   },
 
   mutations: {
-    setFeedback(state, val) {
-      state.feedback = val;
+    setComments(state, val) {
+      state.comments = val;
     },
     setError(state, val) {
       state.error = val;
@@ -23,13 +23,25 @@ export default {
   },
 
   actions: {
-    async postComment({ dispatch }, comment) {
+    async postComment({ dispatch }, { projectId, comment }) {
       try {
-        const res = await commentsRef.add({
+        await db.collection(`comments-${projectId}`).add({
           ts: Date.now(),
-          user: 'You', // todo: should be fetched frmom userStore (when implemented with login)
+          user: 'You',
           text: comment,
         });
+      } catch (err) {
+        dispatch('setError', err);
+      }
+    },
+
+    async getComments({ commit, dispatch }, projectId) {
+      try {
+        const comments = [];
+        const snapshot = await db.collection(`comments-${projectId}`).get();
+        snapshot.forEach((doc) => comments.push({ id: doc.id, data: doc.data() }));
+
+        commit('setComments', comments);
       } catch (err) {
         dispatch('setError', err);
       }

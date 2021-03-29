@@ -12,6 +12,7 @@
 </template>
 
 //todo: make sure the firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
+//* elk project heeft een eigen collection in de firestore, de documenten in deze collection
 
 <script>
 import Navigation from '@/components/Navigation.vue';

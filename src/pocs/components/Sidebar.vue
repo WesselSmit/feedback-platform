@@ -4,17 +4,25 @@
     <Tabs v-if="tabs" :tabs="tabs" />
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
-      <div v-for="(section, name) in sections" :key="section" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
+      <div v-if="activeTab === 'give'" v-for="(section, name) in sections" :key="section"
+      class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
         <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" class="sidebar__section" />
         <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
         <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
         <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section sidebar__section--no-padding-vertical" />
       </div>
 
-      <NavigationButtons v-if="navigation && isCentered" :buttons="navigation" />
+      <div v-else-if="activeTab === 'view'" class="sidebar__inner-wrapper">
+        <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="sidebar__inner-wrapper">
+          <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
+          <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="sidebar__section sidebar__section--no-padding-horizontal" />
+        </div>
+      </div>
+
+      <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" :buttons="navigation" />
     </div>
 
-    <NavigationButtons v-if="navigation && !isCentered" :buttons="navigation" />
+    <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" />
   </section>
   <PopUp v-if="popUp && showPopUp" :content="popUp" />
 </template>
@@ -28,6 +36,7 @@ import ReadInstructions from './ReadInstructions';
 import FeedbackHelper from './FeedbackHelper';
 import FeedbackInput from './FeedbackInput';
 import NavigationButtons from './NavigationButtons';
+import FeedbackComments from './FeedbackComments';
 import PopUp from './PopUp';
 
 export default {
@@ -40,12 +49,14 @@ export default {
     FeedbackHelper,
     FeedbackInput,
     NavigationButtons,
+    FeedbackComments,
     PopUp,
   },
   props: ['content', 'stepIndex'],
   computed: {
     ...mapGetters('sidebar', {
       showPopUp: 'showPopUp',
+      activeTab: 'activeTab',
     }),
     step() {
       return this.content.sidebar.steps[this.stepIndex - 1];
@@ -69,7 +80,7 @@ export default {
       return this.step.tabs;
     },
     sections() {
-      return this.step.content;
+      return (this.activeTab === 'give') ? this.step.content : this.content.sidebar.viewFeedbackSections;
     },
     isCentered() {
       return this.step.isCentered;
@@ -125,6 +136,10 @@ export default {
     &--no-padding-vertical {
       padding: 0 $space--sm-md;
     }
+
+    &--no-padding-horizontal {
+      padding: $space--sm-md 0;
+    }
   }
 }
 </style>
@@ -132,6 +147,7 @@ export default {
 //? maandag
 //todo: feedback van anderen in kunnen zien (feedback tab)
 //todo: feedback markers
+//todo: add real content to give-boxing.js
 
 //? dinsdag
 //todo: feedback foto's
