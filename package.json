@@ -29,6 +29,15 @@
     "lint-staged": "^9.5.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,vue,ts}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
   }
 }
 
