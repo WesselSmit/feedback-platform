@@ -11,7 +11,7 @@
           <button class="feedback-input__action feedback-input__action-image" @click="addImage()">
               <ImageIcon class="feedback-input__action-icon" />
               {{ imageLabel }}
-            </button>
+          </button>
           <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">Comment</button>
         </div>
       </div>
@@ -101,6 +101,7 @@ export default {
     text-transform: uppercase;
     border: 1px solid transparent;
     border-radius: 0;
+    transition: all 500ms $ease;
     cursor: pointer;
 
     &:first-of-type {
