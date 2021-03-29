@@ -68,6 +68,8 @@ export default {
   &__list {
     margin: $space--md 0 0 0;
     list-style: none;
+
+    //todo: add empty state
   }
 
   &__comment {

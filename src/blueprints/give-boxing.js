@@ -118,7 +118,6 @@ export default {
           },
           {
             label: 'Next',
-            hasOutline: true,
             action: 'nextStep'
           }
         ]
@@ -188,7 +187,7 @@ export default {
     viewFeedbackSections: {
       // readInstructions: {
       //   title: `Lorem Ipsum`,
-      //   body: ``,
+      //   body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
       //   legend: [
       //     {
       //       type: 'question',
@@ -204,6 +203,21 @@ export default {
         title: `Feedback`,
         // body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
       }
+    },
+    markerContent: {
+      title: `Place markers by clicking on the data visualisation`,
+      body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt vestibulum nibh cum dui. Et morbi enim urna vestibulum.`,
+      navigation: [
+        {
+          label: 'Cancel',
+          action: 'hideMarkerOverlay'
+        },
+        {
+          label: 'Add',
+          hasOutline: true,
+          action: 'saveMarkers'
+        }
+      ]
     }
   },
 };

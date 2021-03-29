@@ -7,6 +7,8 @@ export default {
     activeTab: 'give', // options: give, view
     showFeedbackHelperZero: true,
     textInput: '',
+    showMarkerOverlay: false,
+    markers: [],
   },
 
   getters: {
@@ -15,6 +17,8 @@ export default {
     activeTab: (state) => state.activeTab,
     showFeedbackHelperZero: (state) => state.showFeedbackHelperZero,
     textInput: (state) => state.textInput,
+    showMarkerOverlay: (state) => state.showMarkerOverlay,
+    markers: (state) => state.markers,
   },
 
   mutations: {
@@ -32,6 +36,12 @@ export default {
     },
     setTextInput(state, val) {
       state.textInput = val;
+    },
+    setShowMarkerOverlay(state, val) {
+      state.showMarkerOverlay = val;
+    },
+    setMarkers(state, val) {
+      state.markers.push(val);
     },
   },
 
@@ -65,6 +75,19 @@ export default {
 
       dispatch('updateShowFeedbackHelperZero', isEmpty);
       commit('setTextInput', value);
+    },
+
+    updateShowMarkerOverlay({ commit, getters }, value) {
+      // pass new value or toggle current value
+      if (typeof value === 'undefined') {
+        value = !getters.showMarkerOverlay;
+      }
+
+      commit('setShowMarkerOverlay', value);
+    },
+
+    updateMarkers({ commit }, value) {
+      commit('setMarkers', value);
     },
   },
 };

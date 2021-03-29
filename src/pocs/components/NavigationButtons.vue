@@ -3,7 +3,7 @@
       <button v-for="(button, name) in buttons"
         :key="name" class="navigation-buttons__button"
         :class="{ 'navigation-buttons__button--outline': button.hasOutline }"
-        @click="handleClick(button)">
+        @click="handleClick(button.action)">
         {{ button.label }}
       </button>
   </section>
@@ -20,8 +20,7 @@ export default {
     },
   },
   methods: {
-    handleClick(button) {
-      const { action } = button;
+    handleClick(action) {
       if (action.hasOwnProperty('target')) {
         this.$router.push(action.target);
       } else if (action === 'previousStep' || action === 'nextStep') {

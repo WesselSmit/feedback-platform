@@ -1,6 +1,6 @@
 <template>
-  <section class="confirm-instructions">
-      <h1 v-if="title">{{ title }}</h1>
+  <section v-if="title" class="confirm-instructions">
+      <h1>{{ title }}</h1>
       <p v-if="body">{{ body }}</p>
   </section>
 </template>

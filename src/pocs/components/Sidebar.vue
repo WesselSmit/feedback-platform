@@ -95,10 +95,6 @@ export default {
 <style lang="scss">
 @import "@/styles";
 
-*::selection {
-  background: none;
-}
-
 .sidebar {
   position: fixed;
   top: 0;
@@ -144,11 +140,8 @@ export default {
 }
 </style>
 
-//? maandag
-//todo: feedback van anderen in kunnen zien (feedback tab)
-//todo: feedback markers
-//todo: add real content to give-boxing.js
-
 //? dinsdag
+//todo: add real content to give-boxing.js
+//todo: zorg dat je de feedback frenzy hebt voorbereid met een presentatie/miro-board (lees mail Deanna)
 //todo: feedback foto's
 //todo: feedback vergelijken

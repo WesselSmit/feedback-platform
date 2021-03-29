@@ -56,7 +56,9 @@ export default {
     },
   },
   methods: {
-    addMarkers() {},
+    addMarkers() {
+      this.$store.dispatch('sidebar/updateShowMarkerOverlay', true);
+    },
     addImage() {},
     comment() {
       if (this.textInput) {
