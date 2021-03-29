@@ -42,12 +42,15 @@ export default {
       commit('setStepIndex', newIndex);
       dispatch('updateShowFeedbackHelperZero', true); // always show feedbackHelper zero state in new sidebar step
     },
+
     updateShowPopUp({ commit }) {
       commit('setShowPopUp', false);
     },
+
     updateActiveTab({ commit }, value) {
       commit('setActiveTab', value);
     },
+
     updateShowFeedbackHelperZero({ commit, getters }, value) {
       // pass new value or toggle current value
       if (typeof value === 'undefined') {
@@ -56,6 +59,7 @@ export default {
 
       commit('setShowFeedbackHelperZero', value);
     },
+
     updateTextInput({ commit, dispatch }, value) {
       const isEmpty = (value === '');
 

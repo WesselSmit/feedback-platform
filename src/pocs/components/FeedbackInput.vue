@@ -18,8 +18,6 @@
   </section>
 </template>
 
-//todo: add comment to post (localStorage of DB)
-
 <script>
 import MarkerIcon from '@/assets/icons/MarkerIcon';
 import ImageIcon from '@/assets/icons/ImageIcon';
@@ -59,7 +57,7 @@ export default {
     addImage() {},
     comment() {
       if (this.textInput) {
-        console.log('this should be posted');
+        this.$store.dispatch('feedback/postComment', this.textInput);
       }
     },
   },

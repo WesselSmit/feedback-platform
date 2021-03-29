@@ -11,6 +11,8 @@
   </div>
 </template>
 
+//todo: make sure the firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
+
 <script>
 import Navigation from '@/components/Navigation.vue';
 import { mapGetters } from 'vuex';
