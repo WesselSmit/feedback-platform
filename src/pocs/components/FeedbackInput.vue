@@ -11,7 +11,7 @@
               <ImageIcon class="feedback-input__action-icon" />
               {{ imageLabel }}
             </button>
-          <!-- <button class="feedback-input__action feedback-input__action--comment" @click="comment()">Comment</button> -->
+          <button class="feedback-input__action feedback-input__action--comment" @click="comment()">Comment</button>
         </div>
       </div>
   </section>
