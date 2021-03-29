@@ -143,5 +143,6 @@ export default {
 //? dinsdag
 //todo: add real content to give-boxing.js
 //todo: zorg dat je de feedback frenzy hebt voorbereid met een presentatie/miro-board (lees mail Deanna)
+//todo: zie todo's in alle marker gerelateerde components
 //todo: feedback foto's
 //todo: feedback vergelijken

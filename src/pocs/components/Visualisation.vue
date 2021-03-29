@@ -5,14 +5,16 @@
     </div>
 
     <div class="visualisation__image-container">
-      <img :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="handleClick($event)">
-      <Marker v-for="marker in markers" :key="marker" :style="{ left: marker.x, top: marker.y }" />
+      <img :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="addMarker($event)">
+      <Marker v-for="marker in markers" :key="marker" :style="{ left: marker.x, top: marker.y }" @click="handleMarkerClick(marker.id)" />
     </div>
   </section>
 </template>
 
+//todo: markers moeten de kleur van hun user hebben
+//todo: markers moeten een hover state hebben waar ze gehighlight worden (voeg in figma een achtergrond cirkel toe, geef deze een opacity-fill in de gebruikers kleur in de hover state)
 //todo: marker hide/show controls moeten zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
-//todo: markers moeten nog opgeslagen worden in DB
+//todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
 
 <script>
 import { mapGetters } from 'vuex';
@@ -30,14 +32,20 @@ export default {
     }),
   },
   methods: {
-    handleClick(e) {
+    addMarker(e) {
       const rect = e.target.getBoundingClientRect();
-      const coords = {
+      const marker = {
+        id: Date.now(),
         x: e.clientX - rect.left - (16 / 2), // 16 = width of Marker svg element in px
         y: e.clientY - rect.top - (20 / 2), // 20 = height of Marker svg element in px
       };
 
-      this.$store.dispatch('sidebar/updateMarkers', coords);
+      this.$store.dispatch('sidebar/addMarker', marker);
+    },
+    handleMarkerClick(id) {
+      if (this.isMarkerOverlay) {
+        this.$store.dispatch('sidebar/removeMarker', id);
+      }
     },
   },
 };
@@ -80,6 +88,7 @@ export default {
 
       .marker {
         position: absolute;
+        cursor: pointer;
 
         &__outline,
         &__dot {

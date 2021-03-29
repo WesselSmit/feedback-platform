@@ -40,8 +40,11 @@ export default {
     setShowMarkerOverlay(state, val) {
       state.showMarkerOverlay = val;
     },
-    setMarkers(state, val) {
+    addMarker(state, val) {
       state.markers.push(val);
+    },
+    removeMarker(state, val) {
+      state.markers.splice(val, 1);
     },
   },
 
@@ -86,8 +89,16 @@ export default {
       commit('setShowMarkerOverlay', value);
     },
 
-    updateMarkers({ commit }, value) {
-      commit('setMarkers', value);
+    addMarker({ commit }, value) {
+      commit('addMarker', value);
+    },
+
+    removeMarker({ commit, getters }, id) {
+      getters.markers.forEach((marker, i) => {
+        if (marker.id === id) {
+          commit('removeMarker', i);
+        }
+      });
     },
   },
 };
