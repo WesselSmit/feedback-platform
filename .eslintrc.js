@@ -18,6 +18,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'no-prototype-builtins': 'off',
     'no-param-reassign': 'off',
+    'no-nested-ternary': 'off',
     'max-len': 'off',
     'vue/max-len': 'off',
     'vue/no-use-v-if-with-v-for': 'off',
