@@ -9,6 +9,7 @@ export default {
     textInput: '',
     showMarkerOverlay: false,
     markers: [],
+    markerSessionId: '',
   },
 
   getters: {
@@ -19,6 +20,7 @@ export default {
     textInput: (state) => state.textInput,
     showMarkerOverlay: (state) => state.showMarkerOverlay,
     markers: (state) => state.markers,
+    markerSessionId: (state) => state.markerSessionId,
   },
 
   mutations: {
@@ -45,6 +47,9 @@ export default {
     },
     removeMarker(state, val) {
       state.markers.splice(val, 1);
+    },
+    setMarkerSessionId(state, val) {
+      state.markerSessionId = val;
     },
   },
 
@@ -80,13 +85,14 @@ export default {
       commit('setTextInput', value);
     },
 
-    updateShowMarkerOverlay({ commit, getters }, value) {
+    updateShowMarkerOverlay({ commit, getters, dispatch }, value) {
       // pass new value or toggle current value
       if (typeof value === 'undefined') {
         value = !getters.showMarkerOverlay;
       }
 
       commit('setShowMarkerOverlay', value);
+      dispatch('updateMarkerSessionId', value ? Date.now() : '');
     },
 
     addMarker({ commit }, value) {
@@ -99,6 +105,17 @@ export default {
           commit('removeMarker', i);
         }
       });
+    },
+
+    updateMarkerSessionId({ commit }, sessionId) {
+      commit('setMarkerSessionId', sessionId);
+    },
+
+    removeSessionMarkers({ getters, dispatch }) {
+      const sessionMarkerIds = getters.markers.filter((marker, i) => marker.sessionId === getters.markerSessionId);
+      sessionMarkerIds.forEach((marker) => dispatch('removeMarker', marker.id));
+
+      dispatch('updateShowMarkerOverlay', false);
     },
   },
 };

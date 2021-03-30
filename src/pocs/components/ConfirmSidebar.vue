@@ -16,7 +16,6 @@
   </section>
 </template>
 
-//todo: als de user op 'Cancel' klikt moeten de NET (dus niet de markers die al bestonden) toegevoegde markers verwijderd worden
 //todo: 'add' button moet zonder markers disabled zijn
 
 <script>
@@ -45,7 +44,7 @@ export default {
 
       switch (action) {
         case 'cancelMarkers':
-          this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
+          this.$store.dispatch('sidebar/removeSessionMarkers');
           break;
         case 'saveMarkers':
           this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);

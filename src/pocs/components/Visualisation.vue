@@ -11,6 +11,7 @@
   </section>
 </template>
 
+//todo: coordinaten van markers moeten in % ipv px
 //todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
 //todo: alleen de markers van de huidige feedback comment moeten zichtbaar zijn (ze moeten dus gereset worden wanneer iemand een comment post) + de markers zijn nu altijd zichtbaar wat niet moet
 //todo: in FeedbackInput moet 'addMarkers' veranderen naar 'X markers' als er markers zijn
@@ -31,12 +32,14 @@ export default {
   computed: {
     ...mapGetters('sidebar', {
       markers: 'markers',
+      markerSessionId: 'markerSessionId',
     }),
   },
   methods: {
     addMarker(e) {
       const rect = e.target.getBoundingClientRect();
       const marker = {
+        sessionId: this.markerSessionId,
         id: Date.now(),
         x: e.clientX - rect.left - (16 / 2), // 16 = width of Marker svg element in px
         y: e.clientY - rect.top - (20 / 2), // 20 = height of Marker svg element in px
