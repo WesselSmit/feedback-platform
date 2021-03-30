@@ -7,8 +7,8 @@
       <div class="confirm-sidebar__buttons" :class="{ 'confirm-sidebar__buttons--multiple': hasMultiple }">
         <button v-for="(button, name) in navigation"
           :key="name" class="confirm-sidebar__button"
-          :class="{ 'confirm-sidebar__button--outline': button.hasOutline }"
-          @click="handleClick(button.action)">
+          :class="{ 'confirm-sidebar__button--outline': button.hasOutline, 'confirm-sidebar__button--disabled': isDisabled(button.disabled) }"
+          @click="handleClick(button)">
           {{ button.label }}
         </button>
       </div>
@@ -16,13 +16,16 @@
   </section>
 </template>
 
-//todo: 'add' button moet zonder markers disabled zijn
-
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'ConfirmSidebar',
   props: ['content'],
   computed: {
+    ...mapGetters('sidebar', {
+      sessionMarkers: 'sessionMarkers',
+    }),
     title() {
       return this.content.title;
     },
@@ -37,7 +40,12 @@ export default {
     },
   },
   methods: {
-    handleClick(action) {
+    isDisabled(hasDisabledState) {
+      if (hasDisabledState === 'sessionMarkers') {
+        return this.sessionMarkers.length === 0;
+      }
+    },
+    handleClick({ disabled, action }) {
       if (action.hasOwnProperty('target')) {
         this.$router.push(action.target);
       }
@@ -47,7 +55,9 @@ export default {
           this.$store.dispatch('sidebar/removeSessionMarkers');
           break;
         case 'saveMarkers':
-          this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
+          if (!this.isDisabled(disabled)) {
+            this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
+          }
           break;
         default:
           console.log('switch case not handled');
@@ -91,7 +101,7 @@ export default {
     text-transform: uppercase;
     border: 2px solid transparent;
     border-radius: $border-radius;
-    transition: background-color 500ms $ease;
+    transition: all 500ms $ease;
     cursor: pointer;
 
     &:hover {
@@ -100,6 +110,16 @@ export default {
 
     &--outline {
       border: $border--button;
+    }
+
+    &--disabled {
+      color: $gray--dark;
+      border-color: $gray--dark-opacity;
+      cursor: default;
+
+      &:hover {
+        background-color: $white
+      }
     }
   }
 }

@@ -21,6 +21,7 @@ export default {
     showMarkerOverlay: (state) => state.showMarkerOverlay,
     markers: (state) => state.markers,
     markerSessionId: (state) => state.markerSessionId,
+    sessionMarkers: (state) => state.markers.filter((marker, i) => marker.sessionId === state.markerSessionId),
   },
 
   mutations: {
@@ -112,8 +113,7 @@ export default {
     },
 
     removeSessionMarkers({ getters, dispatch }) {
-      const sessionMarkerIds = getters.markers.filter((marker, i) => marker.sessionId === getters.markerSessionId);
-      sessionMarkerIds.forEach((marker) => dispatch('removeMarker', marker.id));
+      getters.sessionMarkers.forEach((marker) => dispatch('removeMarker', marker.id));
 
       dispatch('updateShowMarkerOverlay', false);
     },

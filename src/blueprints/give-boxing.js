@@ -215,7 +215,8 @@ export default {
         {
           label: 'Add',
           hasOutline: true,
-          action: 'saveMarkers'
+          action: 'saveMarkers',
+          disabled: 'sessionMarkers'
         }
       ]
     }
