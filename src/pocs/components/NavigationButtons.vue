@@ -21,11 +21,10 @@ export default {
   },
   methods: {
     handleClick(action) {
+      this.$store.dispatch('sidebar/updateTextInput', '');
+
       if (action.hasOwnProperty('target')) {
         this.$router.push(action.target);
-      } else if (action === 'showVisualisation') {
-        this.$store.dispatch('sidebar/updateShowVisualisation', true);
-        this.$store.dispatch('sidebar/updateStepIndex', 'nextStep');
       } else if (action === 'previousStep' || action === 'nextStep') {
         this.$store.dispatch('sidebar/updateStepIndex', action);
       }

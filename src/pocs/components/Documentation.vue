@@ -2,7 +2,7 @@
   <section class="documentation">
     <Menu />
 
-    <div class="documentation__inner" :class="{ 'documentation__inner--centered': !showVisualisation }">
+    <div class="documentation__inner" :class="{ 'documentation__inner--centered': hideVisualisation }">
       <h1>{{ title }}</h1>
 
       <h3 class="documentation__subheading">{{ explanationHeading }}</h3>
@@ -26,7 +26,7 @@
       </p>
     </div>
 
-    <Visualisation v-if="showVisualisation" :title="title" :visualisation="visualisation" />
+    <Visualisation v-if="!hideVisualisation" :title="title" :visualisation="visualisation" />
   </section>
 </template>
 
@@ -48,7 +48,7 @@ export default {
   props: ['content'],
   computed: {
     ...mapGetters('sidebar', {
-      showVisualisation: 'showVisualisation',
+      hideVisualisation: 'hideVisualisation',
     }),
     title() {
       return this.content.title;

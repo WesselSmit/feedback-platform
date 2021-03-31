@@ -29,7 +29,7 @@ export default {
         },
         navigation: [{
             label: 'Done',
-            action: 'showVisualisation'
+            action: 'nextStep'
           }
         ]
       },

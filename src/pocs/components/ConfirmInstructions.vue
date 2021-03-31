@@ -8,7 +8,7 @@
 <script>
 export default {
   name: 'ConfirmInstructions',
-  props: ['content'],
+  props: ['content', 'hideVisualisation'],
   computed: {
     title() {
       return this.content.title;
@@ -18,7 +18,9 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('sidebar/updateShowVisualisation', false);
+    if (this.hideVisualisation) {
+      this.$store.dispatch('sidebar/updateHideVisualisation', true);
+    }
   },
 };
 </script>

@@ -6,7 +6,7 @@
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
       <div v-if="activeTab === 'give'" v-for="(section, name) in sections" :key="section"
       class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
-        <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" class="sidebar__section" />
+        <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="sidebar__section" />
         <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
         <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
         <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section sidebar__section--no-padding-vertical" />
@@ -84,6 +84,9 @@ export default {
     },
     isCentered() {
       return this.step.isCentered;
+    },
+    hideVisualisation() {
+      return this.step.hideVisualisation;
     },
     navigation() {
       return this.step.navigation;
