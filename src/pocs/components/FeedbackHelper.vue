@@ -1,6 +1,6 @@
 <template>
-  <section class="feedback-helper">
-    <h1 v-if="title">{{ title }}</h1>
+  <section v-if="!hideSection" class="feedback-helper">
+    <h2 v-if="title">{{ title }}</h2>
     <p v-if="body">{{ body }}</p>
 
     <ul v-if="zeroTips" v-show="showFeedbackHelperZero">
@@ -41,12 +41,17 @@ export default {
     ...mapGetters('sidebar', {
       showFeedbackHelperZero: 'showFeedbackHelperZero',
     }),
+    currentSection() {
+      return this.showFeedbackHelperZero ? 'zero' : 'interactive';
+    },
+    hideSection() {
+      return this.content.sections[this.currentSection].hide;
+    },
     title() {
-      return this.content.title;
+      return this.content.sections[this.currentSection].title;
     },
     body() {
-      const currentSection = this.showFeedbackHelperZero ? 'zero' : 'interactive';
-      return this.content.sections[currentSection].body;
+      return this.content.sections[this.currentSection].body;
     },
     zeroTips() {
       return this.content.sections.zero.tips;

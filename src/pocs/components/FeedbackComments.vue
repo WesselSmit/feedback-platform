@@ -8,7 +8,7 @@
         <span class="feedback-comments__comment-meta">
           <span class="feedback-comments__comment-avatar">{{ getInitials(comment.data.user.name) }}</span>
           <span class="feedback-comments__comment-user-text">
-            <h2 class="feedback-comments__comment-name">{{ comment.data.user.name }}</h2>
+            <h3 class="feedback-comments__comment-name">{{ comment.data.user.name }}</h3>
             <span class="feedback-comments__comment-role">{{ comment.data.user.role }}</span>
           </span>
         </span>
@@ -29,7 +29,8 @@ export default {
       comments: 'comments',
     }),
     projectId() {
-      return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
+      // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
+      return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
     },
     commentsByTime() {
       return [...this.comments].sort((a, b) => b.data.ts - a.data.ts);

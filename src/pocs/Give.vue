@@ -9,7 +9,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import content from '@/blueprints/give-boxing';
+// import content from '@/blueprints/give-boxing';
+import content from '@/blueprints/give-twitter';
 import Documentation from '@/pocs/components/Documentation';
 import Sidebar from '@/pocs/components/Sidebar';
 import MarkerOverlay from '@/pocs/components/MarkerOverlay';

@@ -7,18 +7,24 @@ body {
     line-height: $line-height;
 }
 
-h1 {
+h1, 
+h2, 
+h3 {
     font-family: $font;
-    font-size: $font-size--lg;
     color: $black;
     margin: 0 0 $space--sm;
 }
 
+h1 {
+    font-size: $font-size--xl;
+}
+
 h2 {
-    font-family: $font;
+    font-size: $font-size--lg;
+}
+
+h3 {
     font-size: $font-size--md-lg;
-    color: $black;
-    margin: 0 0 $space--sm;
 }
 
 p {   

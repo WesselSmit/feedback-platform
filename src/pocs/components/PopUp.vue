@@ -5,7 +5,7 @@
       <p class="pop-up__body" :class="{ 'pop-up__body--extra-margin-bottom': hasTipsSection }">{{ body }}</p>
 
       <div v-if="hasTipsSection">
-        <h2>{{ tipHeading }}</h2>
+        <h3>{{ tipHeading }}</h3>
 
         <ul class="pop-up__tip-list">
           <li v-for="tip in tips" :key="tip" class="pop-up__tip" :class="`pop-up__tip--${ tip.type }`">

@@ -1,7 +1,7 @@
 <template>
   <section class="feedback-input">
       <div class="feedback-input__container">
-        <textarea rows="7" placeholder="Lorem ipsum" v-model.trim="textInput" class="feedback-input__input"></textarea>
+        <textarea rows="6" placeholder="Hit a wall? Read the tips." v-model.trim="textInput" class="feedback-input__input"></textarea>
 
         <div class="feedback-input__actions">
           <button class="feedback-input__action feedback-input__action-marker" @click="addMarkers()">
@@ -38,7 +38,8 @@ export default {
   },
   computed: {
     projectId() {
-      return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
+      // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
+      return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
     },
     textInput: {
       get() {

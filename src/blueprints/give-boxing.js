@@ -4,12 +4,15 @@ export default {
   documentation: {
     menuOptions: ['home'],
     title: `Boxing heavyweight championships`,
+    explanationHeading: `Explanation`,
     explanation: `The history of the different boxing heavyweight championships through the years.`,
     //todo: iterations
+    questionsHeading: `I want feedback on...`,
     questions: [
       `Is it clear what everything means?`,
       `Is the image in the center too distracting?`
     ],
+    limitsHeading: `I don't want feedback on...`,
     limits: `The legend`,
     visualisation: 'boxing'
   },
@@ -26,7 +29,7 @@ export default {
         },
         navigation: [{
             label: 'Done',
-            action: 'nextStep'
+            action: 'showVisualisation'
           }
         ]
       },
@@ -81,9 +84,9 @@ export default {
             ],
           },
           feedbackHelper: {
-            title: `Negative feedback tips`,
             sections: {
               zero: {
+                title: `Negative feedback tips`,
                 body: ``,
                 tips: [
                 `Lorem ipsum`,
@@ -92,6 +95,7 @@ export default {
                 `Lorem ipsum`
               ]},
               interactive: {
+                title: `Negative feedback tips`,
                 body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
                 tips: [
                 {

@@ -17,6 +17,9 @@ export default {
       return this.content.body;
     },
   },
+  created() {
+    this.$store.dispatch('sidebar/updateShowVisualisation', false);
+  },
 };
 </script>
 

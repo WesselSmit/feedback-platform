@@ -19,10 +19,10 @@
         </div>
       </div>
 
-      <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" :buttons="navigation" />
+      <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
     </div>
 
-    <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" />
+    <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
   </section>
   <PopUp v-if="popUp && showPopUp" :content="popUp" />
 </template>
@@ -88,6 +88,9 @@ export default {
     navigation() {
       return this.step.navigation;
     },
+    hasFeedbackHelper() {
+      return Object.keys(this.sections).includes('feedbackHelper');
+    },
   },
 };
 </script>
@@ -140,8 +143,6 @@ export default {
 }
 </style>
 
-//? dinsdag
-//todo: add real content to give-boxing.js
 //todo: zorg dat je de feedback frenzy hebt voorbereid met een presentatie/miro-board (lees mail Deanna)
 //todo: zie todo's in alle marker gerelateerde components
 //todo: feedback foto's

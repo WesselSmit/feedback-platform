@@ -4,6 +4,8 @@
   </section>
 </template>
 
+//todo (see menuOptions in blueprint file)
+
 <script>
 export default {
   name: 'Menu',

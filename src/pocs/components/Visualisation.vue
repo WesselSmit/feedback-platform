@@ -1,7 +1,7 @@
 <template>
   <section class="visualisation" :class="{ 'visualisation--marker-overlay': isMarkerOverlay }">
     <div v-if="title" class="visualisation__title-container">
-      <h2>{{ title }}</h2>
+      <h3>{{ title }}</h3>
     </div>
 
     <div class="visualisation__image-container">
@@ -77,6 +77,7 @@ export default {
 
   &--marker-overlay & {
     &__image {
+      border: $border--ui;
       cursor: crosshair;
     }
   }

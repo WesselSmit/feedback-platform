@@ -2,6 +2,7 @@ export default {
   namespaced: true,
 
   state: {
+    showVisualisation: true,
     stepIndex: 1, // moet uit DB opgehaald worden
     showPopUp: true,
     activeTab: 'give', // options: give, view
@@ -13,6 +14,7 @@ export default {
   },
 
   getters: {
+    showVisualisation: (state) => state.showVisualisation,
     stepIndex: (state) => state.stepIndex,
     showPopUp: (state) => state.showPopUp,
     activeTab: (state) => state.activeTab,
@@ -25,6 +27,9 @@ export default {
   },
 
   mutations: {
+    setShowVisualisation(state, val) {
+      state.showVisualisation = val;
+    },
     setStepIndex(state, val) {
       state.stepIndex = val;
     },
@@ -55,6 +60,10 @@ export default {
   },
 
   actions: {
+    updateShowVisualisation({ commit }, value) {
+      commit('setShowVisualisation', value);
+    },
+
     updateStepIndex({ commit, getters, dispatch }, action) {
       const newIndex = (action === 'previousStep') ? getters.stepIndex - 1 : getters.stepIndex + 1;
 
