@@ -130,3 +130,11 @@ export default {
     },
   },
 };
+
+/*
+ wanneer je ene sessie start kopieer je de markers --> sessionMarkers
+ alle veranderingen (toevoegen en verwijderen gebeurt in sessionMarkers)
+ diabled state word bepaald of er verschil zit tussen markers en sessionMarkers
+ als je opslaat word markers overschreven met sessionMarkers en word sessionMarkers gereset
+ als je canceled dan word alleen sessionMarkers gereset
+ */
