@@ -4,7 +4,7 @@
         <textarea rows="6" placeholder="Hit a wall? Read the tips." v-model.trim="textInput" class="feedback-input__input"></textarea>
 
         <div class="feedback-input__actions">
-          <button class="feedback-input__action feedback-input__action-marker" @click="addMarkers()">
+          <button class="feedback-input__action feedback-input__action-marker" :class="{ 'feedback-input__action--active': this.numberOfMarkers > 0 }" @click="addMarkers()">
               <MarkerIcon class="feedback-input__action-icon" />
               {{ markerLabel }}
             </button>
@@ -133,6 +133,16 @@ export default {
 
     &:hover &,
     &:focus & {
+      &-icon {
+        fill: $purple;
+      }
+    }
+
+    &--active {
+      color: $purple;
+    }
+
+    &--active & {
       &-icon {
         fill: $purple;
       }
