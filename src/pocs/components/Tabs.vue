@@ -76,7 +76,7 @@ export default {
     width: calc(#{$sidebar-width} / 2);
     height: 2px;
     background-color: $purple;
-    transition: left 500ms $ease;
+    transition: left 500ms $ease--fast;
 
     &--left {
       left: 0;

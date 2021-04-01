@@ -4,21 +4,21 @@
       <h3>{{ title }}</h3>
     </div>
 
-    <div class="visualisation__image-container">
+    <div class="visualisation__image-container" :class="{ 'visualisation__image-container--animated': isMarkerOverlay }">
       <img :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="addMarker($event)">
       <Marker v-for="marker in markers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
     </div>
   </section>
 </template>
 
-//todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
-//todo: alleen de markers van de huidige feedback comment moeten zichtbaar zijn (ze moeten dus gereset worden wanneer iemand een comment post) + de markers zijn nu altijd zichtbaar wat niet moet
-//todo: in FeedbackInput moet 'add markers' veranderen naar 'X markers' als er markers zijn
-//todo: markers moeten de kleur van hun user hebben
-//todo: markers moeten een hover state hebben waar ze gehighlight worden (voeg in figma een achtergrond cirkel toe, geef deze een opacity-fill in de gebruikers kleur in de hover state)
-//todo: marker hide/show controls moeten zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 //todo: als je de markerOverlay cancelled en je had een marker verwijderd dan blijft hij verwijderd, eigenlijk moeten de markers die verwijderd zijn in de sessie weer terugkomen als je cancelled
-//todo: je kan niet op 'add' drukken als je allen iets verwijdert hebt + de labels kloppen niet want als je alleen iets verwijdert dan moet er geen 'add' staan (miss save changes???)
+//todo: je kan niet op 'add' drukken als je alleen iets verwijdert hebt + de labels kloppen niet want als je alleen iets verwijdert dan moet er geen 'add' staan (miss save changes???)
+//todo: alleen de markers van de huidige feedback comment moeten zichtbaar zijn (ze moeten dus gereset worden wanneer iemand een comment post) + de markers zijn nu altijd zichtbaar wat niet moet
+
+//todo: markers moeten een hover state hebben waar ze gehighlight worden (voeg in figma een achtergrond cirkel toe, geef deze een opacity-fill in de gebruikers kleur in de hover state)
+//todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
+//todo: markers moeten de kleur van hun user hebben
+//todo: marker hide/show controls moeten zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 
 <script>
 import { mapGetters } from 'vuex';
@@ -90,13 +90,17 @@ export default {
 
   &__image {
     display: block;
-      margin: auto;
-      width: 100%;
-      max-height: 95vh;
+    margin: auto;
+    width: 100%;
+    max-height: 95vh;
 
     &-container {
       position: relative;
       margin: 0 $space--sm-md;
+
+      &--animated {
+        @include zoomIn(300ms, $ease--fast);
+      }
 
       .marker {
         position: absolute;

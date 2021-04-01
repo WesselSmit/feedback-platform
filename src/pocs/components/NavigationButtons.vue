@@ -57,7 +57,7 @@ export default {
     text-transform: uppercase;
     border: 2px solid transparent;
     border-radius: $border-radius;
-    transition: background-color 500ms $ease;
+    transition: background-color 500ms $ease--fast;
     cursor: pointer;
 
     &:hover {

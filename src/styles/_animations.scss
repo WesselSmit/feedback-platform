@@ -1,0 +1,14 @@
+@mixin zoomIn($dur: 1s, $ease: 'ease') {
+    animation: zoomIn #{$dur} #{$ease};
+
+    @keyframes zoomIn {
+        from {
+            opacity: 0;
+            transform: scale(0.3);
+        }
+      
+        50% {
+            opacity: 1;
+        }
+      }
+}

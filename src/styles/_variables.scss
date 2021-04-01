@@ -48,4 +48,5 @@ $border-radius: 5px;
 
 
 // timing
-$ease: cubic-bezier(.23, .75, .26, .9);
+$ease--fast: cubic-bezier(0, 0, 0, 1);
+

@@ -3,11 +3,11 @@
     <h2 v-if="title">{{ title }}</h2>
     <p v-if="body">{{ body }}</p>
 
-    <ul v-if="zeroTips" v-show="showFeedbackHelperZero">
+    <ul v-if="zeroTips && showFeedbackHelperZero">
       <li v-for="tip in zeroTips" :key="tip">{{ tip }}</li>
     </ul>
 
-    <ul v-if="interactiveTips" v-show="!showFeedbackHelperZero" class="feedback-helper__tips-list">
+    <ul v-if="interactiveTips && !showFeedbackHelperZero" class="feedback-helper__tips-list">
       <li v-for="(tip, index) in interactiveTips" :key="tip" class="feedback-helper__tips-tip"
         :class="{ 'feedback-helper__tips-tip--expanded': activeTipIndex === index }" @click="handleClick(index)">
         <span class="feedback-helper__tips-tip-icon-container">
@@ -121,7 +121,7 @@ export default {
 
         svg {
           transform-origin: center;
-          transition: all 500ms $ease;
+          transition: all 500ms $ease--fast;
         }
 
         &-container {

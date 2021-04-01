@@ -114,7 +114,7 @@ export default {
       fill: $black;
       border: 1px solid transparent;
       border-radius: $border-radius;
-      transition: all 500ms $ease;
+      transition: all 500ms $ease--fast;
 
       &:hover {
         background-color: $purple--opacity;
@@ -123,7 +123,7 @@ export default {
 
       svg {
         transform-origin: center;
-        transition: all 500ms $ease;
+        transition: all 500ms $ease--fast;
       }
     }
   }

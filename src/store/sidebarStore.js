@@ -22,8 +22,9 @@ export default {
     textInput: (state) => state.textInput,
     showMarkerOverlay: (state) => state.showMarkerOverlay,
     markers: (state) => state.markers,
+    numberOfMarkers: (state) => state.markers.length,
     markerSessionId: (state) => state.markerSessionId,
-    sessionMarkers: (state) => state.markers.filter((marker, i) => marker.sessionId === state.markerSessionId),
+    sessionMarkers: (state) => state.markers.filter((marker) => marker.sessionId === state.markerSessionId),
   },
 
   mutations: {

@@ -82,7 +82,7 @@ export default {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     width: $popup-width;
     padding: $space--sm-md;
     background-color: $white;
@@ -134,7 +134,7 @@ export default {
     text-transform: uppercase;
     border: 1px solid transparent;
     border-radius: $border-radius;
-    transition: background-color 500ms $ease;
+    transition: background-color 500ms $ease--fast;
     cursor: pointer;
 
     &:hover {
