@@ -6,7 +6,7 @@
 
     <div class="visualisation__image-container">
       <img :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="addMarker($event)">
-      <Marker v-for="marker in markers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
+      <!-- <Marker v-for="marker in markers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" /> -->
     </div>
   </section>
 </template>
@@ -21,20 +21,15 @@
 //todo: marker hide/show controls moeten zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 
 <script>
-import { mapGetters } from 'vuex';
 import Marker from '@/assets/icons/Marker';
 
 export default {
   name: 'Visualisation',
   components: {
-    Marker,
+    // Marker,
   },
   props: ['title', 'visualisation', 'isMarkerOverlay'],
   computed: {
-    ...mapGetters('sidebar', {
-      markers: 'markers',
-      markerSessionId: 'markerSessionId',
-    }),
   },
   methods: {
     addMarker(e) {
@@ -45,17 +40,16 @@ export default {
       const yInPerc = ((yInPx / rect.height) * 100);
 
       const marker = {
-        sessionId: this.markerSessionId,
         id: Date.now(),
         x: xInPerc,
         y: yInPerc,
       };
 
-      this.$store.dispatch('sidebar/addMarker', marker);
+      console.log('CONTINUE: add new marker');
     },
     handleMarkerClick(id) {
       if (this.isMarkerOverlay) {
-        this.$store.dispatch('sidebar/removeMarker', id);
+        console.log('CONTINUE: remove marker');
       }
     },
   },

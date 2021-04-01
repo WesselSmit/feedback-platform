@@ -7,7 +7,7 @@
       <div class="confirm-sidebar__buttons" :class="{ 'confirm-sidebar__buttons--multiple': hasMultiple }">
         <button v-for="(button, name) in navigation"
           :key="name" class="confirm-sidebar__button"
-          :class="{ 'confirm-sidebar__button--outline': button.hasOutline, 'confirm-sidebar__button--disabled': isDisabled(button.disabled) }"
+          :class="{ 'confirm-sidebar__button--outline': button.hasOutline }"
           @click="handleClick(button)">
           {{ button.label }}
         </button>
@@ -17,15 +17,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   name: 'ConfirmSidebar',
   props: ['content'],
   computed: {
-    ...mapGetters('sidebar', {
-      sessionMarkers: 'sessionMarkers',
-    }),
     title() {
       return this.content.title;
     },
@@ -40,11 +35,6 @@ export default {
     },
   },
   methods: {
-    isDisabled(hasDisabledState) {
-      if (hasDisabledState === 'sessionMarkers') {
-        return this.sessionMarkers.length === 0;
-      }
-    },
     handleClick({ disabled, action }) {
       if (action.hasOwnProperty('target')) {
         this.$router.push(action.target);
@@ -52,12 +42,12 @@ export default {
 
       switch (action) {
         case 'cancelMarkers':
-          this.$store.dispatch('sidebar/removeSessionMarkers');
+          this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
+          console.log('CONTINUE: cancel markers');
           break;
         case 'saveMarkers':
-          if (!this.isDisabled(disabled)) {
-            this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
-          }
+          this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
+          console.log('CONTINUE: save markers');
           break;
         default:
           console.log('switch case not handled');

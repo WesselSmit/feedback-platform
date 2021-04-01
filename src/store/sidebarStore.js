@@ -9,8 +9,6 @@ export default {
     showFeedbackHelperZero: true,
     textInput: '',
     showMarkerOverlay: false,
-    markers: [],
-    markerSessionId: '',
   },
 
   getters: {
@@ -21,10 +19,6 @@ export default {
     showFeedbackHelperZero: (state) => state.showFeedbackHelperZero,
     textInput: (state) => state.textInput,
     showMarkerOverlay: (state) => state.showMarkerOverlay,
-    markers: (state) => state.markers,
-    numberOfMarkers: (state) => state.markers.length,
-    markerSessionId: (state) => state.markerSessionId,
-    sessionMarkers: (state) => state.markers.filter((marker) => marker.sessionId === state.markerSessionId),
   },
 
   mutations: {
@@ -48,15 +42,6 @@ export default {
     },
     setShowMarkerOverlay(state, val) {
       state.showMarkerOverlay = val;
-    },
-    addMarker(state, val) {
-      state.markers.push(val);
-    },
-    removeMarker(state, val) {
-      state.markers.splice(val, 1);
-    },
-    setMarkerSessionId(state, val) {
-      state.markerSessionId = val;
     },
   },
 
@@ -97,36 +82,8 @@ export default {
       commit('setTextInput', value);
     },
 
-    updateShowMarkerOverlay({ commit, getters, dispatch }, value) {
-      // pass new value or toggle current value
-      if (typeof value === 'undefined') {
-        value = !getters.showMarkerOverlay;
-      }
-
+    updateShowMarkerOverlay({ commit }, value) {
       commit('setShowMarkerOverlay', value);
-      dispatch('updateMarkerSessionId', value ? Date.now() : '');
-    },
-
-    addMarker({ commit }, value) {
-      commit('addMarker', value);
-    },
-
-    removeMarker({ commit, getters }, id) {
-      getters.markers.forEach((marker, i) => {
-        if (marker.id === id) {
-          commit('removeMarker', i);
-        }
-      });
-    },
-
-    updateMarkerSessionId({ commit }, sessionId) {
-      commit('setMarkerSessionId', sessionId);
-    },
-
-    removeSessionMarkers({ getters, dispatch }) {
-      getters.sessionMarkers.forEach((marker) => dispatch('removeMarker', marker.id));
-
-      dispatch('updateShowMarkerOverlay', false);
     },
   },
 };
