@@ -7,7 +7,7 @@
       <div class="confirm-sidebar__buttons" :class="{ 'confirm-sidebar__buttons--multiple': hasMultiple }">
         <button v-for="(button, name) in navigation"
           :key="name" class="confirm-sidebar__button"
-          :class="{ 'confirm-sidebar__button--outline': button.hasOutline, 'confirm-sidebar__button--disabled': isDisabled(button.disabled) }"
+          :class="{ 'confirm-sidebar__button--outline': button.hasOutline, 'confirm-sidebar__button--disabled': showDisabledState(button.hasDisabled)}"
           @click="handleClick(button)">
           {{ button.label }}
         </button>
@@ -24,7 +24,8 @@ export default {
   props: ['content'],
   computed: {
     ...mapGetters('sidebar', {
-      sessionMarkers: 'sessionMarkers',
+      sessionMarkers: 'temp',
+      markersAreChanged: 'markersAreChanged',
     }),
     title() {
       return this.content.title;
@@ -40,23 +41,22 @@ export default {
     },
   },
   methods: {
-    isDisabled(hasDisabledState) {
-      if (hasDisabledState === 'sessionMarkers') {
-        return this.sessionMarkers.length === 0;
-      }
+    showDisabledState(hasDisabled) {
+      return hasDisabled && !this.markersAreChanged;
     },
-    handleClick({ disabled, action }) {
+    handleClick({ action }) {
       if (action.hasOwnProperty('target')) {
         this.$router.push(action.target);
       }
 
       switch (action) {
         case 'cancelMarkers':
-          this.$store.dispatch('sidebar/removeSessionMarkers');
+          this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
           break;
         case 'saveMarkers':
-          if (!this.isDisabled(disabled)) {
+          if (this.markersAreChanged) {
             this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
+            this.$store.dispatch('sidebar/saveSessionMarkers');
           }
           break;
         default:

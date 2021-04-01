@@ -1,3 +1,5 @@
+import areEqual from 'deep-equal';
+
 export default {
   namespaced: true,
 
@@ -5,12 +7,12 @@ export default {
     hideVisualisation: false,
     stepIndex: 1, // moet uit DB opgehaald worden
     showPopUp: true,
-    activeTab: 'give', // options: give, view
+    activeTab: 'give',
     showFeedbackHelperZero: true,
     textInput: '',
     showMarkerOverlay: false,
     markers: [],
-    markerSessionId: '',
+    sessionMarkers: [],
   },
 
   getters: {
@@ -22,9 +24,8 @@ export default {
     textInput: (state) => state.textInput,
     showMarkerOverlay: (state) => state.showMarkerOverlay,
     markers: (state) => state.markers,
-    numberOfMarkers: (state) => state.markers.length,
-    markerSessionId: (state) => state.markerSessionId,
-    sessionMarkers: (state) => state.markers.filter((marker) => marker.sessionId === state.markerSessionId),
+    sessionMarkers: (state) => state.sessionMarkers,
+    markersAreChanged: (state) => !areEqual(state.markers, state.sessionMarkers),
   },
 
   mutations: {
@@ -49,14 +50,11 @@ export default {
     setShowMarkerOverlay(state, val) {
       state.showMarkerOverlay = val;
     },
-    addMarker(state, val) {
-      state.markers.push(val);
+    setMarkers(state, val) {
+      state.markers = val;
     },
-    removeMarker(state, val) {
-      state.markers.splice(val, 1);
-    },
-    setMarkerSessionId(state, val) {
-      state.markerSessionId = val;
+    setSessionMarkers(state, val) {
+      state.sessionMarkers = val;
     },
   },
 
@@ -97,36 +95,34 @@ export default {
       commit('setTextInput', value);
     },
 
-    updateShowMarkerOverlay({ commit, getters, dispatch }, value) {
-      // pass new value or toggle current value
-      if (typeof value === 'undefined') {
-        value = !getters.showMarkerOverlay;
-      }
-
+    updateShowMarkerOverlay({ commit }, value) {
       commit('setShowMarkerOverlay', value);
-      dispatch('updateMarkerSessionId', value ? Date.now() : '');
     },
 
-    addMarker({ commit }, value) {
-      commit('addMarker', value);
+    startNewMarkerSession({ commit, getters }) {
+      // takes the markers that already excist as starting point for the 'marker session'
+      commit('setSessionMarkers', cleanSource(getters.markers));
     },
 
-    removeMarker({ commit, getters }, id) {
-      getters.markers.forEach((marker, i) => {
-        if (marker.id === id) {
-          commit('removeMarker', i);
-        }
-      });
+    addSessionMarker({ commit, getters }, marker) {
+      const { sessionMarkers } = getters;
+      sessionMarkers.push(marker);
+      commit('setSessionMarkers', sessionMarkers);
     },
 
-    updateMarkerSessionId({ commit }, sessionId) {
-      commit('setMarkerSessionId', sessionId);
+    removeSessionMarker({ commit, getters }, id) {
+      const sessionMarkers = getters.sessionMarkers.filter((marker) => marker.id !== id);
+      commit('setSessionMarkers', sessionMarkers);
     },
 
-    removeSessionMarkers({ getters, dispatch }) {
-      getters.sessionMarkers.forEach((marker) => dispatch('removeMarker', marker.id));
-
-      dispatch('updateShowMarkerOverlay', false);
+    saveSessionMarkers({ commit, getters }) {
+      commit('setMarkers', getters.sessionMarkers);
     },
   },
 };
+
+function cleanSource(source) {
+  // use native JSON functions to remove the reactivity so objects (including arrays) can be cloned without mutating the original source
+  // also see: https://forum.vuejs.org/t/how-to-remove-array-binding/53751
+  return JSON.parse(JSON.stringify(source));
+}

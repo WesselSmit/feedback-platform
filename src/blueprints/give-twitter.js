@@ -290,10 +290,10 @@ export default {
           action: 'cancelMarkers'
         },
         {
-          label: 'Add',
+          label: 'Save',
           hasOutline: true,
+          hasDisabled: true,
           action: 'saveMarkers',
-          disabled: 'sessionMarkers'
         }
       ]
     }

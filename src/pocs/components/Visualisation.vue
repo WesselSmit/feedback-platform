@@ -6,15 +6,12 @@
 
     <div class="visualisation__image-container">
       <img :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="addMarker($event)">
-      <Marker v-for="marker in markers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
+      <Marker v-for="marker in currentMarkers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
     </div>
   </section>
 </template>
 
-//todo: als je de markerOverlay cancelled en je had een marker verwijderd dan blijft hij verwijderd, eigenlijk moeten de markers die verwijderd zijn in de sessie weer terugkomen als je cancelled
-//todo: je kan niet op 'add' drukken als je alleen iets verwijdert hebt + de labels kloppen niet want als je alleen iets verwijdert dan moet er geen 'add' staan (miss save changes???)
-//todo: alleen de markers van de huidige feedback comment moeten zichtbaar zijn (ze moeten dus gereset worden wanneer iemand een comment post) + de markers zijn nu altijd zichtbaar wat niet moet
-
+//todo: het is mogelijk om de een ghost versie van de afbeelding te verslepen wat vervelend is als je markers probeert te zetten, kijk of je dit kan uitzetten met css
 //todo: markers moeten een hover state hebben waar ze gehighlight worden (voeg in figma een achtergrond cirkel toe, geef deze een opacity-fill in de gebruikers kleur in de hover state)
 //todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
 //todo: markers moeten de kleur van hun user hebben
@@ -33,8 +30,11 @@ export default {
   computed: {
     ...mapGetters('sidebar', {
       markers: 'markers',
-      markerSessionId: 'markerSessionId',
+      sessionMarkers: 'sessionMarkers',
     }),
+    currentMarkers() {
+      return this.isMarkerOverlay ? this.sessionMarkers : this.markers;
+    },
   },
   methods: {
     addMarker(e) {
@@ -45,17 +45,16 @@ export default {
       const yInPerc = ((yInPx / rect.height) * 100);
 
       const marker = {
-        sessionId: this.markerSessionId,
         id: Date.now(),
         x: xInPerc,
         y: yInPerc,
       };
 
-      this.$store.dispatch('sidebar/addMarker', marker);
+      this.$store.dispatch('sidebar/addSessionMarker', marker);
     },
     handleMarkerClick(id) {
       if (this.isMarkerOverlay) {
-        this.$store.dispatch('sidebar/removeMarker', id);
+        this.$store.dispatch('sidebar/removeSessionMarker', id);
       }
     },
   },
