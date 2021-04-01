@@ -19,42 +19,42 @@ export default {
   sidebar: {
     hasProgressBar: true,
     steps: [
+      // {
+      //   isCentered: true,
+      //   hideVisualisation: true,
+      //   content: {
+      //     confirmInstructions: {
+      //       title: `Read the documentation`,
+      //       body: `Take the time to take in all the information, so that you know what the data visualization is about. Don't worry, this information will also be available while giving feedback.`,
+      //     }
+      //   },
+      //   navigation: [{
+      //       label: 'Done',
+      //       action: 'nextStep'
+      //     }
+      //   ]
+      // },
       {
-        isCentered: true,
-        hideVisualisation: true,
-        content: {
-          confirmInstructions: {
-            title: `Read the documentation`,
-            body: `Take the time to take in all the information, so that you know what the data visualization is about. Don't worry, this information will also be available while giving feedback.`,
-          }
-        },
-        navigation: [{
-            label: 'Done',
-            action: 'nextStep'
-          }
-        ]
-      },
-      {
-        popUp: {
-          title: `About giving feedback...`,
-          body: `The purpose of your feedback is to make the data visualization as good as possible. Always ask yourself 'does this help improve the data visualisation?' before commenting.`,
-          tipHeading: `Interface tips`,
-          tips: [
-            {
-              type: 'normal',
-              label: `Respect the feedback limits.`
-            },
-            {
-              type: 'normal',
-              label: `Click the 'view feedback' tab to view the feedback of group members.`
-            },
-            {
-              type: 'normal',
-              label: `add markers to your feedback to indicate which part of the data visualization your feedback is about.`
-            },
-          ],
-          buttonLabel: 'Done',
-        },
+        // popUp: {
+        //   title: `About giving feedback...`,
+        //   body: `The purpose of your feedback is to make the data visualization as good as possible. Always ask yourself 'does this help improve the data visualisation?' before commenting.`,
+        //   tipHeading: `Interface tips`,
+        //   tips: [
+        //     {
+        //       type: 'normal',
+        //       label: `Respect the feedback limits.`
+        //     },
+        //     {
+        //       type: 'normal',
+        //       label: `Click the 'view feedback' tab to view the feedback of group members.`
+        //     },
+        //     {
+        //       type: 'normal',
+        //       label: `add markers to your feedback to indicate which part of the data visualization your feedback is about.`
+        //     },
+        //   ],
+        //   buttonLabel: 'Done',
+        // },
         tabs: [
           {
             label: 'Give feedback',
@@ -290,10 +290,10 @@ export default {
           action: 'cancelMarkers'
         },
         {
-          label: 'Add',
+          label: 'Save',
           hasOutline: true,
+          hasDisabled: true,
           action: 'saveMarkers',
-          disabled: 'sessionMarkers'
         }
       ]
     }

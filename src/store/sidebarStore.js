@@ -1,3 +1,5 @@
+import areEqual from 'deep-equal';
+
 export default {
   namespaced: true,
 
@@ -5,7 +7,7 @@ export default {
     hideVisualisation: false,
     stepIndex: 1, // moet uit DB opgehaald worden
     showPopUp: true,
-    activeTab: 'give', // options: give, view
+    activeTab: 'give',
     showFeedbackHelperZero: true,
     textInput: '',
     showMarkerOverlay: false,
@@ -23,6 +25,7 @@ export default {
     showMarkerOverlay: (state) => state.showMarkerOverlay,
     perm: (state) => state.perm,
     temp: (state) => state.temp,
+    markersAreChanged: (state) => !areEqual(state.perm, state.temp),
   },
 
   mutations: {
@@ -97,6 +100,7 @@ export default {
     },
 
     startNewMarkerSession({ commit, getters }) {
+      // takes the markers that already excist as starting point for the 'marker session'
       commit('setTemp', cleanSource(getters.perm));
     },
 
@@ -105,20 +109,20 @@ export default {
       tempMarkers.push(marker);
       commit('setTemp', tempMarkers);
     },
+
+    removeTempMarker({ commit, getters }, id) {
+      const tempMarkers = getters.temp.filter((marker) => marker.id !== id);
+      commit('setTemp', tempMarkers);
+    },
+
+    saveTempMarkers({ commit, getters }) {
+      commit('setPerm', getters.temp);
+    },
   },
 };
 
 function cleanSource(source) {
-  // using native JSON functions removes reactivity
-  // so we can clone an object without mutating the original source
+  // use native JSON functions to remove the reactivity so objects (including arrays) can be cloned without mutating the original source
   // also see: https://forum.vuejs.org/t/how-to-remove-array-binding/53751
   return JSON.parse(JSON.stringify(source));
 }
-
-/*
- wanneer je een sessie start kopieer je de markers --> sessionMarkers
- alle veranderingen (toevoegen en verwijderen gebeurt in sessionMarkers)
- diabled state word bepaald of er verschil zit tussen markers en sessionMarkers
- als je opslaat word markers overschreven met sessionMarkers en word sessionMarkers gereset
- als je canceled dan word alleen sessionMarkers gereset
- */

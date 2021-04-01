@@ -6,14 +6,10 @@
 
     <div class="visualisation__image-container">
       <img :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="addMarker($event)">
-      <!-- <Marker v-for="marker in markers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" /> -->
+      <Marker v-for="marker in currentMarkers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
     </div>
   </section>
 </template>
-
-//todo: als je de markerOverlay cancelled en je had een marker verwijderd dan blijft hij verwijderd, eigenlijk moeten de markers die verwijderd zijn in de sessie weer terugkomen als je cancelled
-//todo: je kan niet op 'add' drukken als je alleen iets verwijdert hebt + de labels kloppen niet want als je alleen iets verwijdert dan moet er geen 'add' staan (miss save changes???)
-//todo: alleen de markers van de huidige feedback comment moeten zichtbaar zijn (ze moeten dus gereset worden wanneer iemand een comment post) + de markers zijn nu altijd zichtbaar wat niet moet
 
 //todo: markers moeten een hover state hebben waar ze gehighlight worden (voeg in figma een achtergrond cirkel toe, geef deze een opacity-fill in de gebruikers kleur in de hover state)
 //todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
@@ -21,15 +17,23 @@
 //todo: marker hide/show controls moeten zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 
 <script>
+import { mapGetters } from 'vuex';
 import Marker from '@/assets/icons/Marker';
 
 export default {
   name: 'Visualisation',
   components: {
-    // Marker,
+    Marker,
   },
   props: ['title', 'visualisation', 'isMarkerOverlay'],
   computed: {
+    ...mapGetters('sidebar', {
+      markers: 'perm',
+      sessionMarkers: 'temp',
+    }),
+    currentMarkers() {
+      return this.isMarkerOverlay ? this.sessionMarkers : this.markers;
+    },
   },
   methods: {
     addMarker(e) {
@@ -45,12 +49,11 @@ export default {
         y: yInPerc,
       };
 
-      console.log('CONTINUE: add new marker');
       this.$store.dispatch('sidebar/addTempMarker', marker);
     },
     handleMarkerClick(id) {
       if (this.isMarkerOverlay) {
-        console.log('CONTINUE: remove marker');
+        this.$store.dispatch('sidebar/removeTempMarker', id);
       }
     },
   },
