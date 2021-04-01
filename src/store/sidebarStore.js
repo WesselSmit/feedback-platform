@@ -11,8 +11,8 @@ export default {
     showFeedbackHelperZero: true,
     textInput: '',
     showMarkerOverlay: false,
-    perm: [],
-    temp: [],
+    markers: [],
+    sessionMarkers: [],
   },
 
   getters: {
@@ -23,9 +23,9 @@ export default {
     showFeedbackHelperZero: (state) => state.showFeedbackHelperZero,
     textInput: (state) => state.textInput,
     showMarkerOverlay: (state) => state.showMarkerOverlay,
-    perm: (state) => state.perm,
-    temp: (state) => state.temp,
-    markersAreChanged: (state) => !areEqual(state.perm, state.temp),
+    markers: (state) => state.markers,
+    sessionMarkers: (state) => state.sessionMarkers,
+    markersAreChanged: (state) => !areEqual(state.markers, state.sessionMarkers),
   },
 
   mutations: {
@@ -50,11 +50,11 @@ export default {
     setShowMarkerOverlay(state, val) {
       state.showMarkerOverlay = val;
     },
-    setPerm(state, val) {
-      state.perm = val;
+    setMarkers(state, val) {
+      state.markers = val;
     },
-    setTemp(state, val) {
-      state.temp = val;
+    setSessionMarkers(state, val) {
+      state.sessionMarkers = val;
     },
   },
 
@@ -101,22 +101,22 @@ export default {
 
     startNewMarkerSession({ commit, getters }) {
       // takes the markers that already excist as starting point for the 'marker session'
-      commit('setTemp', cleanSource(getters.perm));
+      commit('setSessionMarkers', cleanSource(getters.markers));
     },
 
-    addTempMarker({ commit, getters }, marker) {
-      const tempMarkers = getters.temp;
-      tempMarkers.push(marker);
-      commit('setTemp', tempMarkers);
+    addSessionMarker({ commit, getters }, marker) {
+      const { sessionMarkers } = getters;
+      sessionMarkers.push(marker);
+      commit('setSessionMarkers', sessionMarkers);
     },
 
-    removeTempMarker({ commit, getters }, id) {
-      const tempMarkers = getters.temp.filter((marker) => marker.id !== id);
-      commit('setTemp', tempMarkers);
+    removeSessionMarker({ commit, getters }, id) {
+      const sessionMarkers = getters.sessionMarkers.filter((marker) => marker.id !== id);
+      commit('setSessionMarkers', sessionMarkers);
     },
 
-    saveTempMarkers({ commit, getters }) {
-      commit('setPerm', getters.temp);
+    saveSessionMarkers({ commit, getters }) {
+      commit('setMarkers', getters.sessionMarkers);
     },
   },
 };

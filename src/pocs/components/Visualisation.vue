@@ -11,6 +11,7 @@
   </section>
 </template>
 
+//todo: het is mogelijk om de een ghost versie van de afbeelding te verslepen wat vervelend is als je markers probeert te zetten, kijk of je dit kan uitzetten met css
 //todo: markers moeten een hover state hebben waar ze gehighlight worden (voeg in figma een achtergrond cirkel toe, geef deze een opacity-fill in de gebruikers kleur in de hover state)
 //todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
 //todo: markers moeten de kleur van hun user hebben
@@ -28,8 +29,8 @@ export default {
   props: ['title', 'visualisation', 'isMarkerOverlay'],
   computed: {
     ...mapGetters('sidebar', {
-      markers: 'perm',
-      sessionMarkers: 'temp',
+      markers: 'markers',
+      sessionMarkers: 'sessionMarkers',
     }),
     currentMarkers() {
       return this.isMarkerOverlay ? this.sessionMarkers : this.markers;
@@ -49,11 +50,11 @@ export default {
         y: yInPerc,
       };
 
-      this.$store.dispatch('sidebar/addTempMarker', marker);
+      this.$store.dispatch('sidebar/addSessionMarker', marker);
     },
     handleMarkerClick(id) {
       if (this.isMarkerOverlay) {
-        this.$store.dispatch('sidebar/removeTempMarker', id);
+        this.$store.dispatch('sidebar/removeSessionMarker', id);
       }
     },
   },

@@ -56,7 +56,7 @@ export default {
         case 'saveMarkers':
           if (this.markersAreChanged) {
             this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
-            this.$store.dispatch('sidebar/saveTempMarkers');
+            this.$store.dispatch('sidebar/saveSessionMarkers');
           }
           break;
         default:
