@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import MarkerIcon from '@/assets/icons/MarkerIcon';
 import ImageIcon from '@/assets/icons/ImageIcon';
 
@@ -37,6 +38,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('sidebar', {
+      numberOfMarkers: 'numberOfMarkers',
+    }),
     projectId() {
       // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
       return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
@@ -50,7 +54,10 @@ export default {
       },
     },
     markerLabel() {
-      return this.labels.markersZero;
+      let label;
+      label = (this.numberOfMarkers > 0) ? `${this.numberOfMarkers} marker` : this.labels.markersZero;
+      label += (this.numberOfMarkers > 1) ? 's' : '';
+      return label;
     },
     imageLabel() {
       return this.labels.image;

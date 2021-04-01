@@ -25,6 +25,7 @@ export default {
     showMarkerOverlay: (state) => state.showMarkerOverlay,
     markers: (state) => state.markers,
     sessionMarkers: (state) => state.sessionMarkers,
+    numberOfMarkers: (state) => state.markers.length,
     markersAreChanged: (state) => !areEqual(state.markers, state.sessionMarkers),
   },
 
