@@ -9,6 +9,8 @@ export default {
     showFeedbackHelperZero: true,
     textInput: '',
     showMarkerOverlay: false,
+    perm: [],
+    temp: [],
   },
 
   getters: {
@@ -19,6 +21,8 @@ export default {
     showFeedbackHelperZero: (state) => state.showFeedbackHelperZero,
     textInput: (state) => state.textInput,
     showMarkerOverlay: (state) => state.showMarkerOverlay,
+    perm: (state) => state.perm,
+    temp: (state) => state.temp,
   },
 
   mutations: {
@@ -42,6 +46,12 @@ export default {
     },
     setShowMarkerOverlay(state, val) {
       state.showMarkerOverlay = val;
+    },
+    setPerm(state, val) {
+      state.perm = val;
+    },
+    setTemp(state, val) {
+      state.temp = val;
     },
   },
 
@@ -85,11 +95,28 @@ export default {
     updateShowMarkerOverlay({ commit }, value) {
       commit('setShowMarkerOverlay', value);
     },
+
+    startNewMarkerSession({ commit, getters }) {
+      commit('setTemp', cleanSource(getters.perm));
+    },
+
+    addTempMarker({ commit, getters }, marker) {
+      const tempMarkers = getters.temp;
+      tempMarkers.push(marker);
+      commit('setTemp', tempMarkers);
+    },
   },
 };
 
+function cleanSource(source) {
+  // using native JSON functions removes reactivity
+  // so we can clone an object without mutating the original source
+  // also see: https://forum.vuejs.org/t/how-to-remove-array-binding/53751
+  return JSON.parse(JSON.stringify(source));
+}
+
 /*
- wanneer je ene sessie start kopieer je de markers --> sessionMarkers
+ wanneer je een sessie start kopieer je de markers --> sessionMarkers
  alle veranderingen (toevoegen en verwijderen gebeurt in sessionMarkers)
  diabled state word bepaald of er verschil zit tussen markers en sessionMarkers
  als je opslaat word markers overschreven met sessionMarkers en word sessionMarkers gereset

@@ -59,6 +59,7 @@ export default {
   methods: {
     addMarkers() {
       this.$store.dispatch('sidebar/updateShowMarkerOverlay', true);
+      this.$store.dispatch('sidebar/startNewMarkerSession');
     },
     addImage() {},
     comment() {

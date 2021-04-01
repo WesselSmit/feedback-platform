@@ -46,6 +46,7 @@ export default {
       };
 
       console.log('CONTINUE: add new marker');
+      this.$store.dispatch('sidebar/addTempMarker', marker);
     },
     handleMarkerClick(id) {
       if (this.isMarkerOverlay) {
