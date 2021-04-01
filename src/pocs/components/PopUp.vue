@@ -70,6 +70,8 @@ export default {
   top: 0;
   left: 0;
   z-index: 10;
+  display: grid;
+  place-items: center;
   height: 100vh;
   width: 100vw;
   background-color: $white--overlay;
@@ -79,10 +81,7 @@ export default {
   }
 
   &__inner {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    @include zoomIn(300ms, $ease--fast);
     width: $popup-width;
     padding: $space--sm-md;
     background-color: $white;
