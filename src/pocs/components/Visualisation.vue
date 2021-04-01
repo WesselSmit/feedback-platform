@@ -4,7 +4,7 @@
       <h3>{{ title }}</h3>
     </div>
 
-    <div class="visualisation__image-container" :class="{ 'visualisation__image-container--animated': isMarkerOverlay }">
+    <div class="visualisation__image-container">
       <img :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="addMarker($event)">
       <Marker v-for="marker in markers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
     </div>
@@ -69,10 +69,15 @@ export default {
   margin: $space--lg 0;
 
   &--marker-overlay {
+    @include zoomIn(300ms, $ease--fast);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: calc(#{100vh} - (2 * #{$space--lg}));
+
+    .marker {
+      cursor: pointer;
+    }
   }
 
   &--marker-overlay & {
@@ -98,13 +103,8 @@ export default {
       position: relative;
       margin: 0 $space--sm-md;
 
-      &--animated {
-        @include zoomIn(300ms, $ease--fast);
-      }
-
       .marker {
         position: absolute;
-        cursor: pointer;
 
         &__outline,
         &__dot {
