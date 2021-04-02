@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import LimitIcon from '@/assets/icons/LimitIcon';
 import QuestionIcon from '@/assets/icons/QuestionIcon';
 
@@ -55,8 +56,11 @@ export default {
     },
   },
   methods: {
+    ...mapActions('sidebar', {
+      updateShowPopUp: 'updateShowPopUp',
+    }),
     handleClick() {
-      this.$store.dispatch('sidebar/updateShowPopUp');
+      this.updateShowPopUp();
     },
   },
 };
