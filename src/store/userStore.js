@@ -26,16 +26,16 @@ export default {
   },
 
   actions: {
-    async signUp({ dispatch }, form) {
+    async signUp({ dispatch }, payload) {
       try {
-        const { user } = await auth.createUserWithEmailAndPassword(form.email, form.password);
+        const { user } = await auth.createUserWithEmailAndPassword(payload.email, payload.password);
 
         // store user profile in db
         await usersRef.doc(user.uid).set({
           uid: user.uid,
-          name: form.name,
-          mail: form.email,
-          group: form.group,
+          name: payload.name,
+          mail: payload.email,
+          group: payload.group,
           role: 'student',
         });
 
@@ -46,9 +46,9 @@ export default {
       }
     },
 
-    async login({ dispatch }, form) {
+    async login({ dispatch }, payload) {
       try {
-        const { user } = await auth.signInWithEmailAndPassword(form.email, form.password);
+        const { user } = await auth.signInWithEmailAndPassword(payload.email, payload.password);
 
         // fetch user profile and set in state
         dispatch('getUser', user);
@@ -57,8 +57,8 @@ export default {
       }
     },
 
-    async getUser({ commit }, user) {
-      const userProfile = await usersRef.doc(user.uid).get();
+    async getUser({ commit }, payload) {
+      const userProfile = await usersRef.doc(payload.uid).get();
 
       commit('setUser', userProfile.data());
 
@@ -69,7 +69,6 @@ export default {
     },
 
     async logout({ commit }) {
-      console.log('jaa');
       await auth.signOut();
 
       // reset userProfile and redirect to /login
@@ -77,9 +76,9 @@ export default {
       router.push('/login');
     },
 
-    setError({ commit }, error) {
-      commit('setError', error);
-      console.error('Error in userStore:', error);
+    setError({ commit }, payload) {
+      commit('setError', payload);
+      console.error('Error in userStore:', payload);
     },
   },
 };

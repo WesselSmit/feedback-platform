@@ -17,6 +17,7 @@
 
 // todo: alle blueprints/visualisation moeten weg + give-boxing.js moet hernoemt worden
 // todo-now: voeg een favicon toe
+// todo: login error states moeten gereset worden als je succesvol ingelogd bent
 
 import Navigation from '@/components/Navigation.vue';
 import { mapGetters } from 'vuex';

@@ -44,9 +44,9 @@ export default {
       }
     },
 
-    setError({ commit }, error) {
-      commit('setError', error);
-      console.error('Error in groupStore:', error);
+    setError({ commit }, payload) {
+      commit('setError', payload);
+      console.error('Error in groupStore:', payload);
     },
   },
 };
