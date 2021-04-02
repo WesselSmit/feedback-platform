@@ -7,6 +7,9 @@
   <MarkerOverlay v-if="showMarkerOverlay" :content="{ documentation, markerContent}" class="base" />
 </template>
 
+//todo: 'agree with feedback' feature
+//todo: 'add image' feature
+
 <script>
 import { mapGetters } from 'vuex';
 // import content from '@/blueprints/give-boxing';
