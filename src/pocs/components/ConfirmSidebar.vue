@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'ConfirmSidebar',
@@ -41,6 +41,10 @@ export default {
     },
   },
   methods: {
+    ...mapActions('sidebar', {
+      updateShowMarkerOverlay: 'updateShowMarkerOverlay',
+      saveSessionMarkers: 'saveSessionMarkers',
+    }),
     showDisabledState(hasDisabled) {
       return hasDisabled && !this.markersAreChanged;
     },
@@ -51,12 +55,12 @@ export default {
 
       switch (action) {
         case 'cancelMarkers':
-          this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
+          this.updateShowMarkerOverlay(false);
           break;
         case 'saveMarkers':
           if (this.markersAreChanged) {
-            this.$store.dispatch('sidebar/updateShowMarkerOverlay', false);
-            this.$store.dispatch('sidebar/saveSessionMarkers');
+            this.updateShowMarkerOverlay(false);
+            this.saveSessionMarkers();
           }
           break;
         default:
