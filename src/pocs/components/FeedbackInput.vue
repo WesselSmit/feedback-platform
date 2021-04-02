@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import MarkerIcon from '@/assets/icons/MarkerIcon';
 import ImageIcon from '@/assets/icons/ImageIcon';
 
@@ -50,7 +50,7 @@ export default {
         return this.$store.getters['sidebar/textInput'];
       },
       set(value) {
-        this.$store.dispatch('sidebar/updateTextInput', value);
+        this.updateTextInput(value);
       },
     },
     markerLabel() {
@@ -64,14 +64,22 @@ export default {
     },
   },
   methods: {
+    ...mapActions('sidebar', {
+      updateTextInput: 'updateTextInput',
+      updateShowMarkerOverlay: 'updateShowMarkerOverlay',
+      startNewMarkerSession: 'startNewMarkerSession',
+    }),
+    ...mapActions('feedback', {
+      postComment: 'postComment',
+    }),
     addMarkers() {
-      this.$store.dispatch('sidebar/updateShowMarkerOverlay', true);
-      this.$store.dispatch('sidebar/startNewMarkerSession');
+      this.updateShowMarkerOverlay(true);
+      this.startNewMarkerSession();
     },
     addImage() {},
     comment() {
       if (this.textInput) {
-        this.$store.dispatch('feedback/postComment', { projectId: this.projectId, comment: this.textInput });
+        this.postComment({ projectId: this.projectId, comment: this.textInput });
         this.textInput = '';
       }
     },

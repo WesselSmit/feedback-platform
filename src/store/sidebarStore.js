@@ -92,9 +92,7 @@ export default {
     },
 
     updateTextInput({ commit, dispatch }, payload) {
-      const isEmpty = (payload === '');
-
-      dispatch('updateShowFeedbackHelperZero', isEmpty);
+      dispatch('updateShowFeedbackHelperZero', payload === '');
       commit('setTextInput', payload);
     },
 

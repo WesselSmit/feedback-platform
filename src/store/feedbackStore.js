@@ -23,9 +23,9 @@ export default {
   },
 
   actions: {
-    async postComment({ dispatch }, { projectId, comment }) {
+    async postComment({ dispatch }, payload) {
       try {
-        await db.collection(`comments-${projectId}`).add({
+        await db.collection(`comments-${payload.projectId}`).add({
           ts: Date.now(),
           user: { // todo: user moet uit userStore komen (gebruikt nu allemaal placeholder's)
             id: 'TESTER',
@@ -33,17 +33,17 @@ export default {
             role: 'TESTER',
             color: 'TESTER',
           },
-          text: comment,
+          text: payload.comment,
         });
       } catch (err) {
         dispatch('setError', err);
       }
     },
 
-    async getComments({ commit, dispatch }, projectId) {
+    async getComments({ commit, dispatch }, payload) {
       try {
         const comments = [];
-        const snapshot = await db.collection(`comments-${projectId}`).get();
+        const snapshot = await db.collection(`comments-${payload}`).get();
         snapshot.forEach((doc) => comments.push({ id: doc.id, data: doc.data() }));
 
         commit('setComments', comments);
@@ -52,9 +52,9 @@ export default {
       }
     },
 
-    setError({ commit }, error) {
-      commit('setError', error);
-      console.error('Error in feedbackStore:', error);
+    setError({ commit }, payload) {
+      commit('setError', payload);
+      console.error('Error in feedbackStore:', payload);
     },
   },
 };
