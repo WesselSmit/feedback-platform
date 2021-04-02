@@ -17,6 +17,12 @@
 //todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
 //todo: markers moeten de kleur van hun user hebben
 
+/* toevoegen (verwijderen werkt wel goed)
+  NIET voor markerOverlay
+  WEL tijdens markerOverlay
+  WEL na markerOverlay
+*/
+
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import MarkerIcon from '@/assets/icons/OverlayMarkerIcon';
@@ -42,19 +48,21 @@ export default {
       addSessionMarker: 'addSessionMarker',
     }),
     addMarker(e) {
-      const rect = e.target.getBoundingClientRect();
-      const xInPx = e.clientX - rect.left - (45 / 2); // 45 = width of Marker svg element in px
-      const yInPx = e.clientY - rect.top - (45 / 2); // 45 = height of Marker svg element in px
-      const xInPerc = ((xInPx / rect.width) * 100);
-      const yInPerc = ((yInPx / rect.height) * 100);
+      if (this.isMarkerOverlay) {
+        const rect = e.target.getBoundingClientRect();
+        const xInPx = e.clientX - rect.left - (45 / 2); // 45 = width of Marker svg element in px
+        const yInPx = e.clientY - rect.top - (45 / 2); // 45 = height of Marker svg element in px
+        const xInPerc = ((xInPx / rect.width) * 100);
+        const yInPerc = ((yInPx / rect.height) * 100);
 
-      const marker = {
-        id: Date.now(),
-        x: xInPerc,
-        y: yInPerc,
-      };
+        const marker = {
+          id: Date.now(),
+          x: xInPerc,
+          y: yInPerc,
+        };
 
-      this.addSessionMarker(marker);
+        this.addSessionMarker(marker);
+      }
     },
     handleMarkerClick(id) {
       if (this.isMarkerOverlay) {
