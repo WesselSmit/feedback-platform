@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'ConfirmInstructions',
   props: ['content', 'hideVisualisation'],
@@ -17,9 +19,14 @@ export default {
       return this.content.body;
     },
   },
+  methods: {
+    ...mapActions('sidebar', {
+      updateHideVisualisation: 'updateHideVisualisation',
+    }),
+  },
   created() {
     if (this.hideVisualisation) {
-      this.$store.dispatch('sidebar/updateHideVisualisation', true);
+      this.updateHideVisualisation(true);
     }
   },
 };

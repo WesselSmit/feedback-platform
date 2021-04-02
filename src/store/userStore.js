@@ -69,6 +69,7 @@ export default {
     },
 
     async logout({ commit }) {
+      console.log('jaa');
       await auth.signOut();
 
       // reset userProfile and redirect to /login
