@@ -6,16 +6,17 @@
 
     <div class="visualisation__image-container">
       <img draggable="false" :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="addMarker($event)">
-      <MarkerIcon v-for="marker in currentMarkers" :key="marker" class="visualisation__marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
+      <MarkerIcon v-for="marker in currentMarkers" :key="marker" class="visualisation__marker" :class="{ 'visualisation__marker--has-hover': isMarkerOverlay }"
+      :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
     </div>
   </section>
 </template>
 
 //todo-now: het is opeens weer mogelijk om markers toe te voegen wanneer je niet in de markerOverlay zit (werkt het altijd of alleen als je er al een paar hebt toegevoegd?)
-//todo-now: markers hebben een hover state wanneer ze NIET in de markerOverlay zijn, twerijl de hover state juist alleen zichtbaar moet zijn in de markerOverlay
 //todo-now: wanneer je markers hebt toegevoed en ze in het add-marker-label komen te staan is het marker icoon niet paars
 //todo-now: marker hide/show controls toevoegen + ze moeten alleen zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 //todo-now: marker hide/show controls moeten zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
+//todo: wanneer de markerOverlay cancelled/saved moet de documentatie pagina automatisch naar de data visualisatie scrollen
 //todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
 //todo: markers moeten de kleur van hun user hebben
 
@@ -113,19 +114,19 @@ export default {
   &__marker {
     position: absolute;
 
-    &:hover & {
-      &-glow {
-        opacity: .2;
-        transform: scale(1);
-      }
-    }
-
     &-glow {
       fill: $purple; //todo: moet user kleur worden
       opacity: 0;
       transform: scale(.1);
       transform-origin: center;
       transition: transform 300ms $ease--fast, opacity 1s $ease--fast;
+    }
+
+    &--has-hover:hover & {
+      &-glow {
+        opacity: .2;
+        transform: scale(1);
+      }
     }
 
     &-outline,

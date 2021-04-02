@@ -18,6 +18,8 @@
   </section>
 </template>
 
+//todo: empty state
+
 <script>
 import { mapGetters, mapActions } from 'vuex';
 
