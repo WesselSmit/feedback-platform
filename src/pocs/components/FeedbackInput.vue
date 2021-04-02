@@ -171,6 +171,12 @@ export default {
 
     &-icon {
       margin-right: $space--sm;
+
+      .marker {
+        &__background {
+          fill: $white;
+        }
+      }
     }
   }
 }

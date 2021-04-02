@@ -6,7 +6,7 @@
 
     <div class="visualisation__image-container">
       <img draggable="false" :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="addMarker($event)">
-      <Marker v-for="marker in currentMarkers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
+      <MarkerIcon v-for="marker in currentMarkers" :key="marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
     </div>
   </section>
 </template>
@@ -18,12 +18,12 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import Marker from '@/assets/icons/Marker';
+import MarkerIcon from '@/assets/icons/MarkerIcon';
 
 export default {
   name: 'Visualisation',
   components: {
-    Marker,
+    MarkerIcon,
   },
   props: ['title', 'visualisation', 'isMarkerOverlay'],
   computed: {
