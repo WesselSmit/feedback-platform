@@ -18,7 +18,7 @@
 //todo: markers moeten de kleur van hun user hebben
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Marker from '@/assets/icons/Marker';
 
 export default {
@@ -37,6 +37,10 @@ export default {
     },
   },
   methods: {
+    ...mapActions('sidebar', {
+      removeSessionMarker: 'removeSessionMarker',
+      addSessionMarker: 'addSessionMarker',
+    }),
     addMarker(e) {
       const rect = e.target.getBoundingClientRect();
       const xInPx = e.clientX - rect.left - (16 / 2); // 16 = width of Marker svg element in px
@@ -50,11 +54,11 @@ export default {
         y: yInPerc,
       };
 
-      this.$store.dispatch('sidebar/addSessionMarker', marker);
+      this.addSessionMarker(marker);
     },
     handleMarkerClick(id) {
       if (this.isMarkerOverlay) {
-        this.$store.dispatch('sidebar/removeSessionMarker', id);
+        this.removeSessionMarker(id);
       }
     },
   },
