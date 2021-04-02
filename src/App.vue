@@ -12,7 +12,7 @@
 </template>
 
 <script>
-// todo: make sure the firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
+// todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
 //* elk project heeft een eigen collection in de firestore, de documenten in deze collection
 
 // todo: alle blueprints/visualisation moeten weg + give-boxing.js moet hernoemt worden

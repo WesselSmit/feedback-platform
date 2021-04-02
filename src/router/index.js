@@ -7,12 +7,12 @@ const routes = [
   {
     path: '/poc/give',
     name: 'give',
-    component: () => import(/* webpackChunkName: "login" */ '@/pocs/Give.vue'),
+    component: () => import(/* webpackChunkName: "give" */ '@/pocs/Give.vue'),
   },
   {
     path: '/poc/done',
     name: 'done',
-    component: () => import(/* webpackChunkName: "login" */ '@/pocs/Done.vue'),
+    component: () => import(/* webpackChunkName: "done" */ '@/pocs/Done.vue'),
   },
   {
     path: '/',
