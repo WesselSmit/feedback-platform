@@ -13,10 +13,8 @@
 </template>
 
 //todo-now: het is opeens weer mogelijk om markers toe te voegen wanneer je niet in de markerOverlay zit (werkt het altijd of alleen als je er al een paar hebt toegevoegd?)
-//todo-now: wanneer je markers hebt toegevoed en ze in het add-marker-label komen te staan is het marker icoon niet paars
 //todo-now: marker hide/show controls toevoegen + ze moeten alleen zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 //todo-now: marker hide/show controls moeten zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
-//todo: wanneer de markerOverlay cancelled/saved moet de documentatie pagina automatisch naar de data visualisatie scrollen
 //todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
 //todo: markers moeten de kleur van hun user hebben
 

@@ -24,7 +24,6 @@ export default {
   props: ['content'],
   computed: {
     ...mapGetters('sidebar', {
-      sessionMarkers: 'temp',
       markersAreChanged: 'markersAreChanged',
     }),
     title() {

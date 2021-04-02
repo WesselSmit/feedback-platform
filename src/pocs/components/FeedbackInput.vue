@@ -145,8 +145,10 @@ export default {
     }
 
     &--active & {
-      &-icon {
-        fill: $purple;
+      &-marker {
+        &-icon {
+          fill: $purple;
+        }
       }
     }
 
