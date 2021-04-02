@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  name: 'feedback-comments',
+  name: 'FeedbackComments',
   props: ['content'],
   computed: {
     ...mapGetters('feedback', {
@@ -43,6 +43,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions('feedback', {
+      getComments: 'getComments',
+    }),
     getInitials(name) {
       const nameParts = name.split(' ');
       const hasMultipleParts = nameParts.length > 1;
@@ -52,7 +55,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('feedback/getComments', this.projectId);
+    this.getComments(this.projectId);
   },
 };
 </script>
