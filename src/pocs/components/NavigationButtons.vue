@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 
 export default {
   name: 'NavigationButtons',
@@ -20,13 +21,17 @@ export default {
     },
   },
   methods: {
+    ...mapActions('sidebar', {
+      updateTextInput: 'updateTextInput',
+      updateStepIndex: 'updateStepIndex',
+    }),
     handleClick(action) {
-      this.$store.dispatch('sidebar/updateTextInput', '');
+      this.updateTextInput('');
 
       if (action.hasOwnProperty('target')) {
         this.$router.push(action.target);
       } else if (action === 'previousStep' || action === 'nextStep') {
-        this.$store.dispatch('sidebar/updateStepIndex', action);
+        this.updateStepIndex(action);
       }
     },
   },
