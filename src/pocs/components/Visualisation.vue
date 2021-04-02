@@ -11,11 +11,11 @@
   </section>
 </template>
 
-//todo: het is mogelijk om de een ghost versie van de afbeelding te verslepen wat vervelend is als je markers probeert te zetten, kijk of je dit kan uitzetten met css
-//todo: markers moeten een hover state hebben waar ze gehighlight worden (voeg in figma een achtergrond cirkel toe, geef deze een opacity-fill in de gebruikers kleur in de hover state)
+//todo-now: het is mogelijk om de een ghost versie van de afbeelding te verslepen wat vervelend is als je markers probeert te zetten, kijk of je dit kan uitzetten met css
+//todo-now: markers moeten een hover state hebben waar ze gehighlight worden (voeg in figma een achtergrond cirkel toe, geef deze een opacity-fill in de gebruikers kleur in de hover state)
+//todo-now: marker hide/show controls moeten zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 //todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
 //todo: markers moeten de kleur van hun user hebben
-//todo: marker hide/show controls moeten zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 
 <script>
 import { mapGetters } from 'vuex';

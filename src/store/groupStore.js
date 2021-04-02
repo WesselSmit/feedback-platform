@@ -35,7 +35,7 @@ export default {
         const groupNames = snapshot.docs.map((doc) => doc.id);
 
         // TODO: voeg gebruiker toe in firestore group (in een array met uid's + namen van alle users die onderdeel zijn). Gebruik hiervoor een 2e action
-        // TODO: hoe moet dit met coaches? zij behoren niet tot een groep, dus moeten ze dan een eigen coach group hebben?
+        // TODO: coaches + experts worden toegevoegd aan alle groups
 
         commit('setGroups', groups);
         commit('setGroupNames', groupNames);
