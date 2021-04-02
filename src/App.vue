@@ -17,7 +17,6 @@
 
 // todo: alle blueprints/visualisation moeten weg + give-boxing.js moet hernoemt worden
 // todo-now: voeg een favicon toe
-// todo-now: alle actions die alleen maar een mutation committen kunnen weg en dan kunnen de mutations direct aangeroepen worden vanuit de .vue files
 
 import Navigation from '@/components/Navigation.vue';
 import { mapGetters } from 'vuex';

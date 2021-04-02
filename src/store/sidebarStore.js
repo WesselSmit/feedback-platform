@@ -1,6 +1,6 @@
 import areEqual from 'deep-equal';
 
-// todo: cleanup all Store's --> sommige actions moeten alleen mutations worden + hernoem arguments naar 'payload'
+// todo-now: cleanup all Store's --> sommige actions moeten alleen mutations worden + hernoem arguments naar 'payload'
 
 export default {
   namespaced: true,
@@ -62,12 +62,12 @@ export default {
   },
 
   actions: {
-    updateHideVisualisation({ commit }, value) {
-      commit('setHideVisualisation', value);
+    updateHideVisualisation({ commit }, payload) {
+      commit('setHideVisualisation', payload);
     },
 
-    updateStepIndex({ commit, getters, dispatch }, action) {
-      const newIndex = (action === 'previousStep') ? getters.stepIndex - 1 : getters.stepIndex + 1;
+    updateStepIndex({ commit, getters, dispatch }, payload) {
+      const newIndex = (payload === 'previousStep') ? getters.stepIndex - 1 : getters.stepIndex + 1;
 
       commit('setStepIndex', newIndex);
       dispatch('updateHideVisualisation', false); // always show visualisation unless disabled in blueprint
@@ -78,28 +78,28 @@ export default {
       commit('setShowPopUp', false);
     },
 
-    updateActiveTab({ commit }, value) {
-      commit('setActiveTab', value);
+    updateActiveTab({ commit }, payload) {
+      commit('setActiveTab', payload);
     },
 
-    updateShowFeedbackHelperZero({ commit, getters }, value) {
+    updateShowFeedbackHelperZero({ commit, getters }, payload) {
       // pass new value or toggle current value
-      if (typeof value === 'undefined') {
-        value = !getters.showFeedbackHelperZero;
+      if (typeof payload === 'undefined') {
+        payload = !getters.showFeedbackHelperZero;
       }
 
-      commit('setShowFeedbackHelperZero', value);
+      commit('setShowFeedbackHelperZero', payload);
     },
 
-    updateTextInput({ commit, dispatch }, value) {
-      const isEmpty = (value === '');
+    updateTextInput({ commit, dispatch }, payload) {
+      const isEmpty = (payload === '');
 
       dispatch('updateShowFeedbackHelperZero', isEmpty);
-      commit('setTextInput', value);
+      commit('setTextInput', payload);
     },
 
-    updateShowMarkerOverlay({ commit }, value) {
-      commit('setShowMarkerOverlay', value);
+    updateShowMarkerOverlay({ commit }, payload) {
+      commit('setShowMarkerOverlay', payload);
     },
 
     startNewMarkerSession({ commit, getters }) {
@@ -107,14 +107,14 @@ export default {
       commit('setSessionMarkers', cleanSource(getters.markers));
     },
 
-    addSessionMarker({ commit, getters }, marker) {
+    addSessionMarker({ commit, getters }, payload) {
       const { sessionMarkers } = getters;
-      sessionMarkers.push(marker);
+      sessionMarkers.push(payload);
       commit('setSessionMarkers', sessionMarkers);
     },
 
-    removeSessionMarker({ commit, getters }, id) {
-      const sessionMarkers = getters.sessionMarkers.filter((marker) => marker.id !== id);
+    removeSessionMarker({ commit, getters }, payload) {
+      const sessionMarkers = getters.sessionMarkers.filter((marker) => marker.id !== payload);
       commit('setSessionMarkers', sessionMarkers);
     },
 
