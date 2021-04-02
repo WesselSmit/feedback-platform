@@ -5,11 +5,11 @@
 
         <div class="feedback-input__actions">
           <button class="feedback-input__action feedback-input__action-marker" :class="{ 'feedback-input__action--active': this.numberOfMarkers > 0 }" @click="addMarkers()">
-              <MarkerIcon class="feedback-input__action-icon" />
+              <MarkerIcon class="feedback-input__action-marker-icon" />
               {{ markerLabel }}
             </button>
           <button class="feedback-input__action feedback-input__action-image" @click="addImage()">
-              <ImageIcon class="feedback-input__action-icon" />
+              <ImageIcon class="feedback-input__action-image-icon" />
               {{ imageLabel }}
           </button>
           <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">Comment</button>
@@ -20,7 +20,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import MarkerIcon from '@/assets/icons/MarkerIcon';
+import MarkerIcon from '@/assets/icons/ButtonMarkerIcon';
 import ImageIcon from '@/assets/icons/ImageIcon';
 
 export default {
@@ -119,6 +119,7 @@ export default {
     padding: 0 15px;
     background-color: $white;
     color: $black;
+    white-space: nowrap;
     text-transform: uppercase;
     border: 1px solid transparent;
     border-radius: 0;
@@ -139,13 +140,6 @@ export default {
       color: $purple;
     }
 
-    &:hover &,
-    &:focus & {
-      &-icon {
-        fill: $purple;
-      }
-    }
-
     &--active {
       color: $purple;
     }
@@ -153,6 +147,43 @@ export default {
     &--active & {
       &-icon {
         fill: $purple;
+      }
+    }
+
+    &-marker {
+      &-icon {
+        margin-right: $space--sm;
+
+        &-background {
+          fill: $white;
+        }
+      }
+
+      &:hover &,
+      &:focus & {
+        &-icon {
+          &-outline,
+          &-dot {
+            fill: $purple;
+          }
+
+          &-background {
+            fill: none;
+          }
+        }
+      }
+    }
+
+    &-image {
+      &-icon {
+        margin-right: $space--sm;
+      }
+
+      &:hover &,
+      &:focus & {
+        &-icon {
+          fill: $purple;
+        }
       }
     }
 
@@ -166,16 +197,6 @@ export default {
         background-color: $gray--dark-opacity;
         color: $gray--dark;
         cursor: default;
-      }
-    }
-
-    &-icon {
-      margin-right: $space--sm;
-
-      .marker {
-        &__background {
-          fill: $white;
-        }
       }
     }
   }
