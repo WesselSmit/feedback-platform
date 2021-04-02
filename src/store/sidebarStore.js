@@ -1,5 +1,7 @@
 import areEqual from 'deep-equal';
 
+// todo: cleanup all Store's --> sommige actions moeten alleen mutations worden + hernoem arguments naar 'payload'
+
 export default {
   namespaced: true,
 
