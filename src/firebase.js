@@ -23,10 +23,12 @@ const storage = firebase.storage();
 const groupsRef = db.collection('groups');
 const usersRef = db.collection('users');
 
+const storageRef = storage.ref();
+
 export {
   auth,
   db,
-  storage,
   groupsRef,
   usersRef,
+  storageRef,
 };

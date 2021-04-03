@@ -2,14 +2,15 @@
   <!-- Tijdelijk scherm, in de echte app zal dit scherm en niet zijn en wordt de gebruiker naar het dashboard gestuurd -->
   <h1>You finished the demo!</h1>
 
-  <section>
-    <input type="file" @change="onFileSelected($event)">
-    <button @click="upload()">Upload</button>
-  </section>
+  <form>
+    <input type="file" @change="selectFile($event)">
+    <button @click.prevent="upload()">Upload</button>
+  </form>
 </template>
 
 <script>
-import { storage } from '@/firebase';
+import { storageRef } from '@/firebase';
+import { v4 as uuid } from 'uuid';
 
 export default {
   name: 'Done',
@@ -19,19 +20,27 @@ export default {
     };
   },
   methods: {
-    onFileSelected(e) {
+    selectFile(e) {
       this.selectedFile = e.target.files[0];
     },
-    upload() {
-      // adds file to storage, todo: since the name is hardcoded all files will overwrite each other, to prevent this the filenames need to be uid's (you can preserve the original filename in the metadata object in storage if you need it later on)
-      const ref = storage.ref().child('feedback/test.png');
-      ref.put(this.selectedFile).then((snapshot) => {
-        console.log('Uploaded a blob or file!', snapshot);
-      });
+    async upload() {
+      const fileNameParts = this.selectedFile.name.split('.');
+      const extension = fileNameParts[fileNameParts.length - 1];
+      const allowedTypes = ['png', 'jpg', 'jpeg'];
+      const maxBytes = 1024 * 1024 * 5;
+
+      if (allowedTypes.includes(extension) && this.selectedFile.size <= maxBytes) {
+        try {
+          const res = storageRef.child(`feedback/${uuid()}`).put(this.selectedFile);
+          console.log(await res);
+        } catch (err) {
+          console.error('Error trying to upload file:', err);
+        }
+      } else {
+        document.querySelector('form').reset();
+        console.log('only .png and .jpg files smaller than 5mb allowed');
+      }
     },
-  },
-  created() {
-    // storage.ref().child('feedback/test.png');
   },
 };
 </script>
