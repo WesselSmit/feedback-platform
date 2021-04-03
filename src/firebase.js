@@ -18,16 +18,17 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
+const storage = firebase.storage;
 
 const groupsRef = db.collection('groups');
 const usersRef = db.collection('users');
 
-const storageRef = storage.ref();
+const storageRef = storage().ref();
 
 export {
   auth,
   db,
+  storage,
   groupsRef,
   usersRef,
   storageRef,

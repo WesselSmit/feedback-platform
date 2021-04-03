@@ -2,14 +2,15 @@
   <!-- Tijdelijk scherm, in de echte app zal dit scherm en niet zijn en wordt de gebruiker naar het dashboard gestuurd -->
   <h1>You finished the demo!</h1>
 
-  <form>
-    <input type="file" @change="selectFile($event)">
+  <form ref="feedbackImageForm">
+    <input type="file" ref="feedbackImageInput" @change="selectFile($event)">
+    <button @click.prevent="$refs.feedbackImageInput.click()">Browse</button>
     <button @click.prevent="upload()">Upload</button>
   </form>
 </template>
 
 <script>
-import { storageRef } from '@/firebase';
+import { storage, storageRef } from '@/firebase';
 import { v4 as uuid } from 'uuid';
 
 export default {
@@ -17,6 +18,7 @@ export default {
   data() {
     return {
       selectedFile: null,
+      progress: 0,
     };
   },
   methods: {
@@ -31,13 +33,34 @@ export default {
 
       if (allowedTypes.includes(extension) && this.selectedFile.size <= maxBytes) {
         try {
-          const res = storageRef.child(`feedback/${uuid()}`).put(this.selectedFile);
-          console.log(await res);
+          const upload = storageRef.child(`feedback/${uuid()}`).put(this.selectedFile);
+          upload.on('state_changed',
+            (snapshot) => {
+              this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log(`Upload is ${this.progress}% done`);
+              switch (snapshot.state) {
+                case storage.TaskState.PAUSED:
+                  console.log('Upload is paused');
+                  break;
+                case storage.TaskState.RUNNING:
+                  console.log('Upload is running');
+                  break;
+                default:
+                  console.log('switch case not handled');
+              }
+            },
+            (err) => {
+              console.error('Error trying to upload file:', err);
+            },
+            async () => {
+              const downloadURL = await upload.snapshot.ref.getDownloadURL();
+              console.log('File available at', downloadURL);
+            });
         } catch (err) {
           console.error('Error trying to upload file:', err);
         }
       } else {
-        document.querySelector('form').reset();
+        this.$refs.feedbackImageForm.reset();
         console.log('only .png and .jpg files smaller than 5mb allowed');
       }
     },
