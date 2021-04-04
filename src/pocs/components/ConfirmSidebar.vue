@@ -5,13 +5,16 @@
       <p v-if="body">{{ body }}</p>
 
       <div v-if="showImageSidebar">
-        <form v-if="!selectedFile" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click.self="openFilePicker()">
+        <form v-if="!selectedFile" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
           <input class="confirm-sidebar__dropzone-input" type="file" ref="feedbackImageInput" @change="selectFile($event)">
           <p class="confirm-sidebar__dropzone-label">Drop a file or <span class="confirm-sidebar__dropzone-label--underline">browse</span></p>
         </form>
 
         <div v-if="selectedFilePreview" class="confirm-sidebar__preview-container">
           <img :src="selectedFilePreview" class="confirm-sidebar__preview">
+          <div class="confirm-sidebar__preview-remove">
+            <RemoveIcon class="confirm-sidebar__preview-remove-icon" @click="removeSelectedFile()" />
+          </div>
         </div>
       </div>
 
@@ -28,15 +31,19 @@
 </template>
 
 //todo: rules showen, errors states, disabled state van button
-//todo (preview): preview grootte checken met 'poster' formaat, preview verwijderen
+//todo (preview): preview grootte checken met 'poster' formaat
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import { storageRef } from '@/firebase';
 import { v4 as uuid } from 'uuid';
+import RemoveIcon from '@/assets/icons/RemoveIcon';
 
 export default {
   name: 'ConfirmSidebar',
+  components: {
+    RemoveIcon,
+  },
   props: ['content'],
   data() {
     return {
@@ -95,6 +102,10 @@ export default {
     async selectFile(e) {
       this.selectedFile = e.target.files[0];
       this.selectedFilePreview = await this.getPreview();
+    },
+    removeSelectedFile() {
+      this.selectedFile = null;
+      this.selectedFilePreview = null;
     },
     handleNavigationButton({ action }) {
       if (action.hasOwnProperty('target')) {
@@ -202,8 +213,53 @@ export default {
   }
 
   &__preview {
-    width: calc(#{$sidebar-width} - (2 * #{$space--sm-md}));
+    max-width: calc(#{$sidebar-width} - (2 * #{$space--sm-md}));
+    max-height: $feedback-image-preview-height;
     border: $border--ui;
+
+    &-container {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min-content;
+      margin: auto;
+
+      &:hover {
+        .confirm-sidebar__preview-remove {
+          opacity: 1;
+        }
+      }
+    }
+
+    &-remove {
+      position: absolute;
+      top: $space--sm;
+      right: $space--sm;
+      display: grid;
+      place-items: center;
+      padding: $space--xsm;
+      border: 1px solid transparent;
+      border-radius: $border-radius;
+      opacity: 0;
+      background-color: $white;
+      cursor: pointer;
+      transition: all 500ms $ease--fast;
+
+      &:hover {
+        background-color: $purple--opacity-solid;
+      }
+
+      &:hover & {
+        &-icon {
+          fill: $purple;
+        }
+      }
+
+      &-icon {
+        fill: $black;
+        transition: fill 500ms $ease--fast;
+      }
+    }
   }
 
   &__buttons {
