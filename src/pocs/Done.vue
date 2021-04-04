@@ -2,7 +2,7 @@
   <!-- Tijdelijk scherm, in de echte app zal dit scherm en niet zijn en wordt de gebruiker naar het dashboard gestuurd -->
   <h1>You finished the demo!</h1>
 
-  <form ref="feedbackImageForm">
+  <form ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent style="border: 1px solid red;">
     <input type="file" ref="feedbackImageInput" @change="selectFile($event)">
     <button @click.prevent="openFilePicker()">Browse</button>
   </form>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { storage, storageRef } from '@/firebase';
+import { storageRef } from '@/firebase';
 import { v4 as uuid } from 'uuid';
 
 export default {
@@ -23,6 +23,13 @@ export default {
     };
   },
   methods: {
+    handleDrop(e) {
+      if (e.dataTransfer.files.length === 1) {
+        this.selectedFile = e.dataTransfer.files[0];
+      } else {
+        console.log('too many files selected');
+      }
+    },
     openFilePicker() {
       this.$refs.feedbackImageInput.click();
     },
@@ -66,6 +73,6 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 
 </style>
