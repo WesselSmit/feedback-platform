@@ -30,7 +30,7 @@
   </section>
 </template>
 
-//todo: wanneer je een image toegevoegd hebt en vanaf de FeedbackInput weer naar de confirmSidebar/imageSidebar gaat dan krijg je de zero state terwijl je het scherm moet krijgen waar de geuploade image staat
+//todo: wanneer je een image toegevoegd hebt en vanaf de FeedbackInput weer naar de confirmSidebar/imageSidebar gaat dan krijg je de zero state terwijl je het scherm moet krijgen waar de geuploade image staat (dit betekent dat de tijdelijke 'selectedFile' en 'selectedFilePreview' in de sidebarStore moeten komen, want in data() waar ze nu staan worden ze elke keer gereset als je saved/cancelled)
 //todo: rules showen
 //todo: errors states
 
