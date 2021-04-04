@@ -8,8 +8,9 @@
               <MarkerIcon class="feedback-input__action-marker-icon" />
               {{ markerLabel }}
             </button>
-          <button class="feedback-input__action feedback-input__action-image" @click="addImage()">
-              <ImageIcon class="feedback-input__action-image-icon" />
+          <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': this.feedbackImage }" @click="addImage()">
+              <ImageIconZero v-if="!feedbackImage" class="feedback-input__action-image-icon" />
+              <ImageIconActive v-if="feedbackImage" class="feedback-input__action-image-icon" />
               {{ imageLabel }}
           </button>
           <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">Comment</button>
@@ -21,25 +22,29 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import MarkerIcon from '@/assets/icons/ButtonMarkerIcon';
-import ImageIcon from '@/assets/icons/ImageIcon';
+import ImageIconZero from '@/assets/icons/ImageIconZero';
+import ImageIconActive from '@/assets/icons/ImageIconActive';
 
 export default {
   name: 'FeedbackInput',
   components: {
     MarkerIcon,
-    ImageIcon,
+    ImageIconZero,
+    ImageIconActive,
   },
   data() {
     return {
       labels: {
         markersZero: 'Add markers',
-        image: 'Add image',
+        imageZero: 'Add image',
+        imageActive: 'Change image',
       },
     };
   },
   computed: {
     ...mapGetters('sidebar', {
       numberOfMarkers: 'numberOfMarkers',
+      feedbackImage: 'feedbackImage',
     }),
     projectId() {
       // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
@@ -60,7 +65,7 @@ export default {
       return label;
     },
     imageLabel() {
-      return this.labels.image;
+      return this.feedbackImage ? this.labels.imageActive : this.labels.imageZero;
     },
   },
   methods: {
@@ -68,8 +73,9 @@ export default {
       updateTextInput: 'updateTextInput',
       updateShowMarkerOverlay: 'updateShowMarkerOverlay',
       startNewMarkerSession: 'startNewMarkerSession',
-      updateShowImageSidebar: 'updateShowImageSidebar',
       resetAllMarkers: 'resetAllMarkers',
+      updateShowImageSidebar: 'updateShowImageSidebar',
+      updateFeedbackImage: 'updateFeedbackImage',
     }),
     ...mapActions('feedback', {
       postComment: 'postComment',
@@ -85,6 +91,7 @@ export default {
       if (this.textInput) {
         this.postComment({ projectId: this.projectId, comment: this.textInput });
         this.resetAllMarkers();
+        this.updateFeedbackImage(null);
         this.textInput = '';
       }
     },
@@ -150,7 +157,8 @@ export default {
     }
 
     &--active & {
-      &-marker {
+      &-marker,
+      &-image {
         &-icon {
           fill: $purple;
         }

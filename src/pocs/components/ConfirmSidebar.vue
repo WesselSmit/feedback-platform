@@ -30,7 +30,7 @@
   </section>
 </template>
 
-//todo: FeedbackInput 'add image' button states (see figma design)
+//todo: wanneer je een image toegevoegd hebt en vanaf de FeedbackInput weer naar de confirmSidebar/imageSidebar gaat dan krijg je de zero state terwijl je het scherm moet krijgen waar de geuploade image staat
 //todo: rules showen
 //todo: errors states
 
