@@ -128,6 +128,12 @@ export default {
       commit('setMarkers', getters.sessionMarkers);
     },
 
+    resetAllMarkers({ commit }) {
+      // only used when the feedback/comment has been posted and all associated data (markers & images) need to be reset
+      commit('setMarkers', []);
+      commit('setSessionMarkers', []);
+    },
+
     updateShowImageSidebar({ commit }, payload) {
       commit('setShowImageSidebar', payload);
     },

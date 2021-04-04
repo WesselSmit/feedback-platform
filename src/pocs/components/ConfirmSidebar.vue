@@ -30,8 +30,9 @@
   </section>
 </template>
 
-//todo: rules showen, errors states, disabled state van button
-//todo (preview): preview grootte checken met 'poster' formaat
+//todo: FeedbackInput 'add image' button states (see figma design)
+//todo: rules showen
+//todo: errors states
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -51,11 +52,11 @@ export default {
       maxBytes: 1024 * 1024 * 5,
       selectedFile: null,
       selectedFilePreview: null,
-      progress: null,
     };
   },
   computed: {
     ...mapGetters('sidebar', {
+      showMarkerOverlay: 'showMarkerOverlay',
       markersAreChanged: 'markersAreChanged',
       showImageSidebar: 'showImageSidebar',
     }),
@@ -72,11 +73,11 @@ export default {
       return this.content.navigation.length > 1;
     },
     fileExtension() {
-      const fileNameParts = this.selectedfile.name.split('.');
+      const fileNameParts = this.selectedFile.name.split('.');
       return fileNameParts[fileNameParts.length - 1];
     },
     isValidFile() {
-      return this.allowedTypes.includes(this.fileExtension) && this.selectedfile.size <= this.maxBytes;
+      return this.allowedTypes.includes(this.fileExtension) && this.selectedFile.size <= this.maxBytes;
     },
   },
   methods: {
@@ -84,9 +85,15 @@ export default {
       updateShowMarkerOverlay: 'updateShowMarkerOverlay',
       saveSessionMarkers: 'saveSessionMarkers',
       updateShowImageSidebar: 'updateShowImageSidebar',
+      updateFeedbackImage: 'updateFeedbackImage',
     }),
     showDisabledState(hasDisabled) {
-      return hasDisabled && !this.markersAreChanged;
+      if (this.showMarkerOverlay) {
+        return hasDisabled && !this.markersAreChanged;
+      }
+      if (this.showImageSidebar) {
+        return hasDisabled && !this.selectedFile;
+      }
     },
     openFilePicker() {
       this.$refs.feedbackImageInput.click();
@@ -128,7 +135,11 @@ export default {
           this.selectedFilePreview = null;
           break;
         case 'saveImage':
-          this.upload();
+          if (this.selectedFile !== null) {
+            this.upload();
+          } else {
+            console.log('no file selected');
+          }
           break;
         default:
           console.log('switch case not handled');
@@ -143,31 +154,28 @@ export default {
       });
     },
     async upload() {
-      if (this.selectedfile) {
-        if (this.isValidFile()) {
-          try {
-            const upload = storageRef.child(`feedback/${uuid()}`).put(this.selectedfile);
-            upload.on('state_changed',
-              (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(`Upload is ${progress}% done`);
-              },
-              (err) => {
-                console.error('Error trying to upload file:', err);
-              },
-              async () => {
-                const imageUrl = await upload.snapshot.ref.getDownloadURL();
-                this.updateFeedbackImage(imageUrl);
-              });
-          } catch (err) {
-            console.error('Error trying to upload file:', err);
-          }
-        } else {
-          this.$refs.feedbackImageForm.reset();
-          console.log('only .png and .jpg files smaller than 5mb allowed');
+      if (this.isValidFile) {
+        try {
+          const imageId = uuid();
+          const upload = storageRef.child(`feedback/${imageId}`).put(this.selectedFile);
+          upload.on('state_changed',
+            (snapshot) => {
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log(`Upload is ${progress}% done`);
+            },
+            (err) => {
+              console.error('Error trying to upload file:', err);
+            },
+            () => {
+              this.updateFeedbackImage(imageId);
+              this.updateShowImageSidebar(false);
+            });
+        } catch (err) {
+          console.error('Error trying to upload file:', err);
         }
       } else {
-        console.log('no file selected');
+        this.$refs.feedbackImageForm.reset();
+        console.log('only .png and .jpg files smaller than 5mb allowed');
       }
     },
   },

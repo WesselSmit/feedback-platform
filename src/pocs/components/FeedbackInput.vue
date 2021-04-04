@@ -69,6 +69,7 @@ export default {
       updateShowMarkerOverlay: 'updateShowMarkerOverlay',
       startNewMarkerSession: 'startNewMarkerSession',
       updateShowImageSidebar: 'updateShowImageSidebar',
+      resetAllMarkers: 'resetAllMarkers',
     }),
     ...mapActions('feedback', {
       postComment: 'postComment',
@@ -83,6 +84,7 @@ export default {
     comment() {
       if (this.textInput) {
         this.postComment({ projectId: this.projectId, comment: this.textInput });
+        this.resetAllMarkers();
         this.textInput = '';
       }
     },
