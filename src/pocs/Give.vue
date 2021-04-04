@@ -1,14 +1,15 @@
 <template>
   <main v-if="!showMarkerOverlay" class="base">
     <Documentation :content="documentation" />
-    <Sidebar :content="{ documentation, sidebar }" :stepIndex="stepIndex" />
+    <Sidebar v-if="!showImageSidebar" :content="{ documentation, sidebar }" :stepIndex="stepIndex" />
+    <ConfirmSidebar v-if="showImageSidebar" :content="imageContent" />
   </main>
 
   <MarkerOverlay v-if="showMarkerOverlay" :content="{ documentation, markerContent}" class="base" />
 </template>
 
+//todo: add animations
 //todo: 'agree with feedback' feature
-//todo: 'add image' feature
 
 <script>
 import { mapGetters } from 'vuex';
@@ -16,6 +17,7 @@ import { mapGetters } from 'vuex';
 import content from '@/blueprints/give-twitter';
 import Documentation from '@/pocs/components/Documentation';
 import Sidebar from '@/pocs/components/Sidebar';
+import ConfirmSidebar from '@/pocs/components/ConfirmSidebar';
 import MarkerOverlay from '@/pocs/components/MarkerOverlay';
 
 export default {
@@ -23,18 +25,23 @@ export default {
   components: {
     Documentation,
     Sidebar,
+    ConfirmSidebar,
     MarkerOverlay,
   },
   computed: {
     ...mapGetters('sidebar', {
       stepIndex: 'stepIndex',
       showMarkerOverlay: 'showMarkerOverlay',
+      showImageSidebar: 'showImageSidebar',
     }),
     documentation() {
       return content.documentation;
     },
     sidebar() {
       return content.sidebar;
+    },
+    imageContent() {
+      return content.sidebar.imageContent;
     },
     markerContent() {
       return content.sidebar.markerContent;

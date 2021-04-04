@@ -262,23 +262,8 @@ export default {
       },
     ],
     viewFeedbackSections: {
-      // readInstructions: {
-      //   title: `Lorem Ipsum`,
-      //   body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
-      //   legend: [
-      //     {
-      //       type: 'question',
-      //       label: `Do give feedback`
-      //     },
-      //     {
-      //       type: 'limit',
-      //       label: `Don't give feedback`
-      //     }
-      //   ],
-      // },
       feedbackComments: {
         title: `All feedback`,
-        // body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
       }
     },
     markerContent: {
@@ -294,6 +279,23 @@ export default {
           hasOutline: true,
           hasDisabled: true,
           action: 'saveMarkers',
+        }
+      ]
+    },
+    imageContent: {
+      title: `Add image to feedback.`,
+      body: `Visually support your feedback by adding an image. Images can be used to explain your feedback or show alternative solutions.`,
+      rule: `Only .png and .jpg files smaller than 5mb allowed.`,
+      navigation: [
+        {
+          label: 'Cancel',
+          action: 'cancelImage'
+        },
+        {
+          label: 'Save',
+          hasOutline: true,
+          hasDisabled: true,
+          action: 'saveImage',
         }
       ]
     }

@@ -68,6 +68,7 @@ export default {
       updateTextInput: 'updateTextInput',
       updateShowMarkerOverlay: 'updateShowMarkerOverlay',
       startNewMarkerSession: 'startNewMarkerSession',
+      updateShowImageSidebar: 'updateShowImageSidebar',
     }),
     ...mapActions('feedback', {
       postComment: 'postComment',
@@ -76,7 +77,9 @@ export default {
       this.updateShowMarkerOverlay(true);
       this.startNewMarkerSession();
     },
-    addImage() {},
+    addImage() {
+      this.updateShowImageSidebar(true);
+    },
     comment() {
       if (this.textInput) {
         this.postComment({ projectId: this.projectId, comment: this.textInput });
