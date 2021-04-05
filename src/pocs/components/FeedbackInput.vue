@@ -76,6 +76,7 @@ export default {
       resetAllMarkers: 'resetAllMarkers',
       updateShowImageSidebar: 'updateShowImageSidebar',
       updateFeedbackImage: 'updateFeedbackImage',
+      resetFeedbackImage: 'resetFeedbackImage',
     }),
     ...mapActions('feedback', {
       postComment: 'postComment',
@@ -91,7 +92,7 @@ export default {
       if (this.textInput) {
         this.postComment({ projectId: this.projectId, comment: this.textInput });
         this.resetAllMarkers();
-        this.updateFeedbackImage(null);
+        this.resetFeedbackImage();
         this.textInput = '';
       }
     },
@@ -205,6 +206,7 @@ export default {
     &-comment {
       margin-left: auto;
       color: $purple;
+      background-color: $purple--opacity;
 
       &--disabled,
       &--disabled:hover,

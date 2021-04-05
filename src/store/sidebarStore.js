@@ -15,6 +15,8 @@ export default {
     sessionMarkers: [],
     showImageSidebar: false,
     feedbackImage: null,
+    selectedImage: null,
+    selectedImagePreview: null,
   },
 
   getters: {
@@ -31,6 +33,8 @@ export default {
     markersAreChanged: (state) => !areEqual(state.markers, state.sessionMarkers),
     showImageSidebar: (state) => state.showImageSidebar,
     feedbackImage: (state) => state.feedbackImage,
+    selectedImage: (state) => state.selectedImage,
+    selectedImagePreview: (state) => state.selectedImagePreview,
   },
 
   mutations: {
@@ -66,6 +70,12 @@ export default {
     },
     setFeedbackImage(state, val) {
       state.feedbackImage = val;
+    },
+    setSelectedImage(state, val) {
+      state.selectedImage = val;
+    },
+    setSelectedImagePreview(state, val) {
+      state.selectedImagePreview = val;
     },
   },
 
@@ -140,6 +150,20 @@ export default {
 
     updateFeedbackImage({ commit }, payload) {
       commit('setFeedbackImage', payload);
+    },
+
+    updateSelectedImage({ commit }, payload) {
+      commit('setSelectedImage', payload);
+    },
+
+    updateSelectedImagePreview({ commit }, payload) {
+      commit('setSelectedImagePreview', payload);
+    },
+
+    resetFeedbackImage({ commit }) {
+      commit('setFeedbackImage', null);
+      commit('setSelectedImage', null);
+      commit('setSelectedImagePreview', null);
     },
   },
 };

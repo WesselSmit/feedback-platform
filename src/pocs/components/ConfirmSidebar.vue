@@ -5,13 +5,13 @@
       <p v-if="body">{{ body }}</p>
 
       <div v-if="showImageSidebar">
-        <form v-if="!selectedFile" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
+        <form v-if="!selectedImage" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
           <input class="confirm-sidebar__dropzone-input" type="file" ref="feedbackImageInput" @change="selectFile($event)">
           <p class="confirm-sidebar__dropzone-label">Drop a file or <span class="confirm-sidebar__dropzone-label--underline">browse</span></p>
         </form>
 
-        <div v-if="selectedFilePreview" class="confirm-sidebar__preview-container">
-          <img :src="selectedFilePreview" class="confirm-sidebar__preview">
+        <div v-if="selectedImagePreview" class="confirm-sidebar__preview-container">
+          <img :src="selectedImagePreview" class="confirm-sidebar__preview">
           <div class="confirm-sidebar__preview-remove">
             <RemoveIcon class="confirm-sidebar__preview-remove-icon" @click="removeSelectedFile()" />
           </div>
@@ -46,19 +46,13 @@ export default {
     RemoveIcon,
   },
   props: ['content'],
-  data() {
-    return {
-      allowedTypes: ['png', 'jpg', 'jpeg'],
-      maxBytes: 1024 * 1024 * 5,
-      selectedFile: null,
-      selectedFilePreview: null,
-    };
-  },
   computed: {
     ...mapGetters('sidebar', {
       showMarkerOverlay: 'showMarkerOverlay',
       markersAreChanged: 'markersAreChanged',
       showImageSidebar: 'showImageSidebar',
+      selectedImage: 'selectedImage',
+      selectedImagePreview: 'selectedImagePreview',
     }),
     title() {
       return this.content.title;
@@ -73,11 +67,13 @@ export default {
       return this.content.navigation.length > 1;
     },
     fileExtension() {
-      const fileNameParts = this.selectedFile.name.split('.');
+      const fileNameParts = this.selectedImage.name.split('.');
       return fileNameParts[fileNameParts.length - 1];
     },
     isValidFile() {
-      return this.allowedTypes.includes(this.fileExtension) && this.selectedFile.size <= this.maxBytes;
+      const allowedTypes = ['png', 'jpg', 'jpeg'];
+      const maxBytes = 1024 * 1024 * 5;
+      return allowedTypes.includes(this.fileExtension) && this.selectedImage.size <= maxBytes;
     },
   },
   methods: {
@@ -86,13 +82,15 @@ export default {
       saveSessionMarkers: 'saveSessionMarkers',
       updateShowImageSidebar: 'updateShowImageSidebar',
       updateFeedbackImage: 'updateFeedbackImage',
+      updateSelectedImage: 'updateSelectedImage',
+      updateSelectedImagePreview: 'updateSelectedImagePreview',
     }),
     showDisabledState(hasDisabled) {
       if (this.showMarkerOverlay) {
         return hasDisabled && !this.markersAreChanged;
       }
       if (this.showImageSidebar) {
-        return hasDisabled && !this.selectedFile;
+        return hasDisabled && !this.selectedImage;
       }
     },
     openFilePicker() {
@@ -100,19 +98,19 @@ export default {
     },
     async handleDrop(e) {
       if (e.dataTransfer.files.length === 1) {
-        this.selectedFile = e.dataTransfer.files[0];
-        this.selectedFilePreview = await this.getPreview();
+        this.updateSelectedImage(e.dataTransfer.files[0]);
+        this.updateSelectedImagePreview(await this.getPreview());
       } else {
         console.log('too many files selected');
       }
     },
     async selectFile(e) {
-      this.selectedFile = e.target.files[0];
-      this.selectedFilePreview = await this.getPreview();
+      this.updateSelectedImage(e.target.files[0]);
+      this.updateSelectedImagePreview(await this.getPreview());
     },
     removeSelectedFile() {
-      this.selectedFile = null;
-      this.selectedFilePreview = null;
+      this.updateSelectedImage(null);
+      this.updateSelectedImagePreview(null);
     },
     handleNavigationButton({ action }) {
       if (action.hasOwnProperty('target')) {
@@ -131,11 +129,11 @@ export default {
           break;
         case 'cancelImage':
           this.updateShowImageSidebar(false);
-          this.selectedFile = null;
-          this.selectedFilePreview = null;
+          this.updateSelectedImage(null);
+          this.updateSelectedImagePreview(null);
           break;
         case 'saveImage':
-          if (this.selectedFile !== null) {
+          if (this.selectedImage !== null) {
             this.upload();
           } else {
             console.log('no file selected');
@@ -150,14 +148,14 @@ export default {
         const fr = new FileReader();
         fr.onload = () => resolve(fr.result);
         fr.onerror = () => reject();
-        fr.readAsDataURL(this.selectedFile);
+        fr.readAsDataURL(this.selectedImage);
       });
     },
     async upload() {
       if (this.isValidFile) {
         try {
           const imageId = uuid();
-          const upload = storageRef.child(`feedback/${imageId}`).put(this.selectedFile);
+          const upload = storageRef.child(`feedback/${imageId}`).put(this.selectedImage);
           upload.on('state_changed',
             (snapshot) => {
               const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
