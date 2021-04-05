@@ -35,6 +35,7 @@ export default {
     feedbackImage: (state) => state.feedbackImage,
     selectedImage: (state) => state.selectedImage,
     selectedImagePreview: (state) => state.selectedImagePreview,
+    imageIsChanged: (state) => !areEqual(state.feedbackImage?.file, state.selectedImage),
   },
 
   mutations: {

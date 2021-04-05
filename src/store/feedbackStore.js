@@ -34,7 +34,7 @@ export default {
             color: 'TESTER',
           },
           text: payload.comment,
-          image: rootGetters['sidebar/feedbackImage'],
+          image: rootGetters['sidebar/feedbackImage'].id,
           markers: rootGetters['sidebar/markers'],
         });
       } catch (err) {

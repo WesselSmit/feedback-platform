@@ -12,8 +12,8 @@
 
         <div v-if="selectedImagePreview" class="confirm-sidebar__preview-container">
           <img :src="selectedImagePreview" class="confirm-sidebar__preview">
-          <div class="confirm-sidebar__preview-remove">
-            <RemoveIcon class="confirm-sidebar__preview-remove-icon" @click="removeSelectedFile()" />
+          <div class="confirm-sidebar__preview-remove" @click="removeSelectedFile()">
+            <RemoveIcon class="confirm-sidebar__preview-remove-icon" />
           </div>
         </div>
       </div>
@@ -27,10 +27,16 @@
         </button>
       </div>
     </div>
+    <p>feedbackImage: {{ this.feedbackImage }}</p>
+    <p>selectedImage: {{ this.selectedImage }}</p>
+    <p>selectedImagePreview: {{ this.selectedImagePreview }}</p>
+    <p>is changed: {{ this.imageIsChanged }}</p>
   </section>
 </template>
 
-//todo: wanneer je een image toegevoegd hebt en vanaf de FeedbackInput weer naar de confirmSidebar/imageSidebar gaat dan krijg je de zero state terwijl je het scherm moet krijgen waar de geuploade image staat (dit betekent dat de tijdelijke 'selectedFile' en 'selectedFilePreview' in de sidebarStore moeten komen, want in data() waar ze nu staan worden ze elke keer gereset als je saved/cancelled)
+//todo: als er een afbeelding toegevoegd is en de gebruiker opnieuw de ConfirmSidebar opent en vervolgens de image removed; als je cancelled blijft de (selectedImage) image weg (deze moet ge-restored worden)
+//todo: de states/interacties wanneer een afbeelding al toegevoegd is en je opnieuw de image-ConfirmSidebar opent kloppen nog niet
+//todo: laatste check: check alle mogelijkheden --> kloppen de states en bijhroende data? zijn de buttons goed disabled? wordt de image daadwerkelijk opgeslagen in firebase?
 //todo: rules showen
 //todo: errors states
 
@@ -53,6 +59,8 @@ export default {
       showImageSidebar: 'showImageSidebar',
       selectedImage: 'selectedImage',
       selectedImagePreview: 'selectedImagePreview',
+      imageIsChanged: 'imageIsChanged',
+      feedbackImage: 'feedbackImage',
     }),
     title() {
       return this.content.title;
@@ -84,13 +92,14 @@ export default {
       updateFeedbackImage: 'updateFeedbackImage',
       updateSelectedImage: 'updateSelectedImage',
       updateSelectedImagePreview: 'updateSelectedImagePreview',
+      resetFeedbackImage: 'resetFeedbackImage',
     }),
     showDisabledState(hasDisabled) {
       if (this.showMarkerOverlay) {
         return hasDisabled && !this.markersAreChanged;
       }
       if (this.showImageSidebar) {
-        return hasDisabled && !this.selectedImage;
+        return hasDisabled && !this.imageIsChanged;
       }
     },
     openFilePicker() {
@@ -129,14 +138,15 @@ export default {
           break;
         case 'cancelImage':
           this.updateShowImageSidebar(false);
-          this.updateSelectedImage(null);
-          this.updateSelectedImagePreview(null);
+          if (this.imageIsChanged) {
+            this.updateSelectedImage(null);
+            this.updateSelectedImagePreview(null);
+          }
           break;
         case 'saveImage':
-          if (this.selectedImage !== null) {
+          if (this.imageIsChanged) {
             this.upload();
-          } else {
-            console.log('no file selected');
+            this.updateShowImageSidebar(false);
           }
           break;
         default:
@@ -165,8 +175,7 @@ export default {
               console.error('Error trying to upload file:', err);
             },
             () => {
-              this.updateFeedbackImage(imageId);
-              this.updateShowImageSidebar(false);
+              this.updateFeedbackImage({ id: imageId, file: this.selectedImage });
             });
         } catch (err) {
           console.error('Error trying to upload file:', err);
