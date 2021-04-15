@@ -110,11 +110,6 @@ export default {
         &-detail {
           max-height: 200px; // is needed for the height transition (set the max-height to something bigger than the element will ever be)
           transition: max-height 500ms ease;
-
-          &-container {
-            position: relative;
-            left: 1px;
-          }
         }
       }
 

@@ -105,7 +105,7 @@ export default {
                 },
                 {
                   heading: `Suggest possible solutions.`,
-                  detail: `Suggest possible solutions or alternatives to fix the problem. Make sure the suggestion is well explained and add a sketch if necessary (by clicking the 'Add image' button).`
+                  detail: `Suggest possible solutions or alternatives to fix the problem. Make sure the suggestion is well explained and add a sketch if necessary (by clicking the 'ADD IMAGE' button).`
                 }
               ]}
             }
@@ -174,7 +174,7 @@ export default {
                 },
                 {
                   heading: `Suggest possible solutions.`,
-                  detail: `Suggest possible solutions or alternatives to fix the problem. Make sure the suggestion is well explained and add a sketch if necessary (by clicking the 'Add image' button).`
+                  detail: `Suggest possible solutions or alternatives to fix the problem. Make sure the suggestion is well explained and add a sketch if necessary (by clicking the 'ADD IMAGE' button).`
                 },
                 {
                   heading: `Visually support your feedback.`,
