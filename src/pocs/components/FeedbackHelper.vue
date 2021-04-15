@@ -15,7 +15,7 @@
         </span>
         <span class="feedback-helper__tips-tip-detail-container">
           {{ tip.heading }}
-          <span v-show="activeTipIndex === index"  class="feedback-helper__tips-tip-detail">{{ tip.detail }}</span>
+          <span class="feedback-helper__tips-tip-detail">{{ tip.detail }}</span>
         </span>
       </li>
     </ul>
@@ -108,6 +108,9 @@ export default {
         }
 
         &-detail {
+          max-height: 200px; // is needed for the height transition (set the max-height to something bigger than the element will ever be)
+          transition: max-height 500ms ease;
+
           &-container {
             position: relative;
             left: 1px;
@@ -121,7 +124,7 @@ export default {
 
         svg {
           transform-origin: center;
-          transition: all 500ms $ease--fast;
+          transition: all 500ms 50ms $ease--fast;
         }
 
         &-container {
@@ -132,7 +135,9 @@ export default {
       }
 
       &-detail {
+        overflow: hidden;
         display: block;
+        max-height: 0; // is needed for the height transition
         padding-top: $space--xsm;
         font-size: 14px;
         line-height: 1.2;

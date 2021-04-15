@@ -36,6 +36,8 @@
   </section>
 </template>
 
+//todo: feedback vragen alleen laten zien bij de feedback vragen stap (ook legend updaten)
+
 <script>
 import ToggleIcon from '@/assets/icons/ToggleIcon';
 import LimitIcon from '@/assets/icons/LimitIcon';

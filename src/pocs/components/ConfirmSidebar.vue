@@ -38,7 +38,9 @@
 //todo: de states/interacties wanneer een afbeelding al toegevoegd is en je opnieuw de image-ConfirmSidebar opent kloppen nog niet
 //todo: laatste check: check alle mogelijkheden --> kloppen de states en bijhroende data? zijn de buttons goed disabled? wordt de image daadwerkelijk opgeslagen in firebase?
 //todo: rules showen
-//todo: errors states
+//todo: errors states (in een pop-up links onderin het beeld)
+
+//todo: een mini-popup (zonder overlay) die kort in beeld verschijnt om te informeren dat een actie gedaan is (net zoals gdrive het meld als je een document verwijdert), deze pop-up kan je gebruiken om abrubte scherm transities toe te lichten (bij. 'markers opgeslage' of 'afbeelding opgeslagen')
 
 <script>
 import { mapGetters, mapActions } from 'vuex';

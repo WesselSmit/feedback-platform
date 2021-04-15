@@ -1,5 +1,9 @@
 @import 'variables';
 
+::selection {
+    background: none;
+}
+
 body {
     font-family: $font;
     font-size: $font-size--md;
