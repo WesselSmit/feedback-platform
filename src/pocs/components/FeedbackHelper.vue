@@ -141,6 +141,7 @@ export default {
         padding-top: $space--xsm;
         font-size: 14px;
         line-height: 1.2;
+        transition: max-height 150ms ease;
       }
     }
   }
