@@ -4,23 +4,27 @@
     <Tabs v-if="tabs" :tabs="tabs" />
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
-      <div v-if="activeTab === 'give'" v-for="(section, name) in sections" :key="section"
-      class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
-        <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="sidebar__section" />
-        <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
-        <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
-        <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section sidebar__section--no-padding-vertical" />
-      </div>
-
-      <div v-else-if="activeTab === 'view'" class="sidebar__inner-wrapper">
-        <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="sidebar__inner-wrapper">
-          <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
-          <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="sidebar__section sidebar__section--no-padding-horizontal" />
+      <transition name="slide" mode="out-in">
+        <div v-if="activeTab === 'give'">
+          <div v-for="(section, name) in sections" :key="section"
+          class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
+            <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="sidebar__section" />
+            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
+            <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
+            <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section sidebar__section--no-padding-vertical" />
+          </div>
         </div>
-      </div>
 
-      <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
-    </div>
+        <div v-else-if="activeTab === 'view'" class="sidebar__inner-wrapper">
+          <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="sidebar__inner-wrapper">
+            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
+            <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="sidebar__section sidebar__section--no-padding-horizontal" />
+          </div>
+        </div>
+      </transition>
+
+        <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
+      </div>
 
     <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
   </section>
@@ -100,6 +104,14 @@ export default {
 
 <style lang="scss">
 @import "@/styles";
+
+// todo: voeg een goede transitie animatie
+.slide-enter-active, .slide-leave-active {
+  transition: opacity .5s;
+}
+.slide-enter, .slide-leave-to {
+  opacity: 0;
+}
 
 .sidebar {
   position: fixed;
