@@ -5,7 +5,7 @@
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
       <transition name="slide" mode="out-in">
-        <div v-if="activeTab === 'give'">
+        <div v-if="activeTab === 'give'" class="anim-side--left">
           <div v-for="(section, name) in sections" :key="section"
           class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
             <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="sidebar__section" />
@@ -15,7 +15,7 @@
           </div>
         </div>
 
-        <div v-else-if="activeTab === 'view'" class="sidebar__inner-wrapper">
+        <div v-else-if="activeTab === 'view'" class="sidebar__inner-wrapper anim-side--right">
           <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="sidebar__inner-wrapper">
             <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
             <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="sidebar__section sidebar__section--no-padding-horizontal" />
@@ -105,12 +105,24 @@ export default {
 <style lang="scss">
 @import "@/styles";
 
-// todo: voeg een goede transitie animatie
-.slide-enter-active, .slide-leave-active {
-  transition: opacity .5s;
-}
-.slide-enter, .slide-leave-to {
+.slide-enter-from,
+.slide-leave-to {
   opacity: 0;
+
+  &.anim-side {
+    &--left {
+      transform: translateX(-100%);
+    }
+
+    &--right {
+      transform: translateX(100%);
+    }
+  }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 200ms ease-in-out, opacity 250ms ease-in-out;
 }
 
 .sidebar {
