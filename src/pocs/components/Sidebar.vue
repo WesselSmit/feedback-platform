@@ -122,7 +122,7 @@ export default {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: transform 200ms ease-in-out, opacity 250ms ease-in-out;
+  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
 }
 
 .sidebar {

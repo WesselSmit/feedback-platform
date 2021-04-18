@@ -7,7 +7,8 @@
 
     <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
 
-    <div v-show="!isCollapsed">
+    <!-- <div v-show="!isCollapsed" class="read-instructions__reminders"> -->
+    <div class="read-instructions__reminders">
       <ul v-if="legend" class="read-instructions__legend">
         <li v-for="item in legend" :key="item" class="read-instructions__legend-label">
           <span class="read-instructions__legend-icon-container">
@@ -94,6 +95,13 @@ export default {
 
     &__body {
       margin-bottom: 0;
+      transition: margin-bottom 150ms 500ms ease; // wait for max-height transition of next sibling to finish
+    }
+
+    &__reminders {
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 500ms ease, opacity 500ms $ease--fast;
     }
   }
 
@@ -131,9 +139,18 @@ export default {
   }
 
   &__body {
+    transition: margin-bottom 500ms ease;
+
     &--no-margin-bottom {
       margin-bottom: 0;
     }
+  }
+
+  &__reminders {
+    overflow: hidden;
+    max-height: 500px;
+    opacity: 1;
+    transition: max-height 1500ms ease, opacity 1250ms $ease--fast;
   }
 
   &__legend {
