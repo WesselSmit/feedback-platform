@@ -95,7 +95,7 @@ export default {
 
     &__body {
       margin-bottom: 0;
-      transition: margin-bottom 150ms 500ms ease; // wait for max-height transition of next sibling to finish
+      transition: margin-bottom 100ms 350ms linear; // wait for max-height transition of next sibling to finish
     }
 
     &__reminders {

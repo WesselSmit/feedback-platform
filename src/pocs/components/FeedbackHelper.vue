@@ -1,6 +1,6 @@
 <template>
   <section v-if="!hideSection" class="feedback-helper">
-    <transition name="slide-helper" mode="out-in">
+    <transition name="slide" mode="out-in">
       <div v-if="zeroTips && showFeedbackHelperZero" class="anim-side--left">
         <h2 v-if="title">{{ title }}</h2>
         <p v-if="body">{{ body }}</p>
@@ -79,26 +79,6 @@ export default {
 
 <style lang="scss">
 @import '@/styles';
-
-.slide-helper-enter-from,
-.slide-helper-leave-to {
-  opacity: 0;
-
-  &.anim-side {
-    &--left {
-      transform: translateX(-100%);
-    }
-
-    &--right {
-      transform: translateX(100%);
-    }
-  }
-}
-
-.slide-helper-enter-active,
-.slide-helper-leave-active {
-  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
-}
 
 .feedback-helper {
   &__tips {

@@ -4,7 +4,7 @@
     <Tabs v-if="tabs" :tabs="tabs" />
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
-      <transition name="slide-sidebar" mode="out-in">
+      <transition name="slide" mode="out-in">
         <div v-if="activeTab === 'give'" class="sidebar__inner-wrappers anim-side--left">
           <div v-for="(section, name) in sections" :key="section"
           class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
@@ -30,6 +30,8 @@
   </section>
   <PopUp v-if="popUp && showPopUp" :content="popUp" />
 </template>
+
+//todo: sidebar tab transitie ziet er raar uit odmat de navgationButtons geen transitie hebben
 
 <script>
 import { mapGetters } from 'vuex';
@@ -105,8 +107,8 @@ export default {
 <style lang="scss">
 @import "@/styles";
 
-.slide-sidebar-enter-from,
-.slide-sidebar-leave-to {
+.slide-enter-from,
+.slide-leave-to {
   opacity: 0;
 
   &.anim-side {
@@ -120,8 +122,8 @@ export default {
   }
 }
 
-.slide-sidebar-enter-active,
-.slide-sidebar-leave-active {
+.slide-enter-active,
+.slide-leave-active {
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
 }
 
@@ -142,7 +144,8 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
 
-    &--centered {
+    &--centered,
+    &--centered &-wrappers {
       display: flex;
       flex-direction: column;
       justify-content: center;
