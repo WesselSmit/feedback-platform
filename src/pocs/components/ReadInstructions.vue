@@ -7,7 +7,6 @@
 
     <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
 
-    <!-- <div v-show="!isCollapsed" class="read-instructions__reminders"> -->
     <div class="read-instructions__reminders">
       <ul v-if="legend" class="read-instructions__legend">
         <li v-for="item in legend" :key="item" class="read-instructions__legend-label">

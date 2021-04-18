@@ -1,7 +1,7 @@
 <template>
   <section class="feedback-comments">
-    <h1 v-if="title" class="feedback-comments__title">{{ title }}</h1>
-    <p v-if="body" class="feedback-comments__body">{{ body }}</p>
+    <h1 v-if="title && commentsByTime" class="feedback-comments__title">{{ title }}</h1>
+    <p v-if="body && commentsByTime" class="feedback-comments__body">{{ body }}</p>
 
     <ul class="feedback-comments__list">
       <li v-for="comment in commentsByTime" :key="comment" class="feedback-comments__comment">
@@ -18,7 +18,8 @@
   </section>
 </template>
 
-//todo: empty state
+//todo: backgroundcolor sidebar vs documentation
+//todo: scollbar documentation moet niet zichtbaar zijn in sidebar
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -75,7 +76,33 @@ export default {
     margin: $space--md 0 0 0;
     list-style: none;
 
-    //todo: add empty state
+    &:empty {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: $sidebar-width;
+      height: calc(#{100vh} - (2 * #{$space--lg}));
+      margin: auto;
+      padding: 0 $space--lg;
+
+      &::before {
+        content: "No feedback found.";
+        display: block;
+        margin: 0 auto $space--sm;
+        font-size: $font-size--xl;
+        font-family: $font;
+        color: $black;
+        text-align: center;
+      }
+
+      &::after {
+        content: "Be the first to give feedback! Everyone's feedback will be visible here.";
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
   }
 
   &__comment {

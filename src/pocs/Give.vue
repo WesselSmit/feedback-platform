@@ -8,7 +8,7 @@
   <MarkerOverlay v-if="showMarkerOverlay" :content="{ documentation, markerContent}" class="base" />
 </template>
 
-//todo: add animations
+//todo: een mini-popup (zonder overlay) die kort in beeld verschijnt om te informeren dat een actie gedaan is (net zoals gdrive het meld als je een document verwijdert), deze pop-up kan je gebruiken om abrubte scherm transities toe te lichten (bij. 'markers opgeslage' of 'afbeelding opgeslagen')
 //todo: 'agree with feedback' feature
 
 <script>
