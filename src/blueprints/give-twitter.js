@@ -71,10 +71,6 @@ export default {
             body: `Look for areas where there is room for improvement or that do not follow the rules of data visualization.`,
             legend: [
               {
-                type: 'question',
-                label: `Do give feedback`
-              },
-              {
                 type: 'limit',
                 label: `Don't give feedback`
               }

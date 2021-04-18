@@ -19,7 +19,7 @@
       </ul>
 
       <ul v-if="legend" class="read-instructions__points">
-        <li v-for="question in questions" :key="question" class="read-instructions__points-label">
+        <li v-if="hasQuestions" v-for="question in questions" :key="question" class="read-instructions__points-label">
           <span class="read-instructions__points-icon-container">
             <QuestionIcon class="read-instructions__points-icon read-instructions__points-icon--question" />
           </span>
@@ -35,8 +35,6 @@
     </div>
   </section>
 </template>
-
-//todo: feedback vragen alleen laten zien bij de feedback vragen stap (ook legend updaten)
 
 <script>
 import ToggleIcon from '@/assets/icons/ToggleIcon';
@@ -71,6 +69,9 @@ export default {
     },
     questions() {
       return this.legendData.questions;
+    },
+    hasQuestions() {
+      return this.content?.legend?.some((item) => item.type === 'question');
     },
   },
   methods: {

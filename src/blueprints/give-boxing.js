@@ -74,10 +74,6 @@ export default {
             body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
             legend: [
               {
-                type: 'question',
-                label: `Do give feedback`
-              },
-              {
                 type: 'limit',
                 label: `Don't give feedback`
               }
