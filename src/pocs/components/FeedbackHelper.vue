@@ -1,24 +1,33 @@
 <template>
   <section v-if="!hideSection" class="feedback-helper">
-    <h2 v-if="title">{{ title }}</h2>
-    <p v-if="body">{{ body }}</p>
+    <transition name="slide-helper" mode="out-in">
+      <div v-if="zeroTips && showFeedbackHelperZero" class="anim-side--left">
+        <h2 v-if="title">{{ title }}</h2>
+        <p v-if="body">{{ body }}</p>
 
-    <ul v-if="zeroTips && showFeedbackHelperZero">
-      <li v-for="tip in zeroTips" :key="tip">{{ tip }}</li>
-    </ul>
+        <ul>
+          <li v-for="tip in zeroTips" :key="tip">{{ tip }}</li>
+        </ul>
+      </div>
 
-    <ul v-if="interactiveTips && !showFeedbackHelperZero" class="feedback-helper__tips-list">
-      <li v-for="(tip, index) in interactiveTips" :key="tip" class="feedback-helper__tips-tip"
-        :class="{ 'feedback-helper__tips-tip--expanded': activeTipIndex === index }" @click="handleClick(index)">
-        <span class="feedback-helper__tips-tip-icon-container">
-          <ToggleIcon class="feedback-helper__tips-tip-icon" />
-        </span>
-        <span class="feedback-helper__tips-tip-detail-container">
-          {{ tip.heading }}
-          <span class="feedback-helper__tips-tip-detail">{{ tip.detail }}</span>
-        </span>
-      </li>
-    </ul>
+      <div v-else-if="interactiveTips && !showFeedbackHelperZero" class="anim-side--right">
+        <h2 v-if="title">{{ title }}</h2>
+        <p v-if="body">{{ body }}</p>
+
+        <ul class="feedback-helper__tips-list">
+          <li v-for="(tip, index) in interactiveTips" :key="tip" class="feedback-helper__tips-tip"
+            :class="{ 'feedback-helper__tips-tip--expanded': activeTipIndex === index }" @click="handleClick(index)">
+            <span class="feedback-helper__tips-tip-icon-container">
+              <ToggleIcon class="feedback-helper__tips-tip-icon" />
+            </span>
+            <span class="feedback-helper__tips-tip-detail-container">
+              {{ tip.heading }}
+              <span class="feedback-helper__tips-tip-detail">{{ tip.detail }}</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </transition>
   </section>
 </template>
 
@@ -70,6 +79,26 @@ export default {
 
 <style lang="scss">
 @import '@/styles';
+
+.slide-helper-enter-from,
+.slide-helper-leave-to {
+  opacity: 0;
+
+  &.anim-side {
+    &--left {
+      transform: translateX(-100%);
+    }
+
+    &--right {
+      transform: translateX(100%);
+    }
+  }
+}
+
+.slide-helper-enter-active,
+.slide-helper-leave-active {
+  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+}
 
 .feedback-helper {
   &__tips {
