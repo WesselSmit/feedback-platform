@@ -312,7 +312,7 @@ export default {
       cursor: default;
 
       &:hover {
-        background-color: $white
+        background-color: $white;
       }
     }
   }
