@@ -5,7 +5,7 @@
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
       <transition name="slide-sidebar" mode="out-in">
-        <div v-if="activeTab === 'give'" class="anim-side--left">
+        <div v-if="activeTab === 'give'" class="sidebar__inner-wrappers anim-side--left">
           <div v-for="(section, name) in sections" :key="section"
           class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
             <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="sidebar__section" />
@@ -138,7 +138,6 @@ export default {
 
   &__inner {
     display: flex;
-    flex-direction: column;
     flex-grow: 1;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -147,6 +146,12 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    &-wrappers {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
     &-wrapper {
