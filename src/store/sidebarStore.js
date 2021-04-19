@@ -14,61 +14,11 @@ export default {
     markers: [],
     sessionMarkers: [],
     showImageSidebar: false,
-    // feedbackImage: null,
-    // selectedImage: null,
-    // selectedImagePreview: null,
     perm: null,
     semiTemp: null,
-    semiTempPreview: null,
     temp: null,
     tempPreview: null,
   },
-
-  /*
-  MIS:
-  - save X
-  - cancel X
-  - toevoegen + cancel X
-  - toevoegen + verwijder + cancel Y (image preview weg)
-  - toevoegen + change + cancel Y (save button not available)
-  - toevoegen + verwijder + save Y (change image button moet add image button zijn)
-  - toevoegen + change + save Y ()
-
-  de perm image --> opgeslagen image
-  de semi-temp image --> selected image (zonder change) [backup als change gecancelled wordt]
-  de temp image --> (changed) selected image
-
-  user upload : temp
-  user save : perm = temp
-
-  perm = perm, semi-temp = perm, temp = perm
-  user remove : temp = null
-  user upload : temp
-    user cancel : perm = perm, semi-temp = semi-temp, temp = semi-temp
-    user save : perm = temp
-*/
-
-  /*
-  user upload : temp
-  user save : perm = temp
-
-  perm = perm, semi-temp = perm, temp = perm
-  user remove : temp = null
-  user upload : temp
-    user cancel : perm = perm, semi-temp = semi-temp, temp = semi-temp
-    user save : perm = temp
-
-  toegevoegd
-  verwijdert
-  gecancelled
-  perm && !temp
-
-  todo: check of semiTempPreview nog wel gebruikt wordt/nodig is
-
-  todo: check of de state gereset waordt als je een comment achter laat
-
-  todo: check of de files daadwerkleijk geupload worden naar firebase storage
-*/
 
   getters: {
     hideVisualisation: (state) => state.hideVisualisation,
@@ -83,13 +33,8 @@ export default {
     numberOfMarkers: (state) => state.markers.length,
     markersAreChanged: (state) => !areEqual(state.markers, state.sessionMarkers),
     showImageSidebar: (state) => state.showImageSidebar,
-    // feedbackImage: (state) => state.feedbackImage,
-    // selectedImage: (state) => state.selectedImage,
-    // selectedImagePreview: (state) => state.selectedImagePreview,
-    // imageIsChanged: (state) => !areEqual(state.feedbackImage?.file, state.selectedImage),
     perm: (state) => state.perm,
     semiTemp: (state) => state.semiTemp,
-    semiTempPreview: (state) => state.semiTempPreview,
     temp: (state) => state.temp,
     tempPreview: (state) => state.tempPreview,
     imageIsChanged: (state) => !areEqual(state.temp, state.semiTemp),
@@ -126,23 +71,11 @@ export default {
     setShowImageSidebar(state, val) {
       state.showImageSidebar = val;
     },
-    // setFeedbackImage(state, val) {
-    //   state.feedbackImage = val;
-    // },
-    // setSelectedImage(state, val) {
-    //   state.selectedImage = val;
-    // },
-    // setSelectedImagePreview(state, val) {
-    //   state.selectedImagePreview = val;
-    // },
     setPerm(state, val) {
       state.perm = val;
     },
     setSemiTemp(state, val) {
       state.semiTemp = val;
-    },
-    setSemiTempPreview(state, val) {
-      state.semiTempPreview = val;
     },
     setTemp(state, val) {
       state.temp = val;
@@ -221,26 +154,7 @@ export default {
       commit('setShowImageSidebar', payload);
     },
 
-    // updateFeedbackImage({ commit }, payload) {
-    //   commit('setFeedbackImage', payload);
-    // },
-
-    // updateSelectedImage({ commit }, payload) {
-    //   commit('setSelectedImage', payload);
-    // },
-
-    // updateSelectedImagePreview({ commit }, payload) {
-    //   commit('setSelectedImagePreview', payload);
-    // },
-
-    // resetFeedbackImage({ commit }) {
-    //   commit('setFeedbackImage', null);
-    //   commit('setSelectedImage', null);
-    //   commit('setSelectedImagePreview', null);
-    // },
-
     resetImageState({ dispatch, getters }) {
-      // todo: als dit niet werkt dat moet het met cleanSource gedaan worden, cleanSource verwijdert echter wel de File van het object
       dispatch('updateTemp', getters.perm);
       dispatch('updateSemiTemp', getters.perm);
     },
@@ -251,18 +165,10 @@ export default {
 
     updateTempPreview({ commit, dispatch }, payload) {
       commit('setTempPreview', payload);
-
-      if (payload) {
-        dispatch('updateSemiTempPreview', payload);
-      }
     },
 
     updateSemiTemp({ commit }, payload) {
       commit('setSemiTemp', payload);
-    },
-
-    updateSemiTempPreview({ commit }, payload) {
-      commit('setSemiTempPreview', payload);
     },
 
     updatePerm({ commit }, payload) {

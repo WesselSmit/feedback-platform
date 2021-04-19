@@ -44,7 +44,6 @@ export default {
   computed: {
     ...mapGetters('sidebar', {
       numberOfMarkers: 'numberOfMarkers',
-      // feedbackImage: 'feedbackImage',
       perm: 'perm',
     }),
     projectId() {
@@ -76,8 +75,7 @@ export default {
       startNewMarkerSession: 'startNewMarkerSession',
       resetAllMarkers: 'resetAllMarkers',
       updateShowImageSidebar: 'updateShowImageSidebar',
-      // updateFeedbackImage: 'updateFeedbackImage',
-      // resetFeedbackImage: 'resetFeedbackImage',
+      updatePerm: 'updatePerm',
       resetImageState: 'resetImageState',
       updateTempPreview: 'updateTempPreview',
     }),
@@ -96,7 +94,8 @@ export default {
       if (this.textInput) {
         this.postComment({ projectId: this.projectId, comment: this.textInput });
         this.resetAllMarkers();
-        // this.resetFeedbackImage();
+        this.updatePerm(null);
+        this.resetImageState();
         this.updateTempPreview(null);
         this.textInput = '';
       }

@@ -34,7 +34,7 @@ export default {
             color: 'TESTER',
           },
           text: payload.comment,
-          image: rootGetters['sidebar/feedbackImage'].id,
+          image: rootGetters['sidebar/perm'].id, // todo: perm moet hernoemd worden
           markers: rootGetters['sidebar/markers'],
         });
       } catch (err) {

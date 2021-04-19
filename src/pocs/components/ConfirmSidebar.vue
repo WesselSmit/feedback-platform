@@ -10,10 +10,8 @@
           <p class="confirm-sidebar__dropzone-label">Drop a file or <span class="confirm-sidebar__dropzone-label--underline">browse</span></p>
         </form>
 
-        <!-- <div v-if="tempPreview" class="confirm-sidebar__preview-container">
-          <img :src="tempPreview" class="confirm-sidebar__preview"> -->
-        <div v-if="preview" class="confirm-sidebar__preview-container">
-          <img :src="preview" class="confirm-sidebar__preview">
+        <div v-if="tempPreview" class="confirm-sidebar__preview-container">
+          <img :src="tempPreview" class="confirm-sidebar__preview">
           <div class="confirm-sidebar__preview-remove" @click="removeSelectedFile()">
             <RemoveIcon class="confirm-sidebar__preview-remove-icon" />
           </div>
@@ -29,22 +27,9 @@
         </button>
       </div>
     </div>
-    <!-- <p>feedbackImage: {{ this.feedbackImage }}</p>
-    <p>selectedImage: {{ this.selectedImage }}</p>
-    <p>selectedImagePreview: {{ this.selectedImagePreview }}</p>
-    <p>is changed: {{ this.imageIsChanged }}</p> -->
-    <p>perm: {{ this.perm }}</p>
-    <p>semi-temp: {{ this.semiTemp }}</p>
-    <p>semi-temp preview: {{ this.semiTempPreview }}</p>
-    <p>temp: {{ this.temp }}</p>
-    <p>temp preview: {{ this.tempPreview }}</p>
-    <p>changed: {{ this.imageIsChanged }}</p>
   </section>
 </template>
 
-//todo: als er een afbeelding toegevoegd is en de gebruiker opnieuw de ConfirmSidebar opent en vervolgens de image removed; als je cancelled blijft de (selectedImage) image weg (deze moet ge-restored worden)
-//todo: de states/interacties wanneer een afbeelding al toegevoegd is en je opnieuw de image-ConfirmSidebar opent kloppen nog niet
-//todo: laatste check: check alle mogelijkheden --> kloppen de states en bijhroende data? zijn de buttons goed disabled? wordt de image daadwerkelijk opgeslagen in firebase?
 //todo: rules showen
 //todo: errors states (in een pop-up links onderin het beeld)
 
@@ -70,13 +55,8 @@ export default {
       showMarkerOverlay: 'showMarkerOverlay',
       markersAreChanged: 'markersAreChanged',
       showImageSidebar: 'showImageSidebar',
-      // selectedImage: 'selectedImage',
-      // selectedImagePreview: 'selectedImagePreview',
-      // imageIsChanged: 'imageIsChanged',
-      // feedbackImage: 'feedbackImage',
       perm: 'perm',
       semiTemp: 'semiTemp',
-      semiTempPreview: 'semiTempPreview',
       temp: 'temp',
       tempPreview: 'tempPreview',
       imageIsChanged: 'imageIsChanged',
@@ -94,18 +74,13 @@ export default {
       return this.content.navigation.length > 1;
     },
     fileExtension() {
-      // const fileNameParts = this.selectedImage.name.split('.');
       const fileNameParts = this.temp.name.split('.');
       return fileNameParts[fileNameParts.length - 1];
     },
     isValidFile() {
       const allowedTypes = ['png', 'jpg', 'jpeg'];
       const maxBytes = 1024 * 1024 * 5;
-      // return allowedTypes.includes(this.fileExtension) && this.selectedImage.size <= maxBytes;
       return allowedTypes.includes(this.fileExtension) && this.temp.size <= maxBytes;
-    },
-    preview() {
-      return this.tempPreview;
     },
   },
   methods: {
@@ -113,10 +88,6 @@ export default {
       updateShowMarkerOverlay: 'updateShowMarkerOverlay',
       saveSessionMarkers: 'saveSessionMarkers',
       updateShowImageSidebar: 'updateShowImageSidebar',
-      // updateFeedbackImage: 'updateFeedbackImage',
-      // updateSelectedImage: 'updateSelectedImage',
-      // updateSelectedImagePreview: 'updateSelectedImagePreview',
-      // resetFeedbackImage: 'resetFeedbackImage',
       updateTemp: 'updateTemp',
       updateTempPreview: 'updateTempPreview',
       updatePerm: 'updatePerm',
@@ -127,8 +98,7 @@ export default {
         return hasDisabled && !this.markersAreChanged;
       }
       if (this.showImageSidebar) {
-        // console.log(hasDisabled && !this.imageIsChanged, hasDisabled, !this.imageIsChanged);
-        return hasDisabled && !this.imageIsChanged; // todo: nog niet af?
+        return hasDisabled && !this.imageIsChanged;
       }
     },
     openFilePicker() {
@@ -136,9 +106,7 @@ export default {
     },
     async handleDrop(e) {
       if (e.dataTransfer.files.length === 1) {
-        // this.updateSelectedImage(e.dataTransfer.files[0]);
         this.updateTemp(e.dataTransfer.files[0]);
-        // this.updateSelectedImagePreview(await this.getPreview());
         this.updateTempPreview(await this.getPreview());
       } else {
         console.log('too many files selected');
@@ -151,8 +119,6 @@ export default {
       this.updateTempPreview(await this.getPreview());
     },
     removeSelectedFile() {
-      // this.updateSelectedImage(null);
-      // this.updateSelectedImagePreview(null);
       this.updateTemp(null);
       this.removedImage = this.tempPreview;
       this.updateTempPreview(null);
@@ -175,12 +141,9 @@ export default {
         case 'cancelImage':
           this.updateShowImageSidebar(false);
           if (this.imageIsChanged) {
-            // this.updateSelectedImage(null);
-            // this.updateSelectedImagePreview(null);
             this.resetImageState();
             this.updateTempPreview(this.removedImage);
             if (!this.perm) {
-              console.log('ja');
               this.updateTempPreview(null);
             }
           }
@@ -210,19 +173,16 @@ export default {
       } else if (this.isValidFile) {
         try {
           const imageId = uuid();
-          // const upload = storageRef.child(`feedback/${imageId}`).put(this.selectedImage);
           const upload = storageRef.child(`feedback/${imageId}`).put(this.temp);
           upload.on('state_changed',
             (snapshot) => {
-              // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              // console.log(`Upload is ${progress}% done`);
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log(`Upload is ${progress}% done`);
             },
             (err) => {
               console.error('Error trying to upload file:', err);
             },
             () => {
-              // this.updateFeedbackImage({ id: imageId, file: this.selectedImage });
-              // this.updatePerm({ id: imageId, file: this.selectedImage });
               this.updatePerm({ id: imageId, file: this.temp });
             });
         } catch (err) {
