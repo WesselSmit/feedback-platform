@@ -5,13 +5,15 @@
       <p v-if="body">{{ body }}</p>
 
       <div v-if="showImageSidebar">
-        <form v-if="!selectedImage" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
+        <form v-if="!tempPreview" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
           <input class="confirm-sidebar__dropzone-input" type="file" ref="feedbackImageInput" @change="selectFile($event)">
           <p class="confirm-sidebar__dropzone-label">Drop a file or <span class="confirm-sidebar__dropzone-label--underline">browse</span></p>
         </form>
 
-        <div v-if="selectedImagePreview" class="confirm-sidebar__preview-container">
-          <img :src="selectedImagePreview" class="confirm-sidebar__preview">
+        <!-- <div v-if="tempPreview" class="confirm-sidebar__preview-container">
+          <img :src="tempPreview" class="confirm-sidebar__preview"> -->
+        <div v-if="preview" class="confirm-sidebar__preview-container">
+          <img :src="preview" class="confirm-sidebar__preview">
           <div class="confirm-sidebar__preview-remove" @click="removeSelectedFile()">
             <RemoveIcon class="confirm-sidebar__preview-remove-icon" />
           </div>
@@ -27,10 +29,16 @@
         </button>
       </div>
     </div>
-    <p>feedbackImage: {{ this.feedbackImage }}</p>
+    <!-- <p>feedbackImage: {{ this.feedbackImage }}</p>
     <p>selectedImage: {{ this.selectedImage }}</p>
     <p>selectedImagePreview: {{ this.selectedImagePreview }}</p>
-    <p>is changed: {{ this.imageIsChanged }}</p>
+    <p>is changed: {{ this.imageIsChanged }}</p> -->
+    <p>perm: {{ this.perm }}</p>
+    <p>semi-temp: {{ this.semiTemp }}</p>
+    <p>semi-temp preview: {{ this.semiTempPreview }}</p>
+    <p>temp: {{ this.temp }}</p>
+    <p>temp preview: {{ this.tempPreview }}</p>
+    <p>changed: {{ this.imageIsChanged }}</p>
   </section>
 </template>
 
@@ -52,15 +60,26 @@ export default {
     RemoveIcon,
   },
   props: ['content'],
+  data() {
+    return {
+      removedImage: null,
+    };
+  },
   computed: {
     ...mapGetters('sidebar', {
       showMarkerOverlay: 'showMarkerOverlay',
       markersAreChanged: 'markersAreChanged',
       showImageSidebar: 'showImageSidebar',
-      selectedImage: 'selectedImage',
-      selectedImagePreview: 'selectedImagePreview',
+      // selectedImage: 'selectedImage',
+      // selectedImagePreview: 'selectedImagePreview',
+      // imageIsChanged: 'imageIsChanged',
+      // feedbackImage: 'feedbackImage',
+      perm: 'perm',
+      semiTemp: 'semiTemp',
+      semiTempPreview: 'semiTempPreview',
+      temp: 'temp',
+      tempPreview: 'tempPreview',
       imageIsChanged: 'imageIsChanged',
-      feedbackImage: 'feedbackImage',
     }),
     title() {
       return this.content.title;
@@ -75,13 +94,18 @@ export default {
       return this.content.navigation.length > 1;
     },
     fileExtension() {
-      const fileNameParts = this.selectedImage.name.split('.');
+      // const fileNameParts = this.selectedImage.name.split('.');
+      const fileNameParts = this.temp.name.split('.');
       return fileNameParts[fileNameParts.length - 1];
     },
     isValidFile() {
       const allowedTypes = ['png', 'jpg', 'jpeg'];
       const maxBytes = 1024 * 1024 * 5;
-      return allowedTypes.includes(this.fileExtension) && this.selectedImage.size <= maxBytes;
+      // return allowedTypes.includes(this.fileExtension) && this.selectedImage.size <= maxBytes;
+      return allowedTypes.includes(this.fileExtension) && this.temp.size <= maxBytes;
+    },
+    preview() {
+      return this.tempPreview;
     },
   },
   methods: {
@@ -89,17 +113,22 @@ export default {
       updateShowMarkerOverlay: 'updateShowMarkerOverlay',
       saveSessionMarkers: 'saveSessionMarkers',
       updateShowImageSidebar: 'updateShowImageSidebar',
-      updateFeedbackImage: 'updateFeedbackImage',
-      updateSelectedImage: 'updateSelectedImage',
-      updateSelectedImagePreview: 'updateSelectedImagePreview',
-      resetFeedbackImage: 'resetFeedbackImage',
+      // updateFeedbackImage: 'updateFeedbackImage',
+      // updateSelectedImage: 'updateSelectedImage',
+      // updateSelectedImagePreview: 'updateSelectedImagePreview',
+      // resetFeedbackImage: 'resetFeedbackImage',
+      updateTemp: 'updateTemp',
+      updateTempPreview: 'updateTempPreview',
+      updatePerm: 'updatePerm',
+      resetImageState: 'resetImageState',
     }),
     showDisabledState(hasDisabled) {
       if (this.showMarkerOverlay) {
         return hasDisabled && !this.markersAreChanged;
       }
       if (this.showImageSidebar) {
-        return hasDisabled && !this.imageIsChanged;
+        // console.log(hasDisabled && !this.imageIsChanged, hasDisabled, !this.imageIsChanged);
+        return hasDisabled && !this.imageIsChanged; // todo: nog niet af?
       }
     },
     openFilePicker() {
@@ -107,19 +136,26 @@ export default {
     },
     async handleDrop(e) {
       if (e.dataTransfer.files.length === 1) {
-        this.updateSelectedImage(e.dataTransfer.files[0]);
-        this.updateSelectedImagePreview(await this.getPreview());
+        // this.updateSelectedImage(e.dataTransfer.files[0]);
+        this.updateTemp(e.dataTransfer.files[0]);
+        // this.updateSelectedImagePreview(await this.getPreview());
+        this.updateTempPreview(await this.getPreview());
       } else {
         console.log('too many files selected');
       }
     },
     async selectFile(e) {
-      this.updateSelectedImage(e.target.files[0]);
-      this.updateSelectedImagePreview(await this.getPreview());
+      // this.updateSelectedImage(e.target.files[0]);
+      this.updateTemp(e.target.files[0]);
+      // this.updateSelectedImagePreview(await this.getPreview());
+      this.updateTempPreview(await this.getPreview());
     },
     removeSelectedFile() {
-      this.updateSelectedImage(null);
-      this.updateSelectedImagePreview(null);
+      // this.updateSelectedImage(null);
+      // this.updateSelectedImagePreview(null);
+      this.updateTemp(null);
+      this.removedImage = this.tempPreview;
+      this.updateTempPreview(null);
     },
     handleNavigationButton({ action }) {
       if (action.hasOwnProperty('target')) {
@@ -139,8 +175,14 @@ export default {
         case 'cancelImage':
           this.updateShowImageSidebar(false);
           if (this.imageIsChanged) {
-            this.updateSelectedImage(null);
-            this.updateSelectedImagePreview(null);
+            // this.updateSelectedImage(null);
+            // this.updateSelectedImagePreview(null);
+            this.resetImageState();
+            this.updateTempPreview(this.removedImage);
+            if (!this.perm) {
+              console.log('ja');
+              this.updateTempPreview(null);
+            }
           }
           break;
         case 'saveImage':
@@ -158,24 +200,30 @@ export default {
         const fr = new FileReader();
         fr.onload = () => resolve(fr.result);
         fr.onerror = () => reject();
-        fr.readAsDataURL(this.selectedImage);
+        fr.readAsDataURL(this.temp);
       });
     },
     async upload() {
-      if (this.isValidFile) {
+      if (!this.temp) {
+        this.updatePerm(null);
+        this.resetImageState();
+      } else if (this.isValidFile) {
         try {
           const imageId = uuid();
-          const upload = storageRef.child(`feedback/${imageId}`).put(this.selectedImage);
+          // const upload = storageRef.child(`feedback/${imageId}`).put(this.selectedImage);
+          const upload = storageRef.child(`feedback/${imageId}`).put(this.temp);
           upload.on('state_changed',
             (snapshot) => {
-              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              console.log(`Upload is ${progress}% done`);
+              // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              // console.log(`Upload is ${progress}% done`);
             },
             (err) => {
               console.error('Error trying to upload file:', err);
             },
             () => {
-              this.updateFeedbackImage({ id: imageId, file: this.selectedImage });
+              // this.updateFeedbackImage({ id: imageId, file: this.selectedImage });
+              // this.updatePerm({ id: imageId, file: this.selectedImage });
+              this.updatePerm({ id: imageId, file: this.temp });
             });
         } catch (err) {
           console.error('Error trying to upload file:', err);
@@ -233,6 +281,7 @@ export default {
     border: $border--ui;
 
     &-container {
+      @include zoomIn(300ms, $ease--fast);
       position: relative;
       display: grid;
       place-items: center;

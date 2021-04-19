@@ -8,9 +8,9 @@
               <MarkerIcon class="feedback-input__action-marker-icon" />
               {{ markerLabel }}
             </button>
-          <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': this.feedbackImage }" @click="addImage()">
-              <ImageIconZero v-if="!feedbackImage" class="feedback-input__action-image-icon" />
-              <ImageIconActive v-if="feedbackImage" class="feedback-input__action-image-icon" />
+          <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': this.perm }" @click="addImage()">
+              <ImageIconZero v-if="!perm" class="feedback-input__action-image-icon" />
+              <ImageIconActive v-if="perm" class="feedback-input__action-image-icon" />
               {{ imageLabel }}
           </button>
           <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">Comment</button>
@@ -44,7 +44,8 @@ export default {
   computed: {
     ...mapGetters('sidebar', {
       numberOfMarkers: 'numberOfMarkers',
-      feedbackImage: 'feedbackImage',
+      // feedbackImage: 'feedbackImage',
+      perm: 'perm',
     }),
     projectId() {
       // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
@@ -65,7 +66,7 @@ export default {
       return label;
     },
     imageLabel() {
-      return this.feedbackImage ? this.labels.imageActive : this.labels.imageZero;
+      return this.perm ? this.labels.imageActive : this.labels.imageZero;
     },
   },
   methods: {
@@ -75,8 +76,10 @@ export default {
       startNewMarkerSession: 'startNewMarkerSession',
       resetAllMarkers: 'resetAllMarkers',
       updateShowImageSidebar: 'updateShowImageSidebar',
-      updateFeedbackImage: 'updateFeedbackImage',
-      resetFeedbackImage: 'resetFeedbackImage',
+      // updateFeedbackImage: 'updateFeedbackImage',
+      // resetFeedbackImage: 'resetFeedbackImage',
+      resetImageState: 'resetImageState',
+      updateTempPreview: 'updateTempPreview',
     }),
     ...mapActions('feedback', {
       postComment: 'postComment',
@@ -87,12 +90,14 @@ export default {
     },
     addImage() {
       this.updateShowImageSidebar(true);
+      this.resetImageState();
     },
     comment() {
       if (this.textInput) {
         this.postComment({ projectId: this.projectId, comment: this.textInput });
         this.resetAllMarkers();
-        this.resetFeedbackImage();
+        // this.resetFeedbackImage();
+        this.updateTempPreview(null);
         this.textInput = '';
       }
     },

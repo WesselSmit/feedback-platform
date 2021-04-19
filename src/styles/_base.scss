@@ -48,6 +48,7 @@ ul {
 li {
     padding-left: $space--xsm;
     line-height: $line-height;
+    list-style: square;
 
     &:not(:last-of-type) {
         margin-bottom: $space--xsm;
