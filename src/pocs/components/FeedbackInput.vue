@@ -8,9 +8,9 @@
               <MarkerIcon class="feedback-input__action-marker-icon" />
               {{ markerLabel }}
             </button>
-          <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': this.perm }" @click="addImage()">
-              <ImageIconZero v-if="!perm" class="feedback-input__action-image-icon" />
-              <ImageIconActive v-if="perm" class="feedback-input__action-image-icon" />
+          <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': this.feedbackImage }" @click="addImage()">
+              <ImageIconZero v-if="!feedbackImage" class="feedback-input__action-image-icon" />
+              <ImageIconActive v-if="feedbackImage" class="feedback-input__action-image-icon" />
               {{ imageLabel }}
           </button>
           <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">Comment</button>
@@ -44,7 +44,7 @@ export default {
   computed: {
     ...mapGetters('sidebar', {
       numberOfMarkers: 'numberOfMarkers',
-      perm: 'perm',
+      feedbackImage: 'feedbackImage',
     }),
     projectId() {
       // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
@@ -65,7 +65,7 @@ export default {
       return label;
     },
     imageLabel() {
-      return this.perm ? this.labels.imageActive : this.labels.imageZero;
+      return this.feedbackImage ? this.labels.imageActive : this.labels.imageZero;
     },
   },
   methods: {

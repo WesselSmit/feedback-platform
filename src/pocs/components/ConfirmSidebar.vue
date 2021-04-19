@@ -5,13 +5,13 @@
       <p v-if="body">{{ body }}</p>
 
       <div v-if="showImageSidebar">
-        <form v-if="!tempPreview" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
+        <form v-if="!selectedImagePreview" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
           <input class="confirm-sidebar__dropzone-input" type="file" ref="feedbackImageInput" @change="selectFile($event)">
           <p class="confirm-sidebar__dropzone-label">Drop a file or <span class="confirm-sidebar__dropzone-label--underline">browse</span></p>
         </form>
 
-        <div v-if="tempPreview" class="confirm-sidebar__preview-container">
-          <img :src="tempPreview" class="confirm-sidebar__preview">
+        <div v-if="selectedImagePreview" class="confirm-sidebar__preview-container">
+          <img :src="selectedImagePreview" class="confirm-sidebar__preview">
           <div class="confirm-sidebar__preview-remove" @click="removeSelectedFile()">
             <RemoveIcon class="confirm-sidebar__preview-remove-icon" />
           </div>
@@ -55,10 +55,10 @@ export default {
       showMarkerOverlay: 'showMarkerOverlay',
       markersAreChanged: 'markersAreChanged',
       showImageSidebar: 'showImageSidebar',
-      perm: 'perm',
-      semiTemp: 'semiTemp',
-      temp: 'temp',
-      tempPreview: 'tempPreview',
+      feedbackImage: 'feedbackImage',
+      selectedImageBackup: 'selectedImageBackup',
+      selectedImage: 'selectedImage',
+      selectedImagePreview: 'selectedImagePreview',
       imageIsChanged: 'imageIsChanged',
     }),
     title() {
@@ -74,13 +74,13 @@ export default {
       return this.content.navigation.length > 1;
     },
     fileExtension() {
-      const fileNameParts = this.temp.name.split('.');
+      const fileNameParts = this.selectedImage.name.split('.');
       return fileNameParts[fileNameParts.length - 1];
     },
     isValidFile() {
       const allowedTypes = ['png', 'jpg', 'jpeg'];
       const maxBytes = 1024 * 1024 * 5;
-      return allowedTypes.includes(this.fileExtension) && this.temp.size <= maxBytes;
+      return allowedTypes.includes(this.fileExtension) && this.selectedImage.size <= maxBytes;
     },
   },
   methods: {
@@ -120,7 +120,7 @@ export default {
     },
     removeSelectedFile() {
       this.updateTemp(null);
-      this.removedImage = this.tempPreview;
+      this.removedImage = this.selectedImagePreview;
       this.updateTempPreview(null);
     },
     handleNavigationButton({ action }) {
@@ -143,7 +143,7 @@ export default {
           if (this.imageIsChanged) {
             this.resetImageState();
             this.updateTempPreview(this.removedImage);
-            if (!this.perm) {
+            if (!this.feedbackImage) {
               this.updateTempPreview(null);
             }
           }
@@ -163,17 +163,17 @@ export default {
         const fr = new FileReader();
         fr.onload = () => resolve(fr.result);
         fr.onerror = () => reject();
-        fr.readAsDataURL(this.temp);
+        fr.readAsDataURL(this.selectedImage);
       });
     },
     async upload() {
-      if (!this.temp) {
+      if (!this.selectedImage) {
         this.updatePerm(null);
         this.resetImageState();
       } else if (this.isValidFile) {
         try {
           const imageId = uuid();
-          const upload = storageRef.child(`feedback/${imageId}`).put(this.temp);
+          const upload = storageRef.child(`feedback/${imageId}`).put(this.selectedImage);
           upload.on('state_changed',
             (snapshot) => {
               const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -183,7 +183,7 @@ export default {
               console.error('Error trying to upload file:', err);
             },
             () => {
-              this.updatePerm({ id: imageId, file: this.temp });
+              this.updatePerm({ id: imageId, file: this.selectedImage });
             });
         } catch (err) {
           console.error('Error trying to upload file:', err);

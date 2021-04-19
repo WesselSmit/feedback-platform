@@ -5,7 +5,7 @@ export default {
 
   state: {
     hideVisualisation: false,
-    stepIndex: 3, // moet uit DB opgehaald worden
+    stepIndex: 1, // moet uit DB opgehaald worden
     showPopUp: true,
     activeTab: 'give',
     showFeedbackHelperZero: true,
@@ -14,10 +14,10 @@ export default {
     markers: [],
     sessionMarkers: [],
     showImageSidebar: false,
-    perm: null,
-    semiTemp: null,
-    temp: null,
-    tempPreview: null,
+    feedbackImage: null,
+    selectedImageBackup: null,
+    selectedImage: null,
+    selectedImagePreview: null,
   },
 
   getters: {
@@ -33,11 +33,11 @@ export default {
     numberOfMarkers: (state) => state.markers.length,
     markersAreChanged: (state) => !areEqual(state.markers, state.sessionMarkers),
     showImageSidebar: (state) => state.showImageSidebar,
-    perm: (state) => state.perm,
-    semiTemp: (state) => state.semiTemp,
-    temp: (state) => state.temp,
-    tempPreview: (state) => state.tempPreview,
-    imageIsChanged: (state) => !areEqual(state.temp, state.semiTemp),
+    feedbackImage: (state) => state.feedbackImage,
+    selectedImageBackup: (state) => state.selectedImageBackup,
+    selectedImage: (state) => state.selectedImage,
+    selectedImagePreview: (state) => state.selectedImagePreview,
+    imageIsChanged: (state) => !areEqual(state.selectedImage, state.selectedImageBackup),
   },
 
   mutations: {
@@ -72,16 +72,16 @@ export default {
       state.showImageSidebar = val;
     },
     setPerm(state, val) {
-      state.perm = val;
+      state.feedbackImage = val;
     },
     setSemiTemp(state, val) {
-      state.semiTemp = val;
+      state.selectedImageBackup = val;
     },
     setTemp(state, val) {
-      state.temp = val;
+      state.selectedImage = val;
     },
     setTempPreview(state, val) {
-      state.tempPreview = val;
+      state.selectedImagePreview = val;
     },
   },
 
@@ -155,8 +155,8 @@ export default {
     },
 
     resetImageState({ dispatch, getters }) {
-      dispatch('updateTemp', getters.perm);
-      dispatch('updateSemiTemp', getters.perm);
+      dispatch('updateTemp', getters.feedbackImage);
+      dispatch('updateSemiTemp', getters.feedbackImage);
     },
 
     updateTemp({ commit }, payload) {
