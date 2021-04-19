@@ -71,16 +71,16 @@ export default {
     setShowImageSidebar(state, val) {
       state.showImageSidebar = val;
     },
-    setPerm(state, val) {
+    setFeedbackImage(state, val) {
       state.feedbackImage = val;
     },
-    setSemiTemp(state, val) {
+    setSelectedImageBackup(state, val) {
       state.selectedImageBackup = val;
     },
-    setTemp(state, val) {
+    setSelectedImage(state, val) {
       state.selectedImage = val;
     },
-    setTempPreview(state, val) {
+    setSelectedImagePreview(state, val) {
       state.selectedImagePreview = val;
     },
   },
@@ -155,24 +155,24 @@ export default {
     },
 
     resetImageState({ dispatch, getters }) {
-      dispatch('updateTemp', getters.feedbackImage);
-      dispatch('updateSemiTemp', getters.feedbackImage);
+      dispatch('updateSelectedImage', getters.feedbackImage);
+      dispatch('updateSelectedImageBackup', getters.feedbackImage);
     },
 
-    updateTemp({ commit }, payload) {
-      commit('setTemp', payload);
+    updateSelectedImage({ commit }, payload) {
+      commit('setSelectedImage', payload);
     },
 
-    updateTempPreview({ commit, dispatch }, payload) {
-      commit('setTempPreview', payload);
+    updateSelectedImagePreview({ commit }, payload) {
+      commit('setSelectedImagePreview', payload);
     },
 
-    updateSemiTemp({ commit }, payload) {
-      commit('setSemiTemp', payload);
+    updateSelectedImageBackup({ commit }, payload) {
+      commit('setSelectedImageBackup', payload);
     },
 
-    updatePerm({ commit }, payload) {
-      commit('setPerm', payload);
+    updateFeedbackImage({ commit }, payload) {
+      commit('setFeedbackImage', payload);
     },
   },
 };

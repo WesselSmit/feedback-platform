@@ -4,11 +4,11 @@
         <textarea rows="6" placeholder="Don't know what to do? Read the tips." v-model.trim="textInput" class="feedback-input__input"></textarea>
 
         <div class="feedback-input__actions">
-          <button class="feedback-input__action feedback-input__action-marker" :class="{ 'feedback-input__action--active': this.numberOfMarkers > 0 }" @click="addMarkers()">
+          <button class="feedback-input__action feedback-input__action-marker" :class="{ 'feedback-input__action--active': numberOfMarkers > 0 }" @click="addMarkers()">
               <MarkerIcon class="feedback-input__action-marker-icon" />
               {{ markerLabel }}
             </button>
-          <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': this.feedbackImage }" @click="addImage()">
+          <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': feedbackImage }" @click="addImage()">
               <ImageIconZero v-if="!feedbackImage" class="feedback-input__action-image-icon" />
               <ImageIconActive v-if="feedbackImage" class="feedback-input__action-image-icon" />
               {{ imageLabel }}
@@ -75,9 +75,9 @@ export default {
       startNewMarkerSession: 'startNewMarkerSession',
       resetAllMarkers: 'resetAllMarkers',
       updateShowImageSidebar: 'updateShowImageSidebar',
-      updatePerm: 'updatePerm',
+      updateFeedbackImage: 'updateFeedbackImage',
       resetImageState: 'resetImageState',
-      updateTempPreview: 'updateTempPreview',
+      updateSelectedImagePreview: 'updateSelectedImagePreview',
     }),
     ...mapActions('feedback', {
       postComment: 'postComment',
@@ -94,9 +94,9 @@ export default {
       if (this.textInput) {
         this.postComment({ projectId: this.projectId, comment: this.textInput });
         this.resetAllMarkers();
-        this.updatePerm(null);
+        this.updateFeedbackImage(null);
         this.resetImageState();
-        this.updateTempPreview(null);
+        this.updateSelectedImagePreview(null);
         this.textInput = '';
       }
     },

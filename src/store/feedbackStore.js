@@ -36,6 +36,7 @@ export default {
           text: payload.comment,
           image: rootGetters['sidebar/feedbackImage'].id,
           markers: rootGetters['sidebar/markers'],
+          agrees: 0,
         });
       } catch (err) {
         dispatch('setError', err);

@@ -88,9 +88,9 @@ export default {
       updateShowMarkerOverlay: 'updateShowMarkerOverlay',
       saveSessionMarkers: 'saveSessionMarkers',
       updateShowImageSidebar: 'updateShowImageSidebar',
-      updateTemp: 'updateTemp',
-      updateTempPreview: 'updateTempPreview',
-      updatePerm: 'updatePerm',
+      updateSelectedImage: 'updateSelectedImage',
+      updateSelectedImagePreview: 'updateSelectedImagePreview',
+      updateFeedbackImage: 'updateFeedbackImage',
       resetImageState: 'resetImageState',
     }),
     showDisabledState(hasDisabled) {
@@ -106,22 +106,20 @@ export default {
     },
     async handleDrop(e) {
       if (e.dataTransfer.files.length === 1) {
-        this.updateTemp(e.dataTransfer.files[0]);
-        this.updateTempPreview(await this.getPreview());
+        this.updateSelectedImage(e.dataTransfer.files[0]);
+        this.updateSelectedImagePreview(await this.getPreview());
       } else {
         console.log('too many files selected');
       }
     },
     async selectFile(e) {
-      // this.updateSelectedImage(e.target.files[0]);
-      this.updateTemp(e.target.files[0]);
-      // this.updateSelectedImagePreview(await this.getPreview());
-      this.updateTempPreview(await this.getPreview());
+      this.updateSelectedImage(e.target.files[0]);
+      this.updateSelectedImagePreview(await this.getPreview());
     },
     removeSelectedFile() {
-      this.updateTemp(null);
+      this.updateSelectedImage(null);
       this.removedImage = this.selectedImagePreview;
-      this.updateTempPreview(null);
+      this.updateSelectedImagePreview(null);
     },
     handleNavigationButton({ action }) {
       if (action.hasOwnProperty('target')) {
@@ -142,9 +140,9 @@ export default {
           this.updateShowImageSidebar(false);
           if (this.imageIsChanged) {
             this.resetImageState();
-            this.updateTempPreview(this.removedImage);
+            this.updateSelectedImagePreview(this.removedImage);
             if (!this.feedbackImage) {
-              this.updateTempPreview(null);
+              this.updateSelectedImagePreview(null);
             }
           }
           break;
@@ -168,7 +166,7 @@ export default {
     },
     async upload() {
       if (!this.selectedImage) {
-        this.updatePerm(null);
+        this.updateFeedbackImage(null);
         this.resetImageState();
       } else if (this.isValidFile) {
         try {
@@ -183,7 +181,7 @@ export default {
               console.error('Error trying to upload file:', err);
             },
             () => {
-              this.updatePerm({ id: imageId, file: this.selectedImage });
+              this.updateFeedbackImage({ id: imageId, file: this.selectedImage });
             });
         } catch (err) {
           console.error('Error trying to upload file:', err);
