@@ -4,10 +4,12 @@ $white--overlay: rgba(255, 255, 255, .9);
 $black: #212121;
 $gray--dark: #616161;
 $gray--dark-opacity: rgba(97, 97, 97, .1);
+$gray--scrollbar: rgba(116, 116, 116, 0.5);
 $gray--light: #C9C9C9;
-$gray--light-extra: #F7F7F7;
+$gray--light-extra: #f0f0f0;
 $purple: #6404EE;
 $purple--opacity: rgba(100,4,238, .1);
+$purple--opacity-solid: #EFE6FD;
 $green: #00C853;
 $red: #D50000;
 
@@ -31,7 +33,7 @@ $font-size--sm: 12px;
 
 // width
 $documentation-width: 900px;
-$sidebar-width: 450px;
+$sidebar-width: 465px;
 $popup-width: 630px;
 
 
@@ -39,10 +41,13 @@ $popup-width: 630px;
 $tabs-height: 50px;
 $button-height: 45px;
 $feedbfack-actions-height: 40px;
+$dropzone-height: 150px;
+$feedback-image-preview-height: 350px;
 
 
 // border
 $border--ui: 1px solid $gray--light;
+$border--drop: 1px solid $black;
 $border--button: 2px solid $purple;
 $border-radius: 5px;
 

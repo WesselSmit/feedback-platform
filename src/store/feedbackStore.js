@@ -23,7 +23,7 @@ export default {
   },
 
   actions: {
-    async postComment({ dispatch }, payload) {
+    async postComment({ dispatch, rootGetters }, payload) {
       try {
         await db.collection(`comments-${payload.projectId}`).add({
           ts: Date.now(),
@@ -34,6 +34,8 @@ export default {
             color: 'TESTER',
           },
           text: payload.comment,
+          image: rootGetters['sidebar/feedbackImage'].id,
+          markers: rootGetters['sidebar/markers'],
         });
       } catch (err) {
         dispatch('setError', err);

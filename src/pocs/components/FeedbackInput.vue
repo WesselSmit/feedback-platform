@@ -1,15 +1,16 @@
 <template>
   <section class="feedback-input">
       <div class="feedback-input__container">
-        <textarea rows="6" placeholder="Hit a wall? Read the tips." v-model.trim="textInput" class="feedback-input__input"></textarea>
+        <textarea rows="6" placeholder="Don't know what to do? Read the tips." v-model.trim="textInput" class="feedback-input__input"></textarea>
 
         <div class="feedback-input__actions">
           <button class="feedback-input__action feedback-input__action-marker" :class="{ 'feedback-input__action--active': this.numberOfMarkers > 0 }" @click="addMarkers()">
               <MarkerIcon class="feedback-input__action-marker-icon" />
               {{ markerLabel }}
             </button>
-          <button class="feedback-input__action feedback-input__action-image" @click="addImage()">
-              <ImageIcon class="feedback-input__action-image-icon" />
+          <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': this.feedbackImage }" @click="addImage()">
+              <ImageIconZero v-if="!feedbackImage" class="feedback-input__action-image-icon" />
+              <ImageIconActive v-if="feedbackImage" class="feedback-input__action-image-icon" />
               {{ imageLabel }}
           </button>
           <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">Comment</button>
@@ -21,25 +22,29 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import MarkerIcon from '@/assets/icons/ButtonMarkerIcon';
-import ImageIcon from '@/assets/icons/ImageIcon';
+import ImageIconZero from '@/assets/icons/ImageIconZero';
+import ImageIconActive from '@/assets/icons/ImageIconActive';
 
 export default {
   name: 'FeedbackInput',
   components: {
     MarkerIcon,
-    ImageIcon,
+    ImageIconZero,
+    ImageIconActive,
   },
   data() {
     return {
       labels: {
         markersZero: 'Add markers',
-        image: 'Add image',
+        imageZero: 'Add image',
+        imageActive: 'Change image',
       },
     };
   },
   computed: {
     ...mapGetters('sidebar', {
       numberOfMarkers: 'numberOfMarkers',
+      feedbackImage: 'feedbackImage',
     }),
     projectId() {
       // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
@@ -60,7 +65,7 @@ export default {
       return label;
     },
     imageLabel() {
-      return this.labels.image;
+      return this.feedbackImage ? this.labels.imageActive : this.labels.imageZero;
     },
   },
   methods: {
@@ -68,6 +73,11 @@ export default {
       updateTextInput: 'updateTextInput',
       updateShowMarkerOverlay: 'updateShowMarkerOverlay',
       startNewMarkerSession: 'startNewMarkerSession',
+      resetAllMarkers: 'resetAllMarkers',
+      updateShowImageSidebar: 'updateShowImageSidebar',
+      updatePerm: 'updatePerm',
+      resetImageState: 'resetImageState',
+      updateTempPreview: 'updateTempPreview',
     }),
     ...mapActions('feedback', {
       postComment: 'postComment',
@@ -76,10 +86,17 @@ export default {
       this.updateShowMarkerOverlay(true);
       this.startNewMarkerSession();
     },
-    addImage() {},
+    addImage() {
+      this.updateShowImageSidebar(true);
+      this.resetImageState();
+    },
     comment() {
       if (this.textInput) {
         this.postComment({ projectId: this.projectId, comment: this.textInput });
+        this.resetAllMarkers();
+        this.updatePerm(null);
+        this.resetImageState();
+        this.updateTempPreview(null);
         this.textInput = '';
       }
     },
@@ -145,7 +162,8 @@ export default {
     }
 
     &--active & {
-      &-marker {
+      &-marker,
+      &-image {
         &-icon {
           fill: $purple;
         }
@@ -192,6 +210,7 @@ export default {
     &-comment {
       margin-left: auto;
       color: $purple;
+      background-color: $purple--opacity;
 
       &--disabled,
       &--disabled:hover,

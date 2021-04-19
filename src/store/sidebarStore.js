@@ -13,6 +13,11 @@ export default {
     showMarkerOverlay: false,
     markers: [],
     sessionMarkers: [],
+    showImageSidebar: false,
+    feedbackImage: null,
+    selectedImageBackup: null,
+    selectedImage: null,
+    selectedImagePreview: null,
   },
 
   getters: {
@@ -27,6 +32,12 @@ export default {
     sessionMarkers: (state) => state.sessionMarkers,
     numberOfMarkers: (state) => state.markers.length,
     markersAreChanged: (state) => !areEqual(state.markers, state.sessionMarkers),
+    showImageSidebar: (state) => state.showImageSidebar,
+    feedbackImage: (state) => state.feedbackImage,
+    selectedImageBackup: (state) => state.selectedImageBackup,
+    selectedImage: (state) => state.selectedImage,
+    selectedImagePreview: (state) => state.selectedImagePreview,
+    imageIsChanged: (state) => !areEqual(state.selectedImage, state.selectedImageBackup),
   },
 
   mutations: {
@@ -56,6 +67,21 @@ export default {
     },
     setSessionMarkers(state, val) {
       state.sessionMarkers = val;
+    },
+    setShowImageSidebar(state, val) {
+      state.showImageSidebar = val;
+    },
+    setPerm(state, val) {
+      state.feedbackImage = val;
+    },
+    setSemiTemp(state, val) {
+      state.selectedImageBackup = val;
+    },
+    setTemp(state, val) {
+      state.selectedImage = val;
+    },
+    setTempPreview(state, val) {
+      state.selectedImagePreview = val;
     },
   },
 
@@ -116,6 +142,37 @@ export default {
 
     saveSessionMarkers({ commit, getters }) {
       commit('setMarkers', getters.sessionMarkers);
+    },
+
+    resetAllMarkers({ commit }) {
+      // only used when the feedback/comment has been posted and all associated data (markers & images) need to be reset
+      commit('setMarkers', []);
+      commit('setSessionMarkers', []);
+    },
+
+    updateShowImageSidebar({ commit }, payload) {
+      commit('setShowImageSidebar', payload);
+    },
+
+    resetImageState({ dispatch, getters }) {
+      dispatch('updateTemp', getters.feedbackImage);
+      dispatch('updateSemiTemp', getters.feedbackImage);
+    },
+
+    updateTemp({ commit }, payload) {
+      commit('setTemp', payload);
+    },
+
+    updateTempPreview({ commit, dispatch }, payload) {
+      commit('setTempPreview', payload);
+    },
+
+    updateSemiTemp({ commit }, payload) {
+      commit('setSemiTemp', payload);
+    },
+
+    updatePerm({ commit }, payload) {
+      commit('setPerm', payload);
     },
   },
 };

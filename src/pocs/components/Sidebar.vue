@@ -4,28 +4,34 @@
     <Tabs v-if="tabs" :tabs="tabs" />
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
-      <div v-if="activeTab === 'give'" v-for="(section, name) in sections" :key="section"
-      class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
-        <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="sidebar__section" />
-        <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
-        <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
-        <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section sidebar__section--no-padding-vertical" />
-      </div>
-
-      <div v-else-if="activeTab === 'view'" class="sidebar__inner-wrapper">
-        <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="sidebar__inner-wrapper">
-          <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
-          <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="sidebar__section sidebar__section--no-padding-horizontal" />
+      <transition name="slide" mode="out-in">
+        <div v-if="activeTab === 'give'" class="sidebar__inner-wrappers anim-side--left">
+          <div v-for="(section, name) in sections" :key="section"
+          class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
+            <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="sidebar__section" />
+            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
+            <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
+            <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section sidebar__section--no-padding-vertical" />
+          </div>
         </div>
-      </div>
 
-      <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
-    </div>
+        <div v-else-if="activeTab === 'view'" class="sidebar__inner-wrapper anim-side--right">
+          <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="sidebar__inner-wrapper">
+            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
+            <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="sidebar__section sidebar__section--no-padding-horizontal" />
+          </div>
+        </div>
+      </transition>
+
+        <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
+      </div>
 
     <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
   </section>
   <PopUp v-if="popUp && showPopUp" :content="popUp" />
 </template>
+
+//todo: sidebar tab transitie ziet er raar uit odmat de navgationButtons geen transitie hebben
 
 <script>
 import { mapGetters } from 'vuex';
@@ -101,6 +107,26 @@ export default {
 <style lang="scss">
 @import "@/styles";
 
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+
+  &.anim-side {
+    &--left {
+      transform: translateX(-100%);
+    }
+
+    &--right {
+      transform: translateX(100%);
+    }
+  }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
@@ -114,15 +140,21 @@ export default {
 
   &__inner {
     display: flex;
-    flex-direction: column;
     flex-grow: 1;
     overflow-x: hidden;
     overflow-y: scroll;
 
-    &--centered {
+    &--centered,
+    &--centered &-wrappers {
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    &-wrappers {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
     &-wrapper {

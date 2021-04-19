@@ -1,5 +1,13 @@
 @import 'variables';
 
+::-webkit-scrollbar {
+    display: none;
+}
+
+::selection {
+    background: none;
+}
+
 body {
     font-family: $font;
     font-size: $font-size--md;
@@ -40,6 +48,7 @@ ul {
 li {
     padding-left: $space--xsm;
     line-height: $line-height;
+    list-style: square;
 
     &:not(:last-of-type) {
         margin-bottom: $space--xsm;

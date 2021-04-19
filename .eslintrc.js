@@ -26,5 +26,6 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'consistent-return': 'off',
+    'prefer-destructuring': 'off'
   },
 };
