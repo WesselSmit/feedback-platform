@@ -23,7 +23,7 @@
         </div>
       </transition>
 
-        <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
+        <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" class="sidebar__navigation" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
       </div>
 
     <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
@@ -144,11 +144,20 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
 
-    &--centered,
-    &--centered &-wrappers {
+    &--centered {
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    &--centered &-wrappers {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    &--centered .sidebar__navigation {
+      flex-grow: 1;
     }
 
     &-wrappers {
