@@ -7,8 +7,6 @@
   </section>
 </template>
 
-//todo: veld moet required zijn
-//todo: documentation is niet meer zichtbaar bij alle andere stappen
 <script>
 import { mapActions } from 'vuex';
 
