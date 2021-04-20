@@ -4,6 +4,8 @@ export default {
   namespaced: true,
 
   state: {
+    insightInput: '',
+    hideDocumentation: false,
     hideVisualisation: false,
     stepIndex: 1, // moet uit DB opgehaald worden
     showPopUp: true,
@@ -21,6 +23,8 @@ export default {
   },
 
   getters: {
+    insightInput: (state) => state.insightInput,
+    hideDocumentation: (state) => state.hideDocumentation,
     hideVisualisation: (state) => state.hideVisualisation,
     stepIndex: (state) => state.stepIndex,
     showPopUp: (state) => state.showPopUp,
@@ -41,6 +45,12 @@ export default {
   },
 
   mutations: {
+    setInsightInput(state, val) {
+      state.insightInput = val;
+    },
+    setHideDocumentation(state, val) {
+      state.hideDocumentation = val;
+    },
     setHideVisualisation(state, val) {
       state.hideVisualisation = val;
     },
@@ -86,6 +96,14 @@ export default {
   },
 
   actions: {
+    updateInsightInput({ commit }, payload) {
+      commit('setInsightInput', payload);
+    },
+
+    updateHideDocumentation({ commit }, payload) {
+      commit('setHideDocumentation', payload);
+    },
+
     updateHideVisualisation({ commit }, payload) {
       commit('setHideVisualisation', payload);
     },

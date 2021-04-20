@@ -1,8 +1,8 @@
 <template>
-  <section class="documentation">
+  <section class="documentation" >
     <Menu />
 
-    <div class="documentation__inner" :class="{ 'documentation__inner--centered': hideVisualisation }">
+    <div v-if="!hideDocumentation" class="documentation__inner" :class="{ 'documentation__inner--centered': hideVisualisation }">
       <h1>{{ title }}</h1>
 
       <h3 class="documentation__subheading">{{ explanationHeading }}</h3>
@@ -26,7 +26,9 @@
       </p>
     </div>
 
-    <Visualisation v-if="!hideVisualisation" :title="title" :visualisation="visualisation" />
+    <div :class="{ 'documentation__inner documentation__inner--centered': hideDocumentation }">
+      <Visualisation v-if="!hideVisualisation" :class="{ 'no-documentation': hideDocumentation }" :title="title" :visualisation="visualisation" />
+    </div>
   </section>
 </template>
 
@@ -48,6 +50,7 @@ export default {
   props: ['content'],
   computed: {
     ...mapGetters('sidebar', {
+      hideDocumentation: 'hideDocumentation',
       hideVisualisation: 'hideVisualisation',
     }),
     title() {

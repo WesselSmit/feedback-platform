@@ -21,6 +21,21 @@ export default {
     steps: [
       {
         isCentered: true,
+        hideDocumentation: true,
+        content: {
+          inputInstructions: {
+            title: `Note your insights`,
+            body: `What insights can you gather from the data visualisation? What conclusions can you draw? Write them down.`,
+          }
+        },
+        navigation: [{
+            label: 'Submit',
+            action: 'saveInsights'
+          }
+        ]
+      },
+      {
+        isCentered: true,
         hideVisualisation: true,
         content: {
           confirmInstructions: {

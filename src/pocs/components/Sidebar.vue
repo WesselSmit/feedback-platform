@@ -8,6 +8,7 @@
         <div v-if="activeTab === 'give'" class="sidebar__inner-wrappers anim-side--left">
           <div v-for="(section, name) in sections" :key="section"
           class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
+            <InputInstructions v-if="name === 'inputInstructions'" :content="section" :hideDocumentation="hideDocumentation" class="sidebar__section sidebar__section--no-padding-vertical" />
             <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="sidebar__section" />
             <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
             <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
@@ -37,6 +38,7 @@
 import { mapGetters } from 'vuex';
 import ProgressBar from './ProgressBar';
 import Tabs from './Tabs';
+import InputInstructions from './InputInstructions';
 import ConfirmInstructions from './ConfirmInstructions';
 import ReadInstructions from './ReadInstructions';
 import FeedbackHelper from './FeedbackHelper';
@@ -50,6 +52,7 @@ export default {
   components: {
     ProgressBar,
     Tabs,
+    InputInstructions,
     ConfirmInstructions,
     ReadInstructions,
     FeedbackHelper,
@@ -90,6 +93,9 @@ export default {
     },
     isCentered() {
       return this.step.isCentered;
+    },
+    hideDocumentation() {
+      return this.step.hideDocumentation;
     },
     hideVisualisation() {
       return this.step.hideVisualisation;

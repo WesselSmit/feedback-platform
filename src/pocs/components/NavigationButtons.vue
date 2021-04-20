@@ -10,20 +10,31 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'NavigationButtons',
   props: ['buttons', 'bigMarginTop'],
   computed: {
+    ...mapGetters('sidebar', {
+      insightInput: 'insightInput',
+    }),
     hasMultiple() {
       return this.buttons.length > 1;
+    },
+    projectId() {
+      // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
+      return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
     },
   },
   methods: {
     ...mapActions('sidebar', {
       updateTextInput: 'updateTextInput',
       updateStepIndex: 'updateStepIndex',
+      updateHideDocumentation: 'updateHideDocumentation',
+    }),
+    ...mapActions('feedback', {
+      postInsight: 'postInsight',
     }),
     handleClick(action) {
       this.updateTextInput('');
@@ -32,6 +43,15 @@ export default {
         this.$router.push(action.target);
       } else if (action === 'previousStep' || action === 'nextStep') {
         this.updateStepIndex(action);
+      } else if (action === 'saveInsights') {
+        if (this.insightInput) {
+          this.updateHideDocumentation(false);
+          this.postInsight({ insight: this.insightInput, projectId: this.projectId });
+          this.updateStepIndex('nextStep');
+        } else {
+          console.log('Error: no insights entered');
+          // todo: geef error (links onderin beeld) dat de input ingevuld moet worden
+        }
       }
     },
   },

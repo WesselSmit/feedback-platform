@@ -72,6 +72,10 @@ export default {
 .visualisation {
   margin: $space--lg 0;
 
+  &.no-documentation {
+    margin: 0 0 $space--xl 0;
+  }
+
   &--marker-overlay {
     @include zoomIn(300ms, $ease--fast);
     display: flex;
