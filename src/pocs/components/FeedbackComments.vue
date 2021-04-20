@@ -5,31 +5,46 @@
 
     <ul class="feedback-comments__list">
       <li v-for="comment in commentsByTime" :key="comment" class="feedback-comments__comment">
-        <span class="feedback-comments__comment-meta">
-          <span class="feedback-comments__comment-avatar">{{ getInitials(comment.data.user.name) }}</span>
-          <span class="feedback-comments__comment-user-text">
+        <div class="feedback-comments__comment-meta">
+          <p class="feedback-comments__comment-avatar">{{ getInitials(comment.data.user.name) }}</p>
+          <div class="feedback-comments__comment-user-text">
             <h3 class="feedback-comments__comment-name">{{ comment.data.user.name }}</h3>
-            <span class="feedback-comments__comment-role">{{ comment.data.user.role }}</span>
-          </span>
-        </span>
+            <p class="feedback-comments__comment-role">{{ comment.data.user.role }}</p>
+          </div>
+        </div>
         {{ comment.data.text }}
+        <div class="feedback-comments__agree-container" @click="handleClick(comment)">
+          <AgreeIconZero v-if="!isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--zero" />
+          <AgreeIconActive v-if="isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--active" />
+          <p class="feedback-comments__agree-label" :class="{ 'feedback-comments__agree-label--active': isAgreed(comment) }">{{ isAgreed(comment) ? 'Agreed' : 'Agree' }}</p>
+        </div>
       </li>
     </ul>
   </section>
 </template>
 
+//todo: laat feedback afbeeldingen zien in comments tab
+//todo: add hover states aan agree feature
 //todo: backgroundcolor sidebar vs documentation
-//todo: scollbar documentation moet niet zichtbaar zijn in sidebar
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import AgreeIconZero from '@/assets/icons/AgreeIconZero';
+import AgreeIconActive from '@/assets/icons/AgreeIconActive';
 
 export default {
   name: 'FeedbackComments',
+  components: {
+    AgreeIconZero,
+    AgreeIconActive,
+  },
   props: ['content'],
   computed: {
     ...mapGetters('feedback', {
       comments: 'comments',
+    }),
+    ...mapGetters('user', {
+      userId: 'id',
     }),
     projectId() {
       // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
@@ -48,6 +63,7 @@ export default {
   methods: {
     ...mapActions('feedback', {
       getComments: 'getComments',
+      updateAgrees: 'updateAgrees',
     }),
     getInitials(name) {
       const nameParts = name.split(' ');
@@ -55,6 +71,18 @@ export default {
       const firstNamePart = nameParts[0][0];
       const lastNamePart = nameParts[nameParts.length - 1][0];
       return hasMultipleParts ? `${firstNamePart}${lastNamePart}` : firstNamePart;
+    },
+    handleClick(comment) {
+      const agreeIndex = comment.data.agrees.indexOf(this.userId);
+      if (agreeIndex === -1) {
+        comment.data.agrees.push(this.userId);
+      } else {
+        comment.data.agrees.splice(agreeIndex, 1);
+      }
+      this.updateAgrees({ projectId: this.projectId, commentId: comment.id, agrees: comment.data.agrees });
+    },
+    isAgreed(comment) {
+      return comment.data.agrees.some((id) => id === this.userId);
     },
   },
   created() {
@@ -125,7 +153,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-right: $space--sm;
+      margin: 0 $space--sm 0 0;
       height: 24px;
       width: 24px;
       background-color: $gray--light;
@@ -147,8 +175,41 @@ export default {
     }
 
     &-role {
+      margin: 0;
       color: $gray--dark;
       font-size: $font-size--sm;
+    }
+  }
+
+  &__agree {
+    &-container {
+      display: flex;
+      align-items: center;
+      margin-top: $space--xsm;
+      cursor: pointer;
+    }
+
+    &-icon {
+      margin-right: $space--sm;
+
+      &--zero {
+        fill: $black;
+      }
+
+      &--active {
+        fill: $purple;
+      }
+    }
+
+    &-label {
+      margin-bottom: 0;
+      padding-top: 2px;
+      color: $black;
+      text-transform: uppercase;
+
+      &--active {
+        color: $purple;
+      }
     }
   }
 }

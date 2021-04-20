@@ -11,6 +11,7 @@ export default {
 
   getters: {
     user: (state) => state.user,
+    id: (state) => state.user.uid,
     role: (state) => state.user.role,
     group: (state) => state.user.group,
     error: (state) => state.error,

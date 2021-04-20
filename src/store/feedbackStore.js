@@ -34,9 +34,9 @@ export default {
             color: 'TESTER',
           },
           text: payload.comment,
-          image: rootGetters['sidebar/feedbackImage'].id,
+          image: rootGetters['sidebar/feedbackImage']?.id || null,
           markers: rootGetters['sidebar/markers'],
-          agrees: 0,
+          agrees: [],
         });
       } catch (err) {
         dispatch('setError', err);
@@ -50,6 +50,17 @@ export default {
         snapshot.forEach((doc) => comments.push({ id: doc.id, data: doc.data() }));
 
         commit('setComments', comments);
+      } catch (err) {
+        dispatch('setError', err);
+      }
+    },
+
+    async updateAgrees({ dispatch }, payload) {
+      try {
+        await db.collection(`comments-${payload.projectId}`).doc(payload.commentId).update({
+          agrees: payload.agrees,
+        });
+        dispatch('getComments', payload.projectId);
       } catch (err) {
         dispatch('setError', err);
       }
