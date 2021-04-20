@@ -4,6 +4,10 @@
       <h1 v-if="title">{{ title }}</h1>
       <p v-if="body">{{ body }}</p>
 
+      <div v-if="rules" class="confirm-sidebar__rules-container">
+        <p class="confirm-sidebar__rules">{{ rules }}</p>
+      </div>
+
       <div v-if="showImageSidebar">
         <form v-if="!selectedImagePreview" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
           <input class="confirm-sidebar__dropzone-input" type="file" ref="feedbackImageInput" @change="selectFile($event)">
@@ -30,7 +34,6 @@
   </section>
 </template>
 
-//todo: rules showen
 //todo: errors states (in een pop-up links onderin het beeld) -> maak een nieuwe store, als er ergens een error/fout gebeurt (ook in andere stores) dan wordt de error state gezet in de nieuwe store, deze verschijnen in beeld als pop-ups (linksonderin in het beeld)
 
 <script>
@@ -66,6 +69,9 @@ export default {
     },
     body() {
       return this.content.body;
+    },
+    rules() {
+      return this.content.rules;
     },
     navigation() {
       return this.content.navigation;
@@ -210,6 +216,20 @@ export default {
   min-height: 100vh;
   max-height: 100vh;
   border-left: $border--ui;
+
+  &__rules {
+    margin: $space--xsm 0;
+
+    &-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 0 10px;
+      background-color: $gray--light-extra;
+      border: 1px solid transparent;
+      border-radius: $border-radius;
+    }
+  }
 
   &__dropzone {
     display: grid;
