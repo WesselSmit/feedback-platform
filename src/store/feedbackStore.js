@@ -18,16 +18,11 @@ export default {
   },
 
   actions: {
-    async postInsight({ dispatch }, payload) {
+    async postInsight({ dispatch, rootGetters }, payload) {
       try {
         await db.collection(`insights-${payload.projectId}`).add({
           ts: Date.now(),
-          user: { // todo: user moet uit userStore komen (gebruikt nu allemaal placeholder's)
-            id: 'TESTER',
-            name: 'TESTER',
-            role: 'TESTER',
-            color: 'TESTER',
-          },
+          user: rootGetters['user/user'],
           insight: payload.insight,
         });
       } catch (err) {
@@ -39,12 +34,7 @@ export default {
       try {
         await db.collection(`comments-${payload.projectId}`).add({
           ts: Date.now(),
-          user: { // todo: user moet uit userStore komen (gebruikt nu allemaal placeholder's)
-            id: 'TESTER',
-            name: 'TESTER',
-            role: 'TESTER',
-            color: 'TESTER',
-          },
+          user: rootGetters['user/user'],
           text: payload.comment,
           image: rootGetters['sidebar/feedbackImage']?.id || null,
           markers: rootGetters['sidebar/markers'],

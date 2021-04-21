@@ -27,7 +27,7 @@ export default {
         // abort and display error if inputs are empty (email & password inputs are checked by firebase auth)
         if (!payload.name || !payload.group) {
           const err = {
-            message: !payload.name ? 'Enter your name' : 'Select a group',
+            message: !payload.name ? 'Enter your name' : 'Select your group',
           };
           dispatch('handleError', err);
           return;
