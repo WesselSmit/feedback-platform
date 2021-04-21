@@ -62,10 +62,6 @@ export default {
       }
     },
 
-    async isUserLoggedIn({ getters }) {
-      return getters.user;
-    },
-
     async logout({ commit }) {
       await auth.signOut();
 

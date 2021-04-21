@@ -37,7 +37,6 @@ export default {
       userRole: 'role',
       userGroup: 'group',
       id: 'id',
-      hasBeenFetched: 'hasBeenFetched',
     }),
     ...mapGetters('message', {
       message: 'message',
@@ -47,11 +46,9 @@ export default {
     ...mapActions('user', {
       isUserLoggedIn: 'isUserLoggedIn',
     }),
-    async isLoggedIn() {
-      // todo: check of ze allebei werken (en zo ja, waarom? als je ze logged, returnen ze dan hetzelfde?)
-      // todo: je moet een oplossing vinden voor de isLoggedIn() in de template, deze kloppen nu nog niet want ze zijn altijd zichtbaar
-      // return await this.isUserLoggedIn();
-      return this.user;
+    isLoggedIn() {
+      // Object.keys() is needed because this.user is a proxy
+      return Object.keys(this.user).length > 0;
     },
   },
 };
