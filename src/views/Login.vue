@@ -57,7 +57,6 @@ export default {
       this.showPasswordReset = !this.showPasswordReset;
     },
     handleLogin() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors (error messages) in UI
       this.login(this.loginForm);
     },
   },

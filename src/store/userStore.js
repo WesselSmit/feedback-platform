@@ -24,6 +24,15 @@ export default {
   actions: {
     async signUp({ dispatch }, payload) {
       try {
+        // abort and display error if inputs are empty (email & password inputs are checked by firebase auth)
+        if (!payload.name || !payload.group) {
+          const err = {
+            message: !payload.name ? 'Enter your name' : 'Select a group',
+          };
+          dispatch('handleError', err);
+          return;
+        }
+
         const { user } = await auth.createUserWithEmailAndPassword(payload.email, payload.password);
 
         await usersRef.doc(user.uid).set({
@@ -78,7 +87,24 @@ export default {
 
     handleError({ dispatch }, payload) {
       console.error('Error in userStore:', payload);
-      dispatch('message/message', { message: payload.message, mode: 'error' }, { root: true });
+      const errorMessage = getErrorMessage(payload);
+      dispatch('message/message', { message: errorMessage, mode: 'error' }, { root: true });
     },
   },
 };
+
+// map firebase errors to custom error messages
+function getErrorMessage(errorObj) {
+  switch (errorObj.code) {
+    case 'auth/invalid-email':
+      return 'Email is invalid';
+    case 'auth/wrong-password':
+      return 'Incorrect password';
+    case 'auth/weak-password':
+      return 'Password must be at least 6 characters long';
+    case 'auth/email-already-in-use':
+      return 'Email is already in use';
+    default:
+      return errorObj.message;
+  }
+}

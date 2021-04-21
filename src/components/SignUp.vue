@@ -51,7 +51,6 @@ export default {
       signUp: 'signUp',
     }),
     handleSignup() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors (error messages) in UI
       this.signUp(this.signUpForm);
     },
     toggleForm() {
