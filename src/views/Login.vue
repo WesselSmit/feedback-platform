@@ -1,9 +1,7 @@
 <template>
   <section>
 
-    <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
-
-    <div v-if="!showPasswordReset" :class="{ 'login-form': showLoginForm }">
+    <div v-if="!showPasswordReset">
       <form v-if="showLoginForm" @submit.prevent>
         <fieldset>
           <h1>Login</h1>
@@ -21,43 +19,24 @@
         </fieldset>
       </form>
 
-      <form v-else @submit.prevent>
-        <fieldset>
-          <h1>Sign up</h1>
-
-            <label for="signUpName">Name</label>
-            <input v-model.trim="signUpForm.name" type="text" placeholder="John Doe" id="signUpName" />
-
-            <label for="signUpGroup">I'm part of group</label>
-            <select v-model="signUpForm.group" id="signUpGroup">
-              <option v-for="group in groupNames" :key="group" :value="group">{{ group }}</option>
-            </select>
-
-            <label for="signUpEmail">Email</label>
-            <input v-model.trim="signUpForm.email" type="text" placeholder="you@email.com" id="signUpEmail" />
-
-            <label for="signUpPassword">Password</label>
-            <input v-model.trim="signUpForm.password" type="password" placeholder="min length is 6" id="signUpPassword" />
-
-          <button @click="handleSignup()" class="button">Sign Up</button>
-          <button @click="toggleForm()">Go to login</button>
-        </fieldset>
-      </form>
+      <Register v-else @handleToggleForm="toggleForm()" />
     </div>
 
+    <PasswordReset v-else @close="togglePasswordReset()" />
   </section>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import PasswordReset from '@/components/PasswordReset.vue';
+import { mapActions } from 'vuex';
+import Register from '@/components/Register';
+import PasswordReset from '@/components/PasswordReset';
 
-// TODO: make login + signUp separate components
 // TODO: login moet overal logIn worden
 // TODO: maybe move some of the action logic to methods (because they are only used in this component) (like it is done in PasswordReset.vue)
 
 export default {
   components: {
+    Register,
     PasswordReset,
   },
   data() {
@@ -68,26 +47,10 @@ export default {
         email: '',
         password: '',
       },
-      signUpForm: {
-        name: '',
-        group: '',
-        email: '',
-        password: '',
-      },
     };
   },
-  computed: {
-    ...mapGetters('group', {
-      groupNames: 'groupNames',
-      groupError: 'error',
-    }),
-  },
   methods: {
-    ...mapActions('group', {
-      fetchGroups: 'fetchGroups',
-    }),
     ...mapActions('user', {
-      signUp: 'signUp',
       login: 'login',
     }),
     toggleForm() {
@@ -96,17 +59,10 @@ export default {
     togglePasswordReset() {
       this.showPasswordReset = !this.showPasswordReset;
     },
-    handleSignup() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors (error messages) in UI
-      this.signUp(this.signUpForm);
-    },
     handleLogin() {
       // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors (error messages) in UI
       this.login(this.loginForm);
     },
-  },
-  created() {
-    this.fetchGroups();
   },
 };
 </script>
