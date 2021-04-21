@@ -1,4 +1,4 @@
-import { auth, usersRef, groupsRef } from '@/firebase';
+import { auth, usersRef } from '@/firebase';
 import router from '@/router';
 
 export default {
@@ -44,26 +44,7 @@ export default {
         });
 
         dispatch('getUser', user);
-        dispatch('addUserToGroup', { userId: user.uid, group: payload.group });
-      } catch (err) {
-        dispatch('handleError', err);
-      }
-    },
-
-    async addUserToGroup({ dispatch }, payload) {
-      try {
-        let userIdsInGroup;
-        const snapshot = await groupsRef.get();
-        snapshot.forEach((doc) => {
-          if (doc.id === payload.group) {
-            userIdsInGroup = doc.data().users;
-          }
-        });
-        userIdsInGroup.push(payload.userId);
-
-        await groupsRef.doc(payload.group).set({
-          users: userIdsInGroup,
-        });
+        dispatch('group/addUserToGroup', { userId: user.uid, group: payload.group }, { root: true });
       } catch (err) {
         dispatch('handleError', err);
       }

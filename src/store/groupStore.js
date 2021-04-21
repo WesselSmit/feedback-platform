@@ -22,6 +22,8 @@ export default {
     },
   },
 
+  // todo: wanneer een user de role van expert/coach krijgt moet hij aan alle groups toegevoegd worden
+
   actions: {
     async fetchGroups({ dispatch, commit }) {
       try {
@@ -29,11 +31,27 @@ export default {
         const groups = snapshot.docs.map((doc) => doc.data());
         const groupNames = snapshot.docs.map((doc) => doc.id);
 
-        // TODO: voeg gebruiker toe in firestore group (in een array met uid's + namen van alle users die onderdeel zijn). dispatch hiervoor een nieuwe action
-        // TODO: coaches + experts worden toegevoegd aan alle groups
-
         commit('setGroups', groups);
         commit('setGroupNames', groupNames);
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
+    async addUserToGroup({ dispatch }, payload) {
+      try {
+        let userIdsInGroup;
+        const snapshot = await groupsRef.get();
+        snapshot.forEach((doc) => {
+          if (doc.id === payload.group) {
+            userIdsInGroup = doc.data().users;
+          }
+        });
+        userIdsInGroup.push(payload.userId);
+
+        await groupsRef.doc(payload.group).set({
+          users: userIdsInGroup,
+        });
       } catch (err) {
         dispatch('handleError', err);
       }
