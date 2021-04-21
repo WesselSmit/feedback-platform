@@ -10,7 +10,7 @@ export default {
 
   getters: {
     user: (state) => state.user,
-    id: (state) => state.user.uid,
+    id: (state) => state.user.id,
     role: (state) => state.user.role,
     group: (state) => state.user.group,
   },
@@ -36,7 +36,7 @@ export default {
         const { user } = await auth.createUserWithEmailAndPassword(payload.email, payload.password);
 
         await usersRef.doc(user.uid).set({
-          uid: user.uid,
+          id: user.uid,
           name: payload.name,
           mail: payload.email,
           group: payload.group,
