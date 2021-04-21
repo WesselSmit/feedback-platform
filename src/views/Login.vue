@@ -15,11 +15,11 @@
           <a @click="togglePasswordReset()">Forgot password</a>
 
           <button @click="handleLogin()">Log In</button>
-          <button @click="toggleForm()">Create an account</button>
+          <button @click="toggleForm()">Sign Up</button>
         </fieldset>
       </form>
 
-      <Register v-else @handleToggleForm="toggleForm()" />
+      <SignUp v-else @handleToggleForm="toggleForm()" />
     </div>
 
     <PasswordReset v-else @close="togglePasswordReset()" />
@@ -28,15 +28,12 @@
 
 <script>
 import { mapActions } from 'vuex';
-import Register from '@/components/Register';
+import SignUp from '@/components/SignUp';
 import PasswordReset from '@/components/PasswordReset';
-
-// TODO: login moet overal logIn worden
-// TODO: maybe move some of the action logic to methods (because they are only used in this component) (like it is done in PasswordReset.vue)
 
 export default {
   components: {
-    Register,
+    SignUp,
     PasswordReset,
   },
   data() {

@@ -18,7 +18,7 @@
       <input v-model.trim="signUpForm.password" type="password" placeholder="min length is 6" id="signUpPassword" />
 
       <button @click="handleSignup()" class="button">Sign Up</button>
-      <button @click="toggleForm()">Go to login</button>
+      <button @click="toggleForm()">Log in</button>
     </fieldset>
   </form>
 </template>
@@ -27,7 +27,7 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  name: 'Register',
+  name: 'SignUp',
   data() {
     return {
       signUpForm: {
