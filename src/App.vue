@@ -9,6 +9,10 @@
     <p>Group: {{ this.userGroup }}</p>
     <p>Uid: {{ this.user.uid }}</p>
   </div>
+
+  <transition name="slide-vertical">
+    <Message v-if="message" />
+  </transition>
 </template>
 
 <script>
@@ -19,12 +23,14 @@
 // todo: voeg een favicon toe
 // todo: login error states moeten gereset worden als je succesvol ingelogd bent
 
-import Navigation from '@/components/Navigation.vue';
 import { mapGetters } from 'vuex';
+import Navigation from '@/components/Navigation';
+import Message from '@/pocs/components/Message';
 
 export default {
   components: {
     Navigation,
+    Message,
   },
   computed: {
     ...mapGetters('user', {
@@ -32,6 +38,9 @@ export default {
       userRole: 'role',
       userGroup: 'group',
       userError: 'error',
+    }),
+    ...mapGetters('message', {
+      message: 'message',
     }),
     isLoggedIn() {
       // use Object.keys() because this.user returns a Proxy
@@ -42,5 +51,19 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/styles';
 
+.slide-vertical-enter-from,
+.slide-vertical-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.slide-vertical-enter-active {
+  transition: transform 200ms ease-in-out, opacity 350ms ease-in-out;
+}
+
+.slide-vertical-leave-active {
+  transition: transform 200ms ease-in-out, opacity 350ms ease-in-out;
+}
 </style>

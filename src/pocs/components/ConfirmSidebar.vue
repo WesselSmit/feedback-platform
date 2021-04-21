@@ -34,8 +34,6 @@
   </section>
 </template>
 
-//todo: errors states (in een pop-up links onderin het beeld) -> maak een nieuwe store, als er ergens een error/fout gebeurt (ook in andere stores) dan wordt de error state gezet in de nieuwe store, deze verschijnen in beeld als pop-ups (linksonderin in het beeld)
-
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import { storageRef } from '@/firebase';

@@ -36,6 +36,9 @@ export default {
     ...mapActions('feedback', {
       postInsight: 'postInsight',
     }),
+    ...mapActions('message', {
+      message: 'message',
+    }),
     handleClick(action) {
       this.updateTextInput('');
 
@@ -48,9 +51,9 @@ export default {
           this.updateHideDocumentation(false);
           this.postInsight({ insight: this.insightInput, projectId: this.projectId });
           this.updateStepIndex('nextStep');
+          this.message({ message: 'Insight saved', mode: 'succes' });
         } else {
-          console.log('Error: no insights entered');
-          // todo: geef error (links onderin beeld) dat de input ingevuld moet worden
+          this.message({ message: 'Enter atleast one insight', mode: 'error' });
         }
       }
     },
