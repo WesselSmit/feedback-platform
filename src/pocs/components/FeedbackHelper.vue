@@ -31,7 +31,7 @@
   </section>
 </template>
 
-//todo: voeg een animatie toe wanneer je van 'step' verandert (wanneer de gebruiker naar de vorige/volgende stap in het proces gaat)
+//todo: voeg een transitie toe wanneer je van 'step' verandert (wanneer de gebruiker naar de vorige/volgende stap in het proces gaat)
 
 <script>
 import ToggleIcon from '@/assets/icons/ToggleIcon';

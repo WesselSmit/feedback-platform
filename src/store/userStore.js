@@ -41,7 +41,10 @@ export default {
           mail: payload.email,
           group: payload.group,
           role: 'student',
+          color: 'TODO',
         });
+
+        // todo: bij het aanmaken van een user account moet een color toegevoegd worden
 
         dispatch('getUser', user);
         dispatch('group/addUserToGroup', { userId: user.uid, group: payload.group }, { root: true });

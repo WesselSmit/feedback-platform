@@ -12,6 +12,7 @@
             <p class="feedback-comments__comment-role">{{ comment.data.user.role }}</p>
           </div>
         </div>
+        <FeedbackImage v-if="comment.data.image" :imageId="comment.data.image" />
         {{ comment.data.text }}
         <div class="feedback-comments__agree-container" @click="handleClick(comment)">
           <AgreeIconZero v-if="!isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--zero" />
@@ -24,7 +25,6 @@
 </template>
 
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
-//todo: laat feedback afbeeldingen zien in comments tab
 //todo: add hover states aan agree feature
 //todo: backgroundcolor sidebar vs documentation
 
@@ -32,12 +32,14 @@
 import { mapGetters, mapActions } from 'vuex';
 import AgreeIconZero from '@/assets/icons/AgreeIconZero';
 import AgreeIconActive from '@/assets/icons/AgreeIconActive';
+import FeedbackImage from './FeedbackImage';
 
 export default {
   name: 'FeedbackComments',
   components: {
     AgreeIconZero,
     AgreeIconActive,
+    FeedbackImage,
   },
   props: ['content'],
   computed: {
