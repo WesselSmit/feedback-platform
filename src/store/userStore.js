@@ -50,23 +50,30 @@ export default {
       }
     },
 
-    async getUser({ commit }, payload) {
-      const userProfile = await usersRef.doc(payload.uid).get();
+    async getUser({ commit, dispatch }, payload) {
+      try {
+        const userProfile = await usersRef.doc(payload.uid).get();
 
-      commit('setUser', userProfile.data());
+        commit('setUser', userProfile.data());
 
-      // navigate user to homepage
-      // todo: check of user is ingelogd (zo niet, dan is er iets fout gegaan en moet de gebruiker op de login pagina blijven, als het wel goed gegaan is dan mag hij/zij naar het dashboard [in huidige situatie worden users ook naar het dashboard gestuurd als de login een error gaf])
-      if (router.currentRoute.value.name === 'login') {
-        router.push('/');
+        // navigate user to homepage
+        if (router.currentRoute.value.name === 'login') {
+          router.push('/');
+        }
+      } catch (err) {
+        dispatch('handleError', err);
       }
     },
 
-    async logout({ commit }) {
-      await auth.signOut();
+    async logout({ commit, dispatch }) {
+      try {
+        await auth.signOut();
 
-      commit('setUser', {});
-      router.push('/login');
+        commit('setUser', {});
+        router.push('/login');
+      } catch (err) {
+        dispatch('handleError', err);
+      }
     },
 
     handleError({ dispatch }, payload) {
