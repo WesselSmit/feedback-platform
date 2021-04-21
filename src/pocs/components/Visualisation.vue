@@ -12,7 +12,7 @@
   </section>
 </template>
 
-//todo: markers moeten nog opgeslagen worden in DB (en uitgelezen worden in FeedbackComments visualisation)
+//todo: markers moeten nog uitgelezen worden in FeedbackComments visualisation
 //todo: markers moeten de kleur van hun user hebben
 //todo: marker hide/show controls toevoegen + ze moeten alleen zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 

@@ -1,10 +1,6 @@
 <template>
   <section>
 
-    <h1 v-if="this.userError">{{ this.userError.message }}</h1>
-
-    <h1 v-if="this.groupError">{{ this.groupError.message }}</h1>
-
     <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
 
     <div v-if="!showPasswordReset" :class="{ 'login-form': showLoginForm }">
@@ -20,7 +16,7 @@
 
           <a @click="togglePasswordReset()">Forgot password</a>
 
-          <button @click="login()">Log In</button>
+          <button @click="handleLogin()">Log In</button>
           <button @click="toggleForm()">Create an account</button>
         </fieldset>
       </form>
@@ -43,7 +39,7 @@
             <label for="signUpPassword">Password</label>
             <input v-model.trim="signUpForm.password" type="password" placeholder="min length is 6" id="signUpPassword" />
 
-          <button @click="signup()" class="button">Sign Up</button>
+          <button @click="handleSignup()" class="button">Sign Up</button>
           <button @click="toggleForm()">Go to login</button>
         </fieldset>
       </form>
@@ -53,8 +49,8 @@
 </template>
 
 <script>
-import PasswordReset from '@/components/PasswordReset.vue';
 import { mapGetters, mapActions } from 'vuex';
+import PasswordReset from '@/components/PasswordReset.vue';
 
 // TODO: make login + signUp separate components
 // TODO: login moet overal logIn worden
@@ -85,14 +81,14 @@ export default {
       groupNames: 'groupNames',
       groupError: 'error',
     }),
-    ...mapGetters('user', {
-      user: 'user', // TODO: test of user wel gebruikt word of dat hij weg kan
-      userError: 'error',
-    }),
   },
   methods: {
     ...mapActions('group', {
       fetchGroups: 'fetchGroups',
+    }),
+    ...mapActions('user', {
+      signUp: 'signUp',
+      login: 'login',
     }),
     toggleForm() {
       this.showLoginForm = !this.showLoginForm;
@@ -100,13 +96,13 @@ export default {
     togglePasswordReset() {
       this.showPasswordReset = !this.showPasswordReset;
     },
-    signup() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
-      this.$store.dispatch('user/signUp', this.signUpForm);
+    handleSignup() {
+      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors (error messages) in UI
+      this.signUp(this.signUpForm);
     },
-    login() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
-      this.$store.dispatch('user/login', this.loginForm);
+    handleLogin() {
+      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors (error messages) in UI
+      this.login(this.loginForm);
     },
   },
   created() {

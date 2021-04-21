@@ -1,13 +1,13 @@
 <template>
-  <Navigation v-if="isLoggedIn" />
+  <Navigation v-if="isLoggedIn()" />
   <router-view />
 
-  <div v-if="isLoggedIn">
+  <div v-if="isLoggedIn()">
     <p>obj: {{ this.user }}</p>
     <p>User: {{ this.user.name }}</p>
     <p>Role: {{ this.userRole }}</p>
     <p>Group: {{ this.userGroup }}</p>
-    <p>Uid: {{ this.user.uid }}</p>
+    <p>Uid: {{ this.id }}</p>
   </div>
 
   <transition name="slide-vertical">
@@ -21,10 +21,8 @@
 
 // todo: alle blueprints/visualisation moeten weg + give-boxing.js moet hernoemt worden
 // todo: voeg een favicon toe
-// todo: herschrijf alle error states in de store's om de messageStore te gebruiken
-// todo: login error states moeten gereset worden als je succesvol ingelogd bent
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Navigation from '@/components/Navigation';
 import Message from '@/pocs/components/Message';
 
@@ -38,14 +36,22 @@ export default {
       user: 'user',
       userRole: 'role',
       userGroup: 'group',
-      userError: 'error',
+      id: 'id',
+      hasBeenFetched: 'hasBeenFetched',
     }),
     ...mapGetters('message', {
       message: 'message',
     }),
-    isLoggedIn() {
-      // use Object.keys() because this.user returns a Proxy
-      return Object.keys(this.user).length > 1;
+  },
+  methods: {
+    ...mapActions('user', {
+      isUserLoggedIn: 'isUserLoggedIn',
+    }),
+    async isLoggedIn() {
+      // todo: check of ze allebei werken (en zo ja, waarom? als je ze logged, returnen ze dan hetzelfde?)
+      // todo: je moet een oplossing vinden voor de isLoggedIn() in de template, deze kloppen nu nog niet want ze zijn altijd zichtbaar
+      // return await this.isUserLoggedIn();
+      return this.user;
     },
   },
 };

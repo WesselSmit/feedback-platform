@@ -6,7 +6,6 @@ export default {
 
   state: {
     user: {},
-    error: {},
   },
 
   getters: {
@@ -14,15 +13,11 @@ export default {
     id: (state) => state.user.uid,
     role: (state) => state.user.role,
     group: (state) => state.user.group,
-    error: (state) => state.error,
   },
 
   mutations: {
     setUser(state, val) {
       state.user = val;
-    },
-    setError(state, val) {
-      state.error = val;
     },
   },
 
@@ -31,7 +26,6 @@ export default {
       try {
         const { user } = await auth.createUserWithEmailAndPassword(payload.email, payload.password);
 
-        // store user profile in db
         await usersRef.doc(user.uid).set({
           uid: user.uid,
           name: payload.name,
@@ -40,10 +34,9 @@ export default {
           role: 'student',
         });
 
-        // fetch user profile and set in state
         dispatch('getUser', user);
       } catch (err) {
-        dispatch('setError', err);
+        dispatch('handleError', err);
       }
     },
 
@@ -51,10 +44,9 @@ export default {
       try {
         const { user } = await auth.signInWithEmailAndPassword(payload.email, payload.password);
 
-        // fetch user profile and set in state
         dispatch('getUser', user);
       } catch (err) {
-        dispatch('setError', err);
+        dispatch('handleError', err);
       }
     },
 
@@ -64,22 +56,26 @@ export default {
       commit('setUser', userProfile.data());
 
       // navigate user to homepage
+      // todo: check of user is ingelogd (zo niet, dan is er iets fout gegaan en moet de gebruiker op de login pagina blijven, als het wel goed gegaan is dan mag hij/zij naar het dashboard [in huidige situatie worden users ook naar het dashboard gestuurd als de login een error gaf])
       if (router.currentRoute.value.name === 'login') {
         router.push('/');
       }
     },
 
+    async isUserLoggedIn({ getters }) {
+      return getters.user;
+    },
+
     async logout({ commit }) {
       await auth.signOut();
 
-      // reset userProfile and redirect to /login
       commit('setUser', {});
       router.push('/login');
     },
 
-    setError({ commit }, payload) {
-      commit('setError', payload);
+    handleError({ dispatch }, payload) {
       console.error('Error in userStore:', payload);
+      dispatch('message/message', { message: payload.message, mode: 'error' }, { root: true });
     },
   },
 };

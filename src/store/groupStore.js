@@ -6,13 +6,11 @@ export default {
   state: {
     groups: [],
     groupNames: [],
-    error: {},
   },
 
   getters: {
     groups: (state) => state.groups,
     groupNames: (state) => state.groupNames,
-    error: (state) => state.error,
   },
 
   mutations: {
@@ -21,9 +19,6 @@ export default {
     },
     setGroupNames(state, val) {
       state.groupNames = val;
-    },
-    setError(state, val) {
-      state.error = val;
     },
   },
 
@@ -34,19 +29,19 @@ export default {
         const groups = snapshot.docs.map((doc) => doc.data());
         const groupNames = snapshot.docs.map((doc) => doc.id);
 
-        // TODO: voeg gebruiker toe in firestore group (in een array met uid's + namen van alle users die onderdeel zijn). Gebruik hiervoor een 2e action
+        // TODO: voeg gebruiker toe in firestore group (in een array met uid's + namen van alle users die onderdeel zijn). dispatch hiervoor een nieuwe action
         // TODO: coaches + experts worden toegevoegd aan alle groups
 
         commit('setGroups', groups);
         commit('setGroupNames', groupNames);
       } catch (err) {
-        dispatch('setError', err);
+        dispatch('handleError', err);
       }
     },
 
-    setError({ commit }, payload) {
-      commit('setError', payload);
+    handleError({ dispatch }, payload) {
       console.error('Error in groupStore:', payload);
+      dispatch('message/message', { message: payload.message, mode: 'error' }, { root: true });
     },
   },
 };

@@ -5,20 +5,15 @@ export default {
 
   state: {
     comments: [],
-    error: {},
   },
 
   getters: {
     comments: (state) => state.comments,
-    error: (state) => state.error,
   },
 
   mutations: {
     setComments(state, val) {
       state.comments = val;
-    },
-    setError(state, val) {
-      state.error = val;
     },
   },
 
@@ -36,7 +31,7 @@ export default {
           insight: payload.insight,
         });
       } catch (err) {
-        dispatch('setError', err);
+        dispatch('handleError', err);
       }
     },
 
@@ -56,7 +51,7 @@ export default {
           agrees: [],
         });
       } catch (err) {
-        dispatch('setError', err);
+        dispatch('handleError', err);
       }
     },
 
@@ -68,7 +63,7 @@ export default {
 
         commit('setComments', comments);
       } catch (err) {
-        dispatch('setError', err);
+        dispatch('handleError', err);
       }
     },
 
@@ -79,13 +74,13 @@ export default {
         });
         dispatch('getComments', payload.projectId);
       } catch (err) {
-        dispatch('setError', err);
+        dispatch('handleError', err);
       }
     },
 
-    setError({ commit }, payload) {
-      commit('setError', payload);
+    handleError({ dispatch }, payload) {
       console.error('Error in feedbackStore:', payload);
+      dispatch('message/message', { message: payload.message, mode: 'error' }, { root: true });
     },
   },
 };
