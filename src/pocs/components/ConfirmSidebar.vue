@@ -9,7 +9,7 @@
       </div>
 
       <div v-if="showImageSidebar">
-        <form v-if="!selectedImagePreview" class="confirm-sidebar__dropzone" ref="feedbackImageForm" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
+        <form v-if="!selectedImagePreview" class="confirm-sidebar__dropzone" @drop.prevent="handleDrop($event)" @dragenter.prevent @dragover.prevent @click="openFilePicker()">
           <input class="confirm-sidebar__dropzone-input" type="file" ref="feedbackImageInput" @change="selectFile($event)">
           <p class="confirm-sidebar__dropzone-label">Drop a file or <span class="confirm-sidebar__dropzone-label--underline">browse</span></p>
         </form>
@@ -97,6 +97,9 @@ export default {
       updateFeedbackImage: 'updateFeedbackImage',
       resetImageState: 'resetImageState',
     }),
+    ...mapActions('message', {
+      message: 'message',
+    }),
     showDisabledState(hasDisabled) {
       if (this.showMarkerOverlay) {
         return hasDisabled && !this.markersAreChanged;
@@ -113,7 +116,7 @@ export default {
         this.updateSelectedImage(e.dataTransfer.files[0]);
         this.updateSelectedImagePreview(await this.getPreview());
       } else {
-        console.log('too many files selected');
+        this.message({ message: 'too many files selected', mode: 'error' });
       }
     },
     async selectFile(e) {
@@ -138,6 +141,7 @@ export default {
           if (this.markersAreChanged) {
             this.updateShowMarkerOverlay(false);
             this.saveSessionMarkers();
+            this.message({ message: 'Marker changes saved', mode: 'succes' });
           }
           break;
         case 'cancelImage':
@@ -154,10 +158,15 @@ export default {
           if (this.imageIsChanged) {
             this.upload();
             this.updateShowImageSidebar(false);
+
+            if (!this.selectedImage) { // if there was an image but the user removed it
+              this.message({ message: 'Image changes saved', mode: 'succes' });
+            }
           }
           break;
         default:
           console.log('switch case not handled');
+          this.message({ message: 'Something unexpected happened', mode: 'error' });
       }
     },
     getPreview() {
@@ -183,16 +192,21 @@ export default {
             },
             (err) => {
               console.error('Error trying to upload file:', err);
+              this.message({ message: 'Something went wrong', mode: 'error' });
             },
             () => {
               this.updateFeedbackImage({ id: imageId, file: this.selectedImage });
+              this.message({ message: 'Image added to feedback', mode: 'succes' });
             });
         } catch (err) {
           console.error('Error trying to upload file:', err);
+          this.message({ message: 'Something went wrong', mode: 'error' });
         }
       } else {
-        this.$refs.feedbackImageForm.reset();
-        console.log('only .png and .jpg files smaller than 5mb allowed');
+        this.message({ message: 'only .png and .jpg files smaller than 5mb allowed', mode: 'error' });
+        this.updateShowImageSidebar(false);
+        this.resetImageState();
+        this.updateSelectedImagePreview(null);
       }
     },
   },

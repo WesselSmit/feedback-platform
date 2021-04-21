@@ -82,6 +82,9 @@ export default {
     ...mapActions('feedback', {
       postComment: 'postComment',
     }),
+    ...mapActions('message', {
+      message: 'message',
+    }),
     addMarkers() {
       this.updateShowMarkerOverlay(true);
       this.startNewMarkerSession();
@@ -98,6 +101,9 @@ export default {
         this.resetImageState();
         this.updateSelectedImagePreview(null);
         this.textInput = '';
+        this.message({ message: 'Feedback saved', mode: 'succes' });
+      } else {
+        this.message({ message: "Don't forget to enter feedback" });
       }
     },
   },

@@ -14,11 +14,3 @@ export default createStore({
     message: messageStore,
   },
 });
-
-/* todo: show error state when:
-  alle stores met error states
-  file upload/select (error + completion)
-  markers completion
-  feedback comment completion
-  blind kijken error
-*/

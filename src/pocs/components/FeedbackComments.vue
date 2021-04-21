@@ -23,6 +23,7 @@
   </section>
 </template>
 
+//todo: check of je als gebruiker meerdere keren dezelfde feedback comment kan 'agreeen' (verschijnt het meerdere keren in firestore?)
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
 //todo: laat feedback afbeeldingen zien in comments tab
 //todo: add hover states aan agree feature

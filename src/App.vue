@@ -21,6 +21,7 @@
 
 // todo: alle blueprints/visualisation moeten weg + give-boxing.js moet hernoemt worden
 // todo: voeg een favicon toe
+// todo: herschrijf alle error states in de store's om de messageStore te gebruiken
 // todo: login error states moeten gereset worden als je succesvol ingelogd bent
 
 import { mapGetters } from 'vuex';

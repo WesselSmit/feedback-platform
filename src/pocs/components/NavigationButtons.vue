@@ -53,7 +53,7 @@ export default {
           this.updateStepIndex('nextStep');
           this.message({ message: 'Insight saved', mode: 'succes' });
         } else {
-          this.message({ message: 'Enter atleast one insight', mode: 'error' });
+          this.message({ message: 'Enter atleast one insight' });
         }
       }
     },
