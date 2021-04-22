@@ -37,6 +37,7 @@ export default {
 
   &__item {
     display: flex;
+    align-items: center;
     max-width: max-content;
     padding: $space--xsm $space--sm;
     cursor: pointer;
@@ -68,6 +69,7 @@ export default {
     &-link {
       margin: 0;
       color: $black;
+      font-size: $font-size--sm-md;
       transition: color 500ms $ease--fast;
     }
   }

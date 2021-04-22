@@ -26,6 +26,8 @@
   </section>
 </template>
 
+//todo: disable autocomplete
+
 <script>
 import { mapActions } from 'vuex';
 import SignUp from '@/components/SignUp';

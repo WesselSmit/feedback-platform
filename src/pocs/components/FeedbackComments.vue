@@ -7,7 +7,7 @@
       <li v-for="comment in commentsByTime" :key="comment" class="feedback-comments__comment">
         <div class="feedback-comments__comment-meta">
           <p class="feedback-comments__comment-avatar">{{ getInitials(comment.data.user.name) }}</p>
-          <div class="feedback-comments__comment-user-text">
+          <div class="feedback-comments__comment-credentials">
             <h3 class="feedback-comments__comment-name">{{ comment.data.user.name }}</h3>
             <p class="feedback-comments__comment-role">{{ comment.data.user.role }}</p>
           </div>
@@ -167,7 +167,7 @@ export default {
       cursor: default;
     }
 
-    &-user-text {
+    &-credentials {
       display: flex;
       align-items: baseline;
     }
