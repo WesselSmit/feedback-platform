@@ -52,13 +52,17 @@ export default {
       }
     },
 
-    async addProject({ rootGetters, dispatch }) {
+    async addProject({ rootGetters, dispatch }, payload) {
       try {
-        await projectsRef.add({
+        const doc = await projectsRef.add({
+          title: payload,
           ts: Date.now(),
           owner: rootGetters['user/user'],
           group: rootGetters['user/user'].group,
         });
+
+        // todo: navigate naar project: doc.id
+        // todo: om dit goed te laten werken moet de route guard waarschijnlijk geupdate worden met een check die kijkt in welke groep je zit en uit welke groep het project komt
 
         dispatch('getProjects');
       } catch (err) {

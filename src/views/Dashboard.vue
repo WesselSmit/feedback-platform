@@ -6,21 +6,34 @@
     </div>
 
     <div class="dashboard__project-container">
-      <h1>My documentation pages</h1>
-      <div class="dashboard__project-list dashboard__project-list--yours">
+      <h1 class="dashboard__project-title">My documentation pages</h1>
+      <div class="dashboard__project-list">
         <Project v-for="project in myProjects" :key="project.id" :project="project" />
-        <div class="dashboard__project-create" @click="showNameInput()">
+        <div class="dashboard__project-create" @click="togglePopUp()">
           <AddIcon class="dashboard__project-create-icon" />
           <p class="dashboard__project-create-text">Create a new documentation page</p>
         </div>
       </div>
 
-      <h1>Documentation pages shared with you</h1>
-      <div class="dashboard__project-list dashboard__project-list--shared">
+      <h1 class="dashboard__project-title">Documentation pages shared with you</h1>
+      <div class="dashboard__project-list">
         <Project v-for="project in sharedProjects" :key="project.id" :project="project" />
       </div>
     </div>
   </section>
+
+  <div v-if="showProjectInput" class="dashboard__pop-up">
+    <div class="dashboard__pop-up-inner">
+      <h1 class="dashboard__pop-up-title">Enter a title</h1>
+      <p class="dashboard__pop-up-body">Give your documentation page a title that informs others about your topic doesn't spoil the conclusions.</p>
+      <input class="dashboard__pop-up-input" v-model.trim="projectTitle" type="text" placeholder="Enter a title" autocomplete="off" autofocus @keyup.enter="createProject()">
+
+      <div class="dashboard__pop-up-buttons">
+        <button class="dashboard__pop-up-button" @click="togglePopUp()">Cancel</button>
+        <button type="submit" class="dashboard__pop-up-button dashboard__pop-up-button--outline" @click="createProject()">Create</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -38,9 +51,14 @@ export default {
     Project,
     AddIcon,
   },
+  data() {
+    return {
+      showProjectInput: false,
+      projectTitle: '',
+    };
+  },
   computed: {
     ...mapGetters('project', {
-      projects: 'projects',
       myProjects: 'myProjects',
       sharedProjects: 'sharedProjects',
     }),
@@ -50,8 +68,22 @@ export default {
       getProjects: 'getProjects',
       addProject: 'addProject',
     }),
+    ...mapActions('message', {
+      message: 'message',
+    }),
+    togglePopUp() {
+      this.showProjectInput = !this.showProjectInput;
+
+      if (!this.showProjectInput) {
+        this.projectTitle = '';
+      }
+    },
     createProject() {
-      this.addProject();
+      if (this.projectTitle) {
+        this.addProject(this.projectTitle);
+      } else {
+        this.message({ message: 'Enter a title' });
+      }
     },
   },
   created() {
@@ -73,19 +105,24 @@ export default {
     &-container {
       margin: auto;
       padding: 0 $space--md;
-      width: 100%;
-      max-width: calc((5 * #{$project-width}) + (4 * #{$space--md} + (2 * #{$space--md}))); // todo: kijk of dit klopt
+      max-width: calc((5 * #{$project-width}) + (5 * #{$space--md} + (2 * #{$space--md}))); // 5x width of project + 5x project margin + 2x project list padding
+    }
+
+    &-title {
+      padding: 0 15px;
     }
 
     &-list {
       display: flex;
-      margin-bottom: $space--xl;
+      flex-wrap: wrap;
+      margin-bottom: $space--lg;
     }
 
     &-create {
       //todo: add hover state
       display: flex;
       flex-direction: column;
+      margin: 15px;
       padding: $space--sm-md;
       width: $project-width;
       height: $project-height;
@@ -101,16 +138,73 @@ export default {
       }
 
       &-icon {
-        margin: $space--sm auto 40px;
+        margin: $space--sm auto 45px;
         fill: $black;
         transition: all 500ms $ease--fast;
       }
 
       &-text {
         margin: 0;
-        text-align: center;
         color: $gray--dark;
+        font-size: $font-size--md;
+        text-align: center;
         transition: all 500ms $ease--fast;
+      }
+    }
+  }
+
+  &__pop-up {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: $white--overlay;
+
+    &-inner {
+      @include zoomIn(300ms, $ease--fast);
+      width: $popup-width--small;
+      padding: $space--sm-md;
+      background-color: $white;
+      border: $border--ui;
+      border-radius: $border-radius;
+    }
+
+    &-input {
+      padding: $space--xsm;
+      width: 100%;
+      font-size: $font-size--md;
+      border: 1px solid $black;
+      border-radius: $border-radius;
+    }
+
+    &-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &-button {
+      display: block;
+      margin: $space--lg 0 0 0;
+      height: $button-height;
+      width: 150px;
+      background-color: $white;
+      color: $purple;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      border-radius: $border-radius;
+      transition: background-color 500ms $ease--fast;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $purple--opacity;
+      }
+
+      &--outline {
+        border: $border--button;
       }
     }
   }

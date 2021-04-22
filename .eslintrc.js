@@ -23,6 +23,7 @@ module.exports = {
     'max-len': 'off',
     'vue/max-len': 'off',
     'vue/no-use-v-if-with-v-for': 'off',
+    'vue/valid-v-on': 'off',
     'import/no-cycle': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',

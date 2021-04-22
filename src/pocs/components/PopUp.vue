@@ -86,7 +86,7 @@ export default {
 
   &__inner {
     @include zoomIn(300ms, $ease--fast);
-    width: $popup-width;
+    width: $popup-width--large;
     padding: $space--sm-md;
     background-color: $white;
     border: $border--ui;

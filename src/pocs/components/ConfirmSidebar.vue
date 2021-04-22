@@ -247,7 +247,7 @@ export default {
     display: grid;
     place-items: center;
     height: $dropzone-height;
-    border: $border--drop;
+    border: 1px solid $black;
     border-radius: $border-radius;
     border-style: dashed;
     cursor: pointer;

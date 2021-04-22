@@ -37,7 +37,8 @@ $font-size--sm: 12px;
 $project-width: 200px;
 $documentation-width: 900px;
 $sidebar-width: 465px;
-$popup-width: 630px;
+$popup-width--large: 630px;
+$popup-width--small: 450px;
 
 
 // height
@@ -51,7 +52,6 @@ $feedback-image-preview-height: 350px;
 
 // border
 $border--ui: 1px solid $gray--light;
-$border--drop: 1px solid $black;
 $border--button: 2px solid $purple;
 $border-radius: 5px;
 

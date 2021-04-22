@@ -2,7 +2,7 @@
   <div class="project">
     <Avatar v-if="name" :name="name" size="large" class="project__avatar" />
     <h2 class="project__owner">{{ name }}</h2>
-    <p class="project__title">{{ title }}</p>
+    <p class="project__title" :class="{ 'project__title--small' : hasLongText }">{{ title }}</p>
   </div>
 </template>
 
@@ -22,6 +22,10 @@ export default {
     title() {
       return this.project.data.title;
     },
+    hasLongText() {
+      const titleTreshold = 60;
+      return this.title.length >= titleTreshold;
+    },
   },
 };
 </script>
@@ -30,9 +34,11 @@ export default {
 @import '@/styles';
 
 .project {
+  overflow: scroll;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 15px;
   padding: $space--sm-md;
   width: $project-width;
   height: $project-height;
@@ -42,6 +48,7 @@ export default {
   cursor: pointer;
   transition: all 500ms $ease--fast;
 
+  //todo: fix hover state
   &:hover {
     background-color: $purple--opacity;
     border-color: $purple;
@@ -52,18 +59,24 @@ export default {
   }
 
   &__owner {
-    margin-bottom: $space--sm;
+    margin-bottom: $space--xsm;
     color: $black;
     font-size: $font-size--md-lg;
     text-transform: capitalize;
+    text-align: center;
     transition: all 500ms $ease--fast;
   }
 
   &__title {
     margin-bottom: 0;
     color: $gray--dark;
-    font-size: $font-size--md;
+    font-size: $font-size--sm-md;
+    text-align: center;
     transition: all 500ms $ease--fast;
+
+    &--small {
+      font-size: $font-size--sm;
+    }
   }
 }
 </style>
