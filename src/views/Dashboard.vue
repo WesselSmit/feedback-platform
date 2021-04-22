@@ -36,6 +36,8 @@
   </div>
 </template>
 
+//todo: add empty state to 'shared projects'
+
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/pocs/components/Menu';
@@ -119,7 +121,6 @@ export default {
     }
 
     &-create {
-      //todo: add hover state
       display: flex;
       flex-direction: column;
       margin: 15px;
@@ -135,6 +136,16 @@ export default {
       &:hover {
         background-color: $purple--opacity;
         border-color: $purple;
+      }
+
+      &:hover & {
+        &-icon {
+          fill: $purple;
+        }
+
+        &-text {
+          color: $purple;
+        }
       }
 
       &-icon {

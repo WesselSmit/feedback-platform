@@ -48,10 +48,16 @@ export default {
   cursor: pointer;
   transition: all 500ms $ease--fast;
 
-  //todo: fix hover state
   &:hover {
     background-color: $purple--opacity;
     border-color: $purple;
+  }
+
+  &:hover & {
+    &__owner,
+    &__title {
+      color: $purple;
+    }
   }
 
   &__avatar {
