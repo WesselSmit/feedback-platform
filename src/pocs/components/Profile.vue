@@ -1,10 +1,10 @@
 <template>
   <section v-if="user" class="profile">
     <div class="profile__credentials">
-       <h3 class="profile__name">{{ name }}</h3>
+        <h3 class="profile__name">{{ name }}</h3>
         <p class="profile__role">{{ role }}</p>
     </div>
-    <p class="profile__avatar">{{ initials }}W</p>
+    <p class="profile__avatar">{{ initials }}</p>
   </section>
 </template>
 
@@ -85,6 +85,10 @@ export default {
     color: $black;
     border-radius: 50%;
     cursor: default;
+
+    &:empty {
+      display: none;
+    }
   }
 }
 </style>
