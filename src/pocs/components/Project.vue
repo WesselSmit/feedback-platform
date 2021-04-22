@@ -38,7 +38,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 15px;
+  margin: 0 15px 15px;
   padding: $space--sm-md;
   width: $project-width;
   height: $project-height;

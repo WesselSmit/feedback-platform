@@ -36,8 +36,6 @@
   </div>
 </template>
 
-//todo: add empty state to 'shared projects'
-
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/pocs/components/Menu';
@@ -118,12 +116,27 @@ export default {
       display: flex;
       flex-wrap: wrap;
       margin-bottom: $space--lg;
+
+      &:empty {
+        display: grid;
+        place-content: center;
+        margin: $space--xl 0;
+        padding: 0 15px;
+        width: 100%;
+
+        &::after {
+          content: "No documentation pages have been shared with you yet.";
+          display: block;
+          margin: auto;
+          color: $gray--dark;
+        }
+      }
     }
 
     &-create {
       display: flex;
       flex-direction: column;
-      margin: 15px;
+      margin: 0 15px 15px;
       padding: $space--sm-md;
       width: $project-width;
       height: $project-height;
