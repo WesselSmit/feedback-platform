@@ -6,7 +6,7 @@
     <ul class="feedback-comments__list">
       <li v-for="comment in commentsByTime" :key="comment" class="feedback-comments__comment">
         <div class="feedback-comments__comment-meta">
-          <p class="feedback-comments__comment-avatar">{{ getInitials(comment.data.user.name) }}</p>
+          <Avatar v-if="comment.data.user.name" :name="comment.data.user.name" class="feedback-comments__comment-avatar" />
           <div class="feedback-comments__comment-credentials">
             <h3 class="feedback-comments__comment-name">{{ comment.data.user.name }}</h3>
             <p class="feedback-comments__comment-role">{{ comment.data.user.role }}</p>
@@ -27,11 +27,13 @@
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
 //todo: add hover states aan agree feature
 //todo: backgroundcolor sidebar vs documentation
+//todo: delete eigen comments feature (heeft geen prioriteit)
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import AgreeIconZero from '@/assets/icons/AgreeIconZero';
 import AgreeIconActive from '@/assets/icons/AgreeIconActive';
+import Avatar from './Avatar';
 import FeedbackImage from './FeedbackImage';
 
 export default {
@@ -39,6 +41,7 @@ export default {
   components: {
     AgreeIconZero,
     AgreeIconActive,
+    Avatar,
     FeedbackImage,
   },
   props: ['content'],
@@ -153,18 +156,7 @@ export default {
     }
 
     &-avatar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       margin: 0 $space--sm 0 0;
-      height: 24px;
-      width: 24px;
-      background-color: $gray--light;
-      font-size: $font-size--sm;
-      text-transform: uppercase;
-      color: $black;
-      border-radius: 50%;
-      cursor: default;
     }
 
     &-credentials {
@@ -175,12 +167,14 @@ export default {
     &-name {
       margin-bottom: 0;
       margin-right: $space--sm;
+      text-transform: capitalize;
     }
 
     &-role {
       margin: 0;
       color: $gray--dark;
       font-size: $font-size--sm;
+      text-transform: capitalize;
     }
   }
 

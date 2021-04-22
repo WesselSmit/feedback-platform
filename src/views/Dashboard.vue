@@ -4,6 +4,20 @@
       <Menu />
       <Profile />
     </div>
+
+    <h1>Your documentation pages</h1>
+    <div class="dashboard__project-list dashboard__project-list--yours">
+      <article class="dashboard__project" @click="openProject()">
+
+      </article>
+    </div>
+
+    <h1>Documentation pages shared with you</h1>
+    <div class="dashboard__project-list dashboard__project-list--shared">
+      <article class="dashboard__project" @click="openProject()">
+
+      </article>
+    </div>
   </section>
 </template>
 
