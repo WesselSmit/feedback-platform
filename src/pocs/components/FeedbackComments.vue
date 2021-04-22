@@ -6,7 +6,7 @@
     <ul class="feedback-comments__list">
       <li v-for="comment in commentsByTime" :key="comment" class="feedback-comments__comment">
         <div class="feedback-comments__comment-meta">
-          <Avatar v-if="comment.data.user.name" :name="comment.data.user.name" class="feedback-comments__comment-avatar" />
+          <Avatar v-if="comment.data.user.name" :name="comment.data.user.name" size="small" class="feedback-comments__comment-avatar" />
           <div class="feedback-comments__comment-credentials">
             <h3 class="feedback-comments__comment-name">{{ comment.data.user.name }}</h3>
             <p class="feedback-comments__comment-role">{{ comment.data.user.role }}</p>
