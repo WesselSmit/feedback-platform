@@ -24,6 +24,7 @@
 import { mapActions } from 'vuex';
 
 export default {
+  name: 'PasswordReset',
   data() {
     return {
       email: '',

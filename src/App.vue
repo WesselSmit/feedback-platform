@@ -8,7 +8,6 @@
 
 <script>
 
-// todo: zorg dat elk component een name in de 'export default' heeft
 // todo: deel de componenten in mappen op + haal ze uit de 'pocs' map + gebruik altijd '@/components' voor imports (ipv './')
 
 // todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
@@ -19,6 +18,7 @@ import { mapGetters } from 'vuex';
 import Message from '@/pocs/components/Message';
 
 export default {
+  name: 'App',
   components: {
     Message,
   },

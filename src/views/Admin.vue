@@ -10,6 +10,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
+  name: 'Admin',
   computed: {
     ...mapGetters('user', {
       userRole: 'role',

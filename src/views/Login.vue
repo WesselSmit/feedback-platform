@@ -30,6 +30,7 @@ import SignUp from '@/components/SignUp';
 import PasswordReset from '@/components/PasswordReset';
 
 export default {
+  name: 'Login',
   components: {
     SignUp,
     PasswordReset,
