@@ -17,6 +17,15 @@ const routes = [
     name: 'login',
     component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
   },
+  /* todo:
+    - add project (setup, give, view) routes op
+    - voeg aan elke route een 'meta: { isProject: true }' toe (deze gebruik je bij de beforeEach check)
+    - routes moeten dynamisch zijn:
+      - /setup:id
+      - /give:id
+      - /view:id
+    - check of niet bestaande IDs opgevangen worden
+  */
   {
     path: '/give',
     name: 'give',
@@ -63,12 +72,16 @@ router.beforeEach(async (to, from, next) => {
       // this needs to dispatch first because it needs to wait for the user data to be fetched and set in state
       const role = await store.dispatch('user/getUser', auth.currentUser).then(() => store.getters['user/role']);
 
-      if (role && allowedRoles.includes(role)) { // check if user has permission
-        console.log('user is allowed to view page');
-        next();
-      } else {
-        console.log('user does not have the required permissions');
-        next('/404');
+      if (role) {
+        if (allowedRoles.includes(role)) { // check if user has permission
+          console.log('user is allowed to view page');
+          next();
+        } else {
+          console.log('user does not have the required permissions');
+          next('/404');
+        }
+      } else if (to.meta.isProject) {
+        // todo: check voor page permissions
       }
     }
   } else {
