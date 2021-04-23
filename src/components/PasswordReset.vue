@@ -8,7 +8,7 @@
 
         <form @submit.prevent>
           <label for="resetEmail">Email</label>
-          <input v-model.trim="email" type="email" placeholder="you@email.com" id="resetEmail" autocomplete="off" autofocus>
+          <input class="password-reset__input" v-model.trim="email" type="email" placeholder="you@email.com" id="resetEmail" autocomplete="off" autofocus>
         </form>
 
         <div class="password-reset__buttons">
@@ -61,6 +61,15 @@ export default {
 
   &__body {
     margin-bottom: $space--md;
+  }
+
+  &__input {
+    transition: border-color 500ms $ease--fast;
+
+    &:hover,
+    &:focus {
+      border-color: $purple;
+    }
   }
 
   &__buttons {

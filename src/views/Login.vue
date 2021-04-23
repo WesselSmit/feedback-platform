@@ -88,7 +88,13 @@ export default {
   }
 
   &__input {
-    margin-bottom: $space--md;
+    margin-bottom: $space--sm-md;
+    transition: border-color 500ms $ease--fast;
+
+    &:hover,
+    &:focus {
+      border-color: $purple;
+    }
 
     &:last-of-type {
       margin-bottom: $space--xsm;
