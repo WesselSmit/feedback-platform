@@ -39,7 +39,7 @@ export default {
         projects.forEach((project) => {
           if (project.data.owner.id === rootGetters['user/user'].id) {
             myProjects.push(project);
-          } else {
+          } else if (project.data.group === rootGetters['user/user'].group) { // todo: dit werkt voor 'students', als de gebruiker een teacher/expert/admin is moeten alle projecten altijd zichtbaar zijn
             sharedProjects.push(project);
           }
         });

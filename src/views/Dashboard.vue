@@ -36,8 +36,6 @@
   </div>
 </template>
 
-//todo: bij shared projects worden alle projecten ondanks groepje weergegeven, hier moeten alleen de projecten van jouw groepsgenoten staan
-
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/pocs/components/Menu';
