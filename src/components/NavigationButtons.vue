@@ -44,6 +44,10 @@ export default {
 
       if (action.hasOwnProperty('target')) {
         this.$router.push(action.target);
+
+        if (action.target === 'Dashboard') {
+          this.message({ message: 'Your feedback is saved', mode: 'succes' });
+        }
       } else if (action === 'previousStep' || action === 'nextStep') {
         this.updateStepIndex(action);
       } else if (action === 'saveInsights') {
