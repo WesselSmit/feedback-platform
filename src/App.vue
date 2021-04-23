@@ -18,6 +18,7 @@
   2. heb je permissie om dit project te bekijken (zit je in het groepje van het project? ben je admin/docent/expert?)
   3. ben je owner ? setup/edit/inzien : give ==> deze data staat in de projects collection
   4. setup/edit || give ? get progress : start ==> deze data moet nog in de project collection komen
+  - deze checks moeten allemaal in de beforeEach in de router gebeuren
 
   de progress moet aangemaakt als je wel permissie hebt maar nog nooit het project bekeken hebt
 
