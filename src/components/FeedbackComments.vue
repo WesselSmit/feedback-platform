@@ -33,8 +33,8 @@
 import { mapGetters, mapActions } from 'vuex';
 import AgreeIconZero from '@/assets/icons/AgreeIconZero';
 import AgreeIconActive from '@/assets/icons/AgreeIconActive';
-import Avatar from './Avatar';
-import FeedbackImage from './FeedbackImage';
+import Avatar from '@/components/Avatar';
+import FeedbackImage from '@/components/FeedbackImage';
 
 export default {
   name: 'FeedbackComments',

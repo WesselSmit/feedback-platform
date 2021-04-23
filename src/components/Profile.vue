@@ -10,7 +10,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Avatar from './Avatar';
+import Avatar from '@/components/Avatar';
 
 export default {
   name: 'Profile',

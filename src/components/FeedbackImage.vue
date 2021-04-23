@@ -7,7 +7,7 @@
 
 <script>
 import { storageRef } from '@/firebase';
-import Spinner from './Spinner';
+import Spinner from '@/components/Spinner';
 
 export default {
   name: 'FeedbackImage',

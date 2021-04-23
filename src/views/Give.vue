@@ -10,12 +10,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
-// import content from '@/blueprints/give-boxing';
 import content from '@/blueprints/give-twitter';
-import Documentation from '@/pocs/components/Documentation';
-import Sidebar from '@/pocs/components/Sidebar';
-import ConfirmSidebar from '@/pocs/components/ConfirmSidebar';
-import MarkerOverlay from '@/pocs/components/MarkerOverlay';
+import Documentation from '@/components/Documentation';
+import Sidebar from '@/components/Sidebar';
+import ConfirmSidebar from '@/components/ConfirmSidebar';
+import MarkerOverlay from '@/components/MarkerOverlay';
 
 export default {
   name: 'Give',

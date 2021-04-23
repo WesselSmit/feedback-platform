@@ -36,8 +36,8 @@
 import { mapGetters } from 'vuex';
 import LimitIcon from '@/assets/icons/LimitIcon';
 import QuestionIcon from '@/assets/icons/QuestionIcon';
-import Menu from './Menu';
-import Visualisation from './Visualisation';
+import Menu from '@/components/Menu';
+import Visualisation from '@/components/Visualisation';
 
 export default {
   name: 'Documentation',

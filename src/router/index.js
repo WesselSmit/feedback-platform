@@ -5,16 +5,6 @@ import store from '@/store';
 
 const routes = [
   {
-    path: '/poc/give',
-    name: 'give',
-    component: () => import(/* webpackChunkName: "give" */ '@/pocs/Give.vue'),
-  },
-  {
-    path: '/poc/done',
-    name: 'done',
-    component: () => import(/* webpackChunkName: "done" */ '@/pocs/Done.vue'),
-  },
-  {
     path: '/',
     name: 'dashboard',
     component: Dashboard,
@@ -26,6 +16,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+  },
+  {
+    path: '/give',
+    name: 'give',
+    component: () => import(/* webpackChunkName: "give" */ '@/views/Give.vue'),
   },
   {
     path: '/admin',

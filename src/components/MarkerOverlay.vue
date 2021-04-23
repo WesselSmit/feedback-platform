@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Visualisation from './Visualisation';
-import ConfirmSidebar from './ConfirmSidebar';
+import Visualisation from '@/components/Visualisation';
+import ConfirmSidebar from '@/components/ConfirmSidebar';
 
 export default {
   name: 'MarkerOverlay',

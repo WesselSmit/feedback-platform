@@ -8,6 +8,7 @@
 
 <script>
 
+// todo: 'Done' component kan weg --> dashboard + message
 // todo: deel de componenten in mappen op + haal ze uit de 'pocs' map + gebruik altijd '@/components' voor imports (ipv './')
 
 // todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
@@ -15,7 +16,7 @@
 // todo: voeg een favicon toe
 
 import { mapGetters } from 'vuex';
-import Message from '@/pocs/components/Message';
+import Message from '@/components/Message';
 
 export default {
   name: 'App',

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Avatar from '@/pocs/components/Avatar';
+import Avatar from '@/components/Avatar';
 
 export default {
   name: 'Project',

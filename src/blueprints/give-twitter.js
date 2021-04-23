@@ -265,7 +265,7 @@ export default {
             label: 'Next',
             hasOutline: true,
             action: {
-              target: 'Done'
+              target: 'Dashboard'
             }
           }
         ]

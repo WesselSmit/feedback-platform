@@ -36,16 +36,16 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import ProgressBar from './ProgressBar';
-import Tabs from './Tabs';
-import InputInstructions from './InputInstructions';
-import ConfirmInstructions from './ConfirmInstructions';
-import ReadInstructions from './ReadInstructions';
-import FeedbackHelper from './FeedbackHelper';
-import FeedbackInput from './FeedbackInput';
-import NavigationButtons from './NavigationButtons';
-import FeedbackComments from './FeedbackComments';
-import PopUp from './PopUp';
+import ProgressBar from '@/components/ProgressBar';
+import Tabs from '@/components/Tabs';
+import InputInstructions from '@/components/InputInstructions';
+import ConfirmInstructions from '@/components/ConfirmInstructions';
+import ReadInstructions from '@/components/ReadInstructions';
+import FeedbackHelper from '@/components/FeedbackHelper';
+import FeedbackInput from '@/components/FeedbackInput';
+import NavigationButtons from '@/components/NavigationButtons';
+import FeedbackComments from '@/components/FeedbackComments';
+import PopUp from '@/components/PopUp';
 
 export default {
   name: 'Sidebar',

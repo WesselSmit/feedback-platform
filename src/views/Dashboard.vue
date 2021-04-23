@@ -38,9 +38,9 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import Menu from '@/pocs/components/Menu';
-import Profile from '@/pocs/components/Profile';
-import Project from '@/pocs/components/Project';
+import Menu from '@/components/Menu';
+import Profile from '@/components/Profile';
+import Project from '@/components/Project';
 import AddIcon from '@/assets/icons/AddIcon';
 
 export default {
