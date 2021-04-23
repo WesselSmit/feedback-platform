@@ -144,9 +144,10 @@ export default {
       border: $border--ui;
       border-radius: $border-radius;
       cursor: pointer;
-      transition: all 500ms $ease--fast, border-width 0ms;
+      transition: all 500ms $ease--fast, padding 0ms, border-width 0ms;
 
       &:hover {
+        padding: calc(#{$space--sm-md - 1px}); // becuase the border-width increases with 1px, the padding needs to decrease 1px
         background-color: $purple--opacity;
         border-color: $purple;
         border-width: 2px;
