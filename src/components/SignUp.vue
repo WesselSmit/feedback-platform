@@ -4,18 +4,19 @@
       <h1>Sign up</h1>
 
       <label for="signUpName">Name</label>
-      <input v-model.trim="signUpForm.name" type="text" placeholder="John Doe" id="signUpName" />
+      <input v-model.trim="signUpForm.name" type="text" placeholder="John Doe" id="signUpName" autocomplete="off" autofocus>
 
       <label for="signUpGroup">I'm part of group</label>
       <select v-model="signUpForm.group" id="signUpGroup">
-        <option v-for="group in groupNames" :key="group" :value="group">{{ group }}</option>
+        <option value="" disabled selected hidden>Select your group</option>
+        <option v-for="group in groupNames" :key="group" :value="group">Group {{ group }}</option>
       </select>
 
       <label for="signUpEmail">Email</label>
-      <input v-model.trim="signUpForm.email" type="text" placeholder="you@email.com" id="signUpEmail" />
+      <input v-model.trim="signUpForm.email" type="text" placeholder="jonh.doe@gmail.com" id="signUpEmail" autocomplete="off">
 
       <label for="signUpPassword">Password</label>
-      <input v-model.trim="signUpForm.password" type="password" placeholder="min length is 6" id="signUpPassword" />
+      <input v-model.trim="signUpForm.password" type="password" placeholder="******" id="signUpPassword">
 
       <button @click="handleSignup()" class="button">Sign Up</button>
       <button @click="toggleForm()">Log in</button>

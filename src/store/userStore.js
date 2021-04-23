@@ -113,6 +113,19 @@ export default {
       }
     },
 
+    async resetPassword({ dispatch }, payload) {
+      if (payload === '') {
+        dispatch('handleError', { message: 'Enter an email' });
+      }
+
+      try {
+        await auth.sendPasswordResetEmail(payload);
+        dispatch('message/message', { message: 'A reset link has been sent toy our email', mode: 'succes' }, { root: true });
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
     handleError({ dispatch }, payload) {
       console.error('Error in userStore:', payload);
       const errorMessage = getErrorMessage(payload);
@@ -123,6 +136,7 @@ export default {
 
 // map firebase errors to custom error messages
 function getErrorMessage(errorObj) {
+  console.log(errorObj, errorObj.code, errorObj.message);
   switch (errorObj.code) {
     case 'auth/invalid-email':
       return 'Email is invalid';

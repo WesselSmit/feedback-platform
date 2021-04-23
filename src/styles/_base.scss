@@ -55,6 +55,22 @@ li {
     }
 }
 
+label {
+    margin-bottom: $space--sm;
+    color: $black;
+    font-size: $font-size--md-lg;
+}
+
+input[type=text],
+input[type=password] {
+    padding: $space--xsm;
+    width: 100%;
+    color: $black;
+    font-size: $font-size--md;
+    border: 1px solid $black;
+    border-radius: $border-radius;
+}
+
 textarea {
     width: 100%;
     font-family: $font;

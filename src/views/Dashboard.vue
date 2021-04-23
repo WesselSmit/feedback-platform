@@ -36,6 +36,8 @@
   </div>
 </template>
 
+//todo: bij shared projects worden alle projecten ondanks groepje weergegeven, hier moeten alleen de projecten van jouw groepsgenoten staan
+
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/pocs/components/Menu';
@@ -109,6 +111,7 @@ export default {
     }
 
     &-title {
+      margin-bottom: 0;
       padding: 0 15px;
     }
 
@@ -136,7 +139,7 @@ export default {
     &-create {
       display: flex;
       flex-direction: column;
-      margin: 0 15px 15px;
+      margin: 15px;
       padding: $space--sm-md;
       width: $project-width;
       height: $project-height;
@@ -216,7 +219,7 @@ export default {
       display: block;
       margin: $space--lg 0 0 0;
       height: $button-height;
-      width: 150px;
+      width: $button-width;
       background-color: $white;
       color: $purple;
       text-transform: uppercase;

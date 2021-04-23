@@ -1,40 +1,36 @@
 <template>
-  <div class="modal">
-    <div class="modal-content">
-      <div @click="$emit('close')" class="close">X</div>
-      <h3>Reset Password</h3>
-      <div v-if="!showSuccess">
+  <div class="password-reset">
+    <div class="password-reset__content">
+      <div @click="$emit('close')" class="password-reset__close">X</div>
+      <h3 class="password-reset__title">Reset Password</h3>
+
+      <div>
         <p>Enter your email to reset your password</p>
+
         <form @submit.prevent>
-          <input v-model.trim="email" type="email" placeholder="you@email.com" />
+          <input v-model.trim="email" type="email" placeholder="you@email.com" autocomplete="off" autofocus>
         </form>
-        <p v-if="errorMsg !== ''" class="error">{{ errorMsg }}</p>
-        <button @click="resetPassword()" class="button">Reset</button>
+        <button @click="resetUserPassword()" class="button">Reset</button>
       </div>
-      <p v-else>Success! Check your email for a reset link.</p>
     </div>
   </div>
 </template>
 
 <script>
-import { auth } from '@/firebase';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
     return {
       email: '',
-      showSuccess: false,
-      errorMsg: '',
     };
   },
   methods: {
-    async resetPassword() {
-      try {
-        await auth.sendPasswordResetEmail(this.email);
-        this.showSuccess = true;
-      } catch (err) {
-        this.errorMsg = err.message;
-      }
+    ...mapActions('user', {
+      resetPassword: 'resetPassword',
+    }),
+    async resetUserPassword() {
+      await this.resetPassword(this.email);
     },
   },
 };

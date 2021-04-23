@@ -131,7 +131,7 @@ export default {
     display: block;
     margin: $space--lg 0 0 auto;
     height: $button-height;
-    width: 150px;
+    width: $button-width;
     background-color: $white;
     color: $purple;
     text-transform: uppercase;
