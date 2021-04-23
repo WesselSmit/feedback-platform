@@ -7,7 +7,7 @@ export default {
     insightInput: '',
     hideDocumentation: false,
     hideVisualisation: false,
-    stepIndex: 1, // moet uit DB opgehaald worden
+    stepIndex: 1, // todo: moet uit DB opgehaald worden
     showPopUp: true,
     activeTab: 'give',
     showFeedbackHelperZero: true,
