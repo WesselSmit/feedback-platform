@@ -1,7 +1,7 @@
 <template>
   <section class="dashboard">
     <div class="dashboard__header">
-      <Menu />
+      <Menu :hasLogout="true" />
       <Profile />
     </div>
 

@@ -2,7 +2,6 @@
 
 export default {
   documentation: {
-    menuOptions: ['home'],
     title: `Boxing heavyweight championships`,
     explanationHeading: `Explanation`,
     explanation: `The history of the different boxing heavyweight championships through the years.`,

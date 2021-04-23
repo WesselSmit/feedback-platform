@@ -1,6 +1,6 @@
 <template>
   <section class="documentation" >
-    <Menu />
+    <Menu :hasBack="true" :hasLogout="false" />
 
     <div v-if="!hideDocumentation" class="documentation__inner" :class="{ 'documentation__inner--centered': hideVisualisation }">
       <h1>{{ title }}</h1>

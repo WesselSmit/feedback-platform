@@ -1,25 +1,31 @@
 <template>
   <section class="menu">
-    <div class="menu__item" @click="handleLogout">
+    <div v-if="hasBack" class="menu__item">
+      <BackIcon class="menu__item-icon" />
+      <router-link :to="{ name: 'dashboard' }" class="menu__item-link">Home</router-link>
+    </div>
+    <div v-if="hasLogout" class="menu__item" @click="handleLogout">
       <LogoutIcon class="menu__item-icon" />
-      <p class="menu__item-link">logout</p>
+      <p class="menu__item-link">Logout</p>
     </div>
   </section>
 </template>
 
-//todo (see menuOptions in blueprint file)
-
 <script>
 import { mapActions } from 'vuex';
+import BackIcon from '@/assets/icons/BackIcon';
 import LogoutIcon from '@/assets/icons/LogoutIcon';
 
 export default {
   name: 'Menu',
   components: {
+    BackIcon,
     LogoutIcon,
   },
+  props: ['hasBack', 'hasLogout'],
   methods: {
     ...mapActions('user', {
+      user: 'user',
       logout: 'logout',
     }),
     handleLogout() {
@@ -38,6 +44,7 @@ export default {
   &__item {
     display: flex;
     align-items: center;
+    height: 28px;
     max-width: max-content;
     padding: $space--xsm $space--sm;
     cursor: pointer;
@@ -62,6 +69,8 @@ export default {
 
     &-icon {
       margin-right: $space--sm;
+      width: 18px;
+      height: 18px;
       fill: $black;
       transition: fill 500ms $ease--fast;
     }
@@ -70,7 +79,12 @@ export default {
       margin: 0;
       color: $black;
       font-size: $font-size--sm-md;
+      text-decoration: none;
       transition: color 500ms $ease--fast;
+
+      &:visited {
+        color: $black;
+      }
     }
   }
 }

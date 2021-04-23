@@ -2,7 +2,6 @@
 
 export default {
   documentation: {
-    menuOptions: ['home'],
     title: `Twitter usage of Belgian politicians`,
     explanationHeading: `Explanation`,
     explanation: `With this data visualization I try to provide insight into Belgium's most famous politicians and their twitter statistics and interactions. I was curious; we always hear about Donald Trumps twitter usage, but never about other countries. I visualize the data from since the twitter account was created until the 31st of March, 2020.`,
