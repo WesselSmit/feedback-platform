@@ -120,7 +120,7 @@ export default {
 
       try {
         await auth.sendPasswordResetEmail(payload);
-        dispatch('message/message', { message: 'A reset link has been sent toy our email', mode: 'succes' }, { root: true });
+        dispatch('message/message', { message: 'A reset link has been sent to your email', mode: 'succes' }, { root: true });
       } catch (err) {
         dispatch('handleError', err);
       }

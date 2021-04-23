@@ -88,10 +88,10 @@ export default {
   }
 
   &__input {
-    margin-bottom: $space--xsm;
+    margin-bottom: $space--md;
 
-    &:not(:last-of-type) {
-      margin-bottom: $space--md;
+    &:last-of-type {
+      margin-bottom: $space--xsm;
     }
   }
 

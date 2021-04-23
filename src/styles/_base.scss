@@ -56,12 +56,14 @@ li {
 }
 
 label {
-    margin-bottom: $space--sm;
+    display: block;
+    margin-bottom: $space--xsm;
     color: $black;
-    font-size: $font-size--md-lg;
+    font-size: $font-size--md;
 }
 
 input[type=text],
+input[type=email],
 input[type=password] {
     padding: $space--xsm;
     width: 100%;
