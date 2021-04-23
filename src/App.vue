@@ -8,9 +8,6 @@
 
 <script>
 
-// todo: selection state is vervelend (disable het niet bij alle inputs en dergelijke)
-// todo: zet alle vue-transition styles/classes in een _animations.scss file
-// todo: hernoem slide (waar de transform alleen de X as is) naar slide-horizontal
 // todo: deel de componenten in mappen op + haal ze uit de 'pocs' map + gebruik altijd '@/components' voor imports (ipv './')
 
 // todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
@@ -35,18 +32,4 @@ export default {
 
 <style lang="scss">
 @import '@/styles';
-
-.slide-vertical-enter-from,
-.slide-vertical-leave-to {
-  opacity: 0;
-  transform: translateY(100%);
-}
-
-.slide-vertical-enter-active {
-  transition: transform 200ms ease-in-out, opacity 350ms ease-in-out;
-}
-
-.slide-vertical-leave-active {
-  transition: transform 200ms ease-in-out, opacity 350ms ease-in-out;
-}
 </style>

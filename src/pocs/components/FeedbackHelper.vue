@@ -1,6 +1,6 @@
 <template>
   <section v-if="!hideSection" class="feedback-helper">
-    <transition name="slide" mode="out-in">
+    <transition name="slide-horizontal" mode="out-in">
       <div v-if="zeroTips && showFeedbackHelperZero" class="anim-side--left">
         <h2 v-if="title">{{ title }}</h2>
         <p v-if="body">{{ body }}</p>

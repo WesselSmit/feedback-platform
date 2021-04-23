@@ -4,7 +4,7 @@
     <Tabs v-if="tabs" :tabs="tabs" />
 
     <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
-      <transition name="slide" mode="out-in">
+      <transition name="slide-horizontal" mode="out-in">
         <div v-if="activeTab === 'give'" class="sidebar__inner-wrappers anim-side--left">
           <div v-for="(section, name) in sections" :key="section"
           class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
@@ -112,26 +112,6 @@ export default {
 
 <style lang="scss">
 @import "@/styles";
-
-.slide-enter-from,
-.slide-leave-to {
-  opacity: 0;
-
-  &.anim-side {
-    &--left {
-      transform: translateX(-100%);
-    }
-
-    &--right {
-      transform: translateX(100%);
-    }
-  }
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
-}
 
 .sidebar {
   position: fixed;
