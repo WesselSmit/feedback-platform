@@ -20,6 +20,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-nested-ternary': 'off',
     'no-return-await': 'off',
+    'no-shadow':'off',
     'max-len': 'off',
     'vue/max-len': 'off',
     'vue/no-use-v-if-with-v-for': 'off',

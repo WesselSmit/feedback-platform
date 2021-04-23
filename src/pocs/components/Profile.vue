@@ -4,7 +4,7 @@
         <h3 class="profile__name">{{ name }}</h3>
         <p class="profile__role">{{ role }}</p>
     </div>
-    <Avatar v-if="name" :name="name" />
+    <Avatar v-if="getUser" :user="getUser" />
   </section>
 </template>
 
@@ -31,8 +31,11 @@ export default {
       if (Object.keys(this.user).length === 0) return;
       return this.user.role;
     },
-  },
-  methods: {
+    getUser() { // use a computed (instead of getter) because getter will return an empty proxy
+      // abort if user has yet to be fetched by checking for empty proxy
+      if (Object.keys(this.user).length === 0) return;
+      return this.user;
+    },
   },
 };
 </script>

@@ -6,6 +6,22 @@ export default {
 
   state: {
     user: {},
+    colors: {
+      blueLight: '#85BEF5',
+      blueDark: '#48A4FE',
+      purpleLight: '#C5BAFA',
+      purpleDark: '#9761F6',
+      pinkLight: '#F661BA',
+      pinkDark: '#FF97D5',
+      redLight: '#EF8B7C',
+      redDark: '#E05933',
+      orangeLight: '#FEBF84',
+      orangeDark: '#F79A44',
+      yellowLight: '#F0CD6A',
+      yellowDark: '#F7C844',
+      greenLight: '#5CC083',
+      greenDark: '#4DA560',
+    },
   },
 
   getters: {
@@ -13,6 +29,8 @@ export default {
     id: (state) => state.user.id,
     role: (state) => state.user.role,
     group: (state) => state.user.group,
+    color: (state) => state.user.color,
+    colors: (state) => state.colors,
   },
 
   mutations: {
@@ -22,7 +40,7 @@ export default {
   },
 
   actions: {
-    async signUp({ dispatch }, payload) {
+    async signUp({ dispatch, getters }, payload) {
       try {
         // abort and display error if inputs are empty (email & password inputs are checked by firebase auth)
         if (!payload.name || !payload.group) {
@@ -41,16 +59,22 @@ export default {
           mail: payload.email,
           group: payload.group,
           role: 'student',
-          color: 'TODO',
+          color: chooseColor(getters.colors),
         });
-
-        // todo: bij het aanmaken van een user account moet een color toegevoegd worden
 
         dispatch('getUser', user);
         dispatch('group/addUserToGroup', { userId: user.uid, group: payload.group }, { root: true });
       } catch (err) {
         dispatch('handleError', err);
       }
+    },
+
+    getColorHex({ getters }, payload) {
+      const matchingColorObj = Object.entries(getters.colors).filter((colorObj) => colorObj[0] === payload);
+      const colorArr = [...matchingColorObj][0];
+
+      if (!colorArr) return;
+      return colorArr[1];
     },
 
     async login({ dispatch }, payload) {
@@ -108,7 +132,15 @@ function getErrorMessage(errorObj) {
       return 'Password must be at least 6 characters long';
     case 'auth/email-already-in-use':
       return 'Email is already in use';
+    case 'auth/user-not-found':
+      return 'No account found with login credentials';
     default:
       return errorObj.message;
   }
+}
+
+function chooseColor(colors) {
+  const colorsArray = Object.keys(colors);
+  const random = Math.floor(Math.random() * colorsArray.length);
+  return colorsArray[random];
 }

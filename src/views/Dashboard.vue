@@ -144,11 +144,12 @@ export default {
       border: $border--ui;
       border-radius: $border-radius;
       cursor: pointer;
-      transition: all 500ms $ease--fast;
+      transition: all 500ms $ease--fast, border-width 0ms;
 
       &:hover {
         background-color: $purple--opacity;
         border-color: $purple;
+        border-width: 2px;
       }
 
       &:hover & {

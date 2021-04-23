@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <Avatar v-if="name" :name="name" size="large" class="project__avatar" />
+    <Avatar v-if="user" :user="user" size="large" class="project__avatar" />
     <h2 class="project__owner">{{ name }}</h2>
     <p class="project__title" :class="{ 'project__title--small' : hasLongText }">{{ title }}</p>
   </div>
@@ -16,6 +16,9 @@ export default {
     Avatar,
   },
   computed: {
+    user() {
+      return this.project.data.owner;
+    },
     name() {
       return this.project.data.owner.name;
     },
@@ -46,11 +49,12 @@ export default {
   border: $border--ui;
   border-radius: $border-radius;
   cursor: pointer;
-  transition: all 500ms $ease--fast;
+  transition: all 500ms $ease--fast, border-width 0ms;
 
   &:hover {
     background-color: $purple--opacity;
     border-color: $purple;
+    border-width: 2px;
   }
 
   &:hover & {
