@@ -9,6 +9,8 @@
 <script>
 
 // todo: selection state is vervelend (disable het niet bij alle inputs en dergelijke)
+// todo: zet alle vue-transition styles/classes in een _animations.scss file
+// todo: hernoem slide (waar de transform alleen de X as is) naar slide-horizontal
 // todo: deel de componenten in mappen op + haal ze uit de 'pocs' map + gebruik altijd '@/components' voor imports (ipv './')
 
 // todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)

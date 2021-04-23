@@ -5,7 +5,19 @@
 }
 
 ::selection {
-    background: none;
+    background: $purple--opacity;
+}
+
+h1,
+h2,
+h3,
+p,
+a,
+li,
+span {
+    &::selection {
+        background: none;
+    }
 }
 
 body {
