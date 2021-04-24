@@ -6,13 +6,11 @@ export default {
   state: {
     groups: [],
     groupNames: [],
-    error: {},
   },
 
   getters: {
     groups: (state) => state.groups,
     groupNames: (state) => state.groupNames,
-    error: (state) => state.error,
   },
 
   mutations: {
@@ -22,10 +20,9 @@ export default {
     setGroupNames(state, val) {
       state.groupNames = val;
     },
-    setError(state, val) {
-      state.error = val;
-    },
   },
+
+  // todo: wanneer een user de role van expert/coach krijgt moet hij aan alle groups toegevoegd worden
 
   actions: {
     async fetchGroups({ dispatch, commit }) {
@@ -34,19 +31,35 @@ export default {
         const groups = snapshot.docs.map((doc) => doc.data());
         const groupNames = snapshot.docs.map((doc) => doc.id);
 
-        // TODO: voeg gebruiker toe in firestore group (in een array met uid's + namen van alle users die onderdeel zijn). Gebruik hiervoor een 2e action
-        // TODO: hoe moet dit met coaches? zij behoren niet tot een groep, dus moeten ze dan een eigen coach group hebben?
-
         commit('setGroups', groups);
         commit('setGroupNames', groupNames);
       } catch (err) {
-        dispatch('setError', err);
+        dispatch('handleError', err);
       }
     },
 
-    setError({ commit }, error) {
-      commit('setError', error);
-      console.error('Error in groupStore:', error);
+    async addUserToGroup({ dispatch }, payload) {
+      try {
+        let userIdsInGroup;
+        const snapshot = await groupsRef.get();
+        snapshot.forEach((doc) => {
+          if (doc.id === payload.group) {
+            userIdsInGroup = doc.data().users;
+          }
+        });
+        userIdsInGroup.push(payload.userId);
+
+        await groupsRef.doc(payload.group).set({
+          users: userIdsInGroup,
+        });
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
+    handleError({ dispatch }, payload) {
+      console.error('Error in groupStore:', payload);
+      dispatch('message/message', { message: payload.message, mode: 'error' }, { root: true });
     },
   },
 };

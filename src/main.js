@@ -16,5 +16,8 @@ auth.onAuthStateChanged((user) => {
 
   if (user) {
     store.dispatch('user/getUser', user);
+  } else {
+    console.log('User not authenticated, rerouted to login');
+    router.push('/login');
   }
 });

@@ -1,24 +1,50 @@
 @import 'variables';
 
+::-webkit-scrollbar {
+    display: none;
+}
+
+::selection {
+    background: $purple--opacity;
+}
+
+h1,
+h2,
+h3,
+p,
+a,
+li,
+span {
+    &::selection {
+        background: none;
+    }
+}
+
 body {
     font-family: $font;
-    font-size: 16px;
+    font-size: $font-size--md;
     color: $gray--dark;
     line-height: $line-height;
 }
 
-h1 {
+h1, 
+h2, 
+h3 {
     font-family: $font;
-    font-size: 26px;
     color: $black;
     margin: 0 0 $space--sm;
 }
 
+h1 {
+    font-size: $font-size--xl;
+}
+
 h2 {
-    font-family: $font;
-    font-size: 18px;
-    color: $black;
-    margin: 0 0 $space--sm;
+    font-size: $font-size--lg;
+}
+
+h3 {
+    font-size: $font-size--md-lg;
 }
 
 p {   
@@ -34,16 +60,36 @@ ul {
 li {
     padding-left: $space--xsm;
     line-height: $line-height;
+    list-style: square;
 
     &:not(:last-of-type) {
         margin-bottom: $space--xsm;
     }
 }
 
+label {
+    display: block;
+    margin-bottom: $space--xsm;
+    color: $black;
+    font-size: $font-size--md;
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+select {
+    padding: $space--xsm;
+    width: 100%;
+    color: $black;
+    font-size: $font-size--md;
+    border: 1px solid $black;
+    border-radius: $border-radius;
+}
+
 textarea {
     width: 100%;
     font-family: $font;
-    font-size: 16px;
+    font-size: $font-size--md;
     line-height: $line-height;
     color: $black;
     resize: none;

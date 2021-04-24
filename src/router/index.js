@@ -1,19 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Dashboard from '@/views/Dashboard.vue';
 import { auth } from '@/firebase';
 import store from '@/store';
+import Dashboard from '@/views/Dashboard.vue';
 
 const routes = [
-  {
-    path: '/poc/give',
-    name: 'give',
-    component: () => import(/* webpackChunkName: "login" */ '@/pocs/Give.vue'),
-  },
-  {
-    path: '/poc/done',
-    name: 'done',
-    component: () => import(/* webpackChunkName: "login" */ '@/pocs/Done.vue'),
-  },
   {
     path: '/',
     name: 'dashboard',
@@ -27,18 +17,24 @@ const routes = [
     name: 'login',
     component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
   },
+  /* todo:
+    - add project (setup, give, view) routes op
+    - voeg aan elke route een 'meta: { isProject: true }' toe (deze gebruik je bij de beforeEach check)
+    - routes moeten dynamisch zijn:
+      - /setup:id
+      - /give:id
+      - /view:id
+    - check of niet bestaande IDs opgevangen worden
+  */
   {
-    path: '/settings',
-    name: 'settings',
-    component: () => import(/* webpackChunkName: "settings" */ '@/views/Settings.vue'),
-    meta: {
-      requiresAuth: true,
-    },
+    path: '/give',
+    name: 'give',
+    component: () => import(/* webpackChunkName: "give" */ '@/views/Give.vue'),
   },
   {
     path: '/admin',
     name: 'admin',
-    component: () => import(/* webpackChunkName: "settings" */ '@/views/Admin.vue'),
+    component: () => import(/* webpackChunkName: "admin" */ '@/views/Admin.vue'),
     meta: {
       requiresAuth: true,
       allowedRoles: ['admin'],
@@ -76,12 +72,16 @@ router.beforeEach(async (to, from, next) => {
       // this needs to dispatch first because it needs to wait for the user data to be fetched and set in state
       const role = await store.dispatch('user/getUser', auth.currentUser).then(() => store.getters['user/role']);
 
-      if (role && allowedRoles.includes(role)) { // check if user has permission
-        console.log('user is allowed to view page');
-        next();
-      } else {
-        console.log('user does not have the required permissions');
-        next('/404');
+      if (role) {
+        if (allowedRoles.includes(role)) { // check if user has permission
+          console.log('user is allowed to view page');
+          next();
+        } else {
+          console.log('user does not have the required permissions');
+          next('/404');
+        }
+      } else if (to.meta.isProject) {
+        // todo: check voor page permissions
       }
     }
   } else {

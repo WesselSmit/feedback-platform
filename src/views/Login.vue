@@ -1,67 +1,38 @@
 <template>
-  <section>
+  <section class="login-container">
+    <form v-if="!showPasswordReset && showLoginForm" @submit.prevent class="login">
+      <fieldset class="login__inner">
+        <h1 class="login__title">Login</h1>
 
-    <h1 v-if="this.userError">{{ this.userError.message }}</h1>
+        <label for="loginEmail">Email</label>
+        <input class="login__input" v-model.trim="loginForm.email" type="text" placeholder="you@email.com" id="loginEmail" autocomplete="off" autofocus>
 
-    <h1 v-if="this.groupError">{{ this.groupError.message }}</h1>
+        <label for="loginPassword">Password</label>
+        <input class="login__input" v-model.trim="loginForm.password" type="password" placeholder="******" id="loginPassword">
 
-    <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
+        <p class="login__reset" @click="togglePasswordReset()">Forgot password</p>
 
-    <div v-if="!showPasswordReset" :class="{ 'login-form': showLoginForm }">
-      <form v-if="showLoginForm" @submit.prevent>
-        <fieldset>
-          <h1>Login</h1>
+        <div class="login__buttons">
+          <button type="submit" class="login__button login__button--outline" @click="handleLogin()">Log In</button>
+          <button class="login__button" @click="toggleForm()">Sign Up</button>
+        </div>
+      </fieldset>
+    </form>
 
-          <label for="loginEmail">Email</label>
-          <input v-model.trim="loginForm.email" type="text" placeholder="you@email.com" id="loginEmail">
-
-          <label for="loginPassword">Password</label>
-          <input v-model.trim="loginForm.password" type="password" placeholder="******" id="loginPassword">
-
-          <a @click="togglePasswordReset()">Forgot password</a>
-
-          <button @click="login()">Log In</button>
-          <button @click="toggleForm()">Create an account</button>
-        </fieldset>
-      </form>
-
-      <form v-else @submit.prevent>
-        <fieldset>
-          <h1>Sign up</h1>
-
-            <label for="signUpName">Name</label>
-            <input v-model.trim="signUpForm.name" type="text" placeholder="John Doe" id="signUpName" />
-
-            <label for="signUpGroup">I'm part of group</label>
-            <select v-model="signUpForm.group" id="signUpGroup">
-              <option v-for="group in groupNames" :key="group" :value="group">{{ group }}</option>
-            </select>
-
-            <label for="signUpEmail">Email</label>
-            <input v-model.trim="signUpForm.email" type="text" placeholder="you@email.com" id="signUpEmail" />
-
-            <label for="signUpPassword">Password</label>
-            <input v-model.trim="signUpForm.password" type="password" placeholder="min length is 6" id="signUpPassword" />
-
-          <button @click="signup()" class="button">Sign Up</button>
-          <button @click="toggleForm()">Go to login</button>
-        </fieldset>
-      </form>
-    </div>
-
+    <SignUp v-if="!showPasswordReset && !showLoginForm" @handleToggleForm="toggleForm()" />
+    <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()" />
   </section>
 </template>
 
 <script>
-import PasswordReset from '@/components/PasswordReset.vue';
-import { mapGetters, mapActions } from 'vuex';
-
-// TODO: make login + signUp separate components
-// TODO: login moet overal logIn worden
-// TODO: maybe move some of the action logic to methods (because they are only used in this component) (like it is done in PasswordReset.vue)
+import { mapActions } from 'vuex';
+import SignUp from '@/components/SignUp';
+import PasswordReset from '@/components/PasswordReset';
 
 export default {
+  name: 'Login',
   components: {
+    SignUp,
     PasswordReset,
   },
   data() {
@@ -72,27 +43,11 @@ export default {
         email: '',
         password: '',
       },
-      signUpForm: {
-        name: '',
-        group: '',
-        email: '',
-        password: '',
-      },
     };
   },
-  computed: {
-    ...mapGetters('group', {
-      groupNames: 'groupNames',
-      groupError: 'error',
-    }),
-    ...mapGetters('user', {
-      user: 'user', // TODO: test of user wel gebruikt word of dat hij weg kan
-      userError: 'error',
-    }),
-  },
   methods: {
-    ...mapActions('group', {
-      fetchGroups: 'fetchGroups',
+    ...mapActions('user', {
+      login: 'login',
     }),
     toggleForm() {
       this.showLoginForm = !this.showLoginForm;
@@ -100,21 +55,91 @@ export default {
     togglePasswordReset() {
       this.showPasswordReset = !this.showPasswordReset;
     },
-    signup() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
-      this.$store.dispatch('user/signUp', this.signUpForm);
+    handleLogin() {
+      this.login(this.loginForm);
     },
-    login() {
-      // TODO voordat je de store code laat uitvoeren, check eerst of alle gegevens ingevuld zijn + handle errors in UI
-      this.$store.dispatch('user/login', this.loginForm);
-    },
-  },
-  created() {
-    this.fetchGroups();
   },
 };
 </script>
 
 <style lang="scss">
+@import '@/styles';
 
+.login {
+  padding: $space--sm-md;
+  width: $popup-width--small;
+  background: $white;
+  border: $border--ui;
+  border-radius: $border-radius;
+
+  &-container {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    margin-bottom: $space--md;
+  }
+
+  &__input {
+    margin-bottom: $space--sm-md;
+    transition: border-color 500ms $ease--fast;
+
+    &:hover,
+    &:focus {
+      border-color: $purple;
+    }
+
+    &:last-of-type {
+      margin-bottom: $space--xsm;
+    }
+  }
+
+  &__reset {
+    margin: 0 0 0 auto;
+    color: $black;
+    font-size: $font-size--sm-md;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:hover {
+      color: $purple;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row-reverse; // reverse buttons instead of changing HTML layout to support 'submit' enter key
+    justify-content: space-between;
+  }
+
+  &__button {
+    display: block;
+    margin: $space--lg 0 0 0;
+    height: $button-height;
+    width: $button-width;
+    background-color: $white;
+    color: $purple;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    border-radius: $border-radius;
+    transition: background-color 500ms $ease--fast;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $purple--opacity;
+    }
+
+    &--outline {
+      border: $border--button;
+    }
+  }
+}
 </style>

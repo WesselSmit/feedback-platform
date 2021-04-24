@@ -1,14 +1,14 @@
 <template>
-  <section class="documentation">
-    <Menu />
+  <section class="documentation" >
+    <Menu :hasBack="true" :hasLogout="false" />
 
-    <div class="documentation__inner">
+    <div v-if="!hideDocumentation" class="documentation__inner" :class="{ 'documentation__inner--centered': hideVisualisation }">
       <h1>{{ title }}</h1>
 
-      <h2 class="documentation__subheading">Explanation</h2>
+      <h3 class="documentation__subheading">{{ explanationHeading }}</h3>
       <p>{{ explanation }}</p>
 
-      <h2 class="documentation__subheading">Do give feedback</h2>
+      <h3 class="documentation__subheading">{{ questionsHeading }}</h3>
       <ul class="documentation__question-list">
         <li v-for="(question, index) in questions" :key="index" class="documentation__question">
         <span class="documentation__icon-container">
@@ -17,7 +17,7 @@
         {{ question }}</li>
       </ul>
 
-      <h2 class="documentation__subheading">Don't give feedback</h2>
+      <h3 class="documentation__subheading">{{ limitsHeading }}</h3>
       <p class="documentation__limits">
         <span class="documentation__icon-container">
           <LimitIcon class="documentation__icon documentation__icon--limit" />
@@ -26,15 +26,18 @@
       </p>
     </div>
 
-    <Visualisation :title="title" :visualisation="visualisation" />
+    <div :class="{ 'documentation__inner documentation__inner--centered': hideDocumentation }">
+      <Visualisation v-if="!hideVisualisation" :class="{ 'no-documentation': hideDocumentation }" :title="title" :visualisation="visualisation" />
+    </div>
   </section>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import LimitIcon from '@/assets/icons/LimitIcon';
 import QuestionIcon from '@/assets/icons/QuestionIcon';
-import Menu from './Menu';
-import Visualisation from './Visualisation';
+import Menu from '@/components/Menu';
+import Visualisation from '@/components/Visualisation';
 
 export default {
   name: 'Documentation',
@@ -46,14 +49,27 @@ export default {
   },
   props: ['content'],
   computed: {
+    ...mapGetters('sidebar', {
+      hideDocumentation: 'hideDocumentation',
+      hideVisualisation: 'hideVisualisation',
+    }),
     title() {
       return this.content.title;
+    },
+    explanationHeading() {
+      return this.content.explanationHeading;
     },
     explanation() {
       return this.content.explanation;
     },
+    questionsHeading() {
+      return this.content.questionsHeading;
+    },
     questions() {
       return this.content.questions;
+    },
+    limitsHeading() {
+      return this.content.limitsHeading;
     },
     limits() {
       return this.content.limits;
@@ -75,6 +91,14 @@ export default {
     margin: 0 auto;
     padding: 0 $space--sm-md;
     max-width: calc(#{$documentation-width} - (2 * #{$space--sm-md}));
+
+    &--centered {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: calc(#{$space--xl / 2});
+      height: calc(100% - #{$space--xl});
+    }
   }
 
   &__subheading {

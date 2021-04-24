@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Tabs',
@@ -31,11 +31,14 @@ export default {
     },
   },
   methods: {
+    ...mapActions('sidebar', {
+      updateActiveTab: 'updateActiveTab',
+    }),
     handleClick(value, index) {
       this.activeTabIndex = index;
 
       if (this.activeTab !== value) {
-        this.$store.dispatch('sidebar/updateActiveTab', value);
+        this.updateActiveTab(value);
       }
     },
   },
@@ -76,7 +79,7 @@ export default {
     width: calc(#{$sidebar-width} / 2);
     height: 2px;
     background-color: $purple;
-    transition: left 500ms $ease;
+    transition: left 500ms $ease--fast;
 
     &--left {
       left: 0;

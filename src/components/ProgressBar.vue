@@ -32,7 +32,7 @@ export default {
   &__value{
     height: 5px;
     background-color: $purple;
-    transition: width 1s $ease;
+    transition: width 1s $ease--fast;
   }
 }
 </style>

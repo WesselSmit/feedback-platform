@@ -5,7 +5,7 @@
       <p class="pop-up__body" :class="{ 'pop-up__body--extra-margin-bottom': hasTipsSection }">{{ body }}</p>
 
       <div v-if="hasTipsSection">
-        <h2>{{ tipHeading }}</h2>
+        <h3>{{ tipHeading }}</h3>
 
         <ul class="pop-up__tip-list">
           <li v-for="tip in tips" :key="tip" class="pop-up__tip" :class="`pop-up__tip--${ tip.type }`">
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import LimitIcon from '@/assets/icons/LimitIcon';
 import QuestionIcon from '@/assets/icons/QuestionIcon';
 
@@ -55,8 +56,11 @@ export default {
     },
   },
   methods: {
+    ...mapActions('sidebar', {
+      updateShowPopUp: 'updateShowPopUp',
+    }),
     handleClick() {
-      this.$store.dispatch('sidebar/updateShowPopUp');
+      this.updateShowPopUp();
     },
   },
 };
@@ -70,6 +74,8 @@ export default {
   top: 0;
   left: 0;
   z-index: 10;
+  display: grid;
+  place-items: center;
   height: 100vh;
   width: 100vw;
   background-color: $white--overlay;
@@ -79,11 +85,8 @@ export default {
   }
 
   &__inner {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    width: $popup-width;
+    @include zoomIn(300ms, $ease--fast);
+    width: $popup-width--large;
     padding: $space--sm-md;
     background-color: $white;
     border: $border--ui;
@@ -128,13 +131,13 @@ export default {
     display: block;
     margin: $space--lg 0 0 auto;
     height: $button-height;
-    width: 150px;
+    width: $button-width;
     background-color: $white;
     color: $purple;
     text-transform: uppercase;
     border: 1px solid transparent;
     border-radius: $border-radius;
-    transition: background-color 500ms $ease;
+    transition: background-color 500ms $ease--fast;
     cursor: pointer;
 
     &:hover {

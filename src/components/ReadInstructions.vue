@@ -1,13 +1,13 @@
 <template>
-  <section class="read-instructions" :class="{ 'read-instructions--collapsed': isCollapsed }">
+  <section v-if="title" class="read-instructions" :class="{ 'read-instructions--has-legend': legend, 'read-instructions--collapsed': isCollapsed }">
     <div class="read-instructions__header" @click="handleClick()">
-      <h1 v-if="title" class="read-instructions__header-title">{{ title }}</h1>
-      <ToggleIcon class="read-instructions__header-toggle" />
+      <h1 class="read-instructions__header-title">{{ title }}</h1>
+      <ToggleIcon v-if="legend" class="read-instructions__header-toggle" />
     </div>
 
     <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
 
-    <div v-show="!isCollapsed">
+    <div class="read-instructions__reminders">
       <ul v-if="legend" class="read-instructions__legend">
         <li v-for="item in legend" :key="item" class="read-instructions__legend-label">
           <span class="read-instructions__legend-icon-container">
@@ -19,7 +19,7 @@
       </ul>
 
       <ul v-if="legend" class="read-instructions__points">
-        <li v-for="question in questions" :key="question" class="read-instructions__points-label">
+        <li v-if="hasQuestions" v-for="question in questions" :key="question" class="read-instructions__points-label">
           <span class="read-instructions__points-icon-container">
             <QuestionIcon class="read-instructions__points-icon read-instructions__points-icon--question" />
           </span>
@@ -70,6 +70,9 @@ export default {
     questions() {
       return this.legendData.questions;
     },
+    hasQuestions() {
+      return this.content?.legend?.some((item) => item.type === 'question');
+    },
   },
   methods: {
     handleClick() {
@@ -92,13 +95,25 @@ export default {
 
     &__body {
       margin-bottom: 0;
+      transition: margin-bottom 100ms 350ms linear; // wait for max-height transition of next sibling to finish
+    }
+
+    &__reminders {
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 500ms ease, opacity 500ms $ease--fast;
+    }
+  }
+
+  &--has-legend & {
+    &__header {
+      cursor: pointer;
     }
   }
 
   &__header {
     display: flex;
     justify-content: space-between;
-    cursor: pointer;
 
     &-toggle {
       display: flex;
@@ -109,7 +124,7 @@ export default {
       fill: $black;
       border: 1px solid transparent;
       border-radius: $border-radius;
-      transition: all 500ms $ease;
+      transition: all 500ms $ease--fast;
 
       &:hover {
         background-color: $purple--opacity;
@@ -118,15 +133,24 @@ export default {
 
       svg {
         transform-origin: center;
-        transition: all 500ms $ease;
+        transition: all 500ms $ease--fast;
       }
     }
   }
 
   &__body {
+    transition: margin-bottom 500ms ease;
+
     &--no-margin-bottom {
       margin-bottom: 0;
     }
+  }
+
+  &__reminders {
+    overflow: hidden;
+    max-height: 500px;
+    opacity: 1;
+    transition: max-height 1500ms ease, opacity 1250ms $ease--fast;
   }
 
   &__legend {

@@ -2,14 +2,16 @@
 
 export default {
   documentation: {
-    menuOptions: ['home'],
     title: `Boxing heavyweight championships`,
+    explanationHeading: `Explanation`,
     explanation: `The history of the different boxing heavyweight championships through the years.`,
     //todo: iterations
+    questionsHeading: `I want feedback on...`,
     questions: [
       `Is it clear what everything means?`,
       `Is the image in the center too distracting?`
     ],
+    limitsHeading: `I don't want feedback on...`,
     limits: `The legend`,
     visualisation: 'boxing'
   },
@@ -71,19 +73,15 @@ export default {
             body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
             legend: [
               {
-                type: 'question',
-                label: `Do give feedback`
-              },
-              {
                 type: 'limit',
                 label: `Don't give feedback`
               }
             ],
           },
           feedbackHelper: {
-            title: `Negative feedback tips`,
             sections: {
               zero: {
+                title: `Negative feedback tips`,
                 body: ``,
                 tips: [
                 `Lorem ipsum`,
@@ -92,6 +90,7 @@ export default {
                 `Lorem ipsum`
               ]},
               interactive: {
+                title: `Negative feedback tips`,
                 body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
                 tips: [
                 {
@@ -118,7 +117,6 @@ export default {
           },
           {
             label: 'Next',
-            hasOutline: true,
             action: 'nextStep'
           }
         ]
@@ -179,11 +177,64 @@ export default {
             label: 'Next',
             hasOutline: true,
             action: {
-              target: 'Done'
+              target: 'Dashboard'
             }
           }
         ]
       },
     ],
+    viewFeedbackSections: {
+      // readInstructions: {
+      //   title: `Lorem Ipsum`,
+      //   body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+      //   legend: [
+      //     {
+      //       type: 'question',
+      //       label: `Do give feedback`
+      //     },
+      //     {
+      //       type: 'limit',
+      //       label: `Don't give feedback`
+      //     }
+      //   ],
+      // },
+      feedbackComments: {
+        title: `Feedback`,
+        // body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt.`,
+      }
+    },
+    markerContent: {
+      title: `Place markers by clicking on the data visualisation`,
+      body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis adipiscing feugiat tincidunt vestibulum nibh cum dui. Et morbi enim urna vestibulum.`,
+      navigation: [
+        {
+          label: 'Cancel',
+          action: 'cancelMarkers'
+        },
+        {
+          label: 'Add',
+          hasOutline: true,
+          action: 'saveMarkers',
+          disabled: 'sessionMarkers'
+        }
+      ]
+    },
+    imageContent: {
+      title: `Add image to feedback.`,
+      body: `Visually support your feedback by adding an image. Images can be used to explain your feedback or show alternative solutions.`,
+      rule: `Only .png and .jpg files smaller than 5mb allowed.`,
+      navigation: [
+        {
+          label: 'Cancel',
+          action: 'cancelImage'
+        },
+        {
+          label: 'Save',
+          hasOutline: true,
+          hasDisabled: true,
+          action: 'saveImage',
+        }
+      ]
+    }
   },
 };
