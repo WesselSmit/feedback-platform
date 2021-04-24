@@ -11,11 +11,12 @@
 // todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
 // todo: alle blueprints/visualisation moeten weg + give-boxing.js moet hernoemt worden & hernoem blueprints/ naar content/
 // todo: voeg een favicon toe
+// todo: voeg messsages toe aan de route guards (beforeEach)
 
 /*
   todo: PROGRESS
-  1. je opent een project
-  2. heb je permissie om dit project te bekijken (zit je in het groepje van het project? ben je admin/docent/expert?)
+  X 1. je opent een project
+  X 2. heb je permissie om dit project te bekijken (zit je in het groepje van het project? ben je admin/docent/expert?)
   3. ben je owner ? setup/edit/inzien : give ==> deze data staat in de projects collection
   4. setup/edit || give ? get progress : start ==> deze data moet nog in de project collection komen
   - deze checks moeten allemaal in de beforeEach in de router gebeuren

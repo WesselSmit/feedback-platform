@@ -1,5 +1,5 @@
 <template>
-  <div class="project-card">
+  <div class="project-card" @click="navigateToProject()">
     <Avatar v-if="user" :user="user" size="large" class="project-card__avatar" />
     <h2 class="project-card__owner">{{ name }}</h2>
     <p class="project-card__title" :class="{ 'project-card__title--small' : hasLongText }">{{ title }}</p>
@@ -25,9 +25,17 @@ export default {
     title() {
       return this.project.data.title;
     },
+    projectId() {
+      return this.project.id;
+    },
     hasLongText() {
       const titleTreshold = 60;
       return this.title.length >= titleTreshold;
+    },
+  },
+  methods: {
+    navigateToProject() {
+      this.$router.push(`/project/${this.projectId}`);
     },
   },
 };

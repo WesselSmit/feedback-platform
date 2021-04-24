@@ -1,4 +1,5 @@
 import { projectsRef } from '@/firebase';
+import router from '@/router';
 
 export default {
   namespaced: true,
@@ -39,7 +40,7 @@ export default {
         projects.forEach((project) => {
           if (project.data.owner.id === rootGetters['user/user'].id) {
             myProjects.push(project);
-          } else if (project.data.group === rootGetters['user/user'].group) { // todo: dit werkt voor 'students', als de gebruiker een teacher/expert/admin is moeten alle projecten altijd zichtbaar zijn
+          } else if (project.data.group === rootGetters['user/user'].group) {
             sharedProjects.push(project);
           }
         });
@@ -47,6 +48,15 @@ export default {
         commit('setProjects', projects);
         commit('setMyProjects', myProjects);
         commit('setSharedProjects', sharedProjects);
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
+    async getProject({ dispatch }, payload) {
+      try {
+        const doc = await projectsRef.doc(payload).get();
+        return doc.data();
       } catch (err) {
         dispatch('handleError', err);
       }
@@ -61,10 +71,8 @@ export default {
           group: rootGetters['user/user'].group,
         });
 
-        // todo: navigate naar project: doc.id
-        // todo: om dit goed te laten werken moet de route guard waarschijnlijk geupdate worden met een check die kijkt in welke groep je zit en uit welke groep het project komt
-
         dispatch('getProjects');
+        router.push(`/project/${doc.id}`);
       } catch (err) {
         dispatch('handleError', err);
       }

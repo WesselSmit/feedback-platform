@@ -8,6 +8,8 @@
   <MarkerOverlay v-if="showMarkerOverlay" :content="{ documentation, markerContent}" class="base" />
 </template>
 
+//todo: adhv het id + de progress + ownership van de gebruiker wordt bepaald welke view gerendered wordt (setup/edit, give, view)
+
 <script>
 import { mapGetters } from 'vuex';
 import content from '@/blueprints/give-twitter';
@@ -17,12 +19,18 @@ import ConfirmSidebar from '@/components/ConfirmSidebar';
 import MarkerOverlay from '@/components/MarkerOverlay';
 
 export default {
-  name: 'Give',
+  name: 'Project',
+  inheritAttrs: false,
   components: {
     Documentation,
     Sidebar,
     ConfirmSidebar,
     MarkerOverlay,
+  },
+  data() {
+    return {
+      projectId: null,
+    };
   },
   computed: {
     ...mapGetters('sidebar', {
@@ -42,6 +50,9 @@ export default {
     markerContent() {
       return content.sidebar.markerContent;
     },
+  },
+  created() {
+    this.projectId = this.$route.params.id;
   },
 };
 </script>
