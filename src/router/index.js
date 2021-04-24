@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Dashboard from '@/views/Dashboard.vue';
 import { auth } from '@/firebase';
 import store from '@/store';
+import Dashboard from '@/views/Dashboard.vue';
 
 const routes = [
   {

@@ -1,8 +1,8 @@
 <template>
-  <div class="project">
-    <Avatar v-if="user" :user="user" size="large" class="project__avatar" />
-    <h2 class="project__owner">{{ name }}</h2>
-    <p class="project__title" :class="{ 'project__title--small' : hasLongText }">{{ title }}</p>
+  <div class="project-card">
+    <Avatar v-if="user" :user="user" size="large" class="project-card__avatar" />
+    <h2 class="project-card__owner">{{ name }}</h2>
+    <p class="project-card__title" :class="{ 'project-card__title--small' : hasLongText }">{{ title }}</p>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import Avatar from '@/components/Avatar';
 
 export default {
-  name: 'Project',
+  name: 'ProjectCard',
   props: ['project'],
   components: {
     Avatar,
@@ -36,7 +36,7 @@ export default {
 <style lang="scss">
 @import '@/styles';
 
-.project {
+.project-card {
   overflow: scroll;
   display: flex;
   flex-direction: column;

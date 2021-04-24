@@ -8,7 +8,7 @@
     <div class="dashboard__project-container">
       <h1 class="dashboard__project-title">My documentation pages</h1>
       <div class="dashboard__project-list">
-        <Project v-for="project in myProjects" :key="project.id" :project="project" />
+        <ProjectCard v-for="project in myProjects" :key="project.id" :project="project" />
         <div class="dashboard__project-create" @click="togglePopUp()">
           <AddIcon class="dashboard__project-create-icon" />
           <p class="dashboard__project-create-text">Create a new documentation page</p>
@@ -17,7 +17,7 @@
 
       <h1 class="dashboard__project-title">Documentation pages shared with you</h1>
       <div class="dashboard__project-list">
-        <Project v-for="project in sharedProjects" :key="project.id" :project="project" />
+        <ProjectCard v-for="project in sharedProjects" :key="project.id" :project="project" />
       </div>
     </div>
   </section>
@@ -40,7 +40,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/components/Menu';
 import Profile from '@/components/Profile';
-import Project from '@/components/Project';
+import ProjectCard from '@/components/ProjectCard';
 import AddIcon from '@/assets/icons/AddIcon';
 
 export default {
@@ -48,7 +48,7 @@ export default {
   components: {
     Menu,
     Profile,
-    Project,
+    ProjectCard,
     AddIcon,
   },
   data() {
