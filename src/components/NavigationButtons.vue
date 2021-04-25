@@ -19,12 +19,11 @@ export default {
     ...mapGetters('sidebar', {
       insightInput: 'insightInput',
     }),
+    ...mapGetters('project', {
+      projectId: 'projectId',
+    }),
     hasMultiple() {
       return this.buttons.length > 1;
-    },
-    projectId() {
-      // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
-      return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
     },
   },
   methods: {

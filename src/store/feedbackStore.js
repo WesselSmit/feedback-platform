@@ -1,4 +1,4 @@
-import { db } from '@/firebase';
+import { db, insightsRef } from '@/firebase';
 
 export default {
   namespaced: true,
@@ -20,7 +20,8 @@ export default {
   actions: {
     async postInsight({ dispatch, rootGetters }, payload) {
       try {
-        await db.collection(`insights-${payload.projectId}`).add({
+        await insightsRef.add({
+          projectId: payload.projectId,
           ts: Date.now(),
           user: rootGetters['user/user'],
           insight: payload.insight,
