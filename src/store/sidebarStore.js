@@ -7,7 +7,6 @@ export default {
     insightInput: '',
     hideDocumentation: false,
     hideVisualisation: false,
-    stepIndex: 1, // todo: moet uit DB opgehaald worden (verplaats naar de projectStore)
     showPopUp: true,
     activeTab: 'give',
     showFeedbackHelperZero: true,
@@ -26,7 +25,6 @@ export default {
     insightInput: (state) => state.insightInput,
     hideDocumentation: (state) => state.hideDocumentation,
     hideVisualisation: (state) => state.hideVisualisation,
-    stepIndex: (state) => state.stepIndex,
     showPopUp: (state) => state.showPopUp,
     activeTab: (state) => state.activeTab,
     showFeedbackHelperZero: (state) => state.showFeedbackHelperZero,
@@ -53,9 +51,6 @@ export default {
     },
     setHideVisualisation(state, val) {
       state.hideVisualisation = val;
-    },
-    setStepIndex(state, val) {
-      state.stepIndex = val;
     },
     setShowPopUp(state, val) {
       state.showPopUp = val;
@@ -106,14 +101,6 @@ export default {
 
     updateHideVisualisation({ commit }, payload) {
       commit('setHideVisualisation', payload);
-    },
-
-    updateStepIndex({ commit, getters, dispatch }, payload) {
-      const newIndex = (payload === 'previousStep') ? getters.stepIndex - 1 : getters.stepIndex + 1;
-
-      commit('setStepIndex', newIndex);
-      dispatch('updateHideVisualisation', false); // always show visualisation unless disabled in blueprint
-      dispatch('updateShowFeedbackHelperZero', true); // always show feedbackHelper zero state in new sidebar step
     },
 
     updateShowPopUp({ commit }) {

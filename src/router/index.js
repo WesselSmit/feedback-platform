@@ -13,17 +13,17 @@ import Dashboard from '@/views/Dashboard.vue';
 
 const routes = [
   {
-    path: '/',
-    name: 'dashboard',
-    component: Dashboard,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
     path: '/login',
     name: 'login',
     component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+  },
+  {
+    path: '/',
+    name: 'dashboard',
+    component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/project/:id',
@@ -75,7 +75,7 @@ router.beforeEach(async (to, from, next) => {
         next(); // user is allowed to visit page
       } else {
         console.log('user does not have the required permissions');
-        next('/404');
+        next('/dashboard');
       }
     }
   } else if (isProject) {

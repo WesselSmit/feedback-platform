@@ -7,9 +7,10 @@
 </template>
 
 // todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
-// todo: alle blueprints/visualisation moeten weg + give-boxing.js moet hernoemt worden & hernoem blueprints/ naar content/
+// todo: /blueprints/visualisations moet weggehaald worden en images uit firebase storage ophalen
 // todo: voeg een favicon toe
 // todo: voeg messsages toe aan de route guards (beforeEach)
+// todo: de laatste stap van 'setup' moet de progress updaten naar { type: 'view', progress: 1 }
 
 <script>
 
@@ -24,8 +25,8 @@
 
   als de bovenstaande functie werkt dan moeten de volgende dingen gebeuren:
   - hardcoded projectId in computed moeten dynamisch worden (ophalen uit store)
-  - alle buttons moeten de progress updaten (let op dit moet in meer components dan alleen NavigationButtons vervangen worden)
-  - in de SidebarStore moet 'stepIndex' uit de DB komen
+  X - alle buttons moeten de progress updaten (let op dit moet in meer components dan alleen NavigationButtons vervangen worden)
+  X - in de SidebarStore moet 'stepIndex' uit de DB komen
 */
 
 import { mapGetters } from 'vuex';

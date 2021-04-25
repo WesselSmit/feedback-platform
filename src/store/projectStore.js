@@ -6,6 +6,7 @@ export default {
 
   state: {
     project: null,
+    newProgressAvailable: false,
     projects: [],
     myProjects: [],
     sharedProjects: [],
@@ -15,7 +16,7 @@ export default {
     project: (state) => state.project,
     projectId: (state) => state.project?.id,
     owner: (state) => state.project?.data?.owner.id,
-    progress: (state) => state.project?.data?.progress,
+    newProgressAvailable: (state) => state.newProgressAvailable,
     projects: (state) => state.projects,
     myProjects: (state) => state.myProjects,
     sharedProjects: (state) => state.sharedProjects,
@@ -24,6 +25,12 @@ export default {
   mutations: {
     setProject(state, val) {
       state.project = val;
+    },
+    setProgress(state, val) {
+      state.project.data.progress = val;
+    },
+    setNewProgressAvailable(state, val) {
+      state.newProgressAvailable = val;
     },
     setProjects(state, val) {
       state.projects = val;
@@ -108,7 +115,7 @@ export default {
         };
 
         if (!userProgress) {
-          dispatch('updateProgress', { project, userProgress: fallback });
+          dispatch('addUserProgress', { project, userProgress: fallback });
         }
 
         return userProgress || fallback;
@@ -117,14 +124,61 @@ export default {
       }
     },
 
-    async updateProgress({ dispatch }, payload) {
+    async addUserProgress({ commit, dispatch }, payload) {
       try {
         // add user progress to project progress
         payload.project.data.progress.push(payload.userProgress);
+
         await projectsRef.doc(payload.project.id).set(payload.project.data);
+        commit('setProgress', payload.project.data);
       } catch (err) {
         dispatch('handleError', err);
       }
+    },
+
+    async updateProgress({ commit, getters, dispatch }, payload) {
+      try {
+        const userProgress = await dispatch('getProgress');
+
+        switch (payload) {
+          case 'nextStep':
+            userProgress.progress += 1;
+            break;
+          case 'previousStep':
+            userProgress.progress -= 1;
+            break;
+          default:
+            console.error('unhandled progress update command');
+        }
+
+        const project = getters.project;
+        const progress = project.data.progress;
+
+        // remove old userProgress from project.progress
+        const userIndex = progress.map((progressObj) => progressObj.userId).indexOf(userProgress.userId);
+        progress.splice(userIndex, 1);
+
+        // add updated userProgress to project.progress
+        progress.push(userProgress);
+
+        // update project in state
+        commit('setProgress', progress);
+
+        // update project in db
+        await projectsRef.doc(project.id).update({ progress });
+
+        // signal Project.vue to get new progress from store
+        commit('setNewProgressAvailable', true);
+
+        dispatch('sidebar/updateHideVisualisation', false, { root: true }); // always show visualisation unless disabled in blueprint
+        dispatch('sidebar/updateShowFeedbackHelperZero', true, { root: true }); // always show feedbackHelper zero state in new sidebar step
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
+    resetNewProgressAvailable({ commit }) {
+      commit('setNewProgressAvailable', false);
     },
 
     handleError({ dispatch }, payload) {

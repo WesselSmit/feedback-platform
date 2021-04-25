@@ -30,11 +30,13 @@ export default {
   methods: {
     ...mapActions('sidebar', {
       updateTextInput: 'updateTextInput',
-      updateStepIndex: 'updateStepIndex',
       updateHideDocumentation: 'updateHideDocumentation',
     }),
     ...mapActions('feedback', {
       postInsight: 'postInsight',
+    }),
+    ...mapActions('project', {
+      updateProgress: 'updateProgress',
     }),
     ...mapActions('message', {
       message: 'message',
@@ -49,12 +51,12 @@ export default {
           this.message({ message: 'Your feedback is saved', mode: 'succes' });
         }
       } else if (action === 'previousStep' || action === 'nextStep') {
-        this.updateStepIndex(action);
+        this.updateProgress(action);
       } else if (action === 'saveInsights') {
         if (this.insightInput) {
           this.updateHideDocumentation(false);
           this.postInsight({ insight: this.insightInput, projectId: this.projectId });
-          this.updateStepIndex('nextStep');
+          this.updateProgress('nextStep');
           this.message({ message: 'Insight saved', mode: 'succes' });
         } else {
           this.message({ message: 'Enter at least one insight' });

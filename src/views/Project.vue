@@ -6,7 +6,7 @@
 
   <main v-if="pageIsGiveOrView && !showMarkerOverlay" class="base">
     <Documentation :content="documentation" />
-    <GiveSidebar v-if="page === 'give' && !showImageSidebar" :content="{ documentation, sidebar }" :stepIndex="stepIndex" />
+    <GiveSidebar v-if="page === 'give' && !showImageSidebar" :content="{ documentation, sidebar }" :stepIndex="progress" />
     <ViewSidebar v-if="page === 'view' && !showImageSidebar" />
     <ConfirmSidebar v-if="showImageSidebar" :content="imageContent" />
   </main>
@@ -39,17 +39,17 @@ export default {
   data() {
     return {
       page: null,
-      progress: null, // todo: moet nog meegegeven worden als prop in de template + stepIndex moet van sidebarStore naar de projectStore verplaatst worden + de NavigationButtons moeten de stepIndex in de projectStore updaten
+      progress: null,
     };
   },
   computed: {
     ...mapGetters('sidebar', {
-      stepIndex: 'stepIndex',
       showMarkerOverlay: 'showMarkerOverlay',
       showImageSidebar: 'showImageSidebar',
     }),
     ...mapGetters('project', {
       owner: 'owner',
+      newProgressAvailable: 'newProgressAvailable',
     }),
     ...mapGetters('user', {
       userId: 'id',
@@ -82,15 +82,29 @@ export default {
       return this.pageContent.markerContent;
     },
   },
+  watch: {
+    newProgressAvailable(newVal) {
+      // get updated progress from the projectStore whenever the newProgressAvailable changes
+      // ideally this would be a getters instead of a watcher, but since you both the userId and project are needed it can't be a getter and needs to be an action in the store. Because it's an action in the store it isn't reactive and we need a watcher to react on changes
+      if (newVal) {
+        this.syncProgress();
+        this.resetNewProgressAvailable();
+      }
+    },
+  },
   methods: {
     ...mapActions('project', {
       getProgress: 'getProgress',
+      resetNewProgressAvailable: 'resetNewProgressAvailable',
     }),
+    async syncProgress() {
+      const progress = await this.getProgress();
+      this.page = progress.type;
+      this.progress = progress.progress;
+    },
   },
-  async created() {
-    const progress = await this.getProgress();
-    this.page = progress.type;
-    this.progress = progress.progress;
+  created() {
+    this.syncProgress();
   },
 };
 </script>
