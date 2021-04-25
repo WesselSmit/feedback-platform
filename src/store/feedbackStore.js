@@ -43,28 +43,23 @@ export default {
       }
     },
 
-    // todo: markers & image returnen een proxy en worden niet in de db opgeslagen
     async postComment({ dispatch, rootGetters }, payload) {
       try {
-        console.log('markers', rootGetters['sidebar/markers']);
-        console.log('image', rootGetters['sidebar/feedbackImage']?.id || null);
-
-        const uid = uuid();
+        // declare image & markers as const to avoid proxies
+        const image = rootGetters['sidebar/feedbackImage']?.id || null;
+        const markers = rootGetters['sidebar/markers'];
 
         const doc = await commentsRef.doc(payload.projectId).get();
         const comments = doc.data().comments;
         comments.push({
-          // id: uuid(),
-          id: uid,
+          id: uuid(),
           ts: Date.now(),
           user: rootGetters['user/user'],
           text: payload.comment,
-          image: rootGetters['sidebar/feedbackImage']?.id || null,
-          markers: rootGetters['sidebar/markers'],
+          image,
+          markers,
           agrees: [],
         });
-
-        console.log(comments.find((a) => a.id === uid));
 
         await commentsRef.doc(payload.projectId).update({ comments });
       } catch (err) {
