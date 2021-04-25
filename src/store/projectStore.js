@@ -82,7 +82,7 @@ export default {
       }
     },
 
-    async addProject({ rootGetters, dispatch }, payload) {
+    async addProject({ getters, rootGetters, dispatch }, payload) {
       try {
         const doc = await projectsRef.add({
           title: payload,
@@ -95,6 +95,8 @@ export default {
             type: 'setup',
           }],
         });
+
+        dispatch('feedback/addCommentsDocInProjectCollection', getters.projectId, { root: true });
 
         dispatch('getProjects');
         router.push(`/project/${doc.id}`);

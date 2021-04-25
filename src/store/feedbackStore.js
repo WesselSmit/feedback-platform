@@ -1,4 +1,5 @@
-import { db, insightsRef } from '@/firebase';
+import { insightsRef, commentsRef } from '@/firebase';
+import { v4 as uuid } from 'uuid';
 
 export default {
   namespaced: true,
@@ -31,9 +32,30 @@ export default {
       }
     },
 
+    async addCommentsDocInProjectCollection({ dispatch }, payload) {
+      // add an empty doc in the 'comments' collection
+      try {
+        await commentsRef.doc(payload).set({
+          comments: [],
+        });
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
+    // todo: markers & image returnen een proxy en worden niet in de db opgeslagen
     async postComment({ dispatch, rootGetters }, payload) {
       try {
-        await db.collection(`comments-${payload.projectId}`).add({
+        console.log('markers', rootGetters['sidebar/markers']);
+        console.log('image', rootGetters['sidebar/feedbackImage']?.id || null);
+
+        const uid = uuid();
+
+        const doc = await commentsRef.doc(payload.projectId).get();
+        const comments = doc.data().comments;
+        comments.push({
+          // id: uuid(),
+          id: uid,
           ts: Date.now(),
           user: rootGetters['user/user'],
           text: payload.comment,
@@ -41,6 +63,10 @@ export default {
           markers: rootGetters['sidebar/markers'],
           agrees: [],
         });
+
+        console.log(comments.find((a) => a.id === uid));
+
+        await commentsRef.doc(payload.projectId).update({ comments });
       } catch (err) {
         dispatch('handleError', err);
       }
@@ -48,9 +74,8 @@ export default {
 
     async getComments({ commit, dispatch }, payload) {
       try {
-        const comments = [];
-        const snapshot = await db.collection(`comments-${payload}`).get();
-        snapshot.forEach((doc) => comments.push({ id: doc.id, data: doc.data() }));
+        const doc = await commentsRef.doc(payload).get();
+        const comments = doc.data().comments;
 
         commit('setComments', comments);
       } catch (err) {
@@ -58,11 +83,20 @@ export default {
       }
     },
 
-    async updateAgrees({ dispatch }, payload) {
+    async updateAgrees({ getters, rootGetters, dispatch }, payload) {
       try {
-        await db.collection(`comments-${payload.projectId}`).doc(payload.commentId).update({
-          agrees: payload.agrees,
-        });
+        const comments = getters.comments;
+        const userId = rootGetters['user/id'];
+        const comment = comments.find((comment) => comment.id === payload.commentId);
+        const agreeIndex = comment.agrees.indexOf(userId);
+
+        if (agreeIndex === -1) {
+          comment.agrees.push(userId);
+        } else {
+          comment.agrees.splice(agreeIndex, 1);
+        }
+
+        await commentsRef.doc(payload.projectId).update({ comments });
         dispatch('getComments', payload.projectId);
       } catch (err) {
         dispatch('handleError', err);

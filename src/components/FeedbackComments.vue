@@ -1,19 +1,19 @@
 <template>
   <section class="feedback-comments">
-    <h1 v-if="title && commentsByTime" class="feedback-comments__title">{{ title }}</h1>
-    <p v-if="body && commentsByTime" class="feedback-comments__body">{{ body }}</p>
+    <h1 v-if="title && hasComments" class="feedback-comments__title">{{ title }}</h1>
+    <p v-if="body && hasComments" class="feedback-comments__body">{{ body }}</p>
 
     <ul class="feedback-comments__list">
       <li v-for="comment in commentsByTime" :key="comment" class="feedback-comments__comment">
         <div class="feedback-comments__comment-meta">
-          <Avatar v-if="comment.data.user" :user="comment.data.user" size="small" class="feedback-comments__comment-avatar" />
+          <Avatar v-if="comment.user" :user="comment.user" size="small" class="feedback-comments__comment-avatar" />
           <div class="feedback-comments__comment-credentials">
-            <h3 class="feedback-comments__comment-name">{{ comment.data.user.name }}</h3>
-            <p class="feedback-comments__comment-role">{{ comment.data.user.role }}</p>
+            <h3 class="feedback-comments__comment-name">{{ comment.user.name }}</h3>
+            <p class="feedback-comments__comment-role">{{ comment.user.role }}</p>
           </div>
         </div>
-        <FeedbackImage v-if="comment.data.image" :imageId="comment.data.image" />
-        {{ comment.data.text }}
+        <FeedbackImage v-if="comment.image" :imageId="comment.image" />
+        {{ comment.text }}
         <div class="feedback-comments__agree-container" @click="handleClick(comment)">
           <AgreeIconZero v-if="!isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--zero" />
           <AgreeIconActive v-if="isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--active" />
@@ -24,7 +24,6 @@
   </section>
 </template>
 
-//todo: ongeacht het project, er zijn altijd alle comments zichtbaar (moeten ze nog op project gefilterd worden?)
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
 //todo: add hover states aan agree feature
 //todo: backgroundcolor sidebar vs documentation
@@ -53,12 +52,15 @@ export default {
     ...mapGetters('user', {
       userId: 'id',
     }),
-    projectId() {
-      // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
-      return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
-    },
+    ...mapGetters('project', {
+      projectId: 'projectId',
+    }),
     commentsByTime() {
-      return [...this.comments].sort((a, b) => b.data.ts - a.data.ts);
+      const comments = this.comments; // prevent side effects by by assigning 'this.comments' to 'comments'
+      return comments.sort((a, b) => b.ts - a.ts);
+    },
+    hasComments() {
+      return this.commentsByTime.length > 0;
     },
     title() {
       return this.content.title;
@@ -80,16 +82,10 @@ export default {
       return hasMultipleParts ? `${firstNamePart}${lastNamePart}` : firstNamePart;
     },
     handleClick(comment) {
-      const agreeIndex = comment.data.agrees.indexOf(this.userId);
-      if (agreeIndex === -1) {
-        comment.data.agrees.push(this.userId);
-      } else {
-        comment.data.agrees.splice(agreeIndex, 1);
-      }
-      this.updateAgrees({ projectId: this.projectId, commentId: comment.id, agrees: comment.data.agrees });
+      this.updateAgrees({ projectId: this.projectId, commentId: comment.id });
     },
     isAgreed(comment) {
-      return comment.data.agrees.some((id) => id === this.userId);
+      return comment.agrees.some((id) => id === this.userId);
     },
   },
   created() {

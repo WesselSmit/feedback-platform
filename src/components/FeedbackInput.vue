@@ -46,10 +46,9 @@ export default {
       numberOfMarkers: 'numberOfMarkers',
       feedbackImage: 'feedbackImage',
     }),
-    projectId() {
-      // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
-      return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
-    },
+    ...mapGetters('project', {
+      projectId: 'projectId',
+    }),
     textInput: {
       get() {
         return this.$store.getters['sidebar/textInput'];
