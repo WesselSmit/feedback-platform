@@ -29,7 +29,7 @@ export default {
       return this.project.id;
     },
     hasLongText() {
-      const titleTreshold = 60;
+      const titleTreshold = 45;
       return this.title.length >= titleTreshold;
     },
   },
@@ -89,7 +89,7 @@ export default {
   &__title {
     margin-bottom: 0;
     color: $gray--dark;
-    font-size: $font-size--sm-md;
+    font-size: $font-size--md;
     text-align: center;
     transition: all 500ms $ease--fast;
 

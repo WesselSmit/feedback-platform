@@ -13,6 +13,7 @@ export default {
 
   getters: {
     project: (state) => state.project,
+    projectId: (state) => state.project?.id,
     owner: (state) => state.project?.data?.owner.id,
     progress: (state) => state.project?.data?.progress,
     projects: (state) => state.projects,
@@ -45,7 +46,7 @@ export default {
 
         snapshot.forEach((doc) => projects.push({ id: doc.id, data: doc.data() }));
         projects.forEach((project) => {
-          if (project.data.owner.id === rootGetters['user/userId']) {
+          if (project.data.owner.id === rootGetters['user/id']) {
             myProjects.push(project);
           } else if (project.data.group === rootGetters['user/group']) {
             sharedProjects.push(project);
@@ -82,7 +83,7 @@ export default {
           owner: rootGetters['user/user'],
           group: rootGetters['user/group'],
           progress: [{
-            userId: rootGetters['user/userId'],
+            userId: rootGetters['user/id'],
             progress: 1,
             type: 'setup',
           }],
@@ -98,14 +99,29 @@ export default {
     async getProgress({ getters, rootGetters, dispatch }) {
       try {
         const userId = rootGetters['user/id'];
-        const userProgress = getters.project.data.progress.find((user) => user.id === userId);
-        const fallback = { // used if user isn't yet added in the progress array (in DB) // todo: als fallback gebruikt wordt dan moet deze ook in de DB opgeslagen worden (anders blijft de gebruiker altijd op stap 1)
-          id: userId,
+        const project = getters.project;
+        const userProgress = project.data.progress.find((user) => user.userId === userId);
+        const fallback = { // used if user had no progress (object) for the selected project (in firestore db)
+          userId,
           type: 'give',
           progress: 1,
         };
 
+        if (!userProgress) {
+          dispatch('updateProgress', { project, userProgress: fallback });
+        }
+
         return userProgress || fallback;
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
+    async updateProgress({ dispatch }, payload) {
+      try {
+        // add user progress to project progress
+        payload.project.data.progress.push(payload.userProgress);
+        await projectsRef.doc(payload.project.id).set(payload.project.data);
       } catch (err) {
         dispatch('handleError', err);
       }

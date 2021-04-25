@@ -43,7 +43,7 @@ export default {
       this.updateTextInput('');
 
       if (action.hasOwnProperty('target')) {
-        this.$router.push(action.target);
+        this.$router.push({ path: `/${action.target}` });
 
         if (action.target === 'Dashboard') {
           this.message({ message: 'Your feedback is saved', mode: 'succes' });

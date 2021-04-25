@@ -1,30 +1,30 @@
 <template>
-  <section class="sidebar">
-    <ProgressBar v-if="hasProgressBar" :total="totalSteps" :index="stepIndex" />
+  <section class="give-sidebar">
+    <ProgressBar :total="totalSteps" :index="stepIndex" />
     <Tabs v-if="tabs" :tabs="tabs" />
 
-    <div class="sidebar__inner" :class="{ 'sidebar__inner--centered': isCentered }">
+    <div class="give-sidebar__inner" :class="{ 'give-sidebar__inner--centered': isCentered }">
       <transition name="slide-horizontal" mode="out-in">
-        <div v-if="activeTab === 'give'" class="sidebar__inner-wrappers anim-side--left">
+        <div v-if="activeTab === 'give'" class="give-sidebar__inner-wrappers anim-side--left">
           <div v-for="(section, name) in sections" :key="section"
-          class="sidebar__inner-wrapper" :class="{ 'sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
-            <InputInstructions v-if="name === 'inputInstructions'" :content="section" :hideDocumentation="hideDocumentation" class="sidebar__section sidebar__section--no-padding-vertical" />
-            <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="sidebar__section" />
-            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
-            <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="sidebar__section" />
-            <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="sidebar__section sidebar__section--no-padding-vertical" />
+          class="give-sidebar__inner-wrapper" :class="{ 'guve-sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
+            <InputInstructions v-if="name === 'inputInstructions'" :content="section" :hideDocumentation="hideDocumentation" class="give-sidebar__section sidebar__section--no-padding-vertical" />
+            <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="give-sidebar__section" />
+            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
+            <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="give-sidebar__section" />
+            <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="give-sidebar__section sidebar__section--no-padding-vertical" />
           </div>
         </div>
 
-        <div v-else-if="activeTab === 'view'" class="sidebar__inner-wrapper anim-side--right">
-          <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="sidebar__inner-wrapper">
-            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="sidebar__section" />
-            <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="sidebar__section sidebar__section--no-padding-horizontal" />
+        <div v-else-if="activeTab === 'view'" class="give-sidebar__inner-wrapper anim-side--right">
+          <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="give-sidebar__inner-wrapper">
+            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
+            <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="give-sidebar__section sidebar__section--no-padding-horizontal" />
           </div>
         </div>
       </transition>
 
-        <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" class="sidebar__navigation" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
+        <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" class="give-sidebar__navigation" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
       </div>
 
     <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
@@ -48,7 +48,7 @@ import FeedbackComments from '@/components/FeedbackComments';
 import PopUp from '@/components/PopUp';
 
 export default {
-  name: 'Sidebar',
+  name: 'GiveSidebar',
   components: {
     ProgressBar,
     Tabs,
@@ -78,9 +78,6 @@ export default {
         limits: this.content.documentation.limits,
         questions: this.content.documentation.questions,
       };
-    },
-    hasProgressBar() {
-      return this.content.sidebar.hasProgressBar;
     },
     totalSteps() {
       return this.content.sidebar.steps.length;
@@ -113,7 +110,7 @@ export default {
 <style lang="scss">
 @import "@/styles";
 
-.sidebar {
+.give-sidebar {
   position: fixed;
   top: 0;
   right: 0;
@@ -142,7 +139,7 @@ export default {
       justify-content: flex-end;
     }
 
-    &--centered .sidebar__navigation {
+    &--centered .give-sidebar__navigation {
       flex-grow: 1;
     }
 

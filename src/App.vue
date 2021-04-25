@@ -13,17 +13,14 @@
 
 <script>
 
-// todo: zie Project.vue voor updated comment over de problemen
 /*
   todo: PROGRESS
   X 1. je opent een project
   X 2. heb je permissie om dit project te bekijken (zit je in het groepje van het project? ben je admin/docent/expert?)
   X 3. ben je owner ? setup/edit/inzien : give ==> deze data staat in de projects collection --> latere update: dit gebeurt in het Project.vue component
-  4. setup/edit || give ? get progress : start ==> deze data moet nog in de project collection komen --> latere update: dit gebeurt in het Project.vue component
+  X 4. setup/edit || give ? get progress : start ==> deze data moet nog in de project collection komen --> latere update: dit gebeurt in het Project.vue component
 
-  !!!!! zie Project.vue voor updated comment over de problemen
-
-  de progress moet aangemaakt als je wel permissie hebt maar nog nooit het project bekeken hebt
+  X de progress moet aangemaakt als je wel permissie hebt maar nog nooit het project bekeken hebt
 
   als de bovenstaande functie werkt dan moeten de volgende dingen gebeuren:
   - hardcoded projectId in computed moeten dynamisch worden (ophalen uit store)

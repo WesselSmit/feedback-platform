@@ -24,6 +24,7 @@
   </section>
 </template>
 
+//todo: ongeacht het project, er zijn altijd alle comments zichtbaar (moeten ze nog op project gefilterd worden?)
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
 //todo: add hover states aan agree feature
 //todo: backgroundcolor sidebar vs documentation

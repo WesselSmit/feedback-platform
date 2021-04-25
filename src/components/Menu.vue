@@ -1,8 +1,8 @@
 <template>
   <section class="menu">
-    <div v-if="hasBack" class="menu__item">
+    <div v-if="hasBack" class="menu__item" @click="handleBack">
       <BackIcon class="menu__item-icon" />
-      <router-link :to="{ name: 'dashboard' }" class="menu__item-link">Home</router-link>
+      <p class="menu__item-link">Home</p>
     </div>
     <div v-if="hasLogout" class="menu__item" @click="handleLogout">
       <LogoutIcon class="menu__item-icon" />
@@ -28,6 +28,9 @@ export default {
       user: 'user',
       logout: 'logout',
     }),
+    handleBack() {
+      this.$router.push('/dashboard');
+    },
     handleLogout() {
       this.logout();
     },
@@ -79,12 +82,7 @@ export default {
       margin: 0;
       color: $black;
       font-size: $font-size--sm-md;
-      text-decoration: none;
       transition: color 500ms $ease--fast;
-
-      &:visited {
-        color: $black;
-      }
     }
   }
 }
