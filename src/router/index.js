@@ -81,12 +81,12 @@ router.beforeEach(async (to, from, next) => {
   } else if (isProject) {
     // fetch user and project data to check if user is allowed to visit the page
     const { group: userGroup, role } = await store.dispatch('user/getUser', auth.currentUser).then(() => store.getters['user/user']);
-    const project = await store.dispatch('project/getProject', to.params.id);
+    const project = await store.dispatch('project/getProject', to.params.id).then(() => store.getters['project/project']);
 
     if (!project) {
       console.log('requested project does not exist');
       next('/dashboard');
-    } else if (userGroup === project.group || ['admin', 'teacher', 'expert'].includes(role)) { // user has permission to project if they are groupmembers or if they are admin/teacher/expert
+    } else if (userGroup === project.data.group || ['admin', 'teacher', 'expert'].includes(role)) { // user has permission to project if they are groupmembers or if they are admin/teacher/expert
       next(); // user is allowed to visit page
     } else if (auth.currentUser) {
       console.log('requires authorisation and user is not authorised');
