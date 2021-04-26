@@ -7,8 +7,7 @@
       <transition name="slide-horizontal" mode="out-in">
         <div v-if="activeTab === 'give'" class="give-sidebar__inner-wrappers anim-side--left">
           <div v-for="(section, name) in sections" :key="section"
-          class="give-sidebar__inner-wrapper" :class="{ 'guve-sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
-          <!-- TODO: in de regel meteen hierboven, guve in class moet give zijn? -->
+          class="give-sidebar__inner-wrapper" :class="{ 'give-sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
             <InputInstructions v-if="name === 'inputInstructions'" :content="section" :hideDocumentation="hideDocumentation" class="give-sidebar__section sidebar__section--no-padding-vertical" />
             <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="give-sidebar__section" />
             <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
@@ -17,8 +16,7 @@
           </div>
         </div>
 
-        <div v-else-if="activeTab === 'view'" class="give-sidebar__inner-wrapper anim-side--right">
-        <!-- TODO: in de regel hier meteen boven, wrapper in class moet wrappers zijn? -->
+        <div v-else-if="activeTab === 'view'" class="give-sidebar__inner-wrappers anim-side--right">
           <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="give-sidebar__inner-wrapper">
             <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
             <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="give-sidebar__section give-sidebar__section--no-padding-horizontal" />
