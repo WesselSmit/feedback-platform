@@ -6,15 +6,20 @@ export default {
 
   state: {
     comments: [],
+    insights: [],
   },
 
   getters: {
     comments: (state) => state.comments,
+    insights: (state) => state.insights,
   },
 
   mutations: {
     setComments(state, val) {
       state.comments = val;
+    },
+    setInsights(state, val) {
+      state.insights = val;
     },
   },
 
@@ -27,6 +32,20 @@ export default {
           user: rootGetters['user/user'],
           insight: payload.insight,
         });
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
+    async getInsights({ commit, rootGetters, dispatch }) {
+      try {
+        const insights = [];
+        const projectId = rootGetters['project/projectId'];
+        const snapshot = await insightsRef.get();
+
+        snapshot.forEach((doc) => insights.push({ id: doc.id, data: doc.data() }));
+        const projectInsights = insights.filter((insight) => insight.data.projectId === projectId);
+        commit('setInsights', projectInsights);
       } catch (err) {
         dispatch('handleError', err);
       }
@@ -53,7 +72,7 @@ export default {
         const comments = doc?.data()?.comments || [];
 
         if (comments.length === 0) {
-          // add zero-state 'comment' doc to collection 'comments' collection
+          // add zero-state 'comment' doc to collection 'comments' collection (not the same as addCommentsDocInProjectCollection?)
           await commentsRef.doc(payload.projectId).set({
             comments: [],
           });

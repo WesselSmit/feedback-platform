@@ -7,6 +7,7 @@
         <div v-if="activeTab === 'insights'" class="view-sidebar__inner-wrappers anim-side--left">
           <div v-for="(section, name) in sections" :key="section" class="view-sidebar__inner-wrapper">
             <ReadInstructions v-if="name === 'readInstructions'" :content="section" class="view-sidebar__section" />
+            <Insights v-if="name === 'insights'" :content="section" class="view-sidebar__section"/>
           </div>
         </div>
 
@@ -27,6 +28,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import Tabs from '@/components/Tabs';
 import ReadInstructions from '@/components/ReadInstructions';
+import Insights from '@/components/Insights';
 import FeedbackComments from '@/components/FeedbackComments';
 
 export default {
@@ -35,6 +37,7 @@ export default {
     Tabs,
     ReadInstructions,
     FeedbackComments,
+    Insights,
   },
   props: ['content', 'stepIndex'],
   computed: {

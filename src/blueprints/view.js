@@ -10,6 +10,9 @@ export default {
           title: `TODO`,
           body: `TODO`,
         },
+        insights: {
+          title: `Insights`,
+        }
       }
     },
     {

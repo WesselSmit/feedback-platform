@@ -13,7 +13,7 @@
           </div>
         </div>
         <FeedbackImage v-if="comment.image" :imageId="comment.image" />
-        {{ comment.text }}
+      {{ comment.text }}
         <div class="feedback-comments__agree-container" @click="handleClick(comment)">
           <AgreeIconZero v-if="!isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--zero" />
           <AgreeIconActive v-if="isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--active" />
@@ -101,11 +101,6 @@ export default {
 .feedback-comments {
   width: $sidebar-width;
 
-  &--no-padding-horizontal {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   &__title,
   &__body {
     padding: 0 $space--sm-md;
@@ -136,7 +131,7 @@ export default {
       }
 
       &::after {
-        content: "Be the first to give feedback! Everyone's feedback will be visible here.";
+        content: "Everyone's feedback will be visible here.";
         display: block;
         margin: 0 auto;
         text-align: center;
