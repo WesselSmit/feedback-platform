@@ -24,9 +24,8 @@
   </section>
 </template>
 
-// todo: agree button moet aantal agrees zijn in de 'view' pageMode
+//todo: agree button moet aantal agrees zijn in de 'view' pageMode
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
-//todo: add hover states aan agree feature
 //todo: backgroundcolor sidebar vs documentation
 //todo: delete eigen comments feature (heeft geen prioriteit)
 
@@ -184,6 +183,18 @@ export default {
       align-items: center;
       margin-top: $space--xsm;
       cursor: pointer;
+
+      &:hover {
+        .feedback-comments__agree {
+          &-icon {
+            fill: $purple;
+          }
+
+          &-label {
+            color: $purple;
+          }
+        }
+      }
     }
 
     &-icon {
@@ -192,10 +203,6 @@ export default {
       &--zero {
         fill: $black;
       }
-
-      &--active {
-        fill: $purple;
-      }
     }
 
     &-label {
@@ -203,10 +210,6 @@ export default {
       padding-top: 2px;
       color: $black;
       text-transform: uppercase;
-
-      &--active {
-        color: $purple;
-      }
     }
   }
 }

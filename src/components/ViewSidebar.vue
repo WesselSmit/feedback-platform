@@ -23,6 +23,7 @@
 </template>
 
 //todo: content in blueprint moet nog aangepast worden (is nu gekopieerd van give.js)
+//todo: sidebar tab transitie ziet er raar uit odmat de navgationButtons geen transitie hebben
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
