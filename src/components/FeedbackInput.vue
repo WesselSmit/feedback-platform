@@ -1,5 +1,5 @@
 <template>
-  <section class="feedback-input">
+  <section class="feedback-input" id="input">
       <div class="feedback-input__container">
         <textarea rows="6" placeholder="Don't know what to do? Read the tips." v-model.trim="textInput" class="feedback-input__input"></textarea>
 

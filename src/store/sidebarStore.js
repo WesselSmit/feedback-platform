@@ -11,6 +11,7 @@ export default {
     activeTab: null,
     showFeedbackHelperZero: true,
     textInput: '',
+    activeTipIndex: null,
     showMarkerOverlay: false,
     markers: [],
     sessionMarkers: [],
@@ -29,6 +30,7 @@ export default {
     activeTab: (state) => state.activeTab,
     showFeedbackHelperZero: (state) => state.showFeedbackHelperZero,
     textInput: (state) => state.textInput,
+    activeTipIndex: (state) => state.activeTipIndex,
     showMarkerOverlay: (state) => state.showMarkerOverlay,
     markers: (state) => state.markers,
     sessionMarkers: (state) => state.sessionMarkers,
@@ -63,6 +65,9 @@ export default {
     },
     setTextInput(state, val) {
       state.textInput = val;
+    },
+    setActiveTipIndex(state, val) {
+      state.activeTipIndex = val;
     },
     setShowMarkerOverlay(state, val) {
       state.showMarkerOverlay = val;
@@ -123,6 +128,11 @@ export default {
     updateTextInput({ commit, dispatch }, payload) {
       dispatch('updateShowFeedbackHelperZero', payload === '');
       commit('setTextInput', payload);
+      dispatch('updateActiveTipIndex', null);
+    },
+
+    updateActiveTipIndex({ commit }, payload) {
+      commit('setActiveTipIndex', payload);
     },
 
     updateShowMarkerOverlay({ commit }, payload) {
