@@ -38,7 +38,7 @@ export default {
       this.activeTabIndex = index;
 
       if (this.activeTab !== value) {
-        this.updateActiveTab(value);
+        this.updateActiveTab(this.tabs[index].value);
       }
     },
   },

@@ -28,8 +28,12 @@ export default {
       user: 'user',
       logout: 'logout',
     }),
+    ...mapActions('sidebar', {
+      updateActiveTab: 'updateActiveTab',
+    }),
     handleBack() {
       this.$router.push('/dashboard');
+      this.updateActiveTab(null);
     },
     handleLogout() {
       this.logout();

@@ -24,6 +24,7 @@
   </section>
 </template>
 
+// todo: agree button moet aantal agrees zijn in de 'view' pageMode
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
 //todo: add hover states aan agree feature
 //todo: backgroundcolor sidebar vs documentation
@@ -98,6 +99,13 @@ export default {
 @import '@/styles';
 
 .feedback-comments {
+  width: $sidebar-width;
+
+  &--no-padding-horizontal {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   &__title,
   &__body {
     padding: 0 $space--sm-md;

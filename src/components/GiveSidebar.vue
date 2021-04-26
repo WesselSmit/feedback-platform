@@ -8,6 +8,7 @@
         <div v-if="activeTab === 'give'" class="give-sidebar__inner-wrappers anim-side--left">
           <div v-for="(section, name) in sections" :key="section"
           class="give-sidebar__inner-wrapper" :class="{ 'guve-sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
+          <!-- TODO: in de regel meteen hierboven, guve in class moet give zijn? -->
             <InputInstructions v-if="name === 'inputInstructions'" :content="section" :hideDocumentation="hideDocumentation" class="give-sidebar__section sidebar__section--no-padding-vertical" />
             <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="give-sidebar__section" />
             <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
@@ -17,9 +18,10 @@
         </div>
 
         <div v-else-if="activeTab === 'view'" class="give-sidebar__inner-wrapper anim-side--right">
+        <!-- TODO: in de regel hier meteen boven, wrapper in class moet wrappers zijn? -->
           <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="give-sidebar__inner-wrapper">
             <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
-            <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="give-sidebar__section sidebar__section--no-padding-horizontal" />
+            <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="give-sidebar__section give-sidebar__section--no-padding-horizontal" />
           </div>
         </div>
       </transition>
@@ -35,7 +37,7 @@
 //todo: sidebar tab transitie ziet er raar uit odmat de navgationButtons geen transitie hebben
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import ProgressBar from '@/components/ProgressBar';
 import Tabs from '@/components/Tabs';
 import InputInstructions from '@/components/InputInstructions';
@@ -83,7 +85,7 @@ export default {
       return this.content.sidebar.steps.length;
     },
     tabs() {
-      return this.step.tabs;
+      return this.step.isCentered ? null : this.content.sidebar.tabs;
     },
     sections() {
       return (this.activeTab === 'give') ? this.step.content : this.content.sidebar.viewFeedbackSections;
@@ -103,6 +105,14 @@ export default {
     hasFeedbackHelper() {
       return Object.keys(this.sections).includes('feedbackHelper');
     },
+  },
+  methods: {
+    ...mapActions('sidebar', {
+      updateActiveTab: 'updateActiveTab',
+    }),
+  },
+  created() {
+    this.updateActiveTab('give');
   },
 };
 </script>

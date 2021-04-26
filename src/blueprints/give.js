@@ -1,6 +1,16 @@
 /* eslint-disable */
 
 export default {
+  tabs: [
+    {
+      label: 'Give feedback',
+      value: 'give'
+    },
+    {
+      label: 'View feedback',
+      value: 'view'
+    }
+  ],
   steps: [
     {
       isCentered: true,
@@ -53,16 +63,6 @@ export default {
         ],
         buttonLabel: 'Done',
       },
-      tabs: [
-        {
-          label: 'Give feedback',
-          value: 'give'
-        },
-        {
-          label: 'View feedback',
-          value: 'view'
-        }
-      ],
       content: {
         readInstructions: {
           title: `Name areas for improvement`,
@@ -119,16 +119,6 @@ export default {
       ]
     },
     {
-      tabs: [
-        {
-          label: 'Give feedback',
-          value: 'give'
-        },
-        {
-          label: 'View feedback',
-          value: 'view'
-        }
-      ],
       content: {
         readInstructions: {
           title: `Answer the feedback questions`,
@@ -193,16 +183,6 @@ export default {
       ]
     },
     {
-      tabs: [
-        {
-          label: 'Give feedback',
-          value: 'give'
-        },
-        {
-          label: 'View feedback',
-          value: 'view'
-        }
-      ],
       content: {
         readInstructions: {
           title: `Name positive parts`,

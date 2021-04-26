@@ -50,7 +50,15 @@ export default {
         const markers = rootGetters['sidebar/markers'];
 
         const doc = await commentsRef.doc(payload.projectId).get();
-        const comments = doc.data().comments;
+        const comments = doc?.data()?.comments || [];
+
+        if (comments.length === 0) {
+          // add zero-state 'comment' doc to collection 'comments' collection
+          await commentsRef.doc(payload.projectId).set({
+            comments: [],
+          });
+        }
+
         comments.push({
           id: uuid(),
           ts: Date.now(),
@@ -70,7 +78,7 @@ export default {
     async getComments({ commit, dispatch }, payload) {
       try {
         const doc = await commentsRef.doc(payload).get();
-        const comments = doc.data().comments;
+        const comments = doc?.data()?.comments || [];
 
         commit('setComments', comments);
       } catch (err) {

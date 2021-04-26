@@ -7,7 +7,7 @@
   <main v-if="pageIsGiveOrView && !showMarkerOverlay" class="base">
     <Documentation :content="documentation" />
     <GiveSidebar v-if="page === 'give' && !showImageSidebar" :content="{ documentation, sidebar }" :stepIndex="progress" />
-    <ViewSidebar v-if="page === 'view' && !showImageSidebar" />
+    <ViewSidebar v-if="page === 'view' && !showImageSidebar" :content="{ documentation, sidebar }" :stepIndex="progress" />
     <ConfirmSidebar v-if="showImageSidebar" :content="imageContent" />
   </main>
 

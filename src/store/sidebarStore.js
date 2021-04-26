@@ -8,7 +8,7 @@ export default {
     hideDocumentation: false,
     hideVisualisation: false,
     showPopUp: true,
-    activeTab: 'give',
+    activeTab: null,
     showFeedbackHelperZero: true,
     textInput: '',
     showMarkerOverlay: false,
