@@ -109,7 +109,7 @@ export default {
       try {
         const userId = rootGetters['user/id'];
         const project = getters.project;
-        const userProgress = project.data.progress.find((user) => user.userId === userId);
+        const userProgress = project?.data?.progress.find((user) => user.userId === userId);
         const fallback = { // used if user had no progress (object) for the selected project (in firestore db)
           userId,
           type: 'give',

@@ -15,6 +15,7 @@
 // todo: /blueprints/visualisations moet weggehaald worden en images uit firebase storage ophalen
 // todo: voeg een favicon toe
 // todo: voeg messsages toe aan de route guards (beforeEach)
+// todo: loop alle content nog eens door en zorg dat de tips kort, basis niveau engels, toepasbaar en makkelijk te lezen zijn
 // todo: de laatste stap van 'setup' moet de progress updaten naar { type: 'view', progress: 1 }
 
 <script>
