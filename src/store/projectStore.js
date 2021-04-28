@@ -109,7 +109,14 @@ export default {
       try {
         const userId = rootGetters['user/id'];
         const project = getters.project;
-        const userProgress = project?.data?.progress.find((user) => user.userId === userId);
+
+        // todo: de onderstaande regel werkt voor projecten die al een insight hebben (als er geen insights zijn krijgt deze een error)
+        const userProgress = project.data.progress.find((user) => user.userId === userId);
+
+        // todo: de onderstaande regel werk voro projecten die geen insight hebben (als er al wel insgights zijn krijgt deze een error)
+        // const userProgress = project?.data?.progress.find((user) => user.userId === userId);
+        // todo: miss een if statement gebruiken die kijkt of project.data.progress leeg of niet leeg is??
+
         const fallback = { // used if user had no progress (object) for the selected project (in firestore db)
           userId,
           type: 'give',
