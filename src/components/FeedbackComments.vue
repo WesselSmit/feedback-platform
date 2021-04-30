@@ -12,19 +12,25 @@
             <p class="feedback-comments__comment-role">{{ comment.user.role }}</p>
           </div>
         </div>
+
         <FeedbackImage v-if="comment.image" :imageId="comment.image" />
-      {{ comment.text }}
-        <div class="feedback-comments__agree-container" @click="handleClick(comment)">
+        {{ comment.text }}
+
+        <div v-if="!isOwner" class="feedback-comments__agree-container" @click="handleClick(comment)">
           <AgreeIconZero v-if="!isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--zero" />
           <AgreeIconActive v-if="isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--active" />
           <p class="feedback-comments__agree-label" :class="{ 'feedback-comments__agree-label--active': isAgreed(comment) }">{{ isAgreed(comment) ? 'Agreed' : 'Agree' }}</p>
+        </div>
+
+        <div v-else-if="isOwner" class="feedback-comments__agrees-container">
+          <AgreeIconActive class="feedback-comments__agrees-icon" />
+          <p class="feedback-comments__agrees-label">{{ comment.agrees.length }} {{ comment.agrees.length === 1 ? 'person' : 'people' }} agreed</p>
         </div>
       </li>
     </ul>
   </section>
 </template>
 
-//todo: agree button moet aantal agrees zijn in de 'view' pageMode
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
 //todo: backgroundcolor sidebar vs documentation
 //todo: delete eigen comments feature (heeft geen prioriteit)
@@ -54,6 +60,7 @@ export default {
     }),
     ...mapGetters('project', {
       projectId: 'projectId',
+      owner: 'owner',
     }),
     commentsByTime() {
       const comments = this.comments; // prevent side effects by by assigning 'this.comments' to 'comments'
@@ -67,6 +74,9 @@ export default {
     },
     body() {
       return this.content.body;
+    },
+    isOwner() {
+      return this.owner === this.userId;
     },
   },
   methods: {
@@ -208,6 +218,25 @@ export default {
     &-label {
       margin-bottom: 0;
       padding-top: 2px;
+      color: $black;
+      text-transform: uppercase;
+    }
+  }
+
+  &__agrees {
+    &-container {
+      display: flex;
+      align-items: center;
+      margin-top: $space--xsm;
+    }
+
+    &-icon {
+      margin-right: $space--sm;
+      fill: $black;
+    }
+
+    &-label {
+      margin-bottom: 0;
       color: $black;
       text-transform: uppercase;
     }
