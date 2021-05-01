@@ -46,6 +46,7 @@ export default {
 @import '@/styles';
 
 .menu {
+  overflow: auto;
   min-height: $space--xl;
 
   &__item {

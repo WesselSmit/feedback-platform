@@ -1,17 +1,16 @@
 <template>
   <main v-if="page === 'setup' && !showMarkerOverlay">
-    TODO: documentatie pagina opzetten component
-    <!-- TODO: documentatie pagina component -->
+    <Setup :content="pageContent" :stepIndex="progress" />
   </main>
 
-  <main v-if="pageIsGiveOrView && !showMarkerOverlay" class="base">
+  <main v-if="pageIsGiveOrView && !showMarkerOverlay" class="columns">
     <Documentation :content="documentation" />
     <GiveSidebar v-if="page === 'give' && !showImageSidebar" :content="{ documentation, sidebar }" :stepIndex="progress" />
-    <ViewSidebar v-if="page === 'view' && !showImageSidebar" :content="{ documentation, sidebar }" :stepIndex="progress" />
+    <ViewSidebar v-if="page === 'view' && !showImageSidebar" :content="{ documentation, sidebar }" />
     <ConfirmSidebar v-if="showImageSidebar" :content="imageContent" />
   </main>
 
-  <MarkerOverlay v-if="showMarkerOverlay" :content="{ documentation, markerContent}" class="base" />
+  <MarkerOverlay v-if="showMarkerOverlay" :content="{ documentation, markerContent}" class="columns" />
 </template>
 
 <script>
@@ -20,6 +19,7 @@ import setupBlueprint from '@/blueprints/setup';
 import documentationBlueprint from '@/blueprints/documentation';
 import giveBlueprint from '@/blueprints/give';
 import viewBlueprint from '@/blueprints/view';
+import Setup from '@/components/Setup';
 import Documentation from '@/components/Documentation';
 import GiveSidebar from '@/components/GiveSidebar';
 import ViewSidebar from '@/components/ViewSidebar';
@@ -30,6 +30,7 @@ export default {
   name: 'Project',
   inheritAttrs: false,
   components: {
+    Setup,
     Documentation,
     GiveSidebar,
     ViewSidebar,
@@ -112,7 +113,7 @@ export default {
 <style lang="scss">
 @import "@/styles";
 
-.base {
+.columns {
   display: grid;
   grid-template-columns: 1fr $sidebar-width;
 }

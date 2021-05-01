@@ -25,7 +25,7 @@ export default {
 .progress-bar {
   &__container {
     height: 5px;
-    width: $sidebar-width;
+    width: 100%;
     background-color: $gray--light;
   }
 

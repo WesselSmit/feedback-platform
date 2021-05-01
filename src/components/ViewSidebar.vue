@@ -40,7 +40,7 @@ export default {
     FeedbackComments,
     Insights,
   },
-  props: ['content', 'stepIndex'],
+  props: ['content'],
   computed: {
     ...mapGetters('sidebar', {
       activeTab: 'activeTab',
