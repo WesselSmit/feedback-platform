@@ -46,7 +46,7 @@ export default {
       if (action.hasOwnProperty('target')) {
         this.$router.push({ path: `/${action.target}` });
 
-        if (action.target === 'Dashboard') {
+        if (action.target.toLowerCase() === 'dashboard') {
           this.message({ message: 'Your feedback is saved', mode: 'succes' });
         }
       } else if (action === 'previousStep' || action === 'nextStep') {
