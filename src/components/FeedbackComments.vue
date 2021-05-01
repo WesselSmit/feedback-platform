@@ -4,7 +4,7 @@
     <p v-if="body && hasComments" class="feedback-comments__body">{{ body }}</p>
 
     <ul class="feedback-comments__list">
-      <li v-for="comment in commentsByTime" :key="comment" class="feedback-comments__comment">
+      <li v-for="comment in comments" :key="comment" class="feedback-comments__comment">
         <div class="feedback-comments__comment-meta">
           <Avatar v-if="comment.user" :user="comment.user" size="small" class="feedback-comments__comment-avatar" />
           <div class="feedback-comments__comment-credentials">
@@ -53,7 +53,7 @@ export default {
   props: ['content'],
   computed: {
     ...mapGetters('feedback', {
-      comments: 'comments',
+      projectComments: 'comments',
     }),
     ...mapGetters('user', {
       userId: 'id',
@@ -62,12 +62,19 @@ export default {
       projectId: 'projectId',
       owner: 'owner',
     }),
-    commentsByTime() {
-      const comments = this.comments; // prevent side effects by by assigning 'this.comments' to 'comments'
-      return comments.sort((a, b) => b.ts - a.ts);
-    },
     hasComments() {
-      return this.commentsByTime.length > 0;
+      return this.projectComments.length > 0;
+    },
+    comments() {
+      return this.isOwner ? this.commentsByAgrees : this.commentsByTime;
+    },
+    commentsByAgrees() {
+      const comments = this.projectComments; // prevent side effects by by assigning 'this.comments' to 'comments'
+      return comments.sort((a, b) => b.agrees.length - a.agrees.length);
+    },
+    commentsByTime() {
+      const comments = this.projectComments; // prevent side effects by by assigning 'this.comments' to 'comments'
+      return comments.sort((a, b) => b.ts - a.ts);
     },
     title() {
       return this.content.title;
