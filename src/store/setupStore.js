@@ -1,9 +1,11 @@
 export default {
   namespaced: true,
 
+  // todo: iterations
+
   state: {
     visualisation: null,
-    exlanation: '',
+    explanation: '',
     questions: [],
     limits: [],
   },

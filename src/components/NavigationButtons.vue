@@ -47,7 +47,7 @@ export default {
         this.$router.push({ path: `/${action.target}` });
 
         if (action.target.toLowerCase() === 'dashboard') {
-          this.message({ message: 'Saved', mode: 'succes' });
+          this.message({ message: 'Feedback saved', mode: 'succes' });
         }
       } else if (action === 'previousStep' || action === 'nextStep') {
         this.updateProgress(action);

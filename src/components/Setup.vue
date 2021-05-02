@@ -18,13 +18,21 @@
           <li v-for="tip in tips" :key="tip">{{ tip }}</li>
         </ul>
 
-        <component :is="component" :content="step" />
+        <component :is="component" :content="step" class="setup__input" />
+
+      <div class="setup__buttons">
+        <button v-for="(button, name) in navigation" :key="name" class="setup__button" :class="{ 'setup__button--outline': button.hasOutline, 'setup__button--disabled': showDisabledState(button.hasDisabled)}"
+          @click="handleNavigationButton(button)">
+          {{ button.label }}
+        </button>
+      </div>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/components/Menu';
 import ProgressBar from '@/components/ProgressBar';
 import SetupUpload from '@/components/SetupUpload';
@@ -46,6 +54,12 @@ export default {
     SetupIterations,
   },
   computed: {
+    ...mapGetters('setup', {
+      visualisation: 'visualisation',
+      explanation: 'explanation',
+      questions: 'questions',
+      limits: 'limits',
+    }),
     totalSteps() {
       return this.content.steps.length;
     },
@@ -55,8 +69,11 @@ export default {
     title() {
       return this.step.title;
     },
+    isRequired() {
+      return this.step.required;
+    },
     requiredLabel() {
-      return this.step.required ? 'Required' : 'Optional';
+      return this.isRequired ? 'Required' : 'Optional';
     },
     body() {
       return this.step.body;
@@ -69,6 +86,44 @@ export default {
     },
     navigation() {
       return this.step.navigation;
+    },
+  },
+  methods: {
+    ...mapActions('project', {
+      updateProgress: 'updateProgress',
+    }),
+    ...mapActions('message', {
+      message: 'message',
+    }),
+    showDisabledState(hasDisabled) {
+      if (!hasDisabled || !this.isRequired) return false;
+
+      switch (this.component) {
+        case 'SetupUpload':
+          return !this.visualisation;
+        case 'SetupLongText':
+          return !this.explanation;
+        case 'SetupQuestions':
+          return !this.questions.length > 0;
+        case 'SetupLimits':
+          return !this.limits.length > 0;
+        case 'SetupIterations':
+          return ''; // todo
+        default:
+          console.error('Unhandled button disabled state case');
+          break;
+      }
+    },
+    handleNavigationButton({ action, hasDisabled }) {
+      if (!this.showDisabledState(hasDisabled)) {
+        if (action.hasOwnProperty('target')) {
+          this.$router.push({ path: `/${action.target}` });
+        } else if (action === 'previousStep' || action === 'nextStep') {
+          this.updateProgress(action);
+        }
+      } else if (action === 'nextStep') {
+        this.message({ message: 'Input required', mode: 'error' });
+      }
     },
   },
 };
@@ -97,6 +152,46 @@ export default {
 
   &__inner {
     padding: $space--sm-md;
+  }
+
+  &__input {
+    margin-top: $space--md;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: $space--lg 0 0;
+  }
+
+  &__button {
+    height: $button-height;
+    width: $button-width;
+    background-color: $white;
+    color: $purple;
+    text-transform: uppercase;
+    border: 2px solid transparent;
+    border-radius: $border-radius;
+    transition: all 500ms $ease--fast;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $purple--opacity;
+    }
+
+    &--outline {
+      border: $border--button;
+    }
+
+    &--disabled {
+      color: $gray--dark;
+      border-color: $gray--dark-opacity;
+      cursor: default;
+
+      &:hover {
+        background-color: $white;
+      }
+    }
   }
 }
 </style>

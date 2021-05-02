@@ -8,20 +8,20 @@ export default {
         'TODO',
       ],
       component: 'SetupUpload',
-      // navigation: [
-      //   {
-      //     label: 'Dashboard',
-      //     action: {
-      //       target: 'dashboard',
-      //     },
-      //   },
-      //   {
-      //     label: 'Next',
-      //     hasOutline: true,
-      //     action: 'saveSetupProgress',
-      //     setupStep: 'visualisation',
-      //   },
-      // ],
+      navigation: [
+        {
+          label: 'Dashboard',
+          action: {
+            target: 'dashboard',
+          },
+        },
+        {
+          label: 'Next',
+          hasOutline: true,
+          hasDisabled: true,
+          action: 'nextStep',
+        },
+      ],
     },
     {
       required: true,
@@ -31,18 +31,18 @@ export default {
         'TODO',
       ],
       component: 'SetupLongText',
-      // navigation: [
-      //   {
-      //     label: 'Previous',
-      //     action: 'previousStep',
-      //   },
-      //   {
-      //     label: 'Next',
-      //     hasOutline: true,
-      //     action: 'saveSetupProgress',
-      //     setupStep: 'explanation',
-      //   },
-      // ],
+      navigation: [
+        {
+          label: 'Previous',
+          action: 'previousStep',
+        },
+        {
+          label: 'Next',
+          hasOutline: true,
+          hasDisabled: true,
+          action: 'nextStep',
+        },
+      ],
     },
     {
       required: true,
@@ -52,18 +52,18 @@ export default {
         'TODO',
       ],
       component: 'SetupQuestions',
-      // navigation: [
-      //   {
-      //     label: 'Previous',
-      //     action: 'previousStep',
-      //   },
-      //   {
-      //     label: 'Next',
-      //     hasOutline: true,
-      //     action: 'saveSetupProgress',
-      //     setupStep: 'questions',
-      //   },
-      // ],
+      navigation: [
+        {
+          label: 'Previous',
+          action: 'previousStep',
+        },
+        {
+          label: 'Next',
+          hasOutline: true,
+          hasDisabled: true,
+          action: 'nextStep',
+        },
+      ],
     },
     {
       required: true,
@@ -73,18 +73,18 @@ export default {
         'TODO',
       ],
       component: 'SetupLimits',
-      // navigation: [
-      //   {
-      //     label: 'Previous',
-      //     action: 'previousStep',
-      //   },
-      //   {
-      //     label: 'Next',
-      //     hasOutline: true,
-      //     action: 'saveSetupProgress',
-      //     setupStep: 'limits',
-      //   },
-      // ],
+      navigation: [
+        {
+          label: 'Previous',
+          action: 'previousStep',
+        },
+        {
+          label: 'Next',
+          hasOutline: true,
+          hasDisabled: true,
+          action: 'nextStep',
+        },
+      ],
     },
     {
       required: false,
@@ -94,18 +94,18 @@ export default {
         'TODO',
       ],
       component: 'SetupIterations',
-      // navigation: [
-      //   {
-      //     label: 'Previous',
-      //     action: 'previousStep',
-      //   },
-      //   {
-      //     label: 'Save',
-      //     hasOutline: true,
-      //     action: 'saveSetup',
-      //     setupStep: 'iterations',
-      // },
-      // ],
+      navigation: [
+        {
+          label: 'Previous',
+          action: 'previousStep',
+        },
+        {
+          label: 'Next',
+          hasOutline: true,
+          hasDisabled: true,
+          action: 'nextStep',
+        },
+      ],
     },
   ],
 };
