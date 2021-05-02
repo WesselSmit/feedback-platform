@@ -1,117 +1,111 @@
 export default {
   steps: [
     {
+      required: true,
       title: 'Data visualisation',
       body: 'TODO',
       tips: [
         'TODO',
-        'TODO',
       ],
-      navigation: [
-        {
-          label: 'Dashboard',
-          action: {
-            target: 'dashboard',
-          },
-        },
-        {
-          label: 'Next',
-          hasOutline: true,
-          action: 'nextStep',
-        },
-      ],
+      component: 'SetupUpload',
+      // navigation: [
+      //   {
+      //     label: 'Dashboard',
+      //     action: {
+      //       target: 'dashboard',
+      //     },
+      //   },
+      //   {
+      //     label: 'Next',
+      //     hasOutline: true,
+      //     action: 'saveSetupProgress',
+      //     setupStep: 'visualisation',
+      //   },
+      // ],
     },
     {
-      title: 'Title',
-      body: 'TODO',
-      tips: [
-        'TODO',
-      ],
-      navigation: [
-        {
-          label: 'Previous',
-          action: 'previousStep',
-        },
-        {
-          label: 'Next',
-          hasOutline: true,
-          action: 'nextStep',
-        },
-      ],
-    },
-    {
+      required: true,
       title: 'Explanation',
       body: 'TODO',
       tips: [
         'TODO',
-        'TODO',
       ],
-      navigation: [
-        {
-          label: 'Previous',
-          action: 'previousStep',
-        },
-        {
-          label: 'Next',
-          hasOutline: true,
-          action: 'nextStep',
-        },
-      ],
+      component: 'SetupLongText',
+      // navigation: [
+      //   {
+      //     label: 'Previous',
+      //     action: 'previousStep',
+      //   },
+      //   {
+      //     label: 'Next',
+      //     hasOutline: true,
+      //     action: 'saveSetupProgress',
+      //     setupStep: 'explanation',
+      //   },
+      // ],
     },
     {
+      required: true,
       title: 'Feedback questions',
       body: 'TODO',
       tips: [
         'TODO',
-        'TODO',
       ],
-      navigation: [
-        {
-          label: 'Previous',
-          action: 'previousStep',
-        },
-        {
-          label: 'Next',
-          hasOutline: true,
-          action: 'nextStep',
-        },
-      ],
+      component: 'SetupQuestions',
+      // navigation: [
+      //   {
+      //     label: 'Previous',
+      //     action: 'previousStep',
+      //   },
+      //   {
+      //     label: 'Next',
+      //     hasOutline: true,
+      //     action: 'saveSetupProgress',
+      //     setupStep: 'questions',
+      //   },
+      // ],
     },
     {
+      required: true,
       title: 'Feedback limits',
       body: 'TODO',
       tips: [
         'TODO',
       ],
-      navigation: [
-        {
-          label: 'Previous',
-          action: 'previousStep',
-        },
-        {
-          label: 'Next',
-          hasOutline: true,
-          action: 'nextStep',
-        },
-      ],
+      component: 'SetupLimits',
+      // navigation: [
+      //   {
+      //     label: 'Previous',
+      //     action: 'previousStep',
+      //   },
+      //   {
+      //     label: 'Next',
+      //     hasOutline: true,
+      //     action: 'saveSetupProgress',
+      //     setupStep: 'limits',
+      //   },
+      // ],
     },
     {
+      required: false,
       title: 'Iterations',
       body: 'TODO',
       tips: [
         'TODO',
       ],
-      navigation: [
-        {
-          label: 'Previous',
-          action: 'previousStep',
-        },
-        {
-          label: 'Save',
-          hasOutline: true,
-          action: 'saveSetup',
-        },
-      ],
+      component: 'SetupIterations',
+      // navigation: [
+      //   {
+      //     label: 'Previous',
+      //     action: 'previousStep',
+      //   },
+      //   {
+      //     label: 'Save',
+      //     hasOutline: true,
+      //     action: 'saveSetup',
+      //     setupStep: 'iterations',
+      // },
+      // ],
     },
   ],
 };

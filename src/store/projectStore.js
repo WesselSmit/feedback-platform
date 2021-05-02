@@ -77,6 +77,7 @@ export default {
         };
 
         commit('setProject', project);
+        dispatch('setup/populateWithDatabase', null, { root: true });
       } catch (err) {
         dispatch('handleError', err);
       }
@@ -86,10 +87,10 @@ export default {
       try {
         const doc = await projectsRef.add({
           title: payload,
-          visualisation: '',
-          feedbackQuestions: [],
-          feebdackLimits: '',
-          explanation: '',
+          visualisation: null,
+          explanation: null,
+          questions: [],
+          limits: [],
           ts: Date.now(),
           owner: rootGetters['user/user'],
           group: rootGetters['user/group'],
@@ -184,6 +185,18 @@ export default {
 
         dispatch('sidebar/updateHideVisualisation', false, { root: true }); // always show visualisation unless disabled in blueprint
         dispatch('sidebar/updateShowFeedbackHelperZero', true, { root: true }); // always show feedbackHelper zero state in new sidebar step
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
+    async updateSetupProp({ rootGetters, dispatch }, payload) {
+      try {
+        const projectId = rootGetters['project/projectId'];
+        const value = rootGetters[`setup/${payload.toLowerCase()}`];
+        await projectsRef.doc(projectId).update({ [payload]: value });
+
+        dispatch('getProjects');
       } catch (err) {
         dispatch('handleError', err);
       }
