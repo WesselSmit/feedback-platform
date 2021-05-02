@@ -91,6 +91,7 @@ export default {
   methods: {
     ...mapActions('project', {
       updateProgress: 'updateProgress',
+      updateSetupProp: 'updateSetupProp',
     }),
     ...mapActions('message', {
       message: 'message',
@@ -108,7 +109,7 @@ export default {
         case 'SetupLimits':
           return !this.limits.length > 0;
         case 'SetupIterations':
-          return ''; // todo
+          return; // todo
         default:
           console.error('Unhandled button disabled state case');
           break;
@@ -120,6 +121,26 @@ export default {
           this.$router.push({ path: `/${action.target}` });
         } else if (action === 'previousStep' || action === 'nextStep') {
           this.updateProgress(action);
+
+          switch (this.component) {
+            case 'SetupUpload':
+              this.updateSetupProp('visualisation');
+              break;
+            case 'SetupLongText':
+              this.updateSetupProp('explanation');
+              break;
+            case 'SetupQuestions':
+              this.updateSetupProp('questions');
+              break;
+            case 'SetupLimits':
+              this.updateSetupProp('limits');
+              break;
+            case 'SetupIterations':
+              break; // todo
+            default:
+              console.error('Unhandled case');
+              break;
+          }
         }
       } else if (action === 'nextStep') {
         this.message({ message: 'Input required', mode: 'error' });

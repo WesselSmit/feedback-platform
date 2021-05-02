@@ -190,6 +190,7 @@ export default {
       }
     },
 
+    // used to update an individual setup property (field in DB) of the current project
     async updateSetupProp({ rootGetters, dispatch }, payload) {
       try {
         const projectId = rootGetters['project/projectId'];
