@@ -13,7 +13,7 @@
           <li v-for="tip in tips" :key="tip">{{ tip }}</li>
         </ul>
 
-        <NavigationButtons :buttons="navigation" />
+        <NavigationButtons :buttons="navigation" bigMarginTop="true" />
       </div>
     </div>
   </section>
