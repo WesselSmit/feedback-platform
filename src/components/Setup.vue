@@ -1,18 +1,20 @@
 <template>
-    <Menu :hasBack="true" :hasLogout="false" />
+  <Menu :hasBack="true" :hasLogout="false" />
 
-    <section class="setup">
-      <div class="setup__wrapper">
-        <ProgressBar :total="totalSteps" :index="stepIndex" />
+  <section class="setup">
+    <div class="setup__wrapper">
+      <ProgressBar :total="totalSteps" :index="stepIndex" />
 
-        <div class="setup__inner">
-          <h1 v-if="title" class="setup__title">{{ title }}</h1>
-          <p v-if="body" class="setup__body">{{ body }}</p>
+      <div class="setup__inner">
+        <h1 v-if="title" class="setup__title">{{ title }}</h1>
+        <p v-if="body" class="setup__body">{{ body }}</p>
 
-          <ul v-if="tips">
-            <li v-for="tip in tips" :key="tip">{{ tip }}</li>
-          </ul>
-        </div>
+        <ul v-if="tips">
+          <li v-for="tip in tips" :key="tip">{{ tip }}</li>
+        </ul>
+
+        <NavigationButtons :buttons="navigation" />
+      </div>
     </div>
   </section>
 </template>
@@ -20,6 +22,7 @@
 <script>
 import Menu from '@/components/Menu';
 import ProgressBar from '@/components/ProgressBar';
+import NavigationButtons from '@/components/NavigationButtons';
 
 export default {
   name: 'Setup',
@@ -27,6 +30,7 @@ export default {
   components: {
     Menu,
     ProgressBar,
+    NavigationButtons,
   },
   computed: {
     totalSteps() {
@@ -43,6 +47,9 @@ export default {
     },
     tips() {
       return this.step.tips;
+    },
+    navigation() {
+      return this.step.navigation;
     },
   },
 };

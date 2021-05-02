@@ -86,6 +86,10 @@ export default {
       try {
         const doc = await projectsRef.add({
           title: payload,
+          visualisation: '',
+          feedbackQuestions: [],
+          feebdackLimits: '',
+          explanation: '',
           ts: Date.now(),
           owner: rootGetters['user/user'],
           group: rootGetters['user/group'],
@@ -146,6 +150,9 @@ export default {
         const userProgress = await dispatch('getProgress');
 
         switch (payload) {
+          case 'saveSetup':
+            userProgress.type = 'view';
+            break;
           case 'nextStep':
             userProgress.progress += 1;
             break;
