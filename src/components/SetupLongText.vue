@@ -1,6 +1,6 @@
 <template>
   <section class="setup-long-text">
-    <textarea rows="6" placeholder="Describe what your data visualisation is about" v-model.trim="explanation" class="setup-long-text__input"></textarea>
+    <textarea rows="6" placeholder="Enter an explanation" v-model.trim="explanation" class="setup-long-text__input"></textarea>
   </section>
 </template>
 

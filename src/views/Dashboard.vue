@@ -41,7 +41,7 @@ import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/components/Menu';
 import Profile from '@/components/Profile';
 import ProjectCard from '@/components/ProjectCard';
-import AddIcon from '@/assets/icons/AddIcon';
+import AddIcon from '@/assets/icons/AddIconBig';
 
 export default {
   name: 'Dashboard',
