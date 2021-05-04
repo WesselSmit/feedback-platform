@@ -8,6 +8,7 @@ export default {
         'TODO',
       ],
       component: 'SetupUpload',
+      rules: 'Only .png and .jpg files smaller than 5mb allowed.',
       navigation: [
         {
           label: 'Dashboard',

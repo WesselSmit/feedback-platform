@@ -191,11 +191,22 @@ export default {
     },
 
     // used to update an individual setup property (field in DB) of the current project
-    async updateSetupProp({ rootGetters, dispatch }, payload) {
+    async updateSetupProp({ rootGetters, getters, dispatch }, payload) {
       try {
-        const projectId = rootGetters['project/projectId'];
-        const value = rootGetters[`setup/${payload.toLowerCase()}`];
-        await projectsRef.doc(projectId).update({ [payload]: value });
+        const value = rootGetters[`setup/${payload}`];
+        await projectsRef.doc(getters.projectId).update({ [payload]: value });
+
+        dispatch('getProjects');
+      } catch (err) {
+        dispatch('handleError', err);
+      }
+    },
+
+    // update the visualisation property of a project
+    async updateVisualisation({ getters, dispatch }, payload) {
+      try {
+        console.log(payload);
+        await projectsRef.doc(getters.projectId).update({ visualisation: payload });
 
         dispatch('getProjects');
       } catch (err) {

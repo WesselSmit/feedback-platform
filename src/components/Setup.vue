@@ -2,6 +2,7 @@
   <Menu :hasBack="true" :hasLogout="false" />
 
   visualisation: {{ this.$store.getters['setup/visualisation'] ? this.$store.getters['setup/visualisation'] : 'null' }} <br>
+  visualisationPreview: {{ this.$store.getters['setup/visualisationPreview'] ? this.$store.getters['setup/visualisationPreview'] : 'null' }} <br>
   explanation: {{ this.$store.getters['setup/explanation'] ? this.$store.getters['setup/explanation'] : 'null' }} <br>
   questions: {{ this.$store.getters['setup/questions'] }} <br>
   limits: {{ this.$store.getters['setup/limits'] }} <br>
@@ -40,6 +41,8 @@ import SetupLongText from '@/components/SetupLongText';
 import SetupQuestions from '@/components/SetupQuestions';
 import SetupLimits from '@/components/SetupLimits';
 import SetupIterations from '@/components/SetupIterations';
+import { storageRef } from '@/firebase';
+import { v4 as uuid } from 'uuid';
 
 export default {
   name: 'Setup',
@@ -87,11 +90,21 @@ export default {
     navigation() {
       return this.step.navigation;
     },
+    fileExtension() {
+      const fileNameParts = this.visualisation.name.split('.');
+      return fileNameParts[fileNameParts.length - 1];
+    },
+    isValidFile() {
+      const allowedTypes = ['png', 'jpg', 'jpeg'];
+      const maxBytes = 1024 * 1024 * 5;
+      return allowedTypes.includes(this.fileExtension) && this.visualisation.size <= maxBytes;
+    },
   },
   methods: {
     ...mapActions('project', {
       updateProgress: 'updateProgress',
       updateSetupProp: 'updateSetupProp',
+      updateVisualisation: 'updateVisualisation',
     }),
     ...mapActions('message', {
       message: 'message',
@@ -120,20 +133,21 @@ export default {
         if (action.hasOwnProperty('target')) {
           this.$router.push({ path: `/${action.target}` });
         } else if (action === 'previousStep' || action === 'nextStep') {
-          this.updateProgress(action);
-
           switch (this.component) {
             case 'SetupUpload':
-              this.updateSetupProp('visualisation');
+              this.upload('visualisations', action); // upload image + only update progress if upload is succesful
               break;
             case 'SetupLongText':
               this.updateSetupProp('explanation');
+              this.updateProgress(action);
               break;
             case 'SetupQuestions':
               this.updateSetupProp('questions');
+              this.updateProgress(action);
               break;
             case 'SetupLimits':
               this.updateSetupProp('limits');
+              this.updateProgress(action);
               break;
             case 'SetupIterations':
               break; // todo
@@ -144,6 +158,40 @@ export default {
         }
       } else if (action === 'nextStep') {
         this.message({ message: 'Input required', mode: 'error' });
+      }
+    },
+    async upload(storageDir, navigationAction) {
+      // storageDir should be either: 'visualisations' or 'iterations'
+      // navigationAction is action that should be taken to update progress if upload is succesful
+      if (this.visualisation) {
+        if (this.isValidFile) {
+          try {
+            const imageId = uuid();
+            const upload = storageRef.child(`${storageDir}/${imageId}`).put(this.visualisation);
+            this.message({ message: 'Uploading image', duration: 1000 });
+            upload.on('state_changed',
+              (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`Upload is ${progress}% done`);
+              },
+              (err) => {
+                console.error('Error trying to upload file:', err);
+                this.message({ message: 'Something went wrong', mode: 'error' });
+              },
+              () => {
+                this.updateProgress(navigationAction);
+                this.updateVisualisation(imageId);
+                this.message({ message: 'Visualisation uploaded', mode: 'succes' });
+              });
+          } catch (err) {
+            console.error('Error trying to upload file:', err);
+            this.message({ message: 'Something went wrong', mode: 'error' });
+          }
+        } else {
+          this.message({ message: 'only .png and .jpg files smaller than 5mb allowed', mode: 'error' });
+        }
+      } else {
+        this.message({ message: 'no file selected to upload', mode: 'error' });
       }
     },
   },

@@ -5,6 +5,7 @@ export default {
 
   state: {
     visualisation: null,
+    visualisationPreview: null,
     explanation: '',
     questions: [],
     limits: [],
@@ -12,6 +13,7 @@ export default {
 
   getters: {
     visualisation: (state) => state.visualisation,
+    visualisationPreview: (state) => state.visualisationPreview,
     explanation: (state) => state.explanation,
     questions: (state) => state.questions,
     limits: (state) => state.limits,
@@ -20,6 +22,9 @@ export default {
   mutations: {
     setVisualisation(state, val) {
       state.visualisation = val;
+    },
+    setVisualisationPreview(state, val) {
+      state.visualisationPreview = val;
     },
     setExplanation(state, val) {
       state.explanation = val;
@@ -44,6 +49,10 @@ export default {
 
     updateVisualisation({ commit }, payload) {
       commit('setVisualisation', payload);
+    },
+
+    updateVisualisationPreview({ commit }, payload) {
+      commit('setVisualisationPreview', payload);
     },
 
     updateExplanation({ commit }, payload) {
