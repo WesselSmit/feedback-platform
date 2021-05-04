@@ -1,5 +1,5 @@
 <template>
-  <div class="setup-upload">
+  <div class="setup-upload" :class="{ 'setup__input--no-margin-vertical': visualisationPreview }">
     <div v-if="rules && !visualisationPreview" class="setup-upload__rules-container">
       <p class="setup-upload__rules">{{ rules }}</p>
     </div>
@@ -119,8 +119,8 @@ export default {
   }
 
   &__preview {
-    max-width: calc(#{$sidebar-width} - (2 * #{$space--sm-md}));
-    max-height: $feedback-image-preview-height;
+    max-width: calc(#{$popup-width--large} - (2 * #{$space--sm-md}));
+    max-height: $setup-visualisation-height;
     border: $border--ui;
 
     &-container {

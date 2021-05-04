@@ -135,7 +135,7 @@ export default {
         } else if (action === 'previousStep' || action === 'nextStep') {
           switch (this.component) {
             case 'SetupUpload':
-              this.upload('visualisations', action); // upload image + only update progress if upload is succesful
+              this.uploadVisualisation(action); // upload image + update progress if upload is succesful
               break;
             case 'SetupLongText':
               this.updateSetupProp('explanation');
@@ -160,14 +160,24 @@ export default {
         this.message({ message: 'Input required', mode: 'error' });
       }
     },
-    async upload(storageDir, navigationAction) {
-      // storageDir should be either: 'visualisations' or 'iterations'
+    async uploadVisualisation(navigationAction) {
       // navigationAction is action that should be taken to update progress if upload is succesful
       if (this.visualisation) {
-        if (this.isValidFile) {
+        if (typeof this.visualisation === 'string' || this.visualisation instanceof String) {
+          /*
+          this.visualisation can have two types of value:
+          1. File (object) --> user has selected an file using the FilePicker or Drag and Drop
+          2. String --> user navigated from next step back to this step
+                this.visualisation holds the ID to the visualisation in the Firebase Storage
+
+          Scenario 2 will result in an error when trying to upload since you need an File to upload,
+          so when this.visualisation is a string we skip the upload step because the visualisation already exists in the DB
+          */
+          this.updateProgress(navigationAction);
+        } else if (this.isValidFile) {
           try {
             const imageId = uuid();
-            const upload = storageRef.child(`${storageDir}/${imageId}`).put(this.visualisation);
+            const upload = storageRef.child(`visualisations/${imageId}`).put(this.visualisation);
             this.message({ message: 'Uploading image', duration: 1000 });
             upload.on('state_changed',
               (snapshot) => {
@@ -225,6 +235,10 @@ export default {
 
   &__input {
     margin-top: $space--md;
+
+    &--no-margin-vertical {
+      margin-top: 0;
+    }
   }
 
   &__buttons {

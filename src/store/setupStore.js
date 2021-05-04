@@ -1,3 +1,5 @@
+import { storageRef } from '@/firebase';
+
 export default {
   namespaced: true,
 
@@ -38,13 +40,24 @@ export default {
   },
 
   actions: {
-    populateWithDatabase({ commit, rootGetters }) {
+    async populateWithDatabase({ commit, rootGetters }) {
       const project = rootGetters['project/project'];
 
       commit('setVisualisation', project.data.visualisation);
       commit('setExplanation', project.data.explanation);
       commit('setQuestions', project.data.questions);
       commit('setLimits', project.data.limits);
+
+      if (project.data.visualisation) {
+        try {
+          const preview = await storageRef.child(`visualisations/${project.data.visualisation}`).getDownloadURL();
+          commit('setVisualisationPreview', preview);
+        } catch (err) {
+          console.error('Couldn\'t get visualisation preview from DB');
+        }
+      } else {
+        commit('setVisualisationPreview', null);
+      }
     },
 
     updateVisualisation({ commit }, payload) {
