@@ -7,7 +7,7 @@ export default {
       tips: [
         'TODO',
       ],
-      component: 'SetupUpload',
+      component: 'SetupVisualisation',
       rules: 'Only .png and .jpg files smaller than 5mb allowed.',
       navigation: [
         {

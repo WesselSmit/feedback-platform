@@ -36,7 +36,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/components/Menu';
 import ProgressBar from '@/components/ProgressBar';
-import SetupUpload from '@/components/SetupUpload';
+import SetupVisualisation from '@/components/SetupVisualisation';
 import SetupLongText from '@/components/SetupLongText';
 import SetupQuestions from '@/components/SetupQuestions';
 import SetupLimits from '@/components/SetupLimits';
@@ -50,7 +50,7 @@ export default {
   components: {
     Menu,
     ProgressBar,
-    SetupUpload,
+    SetupVisualisation,
     SetupLongText,
     SetupQuestions,
     SetupLimits,
@@ -113,7 +113,7 @@ export default {
       if (!hasDisabled || !this.isRequired) return false;
 
       switch (this.component) {
-        case 'SetupUpload':
+        case 'SetupVisualisation':
           return !this.visualisation;
         case 'SetupLongText':
           return !this.explanation;
@@ -134,7 +134,7 @@ export default {
           this.$router.push({ path: `/${action.target}` });
         } else if (action === 'previousStep' || action === 'nextStep') {
           switch (this.component) {
-            case 'SetupUpload':
+            case 'SetupVisualisation':
               this.uploadVisualisation(action); // upload image + update progress if upload is succesful
               break;
             case 'SetupLongText':

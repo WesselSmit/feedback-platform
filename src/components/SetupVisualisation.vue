@@ -25,7 +25,7 @@ import { mapGetters, mapActions } from 'vuex';
 import RemoveIcon from '@/assets/icons/RemoveIcon';
 
 export default {
-  name: 'SetupUpload',
+  name: 'SetupVisualisation',
   components: {
     RemoveIcon,
   },
