@@ -32,6 +32,8 @@
   </section>
 </template>
 
+// todo: documentation is hardcoded and should be fetched from DB (zie ook documentation.js TODO)
+
 <script>
 import { mapGetters } from 'vuex';
 import LimitIcon from '@/assets/icons/LimitIcon';

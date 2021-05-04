@@ -235,10 +235,6 @@ export default {
 
   &__input {
     margin-top: $space--md;
-
-    &--no-margin-vertical {
-      margin-top: 0;
-    }
   }
 
   &__buttons {

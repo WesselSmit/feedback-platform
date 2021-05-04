@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+// todo: the following properties are hardcoded for testing purposes but should be fetched from the DB: title, explanation, questions, limits, visualisation
+
 export default {
   title: `Twitter usage of Belgian politicians`,
   explanationHeading: `Explanation`,

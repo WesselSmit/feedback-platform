@@ -1,5 +1,5 @@
 <template>
-  <div class="setup-upload" :class="{ 'setup__input--no-margin-vertical': visualisationPreview }">
+  <div class="setup-upload">
     <div v-if="rules && !visualisationPreview" class="setup-upload__rules-container">
       <p class="setup-upload__rules">{{ rules }}</p>
     </div>
