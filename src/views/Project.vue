@@ -13,8 +13,6 @@
   <MarkerOverlay v-if="showMarkerOverlay" :content="{ documentation, markerContent}" class="columns" />
 </template>
 
-// todo: maak een computed value die checkt of alle required documentation content aanwezig is, zo niet laat dan een scherm zien dat aangeeft dat de pagina nog een WIP is (zit nog ergens in de setup fase en niet alle vereiste input is al ingevuld, dus anderen mogen de pagina nog niet inzien/feedback geven)
-
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import setupBlueprint from '@/blueprints/setup';
