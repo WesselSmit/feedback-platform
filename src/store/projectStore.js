@@ -205,7 +205,6 @@ export default {
     // update the visualisation property of a project
     async updateVisualisation({ getters, dispatch }, payload) {
       try {
-        console.log(payload);
         await projectsRef.doc(getters.projectId).update({ visualisation: payload });
 
         dispatch('getProjects');
