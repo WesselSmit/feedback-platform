@@ -79,31 +79,10 @@ export default {
           action: 'previousStep',
         },
         {
-          label: 'Next',
+          label: 'Save',
           hasOutline: true,
           hasDisabled: true,
-          action: 'nextStep',
-        },
-      ],
-    },
-    {
-      required: false,
-      title: 'Iterations',
-      body: 'TODO',
-      tips: [
-        'TODO',
-      ],
-      component: 'SetupIterations',
-      navigation: [
-        {
-          label: 'Previous',
-          action: 'previousStep',
-        },
-        {
-          label: 'Next',
-          hasOutline: true,
-          hasDisabled: true,
-          action: 'nextStep',
+          action: 'saveSetup',
         },
       ],
     },

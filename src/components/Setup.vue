@@ -1,12 +1,6 @@
 <template>
   <Menu :hasBack="true" :hasLogout="false" />
 
-  visualisation: {{ this.$store.getters['setup/visualisation'] ? this.$store.getters['setup/visualisation'] : 'null' }} <br>
-  visualisationPreview: {{ this.$store.getters['setup/visualisationPreview'] ? this.$store.getters['setup/visualisationPreview'] : 'null' }} <br>
-  explanation: {{ this.$store.getters['setup/explanation'] ? this.$store.getters['setup/explanation'] : 'null' }} <br>
-  questions: {{ this.$store.getters['setup/questions'] }} <br>
-  limits: {{ this.$store.getters['setup/limits'] ? this.$store.getters['setup/limits'] : 'null' }} <br>
-
   <section class="setup">
     <div class="setup__wrapper">
       <ProgressBar :total="totalSteps" :index="stepIndex" />
@@ -32,6 +26,8 @@
   </section>
 </template>
 
+// todo: voeg iterations stap toe
+
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/components/Menu';
@@ -40,7 +36,6 @@ import SetupVisualisation from '@/components/SetupVisualisation';
 import SetupLongText from '@/components/SetupLongText';
 import SetupQuestions from '@/components/SetupQuestions';
 import SetupLimits from '@/components/SetupLimits';
-import SetupIterations from '@/components/SetupIterations';
 import { storageRef } from '@/firebase';
 import { v4 as uuid } from 'uuid';
 
@@ -54,7 +49,6 @@ export default {
     SetupLongText,
     SetupQuestions,
     SetupLimits,
-    SetupIterations,
   },
   computed: {
     ...mapGetters('setup', {
@@ -121,8 +115,6 @@ export default {
           return !this.questions.length > 0;
         case 'SetupLimits':
           return !this.limits.length > 0;
-        case 'SetupIterations':
-          return; // todo
         default:
           console.error('Unhandled button disabled state case');
           break;
@@ -132,8 +124,8 @@ export default {
       if (!this.showDisabledState(hasDisabled)) {
         if (action.hasOwnProperty('target')) {
           this.$router.push({ path: `/${action.target}` });
-        } else if (action === 'previousStep' || action === 'nextStep') {
-          if (action === 'nextStep') {
+        } else if (action === 'previousStep' || action === 'nextStep' || action === 'saveSetup') {
+          if (action === 'nextStep' || action === 'saveSetup') {
             switch (this.component) {
               case 'SetupVisualisation':
                 this.uploadVisualisation(action); // upload image + update progress if upload is succesful
@@ -150,8 +142,6 @@ export default {
                 this.updateSetupProp('limits');
                 this.updateProgress(action);
                 break;
-              case 'SetupIterations':
-                break; // todo
               default:
                 console.error('Unhandled case');
                 break;

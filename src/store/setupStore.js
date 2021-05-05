@@ -3,8 +3,6 @@ import { storageRef } from '@/firebase';
 export default {
   namespaced: true,
 
-  // todo: iterations
-
   state: {
     visualisation: null,
     visualisationPreview: null,
