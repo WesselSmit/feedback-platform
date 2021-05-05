@@ -8,7 +8,7 @@
     <div class="dashboard__project-container">
       <h1 class="dashboard__project-title">My documentation pages</h1>
       <div class="dashboard__project-list">
-        <ProjectCard v-for="project in myProjects" :key="project.id" :project="project" />
+        <ProjectCard v-for="project in myProjects" :key="project.id" :project="project" isSetup="true" />
         <div class="dashboard__project-create" @click="togglePopUp()">
           <AddIcon class="dashboard__project-create-icon" />
           <p class="dashboard__project-create-text">Create a new documentation page</p>
@@ -17,7 +17,7 @@
 
       <h1 class="dashboard__project-title">Documentation pages shared with you</h1>
       <div class="dashboard__project-list">
-        <ProjectCard v-for="project in sharedProjects" :key="project.id" :project="project" />
+        <ProjectCard v-for="project in sharedProjects" :key="project.id" :project="project" :isSetup="projectIsCompletelySetup(project.data)" />
       </div>
     </div>
   </section>
@@ -71,6 +71,10 @@ export default {
     ...mapActions('message', {
       message: 'message',
     }),
+    projectIsCompletelySetup(project) {
+      const necessaryDocumentationContent = !!((project.visualisation && project.explanation && project.questions.length > 0 && project.limits));
+      return necessaryDocumentationContent;
+    },
     togglePopUp() {
       this.showProjectInput = !this.showProjectInput;
 

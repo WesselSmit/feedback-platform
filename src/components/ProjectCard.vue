@@ -1,5 +1,5 @@
 <template>
-  <div class="project-card" @click="navigateToProject()">
+  <div class="project-card" :class="{ 'project-card--wip': !isSetup }" @click="navigateToProject()">
     <Avatar v-if="user" :user="user" size="large" class="project-card__avatar" />
     <h2 class="project-card__owner">{{ name }}</h2>
     <p class="project-card__title" :class="{ 'project-card__title--small' : hasLongText }">{{ title }}</p>
@@ -7,11 +7,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Avatar from '@/components/Avatar';
 
 export default {
   name: 'ProjectCard',
-  props: ['project'],
+  props: ['project', 'isSetup'],
   components: {
     Avatar,
   },
@@ -34,8 +35,15 @@ export default {
     },
   },
   methods: {
+    ...mapActions('message', {
+      message: 'message',
+    }),
     navigateToProject() {
-      this.$router.push(`/project/${this.projectId}`);
+      if (this.isSetup) {
+        this.$router.push(`/project/${this.projectId}`);
+      } else {
+        this.message({ message: 'Project is not completely set up yet' });
+      }
     },
   },
 };
@@ -70,6 +78,23 @@ export default {
     &__owner,
     &__title {
       color: $purple;
+    }
+  }
+
+  &--wip {
+    filter: grayscale(1);
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: $gray--dark-opacity;
+      border-color: $gray--dark;
+    }
+
+    &:hover & {
+      &__owner,
+      &__title {
+        color: $gray--dark;
+      }
     }
   }
 

@@ -33,8 +33,6 @@
   </section>
 </template>
 
-// todo: maak een computed value die checkt of alle required documentation content aanwezig is, zo niet laat dan een scherm zien dat aangeeft dat de pagina nog een WIP is (zit nog ergens in de setup fase en niet alle vereiste input is al ingevuld, dus anderen mogen de pagina nog niet inzien/feedback geven)
-
 <script>
 import { mapGetters } from 'vuex';
 import LimitIcon from '@/assets/icons/LimitIcon';
