@@ -55,7 +55,7 @@ export default {
         this.updateVisualisation(e.dataTransfer.files[0]);
         this.updateVisualisationPreview(await this.getPreview());
       } else {
-        this.message({ message: 'too many files selected', mode: 'error' });
+        this.message({ message: 'Too many files selected', mode: 'error' });
       }
     },
     async selectFile(e) {

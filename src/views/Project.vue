@@ -4,7 +4,7 @@
   </main>
 
   <main v-if="pageIsGiveOrView && !showMarkerOverlay" class="columns">
-    <Documentation :content="documentation" />
+    <Documentation :content="{ project, documentation }" />
     <GiveSidebar v-if="page === 'give' && !showImageSidebar" :content="{ documentation, sidebar }" :stepIndex="progress" />
     <ViewSidebar v-if="page === 'view' && !showImageSidebar" :content="{ documentation, sidebar }" />
     <ConfirmSidebar v-if="showImageSidebar" :content="imageContent" />
@@ -51,6 +51,7 @@ export default {
       showImageSidebar: 'showImageSidebar',
     }),
     ...mapGetters('project', {
+      project: 'project',
       owner: 'owner',
       newProgressAvailable: 'newProgressAvailable',
     }),

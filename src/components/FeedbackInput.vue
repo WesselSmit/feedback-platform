@@ -102,7 +102,7 @@ export default {
         this.textInput = '';
         this.message({ message: 'Feedback saved', mode: 'succes' });
       } else {
-        this.message({ message: "Don't forget to enter feedback" });
+        this.message({ message: 'Don\'t forget to enter feedback' });
       }
     },
   },

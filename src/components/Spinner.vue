@@ -20,7 +20,7 @@ export default {
     position: relative;
     display: grid;
     place-items: center;
-    height: 350px;
+    height: $feedback-image-preview-height;
   }
 
   &__spinner {

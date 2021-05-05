@@ -14,7 +14,8 @@
         <span class="documentation__icon-container">
           <QuestionIcon class="documentation__icon documentation__icon--question" />
         </span>
-        {{ question }}</li>
+        {{ question }}
+        </li>
       </ul>
 
       <h3 class="documentation__subheading">{{ limitsHeading }}</h3>
@@ -31,8 +32,6 @@
     </div>
   </section>
 </template>
-
-// todo: documentation is hardcoded and should be fetched from DB (zie ook documentation.js TODO)
 
 <script>
 import { mapGetters } from 'vuex';
@@ -56,28 +55,28 @@ export default {
       hideVisualisation: 'hideVisualisation',
     }),
     title() {
-      return this.content.title;
+      return this.content.project.data.title;
     },
     explanationHeading() {
-      return this.content.explanationHeading;
+      return this.content.documentation.explanationHeading;
     },
     explanation() {
-      return this.content.explanation;
+      return this.content.project.data.explanation;
     },
     questionsHeading() {
-      return this.content.questionsHeading;
+      return this.content.documentation.questionsHeading;
     },
     questions() {
-      return this.content.questions;
+      return this.content.project.data.questions;
     },
     limitsHeading() {
-      return this.content.limitsHeading;
+      return this.content.documentation.limitsHeading;
     },
     limits() {
-      return this.content.limits;
+      return this.content.project.data.limits;
     },
     visualisation() {
-      return this.content.visualisation;
+      return this.content.project.data.visualisation;
     },
   },
 };

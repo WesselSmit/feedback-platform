@@ -202,10 +202,10 @@ export default {
             this.message({ message: 'Something went wrong', mode: 'error' });
           }
         } else {
-          this.message({ message: 'only .png and .jpg files smaller than 5mb allowed', mode: 'error' });
+          this.message({ message: 'Only .png and .jpg files smaller than 5mb allowed', mode: 'error' });
         }
       } else {
-        this.message({ message: 'no file selected to upload', mode: 'error' });
+        this.message({ message: 'No file selected to upload', mode: 'error' });
       }
     },
   },
