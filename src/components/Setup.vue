@@ -5,7 +5,7 @@
   visualisationPreview: {{ this.$store.getters['setup/visualisationPreview'] ? this.$store.getters['setup/visualisationPreview'] : 'null' }} <br>
   explanation: {{ this.$store.getters['setup/explanation'] ? this.$store.getters['setup/explanation'] : 'null' }} <br>
   questions: {{ this.$store.getters['setup/questions'] }} <br>
-  limits: {{ this.$store.getters['setup/limits'] }} <br>
+  limits: {{ this.$store.getters['setup/limits'] ? this.$store.getters['setup/limits'] : 'null' }} <br>
 
   <section class="setup">
     <div class="setup__wrapper">

@@ -90,7 +90,7 @@ export default {
           visualisation: null,
           explanation: null,
           questions: [],
-          limits: [],
+          limits: '',
           ts: Date.now(),
           owner: rootGetters['user/user'],
           group: rootGetters['user/group'],

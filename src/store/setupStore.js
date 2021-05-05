@@ -10,7 +10,7 @@ export default {
     visualisationPreview: null,
     explanation: '',
     questions: [],
-    limits: [],
+    limits: '',
   },
 
   getters: {

@@ -67,8 +67,7 @@ export default {
       ],
     },
     {
-      required: true,
-      title: 'Feedback limits',
+      title: 'Feedback limit',
       body: 'TODO',
       tips: [
         'TODO',
