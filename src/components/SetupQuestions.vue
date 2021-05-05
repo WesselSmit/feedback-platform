@@ -66,8 +66,6 @@ export default {
   },
   mounted() {
     this.syncTemplateWithState();
-    // const inputEls = this.$el.querySelectorAll('.question-input');
-    // this.questions.forEach((question, i) => inputEls[i].value = question);
   },
 };
 </script>
@@ -92,37 +90,6 @@ export default {
       &:hover {
         fill: $purple;
       }
-    }
-  }
-
-  &__button {
-    display: flex;
-    align-items: center;
-    margin-left: $space--sm;
-    cursor: pointer;
-
-    &:hover & {
-      &-icon {
-        fill: $purple
-      }
-
-      &-label {
-        color: $purple
-      }
-    }
-
-    &-icon {
-      margin-right: $space--sm;
-      fill: $black;
-      transition: fill 500ms $ease--fast;
-    }
-
-    &-label {
-      margin: 0;
-      color: $black;
-      font-size: $font-size--sm-md;
-      text-transform: uppercase;
-      transition: color 500ms $ease--fast;
     }
   }
 }

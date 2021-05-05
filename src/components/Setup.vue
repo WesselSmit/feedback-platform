@@ -133,27 +133,31 @@ export default {
         if (action.hasOwnProperty('target')) {
           this.$router.push({ path: `/${action.target}` });
         } else if (action === 'previousStep' || action === 'nextStep') {
-          switch (this.component) {
-            case 'SetupVisualisation':
-              this.uploadVisualisation(action); // upload image + update progress if upload is succesful
-              break;
-            case 'SetupLongText':
-              this.updateSetupProp('explanation');
-              this.updateProgress(action);
-              break;
-            case 'SetupQuestions':
-              this.updateSetupProp('questions');
-              this.updateProgress(action);
-              break;
-            case 'SetupLimits':
-              this.updateSetupProp('limits');
-              this.updateProgress(action);
-              break;
-            case 'SetupIterations':
-              break; // todo
-            default:
-              console.error('Unhandled case');
-              break;
+          if (action === 'nextStep') {
+            switch (this.component) {
+              case 'SetupVisualisation':
+                this.uploadVisualisation(action); // upload image + update progress if upload is succesful
+                break;
+              case 'SetupLongText':
+                this.updateSetupProp('explanation');
+                this.updateProgress(action);
+                break;
+              case 'SetupQuestions':
+                this.updateSetupProp('questions');
+                this.updateProgress(action);
+                break;
+              case 'SetupLimits':
+                this.updateSetupProp('limits');
+                this.updateProgress(action);
+                break;
+              case 'SetupIterations':
+                break; // todo
+              default:
+                console.error('Unhandled case');
+                break;
+            }
+          } else if (action === 'previousStep') {
+            this.updateProgress('previousStep');
           }
         }
       } else if (action === 'nextStep') {
