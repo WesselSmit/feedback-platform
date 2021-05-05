@@ -1,6 +1,7 @@
 <template>
   <div class="avatar" :class="{ 'avatar__avatar--small': isSmall, 'avatar__avatar--large': isLarge }">
-    <p class="avatar__avatar" :class="{ 'avatar__avatar--small': isSmall, 'avatar__avatar--large': isLarge }" :style="{ 'background-color': avatarColor }">{{ initials }}</p>
+    <p class="avatar__avatar" :class="{ 'avatar__avatar--small': isSmall, 'avatar__avatar--large': isLarge, 'avatar__avatar--cursor': cursor }"
+    :style="{ 'background-color': avatarColor }">{{ initials }}</p>
   </div>
 </template>
 
@@ -9,7 +10,7 @@ import { mapActions } from 'vuex';
 
 export default {
   name: 'Avatar',
-  props: ['user', 'size'],
+  props: ['user', 'size', 'cursor'],
   data() {
     return {
       avatarColor: null,
@@ -74,6 +75,10 @@ export default {
 
     &:empty {
       display: none;
+    }
+
+    &--cursor {
+      cursor: pointer;
     }
 
     &--small {

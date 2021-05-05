@@ -1,6 +1,6 @@
 <template>
   <div class="project-card" :class="{ 'project-card--wip': !isSetup }" @click="navigateToProject()">
-    <Avatar v-if="user" :user="user" size="large" class="project-card__avatar" />
+    <Avatar v-if="user" :user="user" cursor="true" size="large" class="project-card__avatar" />
     <h2 class="project-card__owner">{{ name }}</h2>
     <p class="project-card__title" :class="{ 'project-card__title--small' : hasLongText }">{{ title }}</p>
   </div>
