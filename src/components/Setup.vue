@@ -204,7 +204,6 @@ export default {
                 this.uploading = false;
               },
               () => {
-                console.log(navigationAction);
                 this.updateProgress(navigationAction);
                 this.updateVisualisation(imageId);
                 this.message({ message: 'Visualisation uploaded', mode: 'succes' });

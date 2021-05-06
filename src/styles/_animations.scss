@@ -15,35 +15,42 @@
 
 
 // vertical slide
+.short-slide-vertical-enter-from,
+.short-slide-vertical-leave-to,
 .slide-vertical-enter-from,
 .slide-vertical-leave-to {
   opacity: 0;
   transform: translateY(100%);
 }
 
+.short-slide-vertical-enter-active,
+.short-slide-vertical-leave-active {
+    transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
+}
+
 .slide-vertical-enter-active,
 .slide-vertical-leave-active {
-  transition: transform 200ms ease-in-out, opacity 350ms ease-in-out;
+    transition: transform 200ms ease-in-out, opacity 350ms ease-in-out;
 }
 
 
 // horizontal slide
 .slide-horizontal-enter-from,
 .slide-horizontal-leave-to {
-  opacity: 0;
+    opacity: 0;
 
-  &.anim-side {
-    &--left {
-      transform: translateX(-100%);
-    }
+    &.anim-side {
+        &--left {
+            transform: translateX(-100%);
+        }
 
-    &--right {
-      transform: translateX(100%);
+        &--right {
+            transform: translateX(100%);
+        }
     }
-  }
 }
 
 .slide-horizontal-enter-active,
 .slide-horizontal-leave-active {
-  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+    transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
 }

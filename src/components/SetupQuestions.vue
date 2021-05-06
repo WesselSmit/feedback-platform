@@ -1,10 +1,12 @@
 <template>
   <section class="setup-questions">
     <div class="setup-questions__questions">
-      <div v-for="(question, index) in showingQuestionInputs" :key="index" class="setup-questions__question question">
-        <input type="text" placeholder="Enter a question" class="setup-questions__question-input question-input" @input="updateInput()">
-        <RemoveIcon v-if="index !== showingQuestionInputs - 1" class="setup-questions__question-remove" @click="removeInput(index)" />
-      </div>
+      <transition-group name="short-slide-vertical" mode="in-out">
+        <div v-for="(question, index) in showingQuestionInputs" :key="index" class="setup-questions__question question">
+          <input type="text" placeholder="Enter a question" class="setup-questions__question-input question-input" @input="updateInput()">
+          <RemoveIcon v-if="index !== showingQuestionInputs - 1" class="setup-questions__question-remove" @click="removeInput(index)" />
+        </div>
+      </transition-group>
     </div>
   </section>
 </template>
