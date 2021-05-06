@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Visualisation from '@/components/Visualisation';
 import ConfirmSidebar from '@/components/ConfirmSidebar';
 
@@ -17,8 +18,11 @@ export default {
   },
   props: ['content'],
   computed: {
+    ...mapGetters('project', {
+      project: 'project',
+    }),
     visualisation() {
-      return this.content.documentation.visualisation;
+      return this.project.data.visualisation;
     },
     markerContent() {
       return this.content.markerContent;
