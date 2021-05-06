@@ -154,7 +154,6 @@ export default {
           case 'saveSetup':
             userProgress.type = 'view';
             router.push('/');
-            dispatch('getProjects');
             dispatch('message/message', { message: 'Documentation saved and published', mode: 'succes' }, { root: true });
             break;
           case 'nextStep':
