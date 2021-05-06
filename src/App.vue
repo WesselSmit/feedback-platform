@@ -6,6 +6,8 @@
   </transition>
 </template>
 
+// todo: bij setup werkt stap 1 (data visualisation) niet helemaal, soms gebeurt er niks als je op 'next' klikt, als sje dan refreshed ben je opeens bij stap 3 of 4 van setup (heeft dit te maken met de this.uploading guard?)
+
 // todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
 // todo: voeg messsages toe aan de route guards (beforeEach)
 // todo: loop alle content nog eens door en zorg dat de tips kort, basis niveau engels, toepasbaar en makkelijk te lezen zijn

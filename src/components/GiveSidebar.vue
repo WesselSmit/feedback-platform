@@ -1,38 +1,48 @@
 <template>
   <section class="give-sidebar">
     <ProgressBar :total="totalSteps" :index="stepIndex" />
-    <Tabs v-if="tabs" :tabs="tabs" />
 
-    <div class="give-sidebar__inner" :class="{ 'give-sidebar__inner--centered': isCentered }">
-      <transition name="slide-horizontal" mode="out-in">
-        <div v-if="activeTab === 'give'" class="give-sidebar__inner-wrappers anim-side--left">
-          <div v-for="(section, name) in sections" :key="section"
-          class="give-sidebar__inner-wrapper" :class="{ 'give-sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
-            <InputInstructions v-if="name === 'inputInstructions'" :content="section" :hideDocumentation="hideDocumentation" class="give-sidebar__section sidebar__section--no-padding-vertical" />
-            <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="give-sidebar__section" />
-            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
-            <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="give-sidebar__section" />
-            <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="give-sidebar__section sidebar__section--no-padding-vertical" />
+    <transition name="slide-horizontal" mode="out-in">
+      <Tabs v-if="tabs" :tabs="tabs" class="anim-side--right" />
+    </transition>
+
+    <transition name="slide-horizontal" mode="out-in" @before-enter="beforeEnter()" @after-enter="afterEnter()">
+      <div class="give-sidebar__transition-inner" :class="[{ 'give-sidebar__transition-inner--centered': isCentered }, animSideClass]" :key="stepIndex">
+
+        <div class="give-sidebar__inner" :class="{ 'give-sidebar__inner--centered': isCentered }">
+          <transition name="slide-horizontal" mode="out-in">
+            <div v-if="activeTab === 'give'" class="give-sidebar__inner-wrappers anim-side--left">
+              <div v-for="(section, name) in sections" :key="section"
+              class="give-sidebar__inner-wrapper" :class="{ 'give-sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
+                <InputInstructions v-if="name === 'inputInstructions'" :content="section" :hideDocumentation="hideDocumentation" class="give-sidebar__section sidebar__section--no-padding-vertical" />
+                <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="give-sidebar__section" />
+                <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
+                <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="give-sidebar__section" />
+                <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="give-sidebar__section sidebar__section--no-padding-vertical" />
+              </div>
+            </div>
+
+            <div v-else-if="activeTab === 'view'" class="give-sidebar__inner-wrappers anim-side--right">
+              <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="give-sidebar__inner-wrapper">
+                <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
+                <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="give-sidebar__section give-sidebar__section--no-padding-horizontal" />
+              </div>
+            </div>
+          </transition>
+
+            <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" class="give-sidebar__navigation" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" @handleNav="setAnimSide" />
           </div>
-        </div>
 
-        <div v-else-if="activeTab === 'view'" class="give-sidebar__inner-wrappers anim-side--right">
-          <div v-if="activeTab === 'view'" v-for="(section, name) in sections" :key="section" class="give-sidebar__inner-wrapper">
-            <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
-            <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="give-sidebar__section give-sidebar__section--no-padding-horizontal" />
-          </div>
-        </div>
-      </transition>
-
-        <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" class="give-sidebar__navigation" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
+        <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" @handleNav="setAnimSide" />
       </div>
-
-    <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" />
+    </transition>
   </section>
+
   <PopUp v-if="popUp && showPopUp" :content="popUp" />
 </template>
 
-//todo: sidebar tab transitie ziet er raar uit odmat de navgationButtons geen transitie hebben
+// todo: sidebar tab transitie ziet er raar uit omdat de navigationButtons geen transitie hebben
+// todo: transitie van stap 1 naar 2 ziet er raar uit omdat de sidebar eerder update dan de documentation
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -62,6 +72,11 @@ export default {
     PopUp,
   },
   props: ['content', 'stepIndex'],
+  data() {
+    return {
+      animSide: '',
+    };
+  },
   computed: {
     ...mapGetters('sidebar', {
       showPopUp: 'showPopUp',
@@ -103,11 +118,32 @@ export default {
     hasFeedbackHelper() {
       return Object.keys(this.sections).includes('feedbackHelper');
     },
+    animSideClass() {
+      return this.animSide ? `anim-side--${this.animSide}` : '';
+    },
   },
   methods: {
     ...mapActions('sidebar', {
       updateActiveTab: 'updateActiveTab',
     }),
+    setAnimSide(action) {
+      // set animSide (used in leave transition)
+      if (action === 'previousStep') {
+        this.animSide = 'right';
+      } else if (action === 'nextStep' || action === 'saveInsights') {
+        this.animSide = 'left';
+      }
+    },
+    beforeEnter() { // reverse animSide after the leave transition but before the enter transition
+      if (this.animSide === 'left') {
+        this.animSide = 'right';
+      } else if (this.animSide === 'right') {
+        this.animSide = 'left';
+      }
+    },
+    afterEnter() { // rest animSide when transition is done
+      this.animSide = '';
+    },
   },
   created() {
     this.updateActiveTab('give');
@@ -119,15 +155,27 @@ export default {
 @import "@/styles";
 
 .give-sidebar {
+  overflow: hidden;
   position: fixed;
   top: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   width: $sidebar-width;
-  min-height: 100vh;
   max-height: 100vh;
   border-left: $border--ui;
+
+  &__transition-inner {
+    min-height: calc(100vh - #{$space--xsm} - (#{$progressbar-height} + #{$tabs-height}));
+    display: flex;
+    flex-direction: column;
+
+    &--centered {
+      display: flex;
+      flex-grow: 1;
+      min-height: calc(100vh - #{$progressbar-height});
+    }
+  }
 
   &__inner {
     display: flex;

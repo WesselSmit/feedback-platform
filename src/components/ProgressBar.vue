@@ -24,13 +24,13 @@ export default {
 
 .progress-bar {
   &__container {
-    height: 5px;
+    height: $progressbar-height;
     width: 100%;
     background-color: $gray--light;
   }
 
   &__value{
-    height: 5px;
+    height: $progressbar-height;
     background-color: $purple;
     transition: width 1s $ease--fast;
   }

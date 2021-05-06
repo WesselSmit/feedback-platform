@@ -22,7 +22,8 @@
   </section>
 </template>
 
-//todo: sidebar tab transitie ziet er raar uit omdat de navgationButtons geen transitie hebben
+// todo: voeg een transitie toe wanneer je van 'step' verandert (wanneer de gebruiker naar de vorige/volgende stap in het proces gaat)
+// todo: sidebar tab transitie ziet er raar uit omdat de navigationButtons geen transitie hebben
 
 <script>
 import { mapGetters, mapActions } from 'vuex';

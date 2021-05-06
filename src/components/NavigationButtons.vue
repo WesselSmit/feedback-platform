@@ -41,6 +41,7 @@ export default {
       message: 'message',
     }),
     handleClick(action) {
+      this.$emit('handleNav', action); // used for transitions in Sidebar components
       this.updateTextInput('');
 
       if (action.hasOwnProperty('target')) {
