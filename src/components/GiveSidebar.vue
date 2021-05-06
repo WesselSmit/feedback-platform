@@ -90,8 +90,8 @@ export default {
     },
     legendData() {
       return {
-        limits: this.content.documentation.limits,
-        questions: this.content.documentation.questions,
+        limits: this.content.project.data.limits,
+        questions: this.content.project.data.questions,
       };
     },
     totalSteps() {
