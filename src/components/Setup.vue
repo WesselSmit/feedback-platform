@@ -5,28 +5,28 @@
     <div class="setup__wrapper">
       <ProgressBar :total="totalSteps" :index="stepIndex" />
 
-      <div class="setup__inner">
-        <h1 v-if="title" class="setup__title">{{ title }} <span class="setup__required-indicator">{{ requiredLabel }}</span></h1>
-        <p v-if="body" class="setup__body">{{ body }}</p>
+      <transition name="slide-horizontal" mode="out-in" @before-enter="beforeEnter()" @after-enter="afterEnter()">
+        <div class="setup__inner" :class="animSideClass" :key="stepIndex">
+          <h1 v-if="title" class="setup__title">{{ title }} <span class="setup__required-indicator">{{ requiredLabel }}</span></h1>
+          <p v-if="body" class="setup__body">{{ body }}</p>
 
-        <ul v-if="tips">
-          <li v-for="tip in tips" :key="tip">{{ tip }}</li>
-        </ul>
+          <ul v-if="tips">
+            <li v-for="tip in tips" :key="tip">{{ tip }}</li>
+          </ul>
 
-        <component :is="component" :content="step" class="setup__input" />
+          <component :is="component" :content="step" class="setup__input" />
 
-        <div class="setup__buttons">
-          <button v-for="(button, name) in navigation" :key="name" class="setup__button" :class="{ 'setup__button--outline': button.hasOutline, 'setup__button--disabled': showDisabledState(button.hasDisabled)}"
-            @click="handleNavigationButton(button)">
-            {{ button.label }}
-          </button>
+          <div class="setup__buttons">
+            <button v-for="(button, name) in navigation" :key="name" class="setup__button" :class="{ 'setup__button--outline': button.hasOutline, 'setup__button--disabled': showDisabledState(button.hasDisabled)}"
+              @click="handleNavigationButton(button)">
+              {{ button.label }}
+            </button>
+          </div>
         </div>
-      </div>
+      </transition>
     </div>
   </section>
 </template>
-
-// todo: voeg iterations stap toe
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -53,6 +53,7 @@ export default {
   data() {
     return {
       uploading: false,
+      animSide: '',
     };
   },
   computed: {
@@ -98,6 +99,9 @@ export default {
       const maxBytes = 1024 * 1024 * 5;
       return allowedTypes.includes(this.fileExtension) && this.visualisation.size <= maxBytes;
     },
+    animSideClass() {
+      return this.animSide ? `anim-side--${this.animSide}` : '';
+    },
   },
   methods: {
     ...mapActions('project', {
@@ -126,6 +130,13 @@ export default {
       }
     },
     handleNavigationButton({ action, hasDisabled }) {
+      // set animSide (used in leave transition)
+      if (action === 'previousStep') {
+        this.animSide = 'right';
+      } else if (action === 'nextStep' || action === 'saveSetup') {
+        this.animSide = 'left';
+      }
+
       if (!this.showDisabledState(hasDisabled)) {
         if (action.hasOwnProperty('target')) {
           this.$router.push({ path: `/${action.target}` });
@@ -193,6 +204,7 @@ export default {
                 this.uploading = false;
               },
               () => {
+                console.log(navigationAction);
                 this.updateProgress(navigationAction);
                 this.updateVisualisation(imageId);
                 this.message({ message: 'Visualisation uploaded', mode: 'succes' });
@@ -209,6 +221,16 @@ export default {
       } else {
         this.message({ message: 'No file selected to upload', mode: 'error' });
       }
+    },
+    beforeEnter() { // reverse animSide after the leave transition but before the enter transition
+      if (this.animSide === 'left') {
+        this.animSide = 'right';
+      } else if (this.animSide === 'right') {
+        this.animSide = 'left';
+      }
+    },
+    afterEnter() { // rest animSide when transition is done
+      this.animSide = '';
     },
   },
 };
