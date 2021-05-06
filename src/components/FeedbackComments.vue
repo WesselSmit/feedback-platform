@@ -22,7 +22,7 @@
           <p class="feedback-comments__agree-label" :class="{ 'feedback-comments__agree-label--active': isAgreed(comment) }">{{ isAgreed(comment) ? 'Agreed' : 'Agree' }}</p>
         </div>
 
-        <div v-else-if="isOwner" class="feedback-comments__agrees-container">
+        <div v-else-if="isOwner && comment.agrees.length > 0" class="feedback-comments__agrees-container">
           <AgreeIconActive class="feedback-comments__agrees-icon" />
           <p class="feedback-comments__agrees-label">{{ comment.agrees.length }} {{ comment.agrees.length === 1 ? 'person' : 'people' }} agreed</p>
         </div>
