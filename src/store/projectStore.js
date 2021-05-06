@@ -161,6 +161,9 @@ export default {
             break;
           case 'previousStep':
             userProgress.progress -= 1;
+            if (userProgress.progress < 1) { // prevent progress from being lower than 1 (if the user double clicks)
+              userProgress.progress = 1;
+            }
             break;
           default:
             console.error('unhandled progress update command');

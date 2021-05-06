@@ -126,7 +126,6 @@ export default {
   }
 
   &__image {
-    @include zoomIn(250ms, $ease--fast);
     display: block;
     margin: auto;
     width: 100%;
