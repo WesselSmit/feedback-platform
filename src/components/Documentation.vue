@@ -110,10 +110,12 @@ export default {
 
   &__limits {
     display: flex;
+    align-items: center;
   }
 
   &__question {
     display: flex;
+    align-items: center;
     padding-left: 0;
 
     &-list {
@@ -123,20 +125,20 @@ export default {
   }
 
   &__icon {
-      &--limit {
-        fill: $red;
-      }
-
-      &--question {
-        fill: $green;
-      }
-
-      &-container {
-        display: flex;
-        align-items: center;
-        width: 15px;
-        margin: 0 $space--sm;
-      }
+    &--limit {
+      fill: $red;
     }
+
+    &--question {
+      fill: $green;
+    }
+
+    &-container {
+      display: flex;
+      align-items: center;
+      width: 15px;
+      margin: 0 $space--sm;
+    }
+  }
 }
 </style>

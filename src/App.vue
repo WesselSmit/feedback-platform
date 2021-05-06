@@ -7,7 +7,10 @@
 </template>
 
 // todo: als ik bij insights op next klik update de sidebar niet
+
+// todo: test of alle functionaliteiten nog wel werken (setup, give [feedback, agree, marker, image] view)
 // todo: loop alle content nog eens door en zorg dat de tips kort, basis niveau engels, toepasbaar en makkelijk te lezen zijn
+// todo: FeedbackInput verdwijnt uit beeld wanneer gebruiker aan het typen is
 
 // todo: progressbar klopt niet helemaal --> de eerste stap moet geen progressie hebben
 // todo: vanaf 'view' moet er een knop zijn om terug te gaan naar setup (als die er is moet het teruggaan naar de edit/preview pagina, als die er niet is dan moet het terug naar stap 1)

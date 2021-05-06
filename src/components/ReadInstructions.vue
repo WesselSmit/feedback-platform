@@ -198,6 +198,7 @@ export default {
 
     &-label {
       display: flex;
+      align-items: center;
       padding-left: 0;
     }
 
