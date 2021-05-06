@@ -15,12 +15,12 @@
 
         <component :is="component" :content="step" class="setup__input" />
 
-      <div class="setup__buttons">
-        <button v-for="(button, name) in navigation" :key="name" class="setup__button" :class="{ 'setup__button--outline': button.hasOutline, 'setup__button--disabled': showDisabledState(button.hasDisabled)}"
-          @click="handleNavigationButton(button)">
-          {{ button.label }}
-        </button>
-      </div>
+        <div class="setup__buttons">
+          <button v-for="(button, name) in navigation" :key="name" class="setup__button" :class="{ 'setup__button--outline': button.hasOutline, 'setup__button--disabled': showDisabledState(button.hasDisabled)}"
+            @click="handleNavigationButton(button)">
+            {{ button.label }}
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -49,6 +49,11 @@ export default {
     SetupLongText,
     SetupQuestions,
     SetupLimits,
+  },
+  data() {
+    return {
+      uploading: false,
+    };
   },
   computed: {
     ...mapGetters('setup', {
@@ -128,7 +133,10 @@ export default {
           if (action === 'nextStep' || action === 'saveSetup') {
             switch (this.component) {
               case 'SetupVisualisation':
-                this.uploadVisualisation(action); // upload image + update progress if upload is succesful
+                if (!this.uploading) { // because upload is async we need to prevent the user from performing the upload task multiple times (as this would also update the user's progress multilple times --> and thus skip setup steps)
+                  this.uploading = true;
+                  this.uploadVisualisation(action); // upload image + update progress if upload is succesful
+                }
                 break;
               case 'SetupLongText':
                 this.updateSetupProp('explanation');
@@ -168,6 +176,7 @@ export default {
           so when this.visualisation is a string we skip the upload step because the visualisation already exists in the DB
           */
           this.updateProgress(navigationAction);
+          this.uploading = false;
         } else if (this.isValidFile) {
           try {
             const imageId = uuid();
@@ -181,15 +190,18 @@ export default {
               (err) => {
                 console.error('Error trying to upload file:', err);
                 this.message({ message: 'Something went wrong', mode: 'error' });
+                this.uploading = false;
               },
               () => {
                 this.updateProgress(navigationAction);
                 this.updateVisualisation(imageId);
                 this.message({ message: 'Visualisation uploaded', mode: 'succes' });
+                this.uploading = false;
               });
           } catch (err) {
             console.error('Error trying to upload file:', err);
             this.message({ message: 'Something went wrong', mode: 'error' });
+            this.uploading = false;
           }
         } else {
           this.message({ message: 'Only .png and .jpg files smaller than 5mb allowed', mode: 'error' });
