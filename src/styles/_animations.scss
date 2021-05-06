@@ -14,7 +14,7 @@
 }
 
 
-// vertical slide
+// vertical slide (with difference in opacity duration)
 .short-slide-vertical-enter-from,
 .short-slide-vertical-leave-to,
 .slide-vertical-enter-from,
@@ -25,7 +25,7 @@
 
 .short-slide-vertical-enter-active,
 .short-slide-vertical-leave-active {
-    transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
+    transition: transform 200ms ease-in-out, opacity 200ms ease-in-out; 
 }
 
 .slide-vertical-enter-active,
