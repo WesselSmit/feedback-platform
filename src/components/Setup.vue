@@ -207,7 +207,6 @@ export default {
                 this.updateProgress(navigationAction);
                 this.updateVisualisation(imageId);
                 this.message({ message: 'Visualisation uploaded', mode: 'succes' });
-                this.uploading = false;
               });
           } catch (err) {
             console.error('Error trying to upload file:', err);
