@@ -151,22 +151,22 @@ export default {
                 break;
               case 'SetupLongText':
                 this.updateSetupProp('explanation');
-                this.updateProgress(action);
+                this.updateProgress({ instruction: action });
                 break;
               case 'SetupQuestions':
                 this.updateSetupProp('questions');
-                this.updateProgress(action);
+                this.updateProgress({ instruction: action });
                 break;
               case 'SetupLimits':
                 this.updateSetupProp('limits');
-                this.updateProgress(action);
+                this.updateProgress({ instruction: action });
                 break;
               default:
                 console.error('Unhandled case');
                 break;
             }
           } else if (action === 'previousStep') {
-            this.updateProgress('previousStep');
+            this.updateProgress({ instruction: 'previousStep' });
           }
         }
       } else if (action === 'nextStep') {
@@ -186,7 +186,7 @@ export default {
           Scenario 2 will result in an error when trying to upload since you need an File to upload,
           so when this.visualisation is a string we skip the upload step because the visualisation already exists in the DB
           */
-          this.updateProgress(navigationAction);
+          this.updateProgress({ instruction: navigationAction });
           this.uploading = false;
         } else if (this.isValidFile) {
           try {
@@ -204,7 +204,7 @@ export default {
                 this.uploading = false;
               },
               () => {
-                this.updateProgress(navigationAction);
+                this.updateProgress({ instruction: navigationAction });
                 this.updateVisualisation(imageId);
                 this.message({ message: 'Visualisation uploaded', mode: 'succes' });
               });

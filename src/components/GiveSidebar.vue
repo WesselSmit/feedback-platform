@@ -42,7 +42,6 @@
 </template>
 
 // todo: sidebar tab transitie ziet er raar uit omdat de navigationButtons geen transitie hebben
-// todo: transitie van stap 1 naar 2 ziet er raar uit omdat de sidebar eerder update dan de documentation
 
 <script>
 import { mapGetters, mapActions } from 'vuex';

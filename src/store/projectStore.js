@@ -150,7 +150,7 @@ export default {
       try {
         const userProgress = await dispatch('getProgress');
 
-        switch (payload) {
+        switch (payload.instruction) {
           case 'saveSetup':
             userProgress.type = 'view';
             router.push('/');
@@ -188,8 +188,10 @@ export default {
         // signal Project.vue to get new progress from store
         commit('setNewProgressAvailable', true);
 
-        dispatch('sidebar/updateHideVisualisation', false, { root: true }); // always show visualisation unless disabled in blueprint
-        dispatch('sidebar/updateShowFeedbackHelperZero', true, { root: true }); // always show feedbackHelper zero state in new sidebar step
+        if (!payload.hideVisualisation) {
+          dispatch('sidebar/updateHideVisualisation', false, { root: true }); // always reset hideVisualisation unless payload.hideVisualisation is true
+        }
+        dispatch('sidebar/updateShowFeedbackHelperZero', true, { root: true }); // always reset showFeedbackHelperZero (zero state) in sidebar
       } catch (err) {
         dispatch('handleError', err);
       }

@@ -6,8 +6,6 @@
   </transition>
 </template>
 
-// todo: als ik bij insights op next klik update de sidebar niet
-
 // todo: loop alle content nog eens door en zorg dat de tips kort, basis niveau engels, toepasbaar en makkelijk te lezen zijn
 
 // todo: FeedbackInput verdwijnt uit beeld wanneer gebruiker aan het typen is
