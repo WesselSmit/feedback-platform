@@ -4,8 +4,10 @@
       <h3>{{ title }}</h3>
     </div>
 
-    <div class="visualisation__image-container">
-      <img draggable="false" :src="require(`@/blueprints/visualisations/${visualisation}.png`)" class="visualisation__image" @click="addMarker($event)">
+    <div class="visualisation__image-container" :class="{ 'visualisation__image-container--error': sourceHasErrored }">
+      <img v-if="source" :src="source" draggable="false" class="visualisation__image" @click="addMarker($event)">
+      <Spinner v-if="!source && !sourceHasErrored" />
+
       <MarkerIcon v-for="marker in currentMarkers" :key="marker" class="visualisation__marker" :class="{ 'visualisation__marker--has-hover': isMarkerOverlay }"
       :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
     </div>
@@ -18,14 +20,23 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { storageRef } from '@/firebase';
 import MarkerIcon from '@/assets/icons/OverlayMarkerIcon';
+import Spinner from '@/components/Spinner';
 
 export default {
   name: 'Visualisation',
   components: {
     MarkerIcon,
+    Spinner,
   },
   props: ['title', 'visualisation', 'isMarkerOverlay'],
+  data() {
+    return {
+      source: null,
+      sourceHasErrored: false,
+    };
+  },
   computed: {
     ...mapGetters('sidebar', {
       markers: 'markers',
@@ -39,6 +50,9 @@ export default {
     ...mapActions('sidebar', {
       removeSessionMarker: 'removeSessionMarker',
       addSessionMarker: 'addSessionMarker',
+    }),
+    ...mapActions('message', {
+      message: 'message',
     }),
     addMarker(e) {
       if (this.isMarkerOverlay) {
@@ -62,6 +76,16 @@ export default {
         this.removeSessionMarker(id);
       }
     },
+  },
+  async created() {
+    try {
+      const source = await storageRef.child(`visualisations/${this.visualisation}`).getDownloadURL();
+      this.source = source;
+    } catch (err) {
+      console.error('Error when trying to get downloadableURL for image:', err);
+      this.message({ message: 'Could not load visualisation', mode: 'error', duration: 5000 });
+      this.sourceHasErrored = true;
+    }
   },
 };
 </script>
@@ -110,6 +134,16 @@ export default {
     &-container {
       position: relative;
       margin: 0 $space--sm-md;
+
+      &--error {
+        display: grid;
+        place-items: center;
+        height: $feedback-image-preview-height;
+
+        &::after {
+          content: 'Visualisation could not be loaded.';
+        }
+      }
     }
   }
 

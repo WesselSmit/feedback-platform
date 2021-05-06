@@ -23,6 +23,8 @@ const storage = firebase.storage;
 const groupsRef = db.collection('groups');
 const projectsRef = db.collection('projects');
 const usersRef = db.collection('users');
+const insightsRef = db.collection('insights');
+const commentsRef = db.collection('comments');
 
 const storageRef = storage().ref();
 
@@ -33,5 +35,7 @@ export {
   groupsRef,
   projectsRef,
   usersRef,
+  insightsRef,
+  commentsRef,
   storageRef,
 };

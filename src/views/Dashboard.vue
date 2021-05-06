@@ -8,7 +8,7 @@
     <div class="dashboard__project-container">
       <h1 class="dashboard__project-title">My documentation pages</h1>
       <div class="dashboard__project-list">
-        <ProjectCard v-for="project in myProjects" :key="project.id" :project="project" />
+        <ProjectCard v-for="project in myProjectsSorted" :key="project.id" :project="project" isSetup="true" />
         <div class="dashboard__project-create" @click="togglePopUp()">
           <AddIcon class="dashboard__project-create-icon" />
           <p class="dashboard__project-create-text">Create a new documentation page</p>
@@ -17,7 +17,7 @@
 
       <h1 class="dashboard__project-title">Documentation pages shared with you</h1>
       <div class="dashboard__project-list">
-        <ProjectCard v-for="project in sharedProjects" :key="project.id" :project="project" />
+        <ProjectCard v-for="project in sharedProjectsSorted" :key="project.id" :project="project" :isSetup="projectIsCompletelySetup(project.data)" />
       </div>
     </div>
   </section>
@@ -41,7 +41,7 @@ import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/components/Menu';
 import Profile from '@/components/Profile';
 import ProjectCard from '@/components/ProjectCard';
-import AddIcon from '@/assets/icons/AddIcon';
+import AddIcon from '@/assets/icons/AddIconBig';
 
 export default {
   name: 'Dashboard',
@@ -62,6 +62,14 @@ export default {
       myProjects: 'myProjects',
       sharedProjects: 'sharedProjects',
     }),
+    myProjectsSorted() { // sort projects newest first
+      const projects = this.myProjects; // prevent side effects by by assigning 'this.myPojects' to 'projects'
+      return projects.sort((a, b) => b.data.ts - a.data.ts);
+    },
+    sharedProjectsSorted() { // sort projects newest first
+      const projects = this.sharedProjects; // prevent side effects by by assigning 'this.sharedProjects' to 'projects'
+      return projects.sort((a, b) => b.data.ts - a.data.ts);
+    },
   },
   methods: {
     ...mapActions('project', {
@@ -71,6 +79,10 @@ export default {
     ...mapActions('message', {
       message: 'message',
     }),
+    projectIsCompletelySetup(project) {
+      const necessaryDocumentationContent = !!((project.visualisation && project.explanation && project.questions.length > 0 && project.limits));
+      return necessaryDocumentationContent;
+    },
     togglePopUp() {
       this.showProjectInput = !this.showProjectInput;
 
@@ -88,6 +100,10 @@ export default {
   },
   created() {
     this.getProjects();
+
+    setTimeout(() => {
+      this.getProjects(); // get projects again (is necessary if the user has just completed setting up a project to make sure the projects are up to date)
+    }, 1000);
   },
 };
 </script>

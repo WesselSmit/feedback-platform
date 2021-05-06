@@ -116,7 +116,7 @@ export default {
         this.updateSelectedImage(e.dataTransfer.files[0]);
         this.updateSelectedImagePreview(await this.getPreview());
       } else {
-        this.message({ message: 'too many files selected', mode: 'error' });
+        this.message({ message: 'Too many files selected', mode: 'error' });
       }
     },
     async selectFile(e) {
@@ -203,7 +203,7 @@ export default {
           this.message({ message: 'Something went wrong', mode: 'error' });
         }
       } else {
-        this.message({ message: 'only .png and .jpg files smaller than 5mb allowed', mode: 'error' });
+        this.message({ message: 'Only .png and .jpg files smaller than 5mb allowed', mode: 'error' });
         this.updateShowImageSidebar(false);
         this.resetImageState();
         this.updateSelectedImagePreview(null);

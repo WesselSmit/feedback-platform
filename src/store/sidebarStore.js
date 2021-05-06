@@ -7,11 +7,11 @@ export default {
     insightInput: '',
     hideDocumentation: false,
     hideVisualisation: false,
-    stepIndex: 1, // todo: moet uit DB opgehaald worden
     showPopUp: true,
-    activeTab: 'give',
+    activeTab: null,
     showFeedbackHelperZero: true,
     textInput: '',
+    activeTipIndex: null,
     showMarkerOverlay: false,
     markers: [],
     sessionMarkers: [],
@@ -26,11 +26,11 @@ export default {
     insightInput: (state) => state.insightInput,
     hideDocumentation: (state) => state.hideDocumentation,
     hideVisualisation: (state) => state.hideVisualisation,
-    stepIndex: (state) => state.stepIndex,
     showPopUp: (state) => state.showPopUp,
     activeTab: (state) => state.activeTab,
     showFeedbackHelperZero: (state) => state.showFeedbackHelperZero,
     textInput: (state) => state.textInput,
+    activeTipIndex: (state) => state.activeTipIndex,
     showMarkerOverlay: (state) => state.showMarkerOverlay,
     markers: (state) => state.markers,
     sessionMarkers: (state) => state.sessionMarkers,
@@ -54,9 +54,6 @@ export default {
     setHideVisualisation(state, val) {
       state.hideVisualisation = val;
     },
-    setStepIndex(state, val) {
-      state.stepIndex = val;
-    },
     setShowPopUp(state, val) {
       state.showPopUp = val;
     },
@@ -68,6 +65,9 @@ export default {
     },
     setTextInput(state, val) {
       state.textInput = val;
+    },
+    setActiveTipIndex(state, val) {
+      state.activeTipIndex = val;
     },
     setShowMarkerOverlay(state, val) {
       state.showMarkerOverlay = val;
@@ -108,14 +108,6 @@ export default {
       commit('setHideVisualisation', payload);
     },
 
-    updateStepIndex({ commit, getters, dispatch }, payload) {
-      const newIndex = (payload === 'previousStep') ? getters.stepIndex - 1 : getters.stepIndex + 1;
-
-      commit('setStepIndex', newIndex);
-      dispatch('updateHideVisualisation', false); // always show visualisation unless disabled in blueprint
-      dispatch('updateShowFeedbackHelperZero', true); // always show feedbackHelper zero state in new sidebar step
-    },
-
     updateShowPopUp({ commit }) {
       commit('setShowPopUp', false);
     },
@@ -136,6 +128,11 @@ export default {
     updateTextInput({ commit, dispatch }, payload) {
       dispatch('updateShowFeedbackHelperZero', payload === '');
       commit('setTextInput', payload);
+      dispatch('updateActiveTipIndex', null);
+    },
+
+    updateActiveTipIndex({ commit }, payload) {
+      commit('setActiveTipIndex', payload);
     },
 
     updateShowMarkerOverlay({ commit }, payload) {

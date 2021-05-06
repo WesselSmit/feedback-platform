@@ -1,5 +1,5 @@
 <template>
-  <section class="feedback-input">
+  <section class="feedback-input" id="input">
       <div class="feedback-input__container">
         <textarea rows="6" placeholder="Don't know what to do? Read the tips." v-model.trim="textInput" class="feedback-input__input"></textarea>
 
@@ -46,10 +46,9 @@ export default {
       numberOfMarkers: 'numberOfMarkers',
       feedbackImage: 'feedbackImage',
     }),
-    projectId() {
-      // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
-      return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
-    },
+    ...mapGetters('project', {
+      projectId: 'projectId',
+    }),
     textInput: {
       get() {
         return this.$store.getters['sidebar/textInput'];
@@ -103,7 +102,7 @@ export default {
         this.textInput = '';
         this.message({ message: 'Feedback saved', mode: 'succes' });
       } else {
-        this.message({ message: "Don't forget to enter feedback" });
+        this.message({ message: 'Don\'t forget to enter feedback' });
       }
     },
   },

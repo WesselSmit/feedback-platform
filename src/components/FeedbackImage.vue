@@ -37,7 +37,7 @@ export default {
   max-width: 100%;
 
   &__image {
-    @include zoomIn(100ms, ease);
+    @include zoomIn(50ms, ease);
     display: block;
     margin: auto;
     width: auto;

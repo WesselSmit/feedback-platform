@@ -31,11 +31,9 @@
   </section>
 </template>
 
-//todo: voeg een transitie toe wanneer je van 'step' verandert (wanneer de gebruiker naar de vorige/volgende stap in het proces gaat)
-
 <script>
 import ToggleIcon from '@/assets/icons/ToggleIcon';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'feedbackHelper',
@@ -43,14 +41,10 @@ export default {
     ToggleIcon,
   },
   props: ['content'],
-  data() {
-    return {
-      activeTipIndex: null,
-    };
-  },
   computed: {
     ...mapGetters('sidebar', {
       showFeedbackHelperZero: 'showFeedbackHelperZero',
+      activeTipIndex: 'activeTipIndex',
     }),
     currentSection() {
       return this.showFeedbackHelperZero ? 'zero' : 'interactive';
@@ -72,8 +66,18 @@ export default {
     },
   },
   methods: {
+    ...mapActions('sidebar', {
+      updateActiveTipIndex: 'updateActiveTipIndex',
+    }),
     handleClick(index) {
-      this.activeTipIndex = (this.activeTipIndex === index) ? null : index;
+      this.updateActiveTipIndex((this.activeTipIndex === index) ? null : index);
+      this.scrollToInput();
+    },
+    scrollToInput() {
+      const input = document.getElementById('input');
+      setTimeout(() => {
+        input.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }, 175);
     },
   },
 };

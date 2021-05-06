@@ -6,28 +6,15 @@
   </transition>
 </template>
 
-<script>
+// todo: loop alle content nog eens door en zorg dat de tips kort, basis niveau engels, toepasbaar en makkelijk te lezen zijn
 
+// todo: FeedbackInput verdwijnt uit beeld wanneer gebruiker aan het typen is
+// todo: progressbar klopt niet helemaal --> de eerste stap moet geen progressie hebben
+// todo: vanaf 'view' moet er een knop zijn om terug te gaan naar setup (als die er is moet het teruggaan naar de edit/preview pagina, als die er niet is dan moet het terug naar stap 1)
 // todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
-// todo: alle blueprints/visualisation moeten weg + give-boxing.js moet hernoemt worden & hernoem blueprints/ naar content/
-// todo: voeg een favicon toe
+// todo: voeg messsages toe aan de route guards (beforeEach)
 
-/*
-  todo: PROGRESS
-  1. je opent een project
-  2. heb je permissie om dit project te bekijken (zit je in het groepje van het project? ben je admin/docent/expert?)
-  3. ben je owner ? setup/edit/inzien : give ==> deze data staat in de projects collection
-  4. setup/edit || give ? get progress : start ==> deze data moet nog in de project collection komen
-  - deze checks moeten allemaal in de beforeEach in de router gebeuren
-
-  de progress moet aangemaakt als je wel permissie hebt maar nog nooit het project bekeken hebt
-
-  als de bovenstaande functie werkt dan moeten de volgende dingen gebeuren:
-  - hardcoded projectId in computed moeten dynamisch worden (ophalen uit store)
-  - alle buttons moeten de progress updaten (let op dit moet in meer components dan alleen NavigationButtons vervangen worden)
-  - in de SidebarStore moet 'stepIndex' uit de DB komen
-*/
-
+<script>
 import { mapGetters } from 'vuex';
 import Message from '@/components/Message';
 
@@ -43,7 +30,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-@import '@/styles';
-</style>

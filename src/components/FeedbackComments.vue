@@ -1,23 +1,30 @@
 <template>
   <section class="feedback-comments">
-    <h1 v-if="title && commentsByTime" class="feedback-comments__title">{{ title }}</h1>
-    <p v-if="body && commentsByTime" class="feedback-comments__body">{{ body }}</p>
+    <h1 v-if="title && hasComments" class="feedback-comments__title">{{ title }}</h1>
+    <p v-if="body && hasComments" class="feedback-comments__body">{{ body }}</p>
 
     <ul class="feedback-comments__list">
-      <li v-for="comment in commentsByTime" :key="comment" class="feedback-comments__comment">
+      <li v-for="comment in comments" :key="comment" class="feedback-comments__comment">
         <div class="feedback-comments__comment-meta">
-          <Avatar v-if="comment.data.user" :user="comment.data.user" size="small" class="feedback-comments__comment-avatar" />
+          <Avatar v-if="comment.user" :user="comment.user" size="small" class="feedback-comments__comment-avatar" />
           <div class="feedback-comments__comment-credentials">
-            <h3 class="feedback-comments__comment-name">{{ comment.data.user.name }}</h3>
-            <p class="feedback-comments__comment-role">{{ comment.data.user.role }}</p>
+            <h3 class="feedback-comments__comment-name">{{ comment.user.name }}</h3>
+            <p class="feedback-comments__comment-role">{{ comment.user.role }}</p>
           </div>
         </div>
-        <FeedbackImage v-if="comment.data.image" :imageId="comment.data.image" />
-        {{ comment.data.text }}
-        <div class="feedback-comments__agree-container" @click="handleClick(comment)">
+
+        <FeedbackImage v-if="comment.image" :imageId="comment.image" />
+        {{ comment.text }}
+
+        <div v-if="!isOwner" class="feedback-comments__agree-container" @click="handleClick(comment)">
           <AgreeIconZero v-if="!isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--zero" />
           <AgreeIconActive v-if="isAgreed(comment)" class="feedback-comments__agree-icon feedback-comments__agree-icon--active" />
           <p class="feedback-comments__agree-label" :class="{ 'feedback-comments__agree-label--active': isAgreed(comment) }">{{ isAgreed(comment) ? 'Agreed' : 'Agree' }}</p>
+        </div>
+
+        <div v-else-if="isOwner && comment.agrees.length > 0" class="feedback-comments__agrees-container">
+          <AgreeIconActive class="feedback-comments__agrees-icon" />
+          <p class="feedback-comments__agrees-label">{{ comment.agrees.length }} {{ comment.agrees.length === 1 ? 'person' : 'people' }} agreed</p>
         </div>
       </li>
     </ul>
@@ -25,7 +32,6 @@
 </template>
 
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
-//todo: add hover states aan agree feature
 //todo: backgroundcolor sidebar vs documentation
 //todo: delete eigen comments feature (heeft geen prioriteit)
 
@@ -47,23 +53,37 @@ export default {
   props: ['content'],
   computed: {
     ...mapGetters('feedback', {
-      comments: 'comments',
+      projectComments: 'comments',
     }),
     ...mapGetters('user', {
       userId: 'id',
     }),
-    projectId() {
-      // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
-      return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
+    ...mapGetters('project', {
+      projectId: 'projectId',
+      owner: 'owner',
+    }),
+    hasComments() {
+      return this.projectComments.length > 0;
+    },
+    comments() {
+      return this.isOwner ? this.commentsByAgrees : this.commentsByTime;
+    },
+    commentsByAgrees() {
+      const comments = this.projectComments; // prevent side effects by by assigning 'this.comments' to 'comments'
+      return comments.sort((a, b) => b.agrees.length - a.agrees.length);
     },
     commentsByTime() {
-      return [...this.comments].sort((a, b) => b.data.ts - a.data.ts);
+      const comments = this.projectComments; // prevent side effects by by assigning 'this.comments' to 'comments'
+      return comments.sort((a, b) => b.ts - a.ts);
     },
     title() {
       return this.content.title;
     },
     body() {
       return this.content.body;
+    },
+    isOwner() {
+      return this.owner === this.userId;
     },
   },
   methods: {
@@ -79,16 +99,10 @@ export default {
       return hasMultipleParts ? `${firstNamePart}${lastNamePart}` : firstNamePart;
     },
     handleClick(comment) {
-      const agreeIndex = comment.data.agrees.indexOf(this.userId);
-      if (agreeIndex === -1) {
-        comment.data.agrees.push(this.userId);
-      } else {
-        comment.data.agrees.splice(agreeIndex, 1);
-      }
-      this.updateAgrees({ projectId: this.projectId, commentId: comment.id, agrees: comment.data.agrees });
+      this.updateAgrees({ projectId: this.projectId, commentId: comment.id });
     },
     isAgreed(comment) {
-      return comment.data.agrees.some((id) => id === this.userId);
+      return comment.agrees.some((id) => id === this.userId);
     },
   },
   created() {
@@ -101,6 +115,8 @@ export default {
 @import '@/styles';
 
 .feedback-comments {
+  width: $sidebar-width;
+
   &__title,
   &__body {
     padding: 0 $space--sm-md;
@@ -131,7 +147,7 @@ export default {
       }
 
       &::after {
-        content: "Be the first to give feedback! Everyone's feedback will be visible here.";
+        content: "Everyone's feedback will be visible here.";
         display: block;
         margin: 0 auto;
         text-align: center;
@@ -184,6 +200,18 @@ export default {
       align-items: center;
       margin-top: $space--xsm;
       cursor: pointer;
+
+      &:hover {
+        .feedback-comments__agree {
+          &-icon {
+            fill: $purple;
+          }
+
+          &-label {
+            color: $purple;
+          }
+        }
+      }
     }
 
     &-icon {
@@ -192,10 +220,6 @@ export default {
       &--zero {
         fill: $black;
       }
-
-      &--active {
-        fill: $purple;
-      }
     }
 
     &-label {
@@ -203,10 +227,25 @@ export default {
       padding-top: 2px;
       color: $black;
       text-transform: uppercase;
+    }
+  }
 
-      &--active {
-        color: $purple;
-      }
+  &__agrees {
+    &-container {
+      display: flex;
+      align-items: center;
+      margin-top: $space--xsm;
+    }
+
+    &-icon {
+      margin-right: $space--sm;
+      fill: $black;
+    }
+
+    &-label {
+      margin-bottom: 0;
+      color: $black;
+      text-transform: uppercase;
     }
   }
 }

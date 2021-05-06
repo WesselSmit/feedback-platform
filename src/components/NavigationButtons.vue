@@ -19,42 +19,46 @@ export default {
     ...mapGetters('sidebar', {
       insightInput: 'insightInput',
     }),
+    ...mapGetters('project', {
+      projectId: 'projectId',
+    }),
     hasMultiple() {
       return this.buttons.length > 1;
-    },
-    projectId() {
-      // return 'poc-give-boxing'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
-      return 'poc-give-twitter'; // todo: projectId moet uit database komen (is nu hardcoded voor POC)
     },
   },
   methods: {
     ...mapActions('sidebar', {
       updateTextInput: 'updateTextInput',
-      updateStepIndex: 'updateStepIndex',
       updateHideDocumentation: 'updateHideDocumentation',
+      updateHideVisualisation: 'updateHideVisualisation',
     }),
     ...mapActions('feedback', {
       postInsight: 'postInsight',
+    }),
+    ...mapActions('project', {
+      updateProgress: 'updateProgress',
     }),
     ...mapActions('message', {
       message: 'message',
     }),
     handleClick(action) {
+      this.$emit('handleNav', action); // used for transitions in Sidebar components
       this.updateTextInput('');
 
       if (action.hasOwnProperty('target')) {
-        this.$router.push(action.target);
+        this.$router.push({ path: `/${action.target}` });
 
-        if (action.target === 'Dashboard') {
-          this.message({ message: 'Your feedback is saved', mode: 'succes' });
+        if (action.target.toLowerCase() === 'dashboard') {
+          this.message({ message: 'Feedback saved', mode: 'succes' });
         }
       } else if (action === 'previousStep' || action === 'nextStep') {
-        this.updateStepIndex(action);
+        this.updateProgress({ instruction: action });
       } else if (action === 'saveInsights') {
         if (this.insightInput) {
           this.updateHideDocumentation(false);
+          this.updateHideVisualisation(true);
+          this.updateProgress({ instruction: 'nextStep', hideVisualisation: true });
           this.postInsight({ insight: this.insightInput, projectId: this.projectId });
-          this.updateStepIndex('nextStep');
           this.message({ message: 'Insight saved', mode: 'succes' });
         } else {
           this.message({ message: 'Enter at least one insight' });
