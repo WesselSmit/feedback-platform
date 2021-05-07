@@ -8,29 +8,32 @@
       <img v-if="source" :src="source" draggable="false" class="visualisation__image" @click="addMarker($event)">
       <Spinner v-if="!source && !sourceHasErrored" />
 
-      <MarkerIcon v-for="marker in currentMarkers" :key="marker" class="visualisation__marker" :class="{ 'visualisation__marker--has-hover': isMarkerOverlay }"
-      :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
+      <div class="visualisation__comment-markers" v-for="comment in markersPerComment" :key="comment">
+        <MarkerIcon v-for="marker in comment" :key="marker" class="visualisation__marker" :class="{ 'visualisation__marker--has-hover': isMarkerOverlay }"
+        :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
+      </div>
     </div>
   </section>
 </template>
 
-//todo: markers moeten nog uitgelezen worden in FeedbackComments visualisation
 //todo: markers moeten de kleur van hun user hebben
 //todo: marker hide/show controls toevoegen + ze moeten alleen zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
+
+//todo: visualisations worden gestretched/uit hun aspect ratio gehaald als het poster images zijn
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import { storageRef } from '@/firebase';
-import MarkerIcon from '@/assets/icons/OverlayMarkerIcon';
 import Spinner from '@/components/Spinner';
+import MarkerIcon from '@/assets/icons/OverlayMarkerIcon';
 
 export default {
   name: 'Visualisation',
   components: {
-    MarkerIcon,
     Spinner,
+    MarkerIcon,
   },
-  props: ['title', 'visualisation', 'isMarkerOverlay'],
+  props: ['title', 'visualisation', 'isMarkerOverlay', 'pageMode'],
   data() {
     return {
       source: null,
@@ -41,9 +44,29 @@ export default {
     ...mapGetters('sidebar', {
       markers: 'markers',
       sessionMarkers: 'sessionMarkers',
+      activeTab: 'activeTab',
     }),
-    currentMarkers() {
-      return this.isMarkerOverlay ? this.sessionMarkers : this.markers;
+    ...mapGetters('feedback', {
+      comments: 'comments',
+    }),
+    markersPerComment() {
+      if (this.pageMode === 'view' && this.activeTab === 'insights') return null; // markers should not be visible when in 'insights' tab
+
+      let comments;
+      if (this.pageMode === 'give' && this.activeTab === 'give' || this.isMarkerOverlay) {
+        const markers = this.isMarkerOverlay ? this.sessionMarkers : this.markers; // prevent side effects by by assigning 'this.markers' to 'markers'
+        comments = [{ markers }]; // template expects the markers in this structure
+      } else if (this.pageMode === 'give' && this.activeTab === 'view' || this.pageMode === 'view' && this.activeTab === 'feedback') {
+        comments = this.comments; // prevent side effects by by assigning 'this.comments' to 'comments'
+      } else {
+        return null; // needed becuase in initial state the getters return undefined and the next code block would throw an error
+      }
+
+      return comments.map((comment) => {
+        const markers = this.cleanSource(comment.markers); // idk why, but somehow the comment.markers is still reactive so this.cleanSource() is needed
+        markers.forEach((marker) => marker.commentId = comment.id);
+        return markers;
+      });
     },
   },
   methods: {
@@ -76,6 +99,12 @@ export default {
         this.removeSessionMarker(id);
       }
     },
+    cleanSource(source) {
+      // use native JSON functions to remove the reactivity so objects (including arrays) can be cloned without mutating the original source
+      // also see: https://forum.vuejs.org/t/how-to-remove-array-binding/53751
+      return JSON.parse(JSON.stringify(source));
+    },
+
   },
   async created() {
     try {

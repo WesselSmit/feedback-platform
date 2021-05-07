@@ -68,6 +68,8 @@ export default {
         const image = rootGetters['sidebar/feedbackImage']?.id || null;
         const markers = rootGetters['sidebar/markers'];
 
+        console.log(markers);
+
         const doc = await commentsRef.doc(payload.projectId).get();
         const comments = doc?.data()?.comments || [];
 
