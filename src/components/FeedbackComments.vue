@@ -32,6 +32,7 @@
 </template>
 
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
+//todo: als je hovert boven een comment met markers dan moeten de markers gehighlight worden
 //todo: backgroundcolor sidebar vs documentation
 //todo: delete eigen comments feature (heeft geen prioriteit)
 
