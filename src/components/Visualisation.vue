@@ -9,17 +9,16 @@
       <Spinner v-if="!source && !sourceHasErrored" />
 
       <div class="visualisation__comment-markers" v-for="comment in markersPerComment" :key="comment">
-        <MarkerIcon v-for="marker in comment" :key="marker" class="visualisation__marker" :class="{ 'visualisation__marker--has-hover': isMarkerOverlay }"
-        :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
+        <MarkerIcon v-for="marker in comment" :key="marker" class="visualisation__marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }"
+        :class="{ 'visualisation__marker--has-hover--overlay': isMarkerOverlay, 'visualisation__marker--has-hover--sidebar': markerIsFeedbackInteractive }"
+        :showColor="markerIsFeedbackInteractive" :color="marker.color" @click="handleMarkerClick(marker)" />
       </div>
     </div>
   </section>
 </template>
 
-//todo: markers moeten de kleur van hun user hebben
-//todo: marker hide/show controls toevoegen + ze moeten alleen zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
-
 //todo: visualisations worden gestretched/uit hun aspect ratio gehaald als het poster images zijn
+//todo: marker hide/show controls toevoegen + ze moeten alleen zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -64,9 +63,15 @@ export default {
 
       return comments.map((comment) => {
         const markers = this.cleanSource(comment.markers); // idk why, but somehow the comment.markers is still reactive so this.cleanSource() is needed
-        markers.forEach((marker) => marker.commentId = comment.id);
+        markers.forEach((marker) => {
+          marker.color = comment?.user?.color || null;
+          marker.commentId = comment.id;
+        });
         return markers;
       });
+    },
+    markerIsFeedbackInteractive() { // with 'feedback interactive' I mean it interacts with the sidebar when clicked (think: scroll to associated comment in sidebar), this is not the case in markerOverlay or the 'give' tab,
+      return !((this.pageMode === 'give' && this.activeTab === 'give' || this.isMarkerOverlay));
     },
   },
   methods: {
@@ -94,9 +99,20 @@ export default {
         this.addSessionMarker(marker);
       }
     },
-    handleMarkerClick(id) {
+    handleMarkerClick(marker) {
       if (this.isMarkerOverlay) {
-        this.removeSessionMarker(id);
+        this.removeSessionMarker(marker.id);
+      } else if (this.pageMode === 'give' && this.activeTab === 'view' || this.pageMode === 'view' && this.activeTab === 'feedback') {
+        const comment = document.querySelector(`[data-comment-id="${marker.commentId}"]`);
+
+        if (comment) {
+          comment.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          comment.classList.add('feedback-comments__comment--highlighted');
+
+          setTimeout(() => {
+            comment.classList.remove('feedback-comments__comment--highlighted');
+          }, 2000);
+        }
       }
     },
     cleanSource(source) {
@@ -180,18 +196,23 @@ export default {
     position: absolute;
 
     &-glow {
-      fill: $purple; //todo: moet user kleur worden
+      fill: $purple;
       opacity: 0;
       transform: scale(.1);
       transform-origin: center;
       transition: transform 300ms $ease--fast, opacity 1s $ease--fast;
     }
 
-    &--has-hover:hover & {
+    &--has-hover--overlay:hover &,
+    &--has-hover--sidebar:hover & {
       &-glow {
         opacity: .2;
         transform: scale(1);
       }
+    }
+
+    &--has-hover--sidebar {
+      cursor: pointer;
     }
 
     &-outline,
@@ -200,7 +221,7 @@ export default {
     }
 
     &-background {
-      fill: $white; //todo: moet user kleur worden
+      fill: $white;
     }
   }
 }
