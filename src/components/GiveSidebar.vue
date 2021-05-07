@@ -33,15 +33,15 @@
             <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" class="give-sidebar__navigation" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" @handleNav="setAnimSide" />
           </div>
 
-        <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" @handleNav="setAnimSide" />
+        <transition name="slide-horizontal" mode="out-in">
+          <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" @handleNav="setAnimSide" />
+        </transition>
       </div>
     </transition>
   </section>
 
   <PopUp v-if="popUp && showPopUp" :content="popUp" />
 </template>
-
-// todo: sidebar tab transitie ziet er raar uit omdat de navigationButtons geen transitie hebben
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
