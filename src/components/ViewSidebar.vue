@@ -1,6 +1,6 @@
 <template>
   <section class="view-sidebar">
-     <Tabs v-if="tabs" :tabs="tabs" />
+    <Tabs v-if="tabs" :tabs="tabs" />
 
     <div class="view-sidebar__inner">
       <transition name="slide-horizontal" mode="out-in">
@@ -21,9 +21,6 @@
     </div>
   </section>
 </template>
-
-// todo: voeg een transitie toe wanneer je van 'step' verandert (wanneer de gebruiker naar de vorige/volgende stap in het proces gaat)
-// todo: sidebar tab transitie ziet er raar uit omdat de navigationButtons geen transitie hebben
 
 <script>
 import { mapGetters, mapActions } from 'vuex';

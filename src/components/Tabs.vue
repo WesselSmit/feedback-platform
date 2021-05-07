@@ -70,6 +70,11 @@ export default {
 
     &--active {
       color: $purple;
+      cursor: default;
+
+      &:hover {
+        background-color: $white;
+      }
     }
   }
 
