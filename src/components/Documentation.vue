@@ -18,8 +18,8 @@
         </li>
       </ul>
 
-      <h3 class="documentation__subheading">{{ limitsHeading }}</h3>
-      <p class="documentation__limits">
+      <h3 v-if="hasLimits" class="documentation__subheading">{{ limitsHeading }}</h3>
+      <p v-if="hasLimits" class="documentation__limits">
         <span class="documentation__icon-container">
           <LimitIcon class="documentation__icon documentation__icon--limit" />
         </span>
@@ -71,6 +71,9 @@ export default {
     },
     limitsHeading() {
       return this.content.documentation.limitsHeading;
+    },
+    hasLimits() {
+      return this.limits.length > 0;
     },
     limits() {
       return this.content.project.data.limits;
