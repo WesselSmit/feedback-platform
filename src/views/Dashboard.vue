@@ -80,7 +80,7 @@ export default {
       message: 'message',
     }),
     projectIsCompletelySetup(project) {
-      const necessaryDocumentationContent = !!((project.visualisation && project.explanation && project.questions.length > 0 && project.limits));
+      const necessaryDocumentationContent = !!((project.visualisation && project.explanation && project.questions.length > 0));
       return necessaryDocumentationContent;
     },
     togglePopUp() {
