@@ -107,6 +107,10 @@ export default {
 
         if (comment) {
           comment.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+          const highlightedComments = document.querySelectorAll('.feedback-comments__comment--highlighted');
+          highlightedComments.forEach((comment) => comment.classList.remove('feedback-comments__comment--highlighted'));
+
           comment.classList.add('feedback-comments__comment--highlighted');
 
           setTimeout(() => {
