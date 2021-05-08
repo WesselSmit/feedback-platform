@@ -32,12 +32,6 @@ export default {
     border-radius: 50%;
     border-color: $gray--light transparent transparent transparent;
     animation: spin 1200ms cubic-bezier(.5, 0, .5, 1) infinite;
-
-    @for $i from 1 through 3 {
-      &:nth-child(#{i}) {
-        animation-delay: calc(-150ms * #{i});
-      }
-    }
   }
 }
 
