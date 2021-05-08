@@ -4,7 +4,7 @@
     <p v-if="body && hasComments" class="feedback-comments__body">{{ body }}</p>
 
     <ul class="feedback-comments__list">
-      <li v-for="comment in comments" :key="comment" class="feedback-comments__comment">
+      <li v-for="comment in comments" :key="comment" class="feedback-comments__comment" :data-comment-id="comment.id">
         <div class="feedback-comments__comment-meta">
           <Avatar v-if="comment.user" :user="comment.user" size="small" class="feedback-comments__comment-avatar" />
           <div class="feedback-comments__comment-credentials">
@@ -32,6 +32,7 @@
 </template>
 
 //todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
+//todo: als je hovert boven een comment met markers dan moeten de markers gehighlight worden
 //todo: backgroundcolor sidebar vs documentation
 //todo: delete eigen comments feature (heeft geen prioriteit)
 
@@ -123,7 +124,7 @@ export default {
   }
 
   &__list {
-    margin: $space--md 0 0 0;
+    margin: calc(#{$space--md} / 2) 0 0 0; // calc(#{$space--md} / 2) is to compensate for the padding (top) that the comments have
     list-style: none;
 
     &:empty {
@@ -158,11 +159,12 @@ export default {
   &__comment {
     display: flex;
     flex-direction: column;
-    padding: 0 $space--sm-md;
+    padding: calc(#{$space--md / 2}) $space--sm-md;
     line-height: 1.2;
+    transition: background-color 500ms ease-in-out;
 
-    &:not(:last-of-type) {
-      margin-bottom: $space--md;
+    &--highlighted {
+      background-color: $purple--opacity;
     }
 
     &-meta {

@@ -8,29 +8,31 @@
       <img v-if="source" :src="source" draggable="false" class="visualisation__image" @click="addMarker($event)">
       <Spinner v-if="!source && !sourceHasErrored" />
 
-      <MarkerIcon v-for="marker in currentMarkers" :key="marker" class="visualisation__marker" :class="{ 'visualisation__marker--has-hover': isMarkerOverlay }"
-      :style="{ left: `${marker.x}%`, top: `${marker.y}%` }" @click="handleMarkerClick(marker.id)" />
+      <div class="visualisation__comment-markers" v-for="comment in markersPerComment" :key="comment">
+        <MarkerIcon v-for="marker in comment" :key="marker" class="visualisation__marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }"
+        :class="{ 'visualisation__marker--has-hover--overlay': isMarkerOverlay, 'visualisation__marker--has-hover--sidebar': markerIsFeedbackInteractive }"
+        :showColor="markerIsFeedbackInteractive" :color="marker.color" @click="handleMarkerClick(marker)" />
+      </div>
     </div>
   </section>
 </template>
 
-//todo: markers moeten nog uitgelezen worden in FeedbackComments visualisation
-//todo: markers moeten de kleur van hun user hebben
+//todo: visualisations worden gestretched/uit hun aspect ratio gehaald als het poster images zijn
 //todo: marker hide/show controls toevoegen + ze moeten alleen zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import { storageRef } from '@/firebase';
-import MarkerIcon from '@/assets/icons/OverlayMarkerIcon';
 import Spinner from '@/components/Spinner';
+import MarkerIcon from '@/assets/icons/OverlayMarkerIcon';
 
 export default {
   name: 'Visualisation',
   components: {
-    MarkerIcon,
     Spinner,
+    MarkerIcon,
   },
-  props: ['title', 'visualisation', 'isMarkerOverlay'],
+  props: ['title', 'visualisation', 'isMarkerOverlay', 'pageMode'],
   data() {
     return {
       source: null,
@@ -41,9 +43,35 @@ export default {
     ...mapGetters('sidebar', {
       markers: 'markers',
       sessionMarkers: 'sessionMarkers',
+      activeTab: 'activeTab',
     }),
-    currentMarkers() {
-      return this.isMarkerOverlay ? this.sessionMarkers : this.markers;
+    ...mapGetters('feedback', {
+      comments: 'comments',
+    }),
+    markersPerComment() {
+      if (this.pageMode === 'view' && this.activeTab === 'insights') return null; // markers should not be visible when in 'insights' tab
+
+      let comments;
+      if (this.pageMode === 'give' && this.activeTab === 'give' || this.isMarkerOverlay) {
+        const markers = this.isMarkerOverlay ? this.sessionMarkers : this.markers; // prevent side effects by by assigning 'this.markers' to 'markers'
+        comments = [{ markers }]; // template expects the markers in this structure
+      } else if (this.pageMode === 'give' && this.activeTab === 'view' || this.pageMode === 'view' && this.activeTab === 'feedback') {
+        comments = this.comments; // prevent side effects by by assigning 'this.comments' to 'comments'
+      } else {
+        return null; // needed becuase in initial state the getters return undefined and the next code block would throw an error
+      }
+
+      return comments.map((comment) => {
+        const markers = this.cleanSource(comment.markers); // idk why, but somehow the comment.markers is still reactive so this.cleanSource() is needed
+        markers.forEach((marker) => {
+          marker.color = comment?.user?.color || null;
+          marker.commentId = comment.id;
+        });
+        return markers;
+      });
+    },
+    markerIsFeedbackInteractive() { // with 'feedback interactive' I mean it interacts with the sidebar when clicked (think: scroll to associated comment in sidebar), this is not the case in markerOverlay or the 'give' tab,
+      return !((this.pageMode === 'give' && this.activeTab === 'give' || this.isMarkerOverlay));
     },
   },
   methods: {
@@ -71,11 +99,32 @@ export default {
         this.addSessionMarker(marker);
       }
     },
-    handleMarkerClick(id) {
+    handleMarkerClick(marker) {
       if (this.isMarkerOverlay) {
-        this.removeSessionMarker(id);
+        this.removeSessionMarker(marker.id);
+      } else if (this.pageMode === 'give' && this.activeTab === 'view' || this.pageMode === 'view' && this.activeTab === 'feedback') {
+        const comment = document.querySelector(`[data-comment-id="${marker.commentId}"]`);
+
+        if (comment) {
+          comment.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+          const highlightedComments = document.querySelectorAll('.feedback-comments__comment--highlighted');
+          highlightedComments.forEach((comment) => comment.classList.remove('feedback-comments__comment--highlighted'));
+
+          comment.classList.add('feedback-comments__comment--highlighted');
+
+          setTimeout(() => {
+            comment.classList.remove('feedback-comments__comment--highlighted');
+          }, 2000);
+        }
       }
     },
+    cleanSource(source) {
+      // use native JSON functions to remove the reactivity so objects (including arrays) can be cloned without mutating the original source
+      // also see: https://forum.vuejs.org/t/how-to-remove-array-binding/53751
+      return JSON.parse(JSON.stringify(source));
+    },
+
   },
   async created() {
     try {
@@ -151,18 +200,23 @@ export default {
     position: absolute;
 
     &-glow {
-      fill: $purple; //todo: moet user kleur worden
+      fill: $purple;
       opacity: 0;
       transform: scale(.1);
       transform-origin: center;
       transition: transform 300ms $ease--fast, opacity 1s $ease--fast;
     }
 
-    &--has-hover:hover & {
+    &--has-hover--overlay:hover &,
+    &--has-hover--sidebar:hover & {
       &-glow {
         opacity: .2;
         transform: scale(1);
       }
+    }
+
+    &--has-hover--sidebar {
+      cursor: pointer;
     }
 
     &-outline,
@@ -171,7 +225,7 @@ export default {
     }
 
     &-background {
-      fill: $white; //todo: moet user kleur worden
+      fill: $white;
     }
   }
 }

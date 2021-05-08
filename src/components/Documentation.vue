@@ -28,7 +28,7 @@
     </div>
 
     <div :class="{ 'documentation__inner documentation__inner--centered': hideDocumentation }">
-      <Visualisation v-if="!hideVisualisation" :class="{ 'no-documentation': hideDocumentation }" :title="title" :visualisation="visualisation" />
+      <Visualisation v-if="!hideVisualisation" :class="{ 'no-documentation': hideDocumentation }" :title="title" :visualisation="visualisation" :pageMode="pageMode" />
     </div>
   </section>
 </template>
@@ -48,7 +48,7 @@ export default {
     LimitIcon,
     QuestionIcon,
   },
-  props: ['content'],
+  props: ['content', 'pageMode'],
   computed: {
     ...mapGetters('sidebar', {
       hideDocumentation: 'hideDocumentation',

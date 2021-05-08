@@ -21,6 +21,7 @@ module.exports = {
     'no-nested-ternary': 'off',
     'no-return-await': 'off',
     'no-shadow': 'off',
+    'no-mixed-operators': 'off',
     'no-return-assign': 'off',
     'max-len': 'off',
     'vue/max-len': 'off',
