@@ -1,14 +1,14 @@
 <template>
-  <section v-if="title" class="read-instructions" :class="{ 'read-instructions--has-legend': legend, 'read-instructions--collapsed': isCollapsed }">
+  <section v-if="title" class="read-instructions" :class="{ 'read-instructions--has-legend': showLegend, 'read-instructions--collapsed': isCollapsed }">
     <div class="read-instructions__header" @click="handleClick()">
       <h1 class="read-instructions__header-title">{{ title }}</h1>
-      <ToggleIcon v-if="legend" class="read-instructions__header-toggle" />
+      <ToggleIcon v-if="showLegend" class="read-instructions__header-toggle" />
     </div>
 
     <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
 
-    <div class="read-instructions__reminders">
-      <ul v-if="legend" class="read-instructions__legend">
+    <div v-if="showLegend" class="read-instructions__reminders">
+      <ul class="read-instructions__legend">
         <li v-for="item in legend" :key="item" class="read-instructions__legend-label">
           <span class="read-instructions__legend-icon-container">
             <QuestionIcon v-if="item.type === 'question'" class="read-instructions__legend-icon read-instructions__legend-icon--question" />
@@ -25,7 +25,7 @@
           </span>
           {{ question }}
         </li>
-        <li v-if="hasLimits" class="read-instructions__points-label">
+        <li v-if="showLimitsInLegend" class="read-instructions__points-label">
           <span class="read-instructions__points-icon-container">
             <LimitIcon class="read-instructions__points-icon read-instructions__points-icon--limit" />
           </span>
@@ -64,6 +64,14 @@ export default {
     legend() {
       return this.content.legend;
     },
+    showLegend() {
+      if (this.hasLimits) {
+        return this.showLimitsInLegend;
+      } if (this.hasQuestions) {
+        return true;
+      }
+      return false;
+    },
     limits() {
       return this.legendData.limits;
     },
@@ -75,6 +83,9 @@ export default {
     },
     hasLimits() {
       return this.content?.legend?.some((item) => item.type === 'limit');
+    },
+    showLimitsInLegend() {
+      return this.hasLimits && this.limits.length > 0;
     },
   },
   methods: {
@@ -143,6 +154,10 @@ export default {
 
   &__body {
     transition: margin-bottom 500ms ease;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &--no-margin-bottom {
       margin-bottom: 0;
