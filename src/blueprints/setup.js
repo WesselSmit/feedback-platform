@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export default {
   steps: [
     {
@@ -70,7 +72,7 @@ export default {
       title: 'What don’t you want feedback on?',
       body: 'Is there a part that needs to be changed, but haven’t had the time to do it? Write the ‘limit’ down to ensure your feedback providers exclude it from their feedback.',
       tips: [
-        'You should only have a \'limit\' if you have changes you know you\'ll guaranteed make in the future.',
+        `You should only have a 'limit' if you have changes you know you\'ll guaranteed make in the future.`,
         'Your limit should only be a small part / detail.',
       ],
       component: 'SetupLimits',
