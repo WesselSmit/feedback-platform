@@ -37,7 +37,7 @@ export default {
         }
       },
       navigation: [{
-          label: 'Done',
+          label: `Finished`,
           action: 'nextStep'
         }
       ]
@@ -45,8 +45,8 @@ export default {
     {
       popUp: {
         title: `About giving feedback...`,
-        body: `The purpose of your feedback is to make the data visualization as good as possible. Always ask yourself 'does this help improve the data visualisation?' before commenting.`,
-        tipHeading: `Interface tips`,
+        body: `The purpose of your feedback is to make the data visualization as good as possible. Always ask yourself "does this help improve the data visualisation?" before commenting.`,
+        tipHeading: `Some tips:`,
         tips: [
           {
             type: 'normal',
@@ -54,52 +54,52 @@ export default {
           },
           {
             type: 'normal',
-            label: `Click the 'view feedback' tab to view the feedback of group members.`
+            label: `Click the "view feedback" tab to view the feedback of group members.`
           },
           {
             type: 'normal',
-            label: `add markers to your feedback to indicate which part of the data visualization your feedback is about.`
+            label: `Indicate the relevant data visualisation parts using markers.`
           },
         ],
-        buttonLabel: 'Done',
+        buttonLabel: 'Got it',
       },
       content: {
         readInstructions: {
           title: `Name areas for improvement`,
-          body: `Look for areas where there is room for improvement or that do not follow the rules of data visualization.`,
+          body: `Look for areas that could be improved to make the data visualisation more insightful or visually stronger.`,
           legend: [
             {
               type: 'limit',
-              label: `Don't give feedback`
+              label: `Don't give feedback on`
             }
           ],
         },
         feedbackHelper: {
           sections: {
             zero: {
-              title: `Finding areas of improvement`,
+              title: `Ask yourself this:`,
               body: ``,
               tips: [
               `Was the correct visualisation type used or are there better suiting types?`,
-              `Is there anything that you don't understand?.`,
+              `Is there anything that you don't understand?`,
               `Are the labels and texts legible?`,
-              `Are there any design of editorial choices that can mislead the interpreter?`,
+              `Are there design or editorial choices that can mislead the interpreter?`,
             ]},
             interactive: {
-              title: `Formulating feedback`,
-              body: `Follow the tips to make sure your feedback is as clear and helpful as it can possibly be.`,
+              title: `How to write valuable feedback`,
+              body: `Use the tips below to make your feedback clear and useful.`,
               tips: [
               {
-                heading: `Explain the importance of the problem.`,
-                detail: `When you have found a point for improvement, explain why it needs to be changed. "Make the lines thicker" should be "By making the line thicker it becomes clear that they are separated".`
+                heading: `Explain why it's a problem.`,
+                detail: `When you have found an area for improvement, explain why it needs to be changed. \u2192 "Make the lines thicker" should be "By making the line thicker it becomes clear that they are separated".`
               },
               {
                 heading: `Keep it objective.`,
-                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
+                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". \u2192 "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
               },
               {
-                heading: `Suggest possible solutions.`,
-                detail: `Suggest possible solutions or alternatives to fix the problem. Make sure the suggestion is well explained and add a sketch if necessary (by clicking the 'ADD IMAGE' button).`
+                heading: `Suggest a solution.`,
+                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your solution by clicking the "ADD IMAGE" button.`
               }
             ]}
           }
@@ -122,16 +122,12 @@ export default {
       content: {
         readInstructions: {
           title: `Answer the feedback questions`,
-          body: `Make sure to always answer the feedback questions. If you already gave feedback on these topics you can skip this step.`,
+          body: `Make sure to answer the feedback questions below.`,
           legend: [
             {
               type: 'question',
-              label: `Do give feedback`
+              label: `Give feedback on`
             },
-            {
-              type: 'limit',
-              label: `Don't give feedback`
-            }
           ],
         },
         feedbackHelper: {

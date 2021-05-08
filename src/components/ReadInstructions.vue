@@ -25,7 +25,7 @@
           </span>
           {{ question }}
         </li>
-        <li v-if="limits" class="read-instructions__points-label">
+        <li v-if="hasLimits" class="read-instructions__points-label">
           <span class="read-instructions__points-icon-container">
             <LimitIcon class="read-instructions__points-icon read-instructions__points-icon--limit" />
           </span>
@@ -72,6 +72,9 @@ export default {
     },
     hasQuestions() {
       return this.content?.legend?.some((item) => item.type === 'question');
+    },
+    hasLimits() {
+      return this.content?.legend?.some((item) => item.type === 'limit');
     },
   },
   methods: {
