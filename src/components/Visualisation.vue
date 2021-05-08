@@ -17,7 +17,6 @@
   </section>
 </template>
 
-//todo: visualisations worden gestretched/uit hun aspect ratio gehaald als het poster images zijn
 //todo: marker hide/show controls toevoegen + ze moeten alleen zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
 
 <script>
@@ -175,10 +174,13 @@ export default {
   }
 
   &__image {
+    overflow: hidden;
     display: block;
     margin: auto;
     width: 100%;
+    height: 100%;
     max-height: 95vh;
+    object-fit: contain;
 
     &-container {
       position: relative;
