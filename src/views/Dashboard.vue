@@ -208,10 +208,11 @@ export default {
     background-color: $white--overlay;
 
     &-inner {
-      @include zoomIn(300ms, $ease--fast);
+      @include zoomIn(500ms, 50ms, $ease--fast);
       width: $popup-width--small;
       padding: $space--sm-md;
       background-color: $white;
+      opacity: 0;
       border: $border--ui;
       border-radius: $border-radius;
     }
