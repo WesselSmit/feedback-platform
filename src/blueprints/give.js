@@ -70,7 +70,7 @@ export default {
           legend: [
             {
               type: 'limit',
-              label: `Don't give feedback on`
+              label: `Don't include this in your feedback`
             }
           ],
         },
@@ -91,7 +91,7 @@ export default {
               tips: [
               {
                 heading: `Explain why it's a problem.`,
-                detail: `When you have found an area for improvement, explain why it needs to be changed. \u2192 "Make the lines thicker" should be "By making the line thicker it becomes clear that they are separated".`
+                detail: `When you have found an area for improvement, explain why it needs to be changed. \u2192 "Make the lines thicker" should be "By making the line thicker you create more contrast".`
               },
               {
                 heading: `Keep it objective.`,
@@ -126,39 +126,39 @@ export default {
           legend: [
             {
               type: 'question',
-              label: `Give feedback on`
+              label: `Give feedback on this`
             },
           ],
         },
         feedbackHelper: {
           sections: {
             zero: {
-              title: `Answering feedback questions`,
+              title: `How to answer feedback questions`,
               body: ``,
               tips: [
-                `Substantiate your argument by explaining why. Only answering "yes" or "no" is not helpful.`,
-                `You can view the feedback of other group members by clicking on the 'view feedback' tab.`,
+                `Strengthen your argument by explaining why, answers without substance are not useful.`,
+                `Also see the answers / feedback of others by clicking on the "view feedback" tab.`,
               ]
             },
             interactive: {
-              title: `Structuring feedback`,
-              body: ``,
+              title: `How to write valuable feedback`,
+              body: `Use the tips below to make your feedback clear and useful.`,
               tips: [
               {
-                heading: `Explain the importance of the problem.`,
-                detail: `When you have found a point for improvement, explain why it needs to be changed. "Make the lines thicker" should be "By making the line thicker it becomes clear that they are separated".`
+                heading: `Explain why it's a problem.`,
+                detail: `When you have found an area for improvement, explain why it needs to be changed. \u2192 "Make the lines thicker" should be "By making the line thicker you create more contrast".`
               },
               {
                 heading: `Keep it objective.`,
-                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
+                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". \u2192 "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
               },
               {
-                heading: `Suggest possible solutions.`,
-                detail: `Suggest possible solutions or alternatives to fix the problem. Make sure the suggestion is well explained and add a sketch if necessary (by clicking the 'ADD IMAGE' button).`
+                heading: `Suggest a solution.`,
+                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your solution by clicking the "ADD IMAGE" button.`
               },
               {
                 heading: `Visually support your feedback.`,
-                detail: `Adding a visual aspect to your feedback (such as markers or an image) helps others interpret your feedback, making it easier to convey your point.`
+                detail: `Adding a visual aspect to your feedback (such as markers or an image) helps others interpret your feedback, making it easier to get your point across.`
               }
             ]}
           }
@@ -182,34 +182,34 @@ export default {
       content: {
         readInstructions: {
           title: `Name positive parts`,
-          body: `In addition to criticism and suggestions for improvements, it is also important to indicate what parts are good.`,
+          body: `Name parts of the data visualisation that work well or that you found enjoyable, this decreases the chance of it being removed in a future iteration.`,
         },
         feedbackHelper: {
           sections: {
             zero: {
-              title: `Finding positive parts`,
-              body: `In addition to criticism and suggestions for improvements, it is also important to indicate what parts are good. Naming the positive parts also decreases the chance of it being removed in a future iteration.`,
+              title: `Ask yourself this:`,
+              body: ``,
               tips: [
                 `What do you like about the visualisation?`,
-                `Do you understand the visualisation? If so, you should mention this.`,
-                `You can view the feedback of other group members by clicking on the 'view feedback' tab.`,
+                `Do you understand the visualisation? If so, you should let the creator know.`,
+                `Also see the answers / feedback of others by clicking on the "view feedback" tab.`,
               ]
             },
             interactive: {
-              title: `Structuring feedback`,
-              body: `In addition to criticism and suggestions for improvements, it is also important to indicate what parts are good. Naming the positive parts also decreases the chance of it being removed in a future iteration.`,
+              title: `How to write valuable feedback`,
+              body: ``,
               tips: [
               {
                 heading: `Explain why it's good.`,
-                detail: `When you name a positive part, explain what makes it good. "The colors are good" should be "The color contrast makes the text legible and helps my eyes focus".`
+                detail: `When you name something positive, explain what makes it good. \u2192 "The colors are good" should be "The color contrast makes the text easy to read".`
               },
               {
                 heading: `Keep it objective.`,
-                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
+                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". \u2192 "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
               },
               {
                 heading: `Add markers.`,
-                detail: `Adding markers allows you to clearly communicate what part of the visualisation your feedback is related to, this mskes your feedback easier to interpret.`
+                detail: `Adding markers allows you to clearly show what part of the visualisation your feedback relates to, this makes it easier to understand your feedback.`
               }
             ]}
           }
@@ -237,8 +237,8 @@ export default {
     }
   },
   markerContent: {
-    title: `Mark the relevant parts of the data visualization.`,
-    body: `Place markers by clicking on the data visualisation, you can remove markers by clicking on them.`,
+    title: `Mark the relevant parts.`,
+    body: `Place and remove markers by clicking on the visualisation.`,
     navigation: [
       {
         label: 'Cancel',
@@ -253,9 +253,9 @@ export default {
     ]
   },
   imageContent: {
-    title: `Add image to feedback.`,
-    body: `Visually support your feedback by adding an image. Images can be used to explain your feedback or show alternative solutions.`,
-    rules: `Only .png and .jpg files smaller than 5mb allowed.`,
+    title: `Add an image to your feedback.`,
+    body: `Visually support your feedback by adding an image. Images can be a visual explanation or sketch of a possible solution.`,
+    rules: `Only .png and .jpg files smaller than 5mb allowed`,
     navigation: [
       {
         label: 'Cancel',

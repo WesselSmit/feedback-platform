@@ -6,7 +6,7 @@ export default {
       body: 'Make sure the data visualisation is cropped correctly. A title in the image is not necessary.',
       tips: [],
       component: 'SetupVisualisation',
-      rules: 'Only .png and .jpg files smaller than 5mb allowed.',
+      rules: 'Only .png and .jpg files smaller than 5mb allowed',
       navigation: [
         {
           label: 'Dashboard',
