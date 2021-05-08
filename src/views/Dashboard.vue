@@ -25,7 +25,7 @@
   <div v-if="showProjectInput" class="dashboard__pop-up">
     <div class="dashboard__pop-up-inner">
       <h1 class="dashboard__pop-up-title">Enter a title</h1>
-      <p class="dashboard__pop-up-body">Give your documentation page a title that informs others about your topic doesn't spoil the conclusions.</p>
+      <p class="dashboard__pop-up-body">A to the point title of what you visualisation is about without revealing the conclusions.</p>
       <input class="dashboard__pop-up-input" v-model.trim="projectTitle" type="text" placeholder="Enter a title" autocomplete="off" autofocus @keyup.enter="createProject()">
 
       <div class="dashboard__pop-up-buttons">
