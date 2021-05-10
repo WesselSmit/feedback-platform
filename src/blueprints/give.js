@@ -222,7 +222,7 @@ export default {
           action: 'previousStep'
         },
         {
-          label: 'Next',
+          label: 'Save',
           hasOutline: true,
           action: {
             target: 'dashboard'
