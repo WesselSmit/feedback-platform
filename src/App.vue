@@ -6,6 +6,8 @@
   </transition>
 </template>
 
+// todo: wanneer de gebruiker naar Project in 'view' mode gaat moet alle documentatie altijd zichtbaar zijn. Dit is niet het geval als je een 'give' Project in gaat en terug gaat naar het Dashboard in een state waar de visualisation of documentation verstopt is --> om dit te voorkomen moet de sidebar state volledig gereset worden wanneer de gebruiker in Dashboard.vue komt
+
 // todo: FeedbackInput verdwijnt uit beeld wanneer gebruiker aan het typen is
 // todo: progressbar klopt niet helemaal --> de eerste stap moet geen progressie hebben
 // todo: vanaf 'view' moet er een knop zijn om terug te gaan naar setup (als die er is moet het teruggaan naar de edit/preview pagina, als die er niet is dan moet het terug naar stap 1)
