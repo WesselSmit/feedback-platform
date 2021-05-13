@@ -13,7 +13,10 @@
               <ImageIconActive v-if="feedbackImage" class="feedback-input__action-image-icon" />
               {{ imageLabel }}
           </button>
-          <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">Comment</button>
+          <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">
+            <SendIcon class="feedback-input__action-comment-icon" />
+            Comment
+          </button>
         </div>
       </div>
   </section>
@@ -24,6 +27,7 @@ import { mapGetters, mapActions } from 'vuex';
 import MarkerIcon from '@/assets/icons/ButtonMarkerIcon';
 import ImageIconZero from '@/assets/icons/ImageIconZero';
 import ImageIconActive from '@/assets/icons/ImageIconActive';
+import SendIcon from '@/assets/icons/SendIcon';
 
 export default {
   name: 'FeedbackInput',
@@ -31,6 +35,7 @@ export default {
     MarkerIcon,
     ImageIconZero,
     ImageIconActive,
+    SendIcon,
   },
   data() {
     return {
@@ -145,7 +150,7 @@ export default {
     text-transform: uppercase;
     border: 1px solid transparent;
     border-radius: 0;
-    transition: all 500ms $ease--fast;
+    transition: all 500ms $ease--fast, color 350ms $ease--fast;
     cursor: pointer;
 
     &:first-of-type {
@@ -214,15 +219,29 @@ export default {
 
     &-comment {
       margin-left: auto;
-      color: $purple;
-      background-color: $purple--opacity;
+      color: $white;
+      background-color: $purple;
+      box-sizing: content-box;
+      border: 1px solid transparent;
+      border-radius: $border-radius;
+
+      &:hover,
+      &:focus {
+        background-color: $purple;
+        color: $white;
+       }
 
       &--disabled,
       &--disabled:hover,
       &--disabled:focus {
         background-color: $gray--dark-opacity;
         color: $gray--dark;
+        border-color: transparent;
         cursor: default;
+      }
+
+      &-icon {
+        margin-right: $space--sm;
       }
     }
   }
