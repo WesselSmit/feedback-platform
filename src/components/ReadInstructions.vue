@@ -1,8 +1,8 @@
 <template>
-  <section v-if="title" class="read-instructions" :class="{ 'read-instructions--has-legend': showLegend, 'read-instructions--collapsed': isCollapsed }">
+  <section v-if="title" class="read-instructions" :class="{ 'read-instructions--has-legend': showLegend && hasLimits, 'read-instructions--collapsed': isCollapsed }">
     <div class="read-instructions__header" @click="handleClick()">
       <h1 class="read-instructions__header-title">{{ title }}</h1>
-      <ToggleIcon v-if="showLegend" class="read-instructions__header-toggle" />
+      <ToggleIcon v-if="showLegend && hasLimits" class="read-instructions__header-toggle" />
     </div>
 
     <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
@@ -90,7 +90,9 @@ export default {
   },
   methods: {
     handleClick() {
-      this.isCollapsed = !this.isCollapsed;
+      if (this.showLegend && this.hasLimits) {
+        this.isCollapsed = !this.isCollapsed;
+      }
     },
   },
 };
