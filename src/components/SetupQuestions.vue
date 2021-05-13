@@ -50,7 +50,7 @@ export default {
     updateInput() {
       const inputEls = this.$el.querySelectorAll('.question-input');
       const input = Array.from(inputEls, (el) => el.value);
-      const filteredInput = input.filter((str) => str !== '');
+      const filteredInput = input.filter((str) => str.trim() !== '');
 
       this.updateQuestions(filteredInput);
     },
