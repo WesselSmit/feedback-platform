@@ -1,7 +1,7 @@
 <template>
   <router-view />
 
-  <transition name="slide-vertical">
+  <transition name="message">
     <Message v-if="message" />
   </transition>
 </template>
