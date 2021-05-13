@@ -126,7 +126,7 @@ export default {
           legend: [
             {
               type: 'question',
-              label: `Give feedback on this`
+              label: `Answer the questions below`
             },
           ],
         },
