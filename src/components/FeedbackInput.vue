@@ -150,7 +150,7 @@ export default {
     text-transform: uppercase;
     border: 1px solid transparent;
     border-radius: 0;
-    transition: all 500ms $ease--fast, color 350ms $ease--fast;
+    transition: all 500ms $ease--fast;
     cursor: pointer;
 
     &:first-of-type {
@@ -218,18 +218,19 @@ export default {
     }
 
     &-comment {
-      margin-left: auto;
-      color: $white;
-      background-color: $purple;
       box-sizing: content-box;
-      border: 1px solid transparent;
-      border-radius: $border-radius;
+      height: calc(100% - 2px);
+      margin-right: -1px;
+      margin-left: auto;
+      color: $purple;
+      background-color: $white;
+      border: 2px solid $purple;
+      border-radius: $border-radius !important;
 
       &:hover,
       &:focus {
-        background-color: $purple;
-        color: $white;
-       }
+        background-color: $purple--opacity;
+      }
 
       &--disabled,
       &--disabled:hover,
