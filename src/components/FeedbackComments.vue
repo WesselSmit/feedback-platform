@@ -7,6 +7,7 @@
       <li v-for="comment in comments" :key="comment" class="feedback-comments__comment" :data-comment-id="comment.id">
         <div class="feedback-comments__comment-meta">
           <Avatar v-if="comment.user" :user="comment.user" size="small" class="feedback-comments__comment-avatar" />
+          <MarkerIcon v-if="comment.markers.length > 0" :color="comment.user.color" :showColor="true" class="feedback-comments__comment-marker" @markerClick="highLighMarkers(comment)" />
           <div class="feedback-comments__comment-credentials">
             <h3 class="feedback-comments__comment-name">{{ comment.user.name }}</h3>
             <p class="feedback-comments__comment-role">{{ comment.user.role }}</p>
@@ -31,27 +32,32 @@
   </section>
 </template>
 
-//todo: laat marker icoon naast avatar zien als er markers bij de feedback horen
-//todo: als je hovert boven een comment met markers dan moeten de markers gehighlight worden
 //todo: backgroundcolor sidebar vs documentation
 //todo: delete eigen comments feature (heeft geen prioriteit)
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import Avatar from '@/components/Avatar';
+import MarkerIcon from '@/assets/icons/OverlayMarkerIcon';
+import FeedbackImage from '@/components/FeedbackImage';
 import AgreeIconZero from '@/assets/icons/AgreeIconZero';
 import AgreeIconActive from '@/assets/icons/AgreeIconActive';
-import Avatar from '@/components/Avatar';
-import FeedbackImage from '@/components/FeedbackImage';
 
 export default {
   name: 'FeedbackComments',
   components: {
+    Avatar,
+    MarkerIcon,
+    FeedbackImage,
     AgreeIconZero,
     AgreeIconActive,
-    Avatar,
-    FeedbackImage,
   },
   props: ['content'],
+  data() {
+    return {
+      previousHighlightedMarkerId: null,
+    };
+  },
   computed: {
     ...mapGetters('feedback', {
       projectComments: 'comments',
@@ -104,6 +110,17 @@ export default {
     },
     isAgreed(comment) {
       return comment.agrees.some((id) => id === this.userId);
+    },
+    highLighMarkers(comment) {
+      if (comment.id !== this.previousHighlightedMarkerId) { // this condition allows the user to click the comment-marker icon (next to the avatar) again to stop the highlighted markers from 'glowing' / being highlighted
+        const highlightedMarkers = document.querySelectorAll('.visualisation__marker--is-highlighted');
+        highlightedMarkers.forEach((marker) => marker.classList.remove('visualisation__marker--is-highlighted'));
+      }
+
+      const markers = document.querySelectorAll(`.visualisation__marker[data-marker-id='${comment.id}']`);
+      markers.forEach((marker) => marker.classList.toggle('visualisation__marker--is-highlighted'));
+
+      this.previousHighlightedMarkerId = comment.id;
     },
   },
   created() {
@@ -173,8 +190,14 @@ export default {
       margin-bottom: $space--xsm;
     }
 
-    &-avatar {
-      margin: 0 $space--sm 0 0;
+    &-avatar + .feedback-comments__comment-credentials {
+      margin-left: $space--sm;
+    }
+
+    &-marker {
+      margin-left: -16px;
+      padding-top: 3px;
+      cursor: pointer;
     }
 
     &-credentials {

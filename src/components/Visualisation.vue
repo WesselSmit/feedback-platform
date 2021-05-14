@@ -11,7 +11,7 @@
       <div class="visualisation__comment-markers" v-for="comment in markersPerComment" :key="comment">
         <MarkerIcon v-for="marker in comment" :key="marker" class="visualisation__marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }"
         :class="{ 'visualisation__marker--has-hover--overlay': isMarkerOverlay, 'visualisation__marker--has-hover--sidebar': markerIsFeedbackInteractive }"
-        :showColor="markerIsFeedbackInteractive" :color="marker.color" @click="handleMarkerClick(marker)" />
+        :showColor="markerIsFeedbackInteractive" :color="marker.color" :data-marker-id="comment[0].commentId" @click="handleMarkerClick(marker)" />
       </div>
     </div>
   </section>
@@ -123,7 +123,6 @@ export default {
       // also see: https://forum.vuejs.org/t/how-to-remove-array-binding/53751
       return JSON.parse(JSON.stringify(source));
     },
-
   },
   async created() {
     try {
@@ -207,6 +206,13 @@ export default {
       transform: scale(.1);
       transform-origin: center;
       transition: transform 300ms $ease--fast, opacity 1s $ease--fast;
+    }
+
+    &--is-highlighted & {
+      &-glow {
+        opacity: .4;
+        transform: scale(1);
+      }
     }
 
     &--has-hover--overlay:hover &,
