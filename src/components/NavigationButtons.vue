@@ -9,8 +9,6 @@
   </section>
 </template>
 
-// todo: navigation button minder op laten vallen in 'Give'
-
 <script>
 import { mapGetters, mapActions } from 'vuex';
 

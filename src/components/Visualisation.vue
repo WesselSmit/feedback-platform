@@ -1,7 +1,12 @@
 <template>
   <section class="visualisation" :class="{ 'visualisation--marker-overlay': isMarkerOverlay }">
     <div v-if="title" class="visualisation__title-container">
-      <h3>{{ title }}</h3>
+      <h3 class="visualisation__title">{{ title }}</h3>
+
+      <div v-if="showControl" class="visualisation__control" :class="{ 'visualisation__control--hidden': !showMarkers }" @click="toggleControl()">
+        <MarkerButtonIcon class="visualisation__control-icon" />
+        <p class="visualisation__control-label">{{ controlLabel }}</p>
+      </div>
     </div>
 
     <div class="visualisation__image-container" :class="{ 'visualisation__image-container--error': sourceHasErrored }">
@@ -10,32 +15,33 @@
 
       <div class="visualisation__comment-markers" v-for="comment in markersPerComment" :key="comment">
         <MarkerIcon v-for="marker in comment" :key="marker" class="visualisation__marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }"
-        :class="{ 'visualisation__marker--has-hover--overlay': isMarkerOverlay, 'visualisation__marker--has-hover--sidebar': markerIsFeedbackInteractive }"
+        :class="{ 'visualisation__marker--has-hover--overlay': isMarkerOverlay, 'visualisation__marker--has-hover--sidebar': markerIsFeedbackInteractive, 'visualisation__marker--hidden-by-control': !showMarkers }"
         :showColor="markerIsFeedbackInteractive" :color="marker.color" :data-marker-id="comment[0].commentId" @click="handleMarkerClick(marker)" />
       </div>
     </div>
   </section>
 </template>
 
-//todo: marker hide/show controls toevoegen + ze moeten alleen zichtbaar zijn als een van de volgende componenten gerendered is: markerOverlay, FeedbackComments
-
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import { storageRef } from '@/firebase';
 import Spinner from '@/components/Spinner';
 import MarkerIcon from '@/assets/icons/OverlayMarkerIcon';
+import MarkerButtonIcon from '@/assets/icons/ButtonMarkerIcon';
 
 export default {
   name: 'Visualisation',
   components: {
     Spinner,
     MarkerIcon,
+    MarkerButtonIcon,
   },
   props: ['title', 'visualisation', 'isMarkerOverlay', 'pageMode'],
   data() {
     return {
       source: null,
       sourceHasErrored: false,
+      showMarkers: true,
     };
   },
   computed: {
@@ -47,6 +53,12 @@ export default {
     ...mapGetters('feedback', {
       comments: 'comments',
     }),
+    showControl() {
+      return this.activeTab === 'view' || this.activeTab === 'feedback';
+    },
+    controlLabel() {
+      return this.showMarkers ? 'Shown' : 'Hidden';
+    },
     markersPerComment() {
       if (this.pageMode === 'view' && this.activeTab === 'insights') return null; // markers should not be visible when in 'insights' tab
 
@@ -98,6 +110,9 @@ export default {
         this.addSessionMarker(marker);
       }
     },
+    toggleControl() {
+      this.showMarkers = !this.showMarkers;
+    },
     handleMarkerClick(marker) {
       if (this.isMarkerOverlay) {
         this.removeSessionMarker(marker.id);
@@ -122,6 +137,11 @@ export default {
       // use native JSON functions to remove the reactivity so objects (including arrays) can be cloned without mutating the original source
       // also see: https://forum.vuejs.org/t/how-to-remove-array-binding/53751
       return JSON.parse(JSON.stringify(source));
+    },
+  },
+  watch: {
+    activeTab() {
+      this.showMarkers = true; // always reset showMarkers state to make sure the markers are visible after user switched tabs
     },
   },
   async created() {
@@ -166,10 +186,48 @@ export default {
     }
   }
 
-  &__title-container {
-    margin: auto;
-    padding: 0 $space--sm-md;
-    max-width: calc(#{$documentation-width} - (2 * #{$space--sm-md}));
+  &__title {
+    margin: 0;
+
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto $space--sm;
+      padding: 0 $space--sm-md;
+      max-width: calc(#{$documentation-width} - (2 * #{$space--sm-md}));
+    }
+  }
+
+  &__control {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &--hidden &,
+    &:hover & {
+      &-icon {
+        fill: $purple;
+      }
+
+      &-label {
+        color: $purple;
+      }
+    }
+
+    &-icon {
+      margin-right: $space--xsm;
+      transform: scale(.7);
+      transition: all 500ms $ease--fast;
+    }
+
+    &-label {
+      margin: 0;
+      color: $black;
+      font-size: $font-size--sm-md;
+      text-transform: uppercase;
+      transition: all 500ms $ease--fast;
+    }
   }
 
   &__image {
@@ -225,6 +283,10 @@ export default {
 
     &--has-hover--sidebar {
       cursor: pointer;
+    }
+
+    &--hidden-by-control {
+      display: none;
     }
 
     &-outline,
