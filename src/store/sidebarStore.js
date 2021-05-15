@@ -210,7 +210,6 @@ export default {
     },
 
     resetAllInputs({ commit }) {
-      commit('setInsightInput', '');
       commit('setTextInput', '');
       commit('setMarkers', []);
       commit('setSessionMarkers', []);
