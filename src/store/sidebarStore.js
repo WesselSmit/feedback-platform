@@ -96,6 +96,25 @@ export default {
   },
 
   actions: {
+    resetSidebarStoreState({ commit }) {
+      commit('setInsightInput', '');
+      commit('setHideDocumentation', false);
+      commit('setHideVisualisation', false);
+      commit('setShowPopUp', true);
+      commit('setActiveTab', null);
+      commit('setShowFeedbackHelperZero', true);
+      commit('setTextInput', '');
+      commit('setActiveTipIndex', null);
+      commit('setShowMarkerOverlay', false);
+      commit('setMarkers', []);
+      commit('setSessionMarkers', []);
+      commit('setShowImageSidebar', false);
+      commit('setFeedbackImage', null);
+      commit('setSelectedImageBackup', null);
+      commit('setSelectedImage', null);
+      commit('setSelectedImagePreview', null);
+    },
+
     updateInsightInput({ commit }, payload) {
       commit('setInsightInput', payload);
     },
