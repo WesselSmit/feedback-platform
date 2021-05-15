@@ -84,13 +84,6 @@ export default {
     }),
     handleClick(index) {
       this.updateActiveTipIndex((this.activeTipIndex === index) ? null : index);
-      this.scrollToInput();
-    },
-    scrollToInput() {
-      const input = document.getElementById('input');
-      setTimeout(() => {
-        input.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }, 175);
     },
     switchHelper() {
       this.updateShowFeedbackHelperZero();

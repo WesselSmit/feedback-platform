@@ -143,7 +143,7 @@ export default {
     align-items: center;
     justify-content: center;
     height: calc(#{$feedbfack-actions-height} - 1px);
-    padding: 0 15px;
+    padding: 0 $space--sm;
     background-color: $white;
     color: $black;
     white-space: nowrap;
