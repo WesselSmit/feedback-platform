@@ -22,7 +22,7 @@ export default {
     },
   },
 
-  // todo: wanneer een user de role van expert/coach krijgt moet hij aan alle groups toegevoegd worden
+  // todo (documenteer in PB --> niet coderen): wanneer een user de role van expert/coach krijgt moet hij aan alle groups toegevoegd worden
 
   actions: {
     async fetchGroups({ dispatch, commit }) {

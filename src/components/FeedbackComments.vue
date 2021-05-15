@@ -33,7 +33,7 @@
 </template>
 
 //todo: backgroundcolor sidebar vs documentation
-//todo: delete eigen comments feature (heeft geen prioriteit)
+//todo (documenteer in PB --> niet coderen): delete eigen comments feature (heeft geen prioriteit)
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
