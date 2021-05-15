@@ -28,9 +28,9 @@ export default {
   },
   methods: {
     ...mapActions('sidebar', {
-      updateTextInput: 'updateTextInput',
       updateHideDocumentation: 'updateHideDocumentation',
       updateHideVisualisation: 'updateHideVisualisation',
+      resetAllInputs: 'resetAllInputs',
     }),
     ...mapActions('feedback', {
       postInsight: 'postInsight',
@@ -43,7 +43,7 @@ export default {
     }),
     handleClick(action) {
       this.$emit('handleNav', action); // used for transitions in Sidebar components
-      this.updateTextInput('');
+      this.resetAllInputs();
 
       if (action.hasOwnProperty('target')) {
         this.$router.push({ path: `/${action.target}` });
@@ -61,7 +61,7 @@ export default {
           this.postInsight({ insight: this.insightInput, projectId: this.projectId });
           this.message({ message: 'Insight saved', mode: 'succes' });
         } else {
-          this.message({ message: 'Enter at least one insight' });
+          this.message({ message: 'Enter at least one insight', mode: 'error' });
         }
       }
     },

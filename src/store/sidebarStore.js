@@ -179,7 +179,7 @@ export default {
     },
 
     resetAllMarkers({ commit }) {
-      // only used when the feedback/comment has been posted and all associated data (markers & images) need to be reset
+      // only used when the feedback/comment has been posted (or if the user wants to navigate to next/previous step) and all associated data (markers & images) need to be reset
       commit('setMarkers', []);
       commit('setSessionMarkers', []);
     },
@@ -207,6 +207,17 @@ export default {
 
     updateFeedbackImage({ commit }, payload) {
       commit('setFeedbackImage', payload);
+    },
+
+    resetAllInputs({ commit }) {
+      commit('setInsightInput', '');
+      commit('setTextInput', '');
+      commit('setMarkers', []);
+      commit('setSessionMarkers', []);
+      commit('setFeedbackImage', null);
+      commit('setSelectedImageBackup', null);
+      commit('setSelectedImage', null);
+      commit('setSelectedImagePreview', null);
     },
   },
 };

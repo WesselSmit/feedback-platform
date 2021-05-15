@@ -6,8 +6,6 @@
   </transition>
 </template>
 
-// todo: feedback- markers/image moeten gereset worden wanneer je naar volgende/vorige stap gaat in 'give' proces
-
 // todo: progressbar klopt niet helemaal --> de eerste stap moet geen progressie hebben
 // todo: vanaf 'view' moet er een knop zijn om terug te gaan naar setup (als die er is moet het teruggaan naar de edit/preview pagina, als die er niet is dan moet het terug naar stap 1)
 // todo: make sure the firebase storage + firestore security rules are secure, they were disabled for the POCs (see clickup for more info)
