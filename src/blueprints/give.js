@@ -23,6 +23,7 @@ export default {
       },
       navigation: [{
           label: 'Submit',
+          hasDisabled: true,
           action: 'saveInsights'
         }
       ]
