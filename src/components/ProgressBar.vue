@@ -16,7 +16,7 @@ export default {
   computed: {
     progress() {
       const progress = (this.index / this.total) * 100;
-      return { width: `calc(${progress}% - 2.5px)` }; // 2.5px = half of $progressbar-gap-width
+      return progress === 100 ? { width: `${progress}%` } : { width: `calc(${progress}% - 2.5px)` }; // 2.5px = half of $progressbar-gap-width
     },
   },
 };
