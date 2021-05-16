@@ -218,7 +218,6 @@ export default {
 
     &-label {
       display: flex;
-      align-items: center;
       padding-left: $space--sm;
 
       &--question {
@@ -233,13 +232,14 @@ export default {
 
       &--question {
         fill: $green;
+        margin-left: $space--xsm;
       }
 
       &-container {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         width: 15px;
-        margin: 3px $space--sm 0 0;
+        margin: 3px $space--sm 0 1px;
       }
     }
   }
