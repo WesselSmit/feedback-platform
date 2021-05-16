@@ -8,16 +8,6 @@
     <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
 
     <div v-if="showLegend" class="read-instructions__reminders">
-      <ul v-if="hasLimits" class="read-instructions__legend">
-        <li v-for="item in legend" :key="item" class="read-instructions__legend-label">
-          <span class="read-instructions__legend-icon-container">
-            <QuestionIcon v-if="item.type === 'question'" class="read-instructions__legend-icon read-instructions__legend-icon--question" />
-            <LimitIcon v-if="item.type === 'limit'" class="read-instructions__legend-icon read-instructions__legend-icon--limit" />
-          </span>
-          {{ item.label }}
-        </li>
-      </ul>
-
       <ul v-if="legend" class="read-instructions__points">
         <li v-if="hasQuestions" v-for="(question, index) in questions" :key="question" class="read-instructions__points-label read-instructions__points-label--question">
           <span class="read-instructions__points-icon-container">
