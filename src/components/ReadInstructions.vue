@@ -19,11 +19,12 @@
       </ul>
 
       <ul v-if="legend" class="read-instructions__points">
-        <li v-if="hasQuestions" v-for="question in questions" :key="question" class="read-instructions__points-label read-instructions__points-label--question">
+        <li v-if="hasQuestions" v-for="(question, index) in questions" :key="question" class="read-instructions__points-label read-instructions__points-label--question">
           <span class="read-instructions__points-icon-container">
             <QuestionIcon class="read-instructions__points-icon read-instructions__points-icon--question" />
           </span>
-          {{ question }}
+          <span v-if="questions.length > 1" class="read-instructions__points-number">{{ index + 1 }}. </span>
+          {{ question + punctuate(question) }}
         </li>
         <li v-if="showLimitsInLegend" class="read-instructions__points-label">
           <span class="read-instructions__points-icon-container">
@@ -89,6 +90,9 @@ export default {
     },
   },
   methods: {
+    punctuate(question) { // add a ? if the question doesn't end with one of the following characters: .,!?
+      return question[question.length - 1].match(/^[.,!?]/) ? '' : '?';
+    },
     handleClick() {
       if (this.showLegend && this.hasLimits) {
         this.isCollapsed = !this.isCollapsed;
@@ -241,6 +245,13 @@ export default {
         width: 15px;
         margin: 3px $space--sm 0 1px;
       }
+    }
+
+    &-number {
+      margin-top: 4px;
+      margin-right: $space--xsm;
+      font-size: $font-size--sm;
+      color: $gray--dark;
     }
   }
 }
