@@ -3,7 +3,7 @@
     <div class="setup-questions__questions">
       <transition-group name="short-slide-vertical" mode="in-out">
         <div v-for="(question, index) in showingQuestionInputs" :key="index" class="setup-questions__question question">
-          <input type="text" placeholder="Enter a question" class="setup-questions__question-input question-input" @input="updateInput()">
+          <textarea rows="1" placeholder="Enter a question" class="setup-questions__question-input question-input" @input="updateInput($event)"></textarea>
           <RemoveIcon v-if="index !== showingQuestionInputs - 1" class="setup-questions__question-remove" @click="removeInput(index)" />
         </div>
       </transition-group>
@@ -47,11 +47,16 @@ export default {
     ...mapActions('setup', {
       updateQuestions: 'updateQuestions',
     }),
-    updateInput() {
+    updateInput(e) {
+      // update input height
+      const maxHeight = 48; // single-line height = 29px, every line after increases the height by 19px --> maxHeight = 67px (29px + (number-of-lines * 19px))
+      e.target.style.height = 'auto'; // decreases height if user removes a line of text and the textarea needs to shrink instead of grow
+      e.target.style.height = e.target.scrollHeight > maxHeight ? `${maxHeight}px` : `${e.target.scrollHeight}px`; // increases textarea height whenever the text overflows
+
+      // update state
       const inputEls = this.$el.querySelectorAll('.question-input');
       const input = Array.from(inputEls, (el) => el.value);
-      const filteredInput = input.filter((str) => str !== '');
-
+      const filteredInput = input.filter((str) => str.trim() !== '');
       this.updateQuestions(filteredInput);
     },
     removeInput(index) {
@@ -68,6 +73,14 @@ export default {
   },
   mounted() {
     this.syncTemplateWithState();
+
+    // set textarea heights to match input from state
+    const maxHeight = 48; // single-line height = 29px, every line after increases the height by 19px --> maxHeight = 67px (29px + (number-of-lines * 19px))
+    const inputEls = this.$el.querySelectorAll('.question-input');
+
+    inputEls.forEach((el) => {
+      el.style.height = el.scrollHeight > maxHeight ? `${maxHeight}px` : `${el.scrollHeight}px`; // increases textarea height whenever the text overflows
+    });
   },
 };
 </script>
@@ -80,6 +93,17 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: $space--sm;
+
+    &-input {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      padding: $space--xsm;
+      width: 100%;
+      color: $black;
+      font-size: $font-size--md;
+      border: 1px solid $black;
+      border-radius: $border-radius;
+    }
 
     &-remove {
       box-sizing: content-box;

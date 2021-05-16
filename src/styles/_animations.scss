@@ -58,3 +58,14 @@
 .slide-horizontal-leave-active {
     transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
 }
+
+.message-enter-from,
+.message-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -150%);
+}
+
+.message-enter-active,
+.message-leave-active {
+    transition: transform 200ms ease-in-out, opacity 350ms ease-in-out;
+}

@@ -96,6 +96,25 @@ export default {
   },
 
   actions: {
+    resetSidebarStoreState({ commit }) {
+      commit('setInsightInput', '');
+      commit('setHideDocumentation', false);
+      commit('setHideVisualisation', false);
+      commit('setShowPopUp', true);
+      commit('setActiveTab', null);
+      commit('setShowFeedbackHelperZero', true);
+      commit('setTextInput', '');
+      commit('setActiveTipIndex', null);
+      commit('setShowMarkerOverlay', false);
+      commit('setMarkers', []);
+      commit('setSessionMarkers', []);
+      commit('setShowImageSidebar', false);
+      commit('setFeedbackImage', null);
+      commit('setSelectedImageBackup', null);
+      commit('setSelectedImage', null);
+      commit('setSelectedImagePreview', null);
+    },
+
     updateInsightInput({ commit }, payload) {
       commit('setInsightInput', payload);
     },
@@ -160,7 +179,7 @@ export default {
     },
 
     resetAllMarkers({ commit }) {
-      // only used when the feedback/comment has been posted and all associated data (markers & images) need to be reset
+      // only used when the feedback/comment has been posted (or if the user wants to navigate to next/previous step) and all associated data (markers & images) need to be reset
       commit('setMarkers', []);
       commit('setSessionMarkers', []);
     },
@@ -188,6 +207,16 @@ export default {
 
     updateFeedbackImage({ commit }, payload) {
       commit('setFeedbackImage', payload);
+    },
+
+    resetAllInputs({ commit }) {
+      commit('setTextInput', '');
+      commit('setMarkers', []);
+      commit('setSessionMarkers', []);
+      commit('setFeedbackImage', null);
+      commit('setSelectedImageBackup', null);
+      commit('setSelectedImage', null);
+      commit('setSelectedImagePreview', null);
     },
   },
 };

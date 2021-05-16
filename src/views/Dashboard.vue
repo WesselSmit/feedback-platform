@@ -72,6 +72,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions('sidebar', {
+      resetSidebarStoreState: 'resetSidebarStoreState',
+    }),
     ...mapActions('project', {
       getProjects: 'getProjects',
       addProject: 'addProject',
@@ -99,6 +102,7 @@ export default {
     },
   },
   created() {
+    this.resetSidebarStoreState();
     this.getProjects();
 
     setTimeout(() => {

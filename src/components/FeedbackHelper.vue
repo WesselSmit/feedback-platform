@@ -2,7 +2,13 @@
   <section v-if="!hideSection" class="feedback-helper">
     <transition name="slide-horizontal" mode="out-in">
       <div v-if="zeroTips && showFeedbackHelperZero" class="anim-side--left">
-        <h2 v-if="title">{{ title }}</h2>
+        <div class="feedback-helper__header">
+          <h2 v-if="title" class="feedback-helper__title">{{ title }}</h2>
+          <div class="feedback-helper__toggle-container">
+            <ToggleIcon class="feedback-helper__toggle feedback-helper__toggle--zero" :class="{ 'feedback-helper__toggle--disabled': showFeedbackHelperZero }" />
+            <ToggleIcon class="feedback-helper__toggle feedback-helper__toggle--interactive" :class="{ 'feedback-helper__toggle--disabled': !showFeedbackHelperZero }" @click="switchHelper()" />
+          </div>
+        </div>
         <p v-if="body">{{ body }}</p>
 
         <ul>
@@ -11,7 +17,13 @@
       </div>
 
       <div v-else-if="interactiveTips && !showFeedbackHelperZero" class="anim-side--right">
-        <h2 v-if="title">{{ title }}</h2>
+        <div class="feedback-helper__header">
+          <h2 v-if="title" class="feedback-helper__title">{{ title }}</h2>
+          <div class="feedback-helper__toggle-container">
+            <ToggleIcon class="feedback-helper__toggle feedback-helper__toggle--zero" :class="{ 'feedback-helper__toggle--disabled': showFeedbackHelperZero }" @click="switchHelper()" />
+            <ToggleIcon class="feedback-helper__toggle feedback-helper__toggle--interactive" :class="{ 'feedback-helper__toggle--disabled': !showFeedbackHelperZero }" />
+          </div>
+        </div>
         <p v-if="body">{{ body }}</p>
 
         <ul class="feedback-helper__tips-list">
@@ -32,8 +44,8 @@
 </template>
 
 <script>
-import ToggleIcon from '@/assets/icons/ToggleIcon';
 import { mapGetters, mapActions } from 'vuex';
+import ToggleIcon from '@/assets/icons/ToggleIcon';
 
 export default {
   name: 'feedbackHelper',
@@ -68,16 +80,13 @@ export default {
   methods: {
     ...mapActions('sidebar', {
       updateActiveTipIndex: 'updateActiveTipIndex',
+      updateShowFeedbackHelperZero: 'updateShowFeedbackHelperZero',
     }),
     handleClick(index) {
       this.updateActiveTipIndex((this.activeTipIndex === index) ? null : index);
-      this.scrollToInput();
     },
-    scrollToInput() {
-      const input = document.getElementById('input');
-      setTimeout(() => {
-        input.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }, 175);
+    switchHelper() {
+      this.updateShowFeedbackHelperZero();
     },
   },
 };
@@ -87,6 +96,60 @@ export default {
 @import '@/styles';
 
 .feedback-helper {
+  &__title {
+    margin-top: 3px; // needed to align title with toggle-icon
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $space--md;
+    width: $space--md;
+    fill: $black;
+    border: 1px solid transparent;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 500ms $ease--fast;
+
+    &:hover {
+      background-color: $purple--opacity;
+      fill: $purple;
+    }
+
+    svg {
+      transform-origin: center;
+      transition: all 500ms $ease--fast;
+    }
+
+    &--zero {
+      transform: rotate(90deg);
+    }
+
+    &--interactive {
+      transform: rotate(270deg);
+    }
+
+    &--disabled {
+      fill: $gray--light;
+      cursor: default;
+
+      &:hover {
+        background-color: $white;
+        fill: $gray--light;
+      }
+    }
+
+    &-container {
+      display: flex;
+    }
+  }
+
   &__tips {
     &-list {
       list-style: none;

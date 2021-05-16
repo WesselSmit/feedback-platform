@@ -14,11 +14,10 @@
             <div v-if="activeTab === 'give'" class="give-sidebar__inner-wrappers anim-side--left">
               <div v-for="(section, name) in sections" :key="section"
               class="give-sidebar__inner-wrapper" :class="{ 'give-sidebar__inner-wrapper--grow-bottom': name === 'feedbackInput' }">
-                <InputInstructions v-if="name === 'inputInstructions'" :content="section" :hideDocumentation="hideDocumentation" class="give-sidebar__section sidebar__section--no-padding-vertical" />
+                <InputInstructions v-if="name === 'inputInstructions'" :content="section" :hideDocumentation="hideDocumentation" class="give-sidebar__section give-sidebar__section--no-padding-vertical" />
                 <ConfirmInstructions v-if="name === 'confirmInstructions'" :content="section" :hideVisualisation="hideVisualisation" class="give-sidebar__section" />
                 <ReadInstructions v-if="name === 'readInstructions'" :content="section" :legendData="legendData" class="give-sidebar__section" />
                 <FeedbackHelper v-if="name === 'feedbackHelper'" :content="section" class="give-sidebar__section" />
-                <FeedbackInput v-if="name === 'feedbackInput'" :content="section" class="give-sidebar__section sidebar__section--no-padding-vertical" />
               </div>
             </div>
 
@@ -33,9 +32,10 @@
             <NavigationButtons v-if="navigation && isCentered && activeTab === 'give'" class="give-sidebar__navigation" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" @handleNav="setAnimSide" />
           </div>
 
-        <transition name="slide-horizontal" mode="out-in">
+        <transition-group name="slide-horizontal" mode="out-in">
+          <FeedbackInput v-if="hasFeedbackInput" class="give-sidebar__section give-sidebar__section--no-padding-vertical" />
           <NavigationButtons v-if="navigation && !isCentered && activeTab === 'give'" :buttons="navigation" :bigMarginTop="!hasFeedbackHelper" @handleNav="setAnimSide" />
-        </transition>
+        </transition-group>
       </div>
     </transition>
   </section>
@@ -116,6 +116,9 @@ export default {
     },
     hasFeedbackHelper() {
       return Object.keys(this.sections).includes('feedbackHelper');
+    },
+    hasFeedbackInput() {
+      return Object.keys(this.sections).includes('feedbackInput');
     },
     animSideClass() {
       return this.animSide ? `anim-side--${this.animSide}` : '';

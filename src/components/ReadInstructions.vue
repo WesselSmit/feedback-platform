@@ -1,14 +1,14 @@
 <template>
-  <section v-if="title" class="read-instructions" :class="{ 'read-instructions--has-legend': showLegend, 'read-instructions--collapsed': isCollapsed }">
+  <section v-if="title" class="read-instructions" :class="{ 'read-instructions--has-legend': showLegend && hasLimits, 'read-instructions--collapsed': isCollapsed }">
     <div class="read-instructions__header" @click="handleClick()">
       <h1 class="read-instructions__header-title">{{ title }}</h1>
-      <ToggleIcon v-if="showLegend" class="read-instructions__header-toggle" />
+      <ToggleIcon v-if="showLegend && hasLimits" class="read-instructions__header-toggle" />
     </div>
 
     <p v-if="body" class="read-instructions__body" :class="{ 'read-instructions__body--no-margin-bottom': !legend }">{{ body }}</p>
 
     <div v-if="showLegend" class="read-instructions__reminders">
-      <ul class="read-instructions__legend">
+      <ul v-if="hasLimits" class="read-instructions__legend">
         <li v-for="item in legend" :key="item" class="read-instructions__legend-label">
           <span class="read-instructions__legend-icon-container">
             <QuestionIcon v-if="item.type === 'question'" class="read-instructions__legend-icon read-instructions__legend-icon--question" />
@@ -19,7 +19,7 @@
       </ul>
 
       <ul v-if="legend" class="read-instructions__points">
-        <li v-if="hasQuestions" v-for="question in questions" :key="question" class="read-instructions__points-label">
+        <li v-if="hasQuestions" v-for="question in questions" :key="question" class="read-instructions__points-label read-instructions__points-label--question">
           <span class="read-instructions__points-icon-container">
             <QuestionIcon class="read-instructions__points-icon read-instructions__points-icon--question" />
           </span>
@@ -39,7 +39,7 @@
 <script>
 import ToggleIcon from '@/assets/icons/ToggleIcon';
 import LimitIcon from '@/assets/icons/LimitIcon';
-import QuestionIcon from '@/assets/icons/QuestionIcon';
+import QuestionIcon from '@/assets/icons/QuestionMarkIcon';
 
 export default {
   name: 'ReadInstructions',
@@ -90,7 +90,9 @@ export default {
   },
   methods: {
     handleClick() {
-      this.isCollapsed = !this.isCollapsed;
+      if (this.showLegend && this.hasLimits) {
+        this.isCollapsed = !this.isCollapsed;
+      }
     },
   },
 };
@@ -212,12 +214,16 @@ export default {
 
   &__points {
     list-style: none;
-    margin-left: $space--sm;
+    margin-left: 0;
 
     &-label {
       display: flex;
       align-items: center;
-      padding-left: 0;
+      padding-left: $space--sm;
+
+      &--question {
+        padding-left: $space--xsm;
+      }
     }
 
     &-icon {

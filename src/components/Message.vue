@@ -28,8 +28,10 @@ export default {
 
 .message {
   position: fixed;
-  bottom: $space--sm-md;
-  left: $space--sm-md;
+  top: $space--sm-md;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, 0);
   z-index: 100;
   padding: $space--sm;
   background-color: $gray--light-extra;
