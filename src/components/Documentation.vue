@@ -5,7 +5,7 @@
     <div v-if="!hideDocumentation" class="documentation__inner" :class="{ 'documentation__inner--centered': hideVisualisation }">
       <h1>{{ title }}</h1>
 
-      <h3 class="documentation__subheading">{{ explanationHeading }}</h3>
+      <!-- <h3 class="documentation__subheading">{{ explanationHeading }}</h3> -->
       <p class="documentation__explanation">{{ explanation }}</p>
 
       <!-- <h3 class="documentation__subheading">{{ questionsHeading }}</h3>
@@ -57,9 +57,9 @@ export default {
     title() {
       return this.content.project.data.title;
     },
-    explanationHeading() {
-      return this.content.documentation.explanationHeading;
-    },
+    // explanationHeading() {
+    //   return this.content.documentation.explanationHeading;
+    // },
     explanation() {
       return this.content.project.data.explanation;
     },
