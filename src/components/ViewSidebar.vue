@@ -4,17 +4,17 @@
 
     <div class="view-sidebar__inner">
       <transition name="slide-horizontal" mode="out-in">
-        <div v-if="activeTab === 'insights'" class="view-sidebar__inner-wrappers anim-side--left">
-          <div v-for="(section, name) in sections" :key="section" class="view-sidebar__inner-wrapper">
-            <ReadInstructions v-if="name === 'readInstructions'" :content="section" class="view-sidebar__section" />
-            <Insights v-if="name === 'insights'" :content="section" class="view-sidebar__section"/>
-          </div>
-        </div>
-
-        <div v-else-if="activeTab === 'feedback'" class="view-sidebar__inner-wrapper anim-side--right">
+         <div v-if="activeTab === 'feedback'" class="view-sidebar__inner-wrapper anim-side--left">
           <div v-if="activeTab === 'feedback'" v-for="(section, name) in sections" :key="section" class="view-sidebar__inner-wrapper">
             <ReadInstructions v-if="name === 'readInstructions'" :content="section" class="view-sidebar__section" />
             <FeedbackComments v-if="name === 'feedbackComments'" :content="section" class="view-sidebar__section view-sidebar__section--no-padding-horizontal" />
+          </div>
+        </div>
+
+        <div v-else-if="activeTab === 'insights'" class="view-sidebar__inner-wrappers anim-side--right">
+          <div v-for="(section, name) in sections" :key="section" class="view-sidebar__inner-wrapper">
+            <ReadInstructions v-if="name === 'readInstructions'" :content="section" class="view-sidebar__section" />
+            <Insights v-if="name === 'insights'" :content="section" class="view-sidebar__section"/>
           </div>
         </div>
       </transition>
@@ -26,8 +26,8 @@
 import { mapGetters, mapActions } from 'vuex';
 import Tabs from '@/components/Tabs';
 import ReadInstructions from '@/components/ReadInstructions';
-import Insights from '@/components/Insights';
 import FeedbackComments from '@/components/FeedbackComments';
+import Insights from '@/components/Insights';
 
 export default {
   name: 'ViewSidebar',
@@ -56,7 +56,7 @@ export default {
     }),
   },
   created() {
-    this.updateActiveTab('insights');
+    this.updateActiveTab('feedback');
   },
 };
 </script>
