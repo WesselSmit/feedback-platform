@@ -23,25 +23,26 @@ export default {
       },
       navigation: [{
           label: 'Submit',
+          hasDisabled: true,
           action: 'saveInsights'
         }
       ]
     },
-    {
-      isCentered: true,
-      hideVisualisation: true,
-      content: {
-        confirmInstructions: {
-          title: `Read the documentation`,
-          body: `Take the time to take in all the information, so that you know what the data visualization is about. Don't worry, this information will also be available while giving feedback.`,
-        }
-      },
-      navigation: [{
-          label: `Finished`,
-          action: 'nextStep'
-        }
-      ]
-    },
+    // {
+    //   isCentered: true,
+    //   hideVisualisation: true,
+    //   content: {
+    //     confirmInstructions: {
+    //       title: `Read the documentation`,
+    //       body: `Take the time to take in all the information, so that you know what the data visualization is about. Don't worry, this information will also be available while giving feedback.`,
+    //     }
+    //   },
+    //   navigation: [{
+    //       label: `Finished`,
+    //       action: 'nextStep'
+    //     }
+    //   ]
+    // },
     {
       popUp: {
         title: `About giving feedback...`,
@@ -107,10 +108,10 @@ export default {
         feedbackInput: true
       },
       navigation: [
-        {
-          label: 'Previous',
-          action: 'previousStep'
-        },
+        // {
+        //   label: 'Previous',
+        //   action: 'previousStep'
+        // },
         {
           label: 'Next',
           hasOutline: true,

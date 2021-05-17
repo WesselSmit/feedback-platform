@@ -1,7 +1,7 @@
 <template>
   <section class="visualisation" :class="{ 'visualisation--marker-overlay': isMarkerOverlay }">
     <div v-if="title" class="visualisation__title-container">
-      <h3 class="visualisation__title">{{ title }}</h3>
+      <h3 class="visualisation__title" :class="{ 'visualisation__title--hidden': hideTitle }">{{ title }}</h3>
 
       <div v-if="showControl" class="visualisation__control" :class="{ 'visualisation__control--hidden': !showMarkers }" @click="toggleControl()">
         <MarkerButtonIcon class="visualisation__control-icon" />
@@ -49,12 +49,16 @@ export default {
       markers: 'markers',
       sessionMarkers: 'sessionMarkers',
       activeTab: 'activeTab',
+      hideDocumentation: 'hideDocumentation',
     }),
     ...mapGetters('feedback', {
       comments: 'comments',
     }),
+    hideTitle() {
+      return !this.hideDocumentation;
+    },
     showControl() {
-      return this.activeTab === 'view' || this.activeTab === 'feedback';
+      return this.activeTab === 'view' && this.comments.length > 0 || this.activeTab === 'feedback' && this.comments.length > 0;
     },
     controlLabel() {
       return this.showMarkers ? 'Shown' : 'Hidden';
@@ -122,6 +126,9 @@ export default {
         if (comment) {
           comment.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
+          const highlightedMarkers = document.querySelectorAll('.visualisation__marker--is-highlighted');
+          highlightedMarkers.forEach((marker) => marker.classList.remove('visualisation__marker--is-highlighted'));
+
           const highlightedComments = document.querySelectorAll('.feedback-comments__comment--highlighted');
           highlightedComments.forEach((comment) => comment.classList.remove('feedback-comments__comment--highlighted'));
 
@@ -161,7 +168,7 @@ export default {
 @import '@/styles';
 
 .visualisation {
-  margin: $space--lg 0;
+  margin: $space--md 0 $space--lg;
 
   &.no-documentation {
     margin: 0 0 $space--xl 0;
@@ -172,6 +179,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: $space--lg 0;
     min-height: calc(#{100vh} - (2 * #{$space--lg}));
   }
 
@@ -189,6 +197,10 @@ export default {
   &__title {
     margin: 0;
 
+    &--hidden {
+      opacity: 0;
+    }
+
     &-container {
       display: flex;
       justify-content: space-between;
@@ -196,12 +208,17 @@ export default {
       margin: 0 auto $space--sm;
       padding: 0 $space--sm-md;
       max-width: calc(#{$documentation-width} - (2 * #{$space--sm-md}));
+
+      &--reverse {
+        flex-direction: row-reverse;
+      }
     }
   }
 
   &__control {
     display: flex;
     align-items: center;
+    margin-left: auto;
     cursor: pointer;
 
     &--hidden &,

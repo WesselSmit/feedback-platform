@@ -5,10 +5,10 @@
     <div v-if="!hideDocumentation" class="documentation__inner" :class="{ 'documentation__inner--centered': hideVisualisation }">
       <h1>{{ title }}</h1>
 
-      <h3 class="documentation__subheading">{{ explanationHeading }}</h3>
-      <p>{{ explanation }}</p>
+      <!-- <h3 class="documentation__subheading">{{ explanationHeading }}</h3> -->
+      <p class="documentation__explanation">{{ explanation }}</p>
 
-      <h3 class="documentation__subheading">{{ questionsHeading }}</h3>
+      <!-- <h3 class="documentation__subheading">{{ questionsHeading }}</h3>
       <ul class="documentation__question-list">
         <li v-for="(question, index) in questions" :key="index" class="documentation__question">
         <span class="documentation__icon-container">
@@ -24,7 +24,7 @@
           <LimitIcon class="documentation__icon documentation__icon--limit" />
         </span>
         {{ limits }}
-      </p>
+      </p> -->
     </div>
 
     <div :class="{ 'documentation__inner documentation__inner--centered': hideDocumentation }">
@@ -35,8 +35,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import LimitIcon from '@/assets/icons/LimitIcon';
-import QuestionIcon from '@/assets/icons/QuestionIcon';
+// import LimitIcon from '@/assets/icons/LimitIcon';
+// import QuestionIcon from '@/assets/icons/QuestionIcon';
 import Menu from '@/components/Menu';
 import Visualisation from '@/components/Visualisation';
 
@@ -45,8 +45,8 @@ export default {
   components: {
     Menu,
     Visualisation,
-    LimitIcon,
-    QuestionIcon,
+    // LimitIcon,
+    // QuestionIcon,
   },
   props: ['content', 'pageMode'],
   computed: {
@@ -57,27 +57,27 @@ export default {
     title() {
       return this.content.project.data.title;
     },
-    explanationHeading() {
-      return this.content.documentation.explanationHeading;
-    },
+    // explanationHeading() {
+    //   return this.content.documentation.explanationHeading;
+    // },
     explanation() {
       return this.content.project.data.explanation;
     },
-    questionsHeading() {
-      return this.content.documentation.questionsHeading;
-    },
-    questions() {
-      return this.content.project.data.questions;
-    },
-    limitsHeading() {
-      return this.content.documentation.limitsHeading;
-    },
-    hasLimits() {
-      return this.limits.length > 0;
-    },
-    limits() {
-      return this.content.project.data.limits;
-    },
+    // questionsHeading() {
+    //   return this.content.documentation.questionsHeading;
+    // },
+    // questions() {
+    //   return this.content.project.data.questions;
+    // },
+    // limitsHeading() {
+    //   return this.content.documentation.limitsHeading;
+    // },
+    // hasLimits() {
+    //   return this.limits.length > 0;
+    // },
+    // limits() {
+    //   return this.content.project.data.limits;
+    // },
     visualisation() {
       return this.content.project.data.visualisation;
     },
@@ -102,6 +102,7 @@ export default {
       justify-content: center;
       margin-bottom: calc(#{$space--xl / 2});
       height: calc(100% - #{$space--xl});
+      max-width: unset;
     }
   }
 
@@ -111,37 +112,41 @@ export default {
     }
   }
 
-  &__limits {
-    display: flex;
-    align-items: center;
+  &__explanation {
+    margin-bottom: 0;
   }
 
-  &__question {
-    display: flex;
-    align-items: center;
-    padding-left: 0;
+  // &__limits {
+  //   display: flex;
+  //   align-items: center;
+  // }
 
-    &-list {
-      margin-left: 0;
-      list-style: none;
-    }
-  }
+  // &__question {
+  //   display: flex;
+  //   align-items: center;
+  //   padding-left: 0;
 
-  &__icon {
-    &--limit {
-      fill: $red;
-    }
+  //   &-list {
+  //     margin-left: 0;
+  //     list-style: none;
+  //   }
+  // }
 
-    &--question {
-      fill: $green;
-    }
+  // &__icon {
+  //   &--limit {
+  //     fill: $red;
+  //   }
 
-    &-container {
-      display: flex;
-      align-items: center;
-      width: 15px;
-      margin: 0 $space--sm;
-    }
-  }
+  //   &--question {
+  //     fill: $green;
+  //   }
+
+  //   &-container {
+  //     display: flex;
+  //     align-items: center;
+  //     width: 15px;
+  //     margin: 0 $space--sm;
+  //   }
+  // }
 }
 </style>

@@ -2,7 +2,7 @@
   <section class="navigation-buttons" :class="{ 'navigation-buttons--multiple': hasMultiple, 'navigation-buttons--big-margin-top': bigMarginTop }">
       <button v-for="(button, name) in buttons"
         :key="name" class="navigation-buttons__button"
-        :class="{ 'navigation-buttons__button--outline': button.hasOutline, }"
+        :class="{ 'navigation-buttons__button--outline': button.hasOutline, 'navigation-buttons__button--disabled': isDisabled(button.hasDisabled), }"
         @click="handleClick(button.action)">
         {{ button.label }}
       </button>
@@ -41,6 +41,9 @@ export default {
     ...mapActions('message', {
       message: 'message',
     }),
+    isDisabled(hasDisabled) {
+      return hasDisabled && this.insightInput === '';
+    },
     handleClick(action) {
       this.$emit('handleNav', action); // used for transitions in Sidebar components
       this.resetAllInputs();
@@ -56,7 +59,7 @@ export default {
       } else if (action === 'saveInsights') {
         if (this.insightInput) {
           this.updateHideDocumentation(false);
-          this.updateHideVisualisation(true);
+          // this.updateHideVisualisation(true);
           this.updateProgress({ instruction: 'nextStep', hideVisualisation: true });
           this.postInsight({ insight: this.insightInput, projectId: this.projectId });
           this.message({ message: 'Insight saved', mode: 'succes' });
@@ -98,6 +101,17 @@ export default {
 
     &:hover {
       background-color: $purple--opacity;
+    }
+
+    &--disabled {
+      background-color: $white;
+      color: $gray--dark;
+      cursor: default;
+
+      &:hover {
+        background-color: $white;
+        color: $gray--dark;
+      }
     }
 
     // &--outline {
