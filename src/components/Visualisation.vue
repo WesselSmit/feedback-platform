@@ -168,7 +168,7 @@ export default {
 @import '@/styles';
 
 .visualisation {
-  margin: $space--lg 0;
+  margin: $space--md 0 $space--lg;
 
   &.no-documentation {
     margin: 0 0 $space--xl 0;
@@ -179,6 +179,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: $space--lg 0;
     min-height: calc(#{100vh} - (2 * #{$space--lg}));
   }
 

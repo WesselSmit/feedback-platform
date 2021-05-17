@@ -102,6 +102,7 @@ export default {
       justify-content: center;
       margin-bottom: calc(#{$space--xl / 2});
       height: calc(100% - #{$space--xl});
+      max-width: unset;
     }
   }
 
