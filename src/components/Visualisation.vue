@@ -58,7 +58,8 @@ export default {
       return !this.hideDocumentation;
     },
     showControl() {
-      return this.activeTab === 'view' && this.comments.length > 0 || this.activeTab === 'feedback' && this.comments.length > 0;
+      const hasMarkers = this.comments.some((comment) => comment.markers.length > 0);
+      return this.activeTab === 'view' && hasMarkers || this.activeTab === 'feedback' && hasMarkers;
     },
     controlLabel() {
       return this.showMarkers ? 'Shown' : 'Hidden';
