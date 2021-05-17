@@ -144,10 +144,16 @@ export default {
       commit('setShowFeedbackHelperZero', payload);
     },
 
-    updateTextInput({ commit, dispatch }, payload) {
-      dispatch('updateShowFeedbackHelperZero', payload === '');
+    updateTextInput({ getters, commit, dispatch }, payload) {
+      // update FeedbackHelper state
+      if (getters.textInput === '' && payload !== '') { // first (character) input entered
+        dispatch('updateShowFeedbackHelperZero', false);
+      } else if (getters.textInput !== '' && payload === '') { // input is deleted / reset
+        dispatch('updateShowFeedbackHelperZero', true);
+        dispatch('updateActiveTipIndex', null);
+      }
+
       commit('setTextInput', payload);
-      dispatch('updateActiveTipIndex', null);
     },
 
     updateActiveTipIndex({ commit }, payload) {

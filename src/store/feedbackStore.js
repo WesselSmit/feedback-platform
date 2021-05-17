@@ -64,6 +64,8 @@ export default {
 
     async postComment({ dispatch, rootGetters }, payload) {
       try {
+        dispatch('sidebar/updateActiveTipIndex', null, { root: true });
+
         // declare image & markers as const to avoid proxies
         const image = rootGetters['sidebar/feedbackImage']?.id || null;
         const markers = rootGetters['sidebar/markers'];
