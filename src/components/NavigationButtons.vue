@@ -91,7 +91,7 @@ export default {
   &__button {
     height: $button-height;
     width: $button-width;
-    background-color: $white;
+    background-color: $gray--sidebar;
     color: $purple;
     text-transform: uppercase;
     border: 2px solid transparent;
@@ -104,12 +104,12 @@ export default {
     }
 
     &--disabled {
-      background-color: $white;
+      background-color: $gray--sidebar;
       color: $gray--dark;
       cursor: default;
 
       &:hover {
-        background-color: $white;
+        background-color: $gray--sidebar;
         color: $gray--dark;
       }
     }

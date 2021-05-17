@@ -227,6 +227,7 @@ export default {
   width: $sidebar-width;
   min-height: 100vh;
   max-height: 100vh;
+  background-color: $gray--sidebar;
   border-left: $border--ui;
 
   &__rules {
@@ -329,7 +330,7 @@ export default {
   &__button {
     height: $button-height;
     width: $button-width;
-    background-color: $white;
+    background-color: $gray--sidebar;
     color: $purple;
     text-transform: uppercase;
     border: 2px solid transparent;
@@ -351,7 +352,7 @@ export default {
       cursor: default;
 
       &:hover {
-        background-color: $white;
+        background-color: $gray--sidebar;
       }
     }
   }

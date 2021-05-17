@@ -59,7 +59,7 @@ export default {
     align-items: center;
     width: 50%;
     padding: 18px;
-    background-color: $white;
+    background-color: $gray--sidebar;
     color: $black;
     text-transform: uppercase;
     cursor: pointer;
@@ -73,7 +73,7 @@ export default {
       cursor: default;
 
       &:hover {
-        background-color: $white;
+        background-color: $gray--sidebar;
       }
     }
   }

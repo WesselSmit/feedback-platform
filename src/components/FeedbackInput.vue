@@ -126,6 +126,7 @@ export default {
   &__input {
     width: 100%;
     padding: $space--xsm;
+    background-color: $gray--sidebar;
     border: 1px solid transparent;
     border-radius: $border-radius;
   }
@@ -144,7 +145,7 @@ export default {
     justify-content: center;
     height: calc(#{$feedbfack-actions-height} - 1px);
     padding: 0 $space--sm;
-    background-color: $white;
+    background-color: $gray--sidebar;
     color: $black;
     white-space: nowrap;
     text-transform: uppercase;
@@ -223,7 +224,7 @@ export default {
       margin-right: -1px;
       margin-left: auto;
       color: $purple;
-      background-color: $white;
+      background-color: $gray--sidebar;
       border: 2px solid $purple;
       border-radius: $border-radius !important;
 

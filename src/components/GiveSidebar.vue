@@ -165,6 +165,7 @@ export default {
   flex-direction: column;
   width: $sidebar-width;
   max-height: 100vh;
+  background-color: $gray--sidebar;
   border-left: $border--ui;
 
   &__transition-inner {

@@ -65,6 +65,7 @@ export default {
   &__input {
     width: 100%;
     padding: $space--xsm;
+    background-color: $gray--sidebar;
     border: 1px solid $black;
     border-radius: $border-radius;
   }
