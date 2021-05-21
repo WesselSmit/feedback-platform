@@ -59,7 +59,6 @@ export default {
       } else if (action === 'saveInsights') {
         if (this.insightInput) {
           this.updateHideDocumentation(false);
-          // this.updateHideVisualisation(true);
           this.updateProgress({ instruction: 'nextStep', hideVisualisation: true });
           this.postInsight({ insight: this.insightInput, projectId: this.projectId });
           this.message({ message: 'Insight saved', mode: 'succes' });
@@ -113,10 +112,6 @@ export default {
         color: $gray--dark;
       }
     }
-
-    // &--outline {
-    //   border: $border--button;
-    // }
   }
 }
 </style>

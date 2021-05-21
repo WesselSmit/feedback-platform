@@ -28,21 +28,6 @@ export default {
         }
       ]
     },
-    // {
-    //   isCentered: true,
-    //   hideVisualisation: true,
-    //   content: {
-    //     confirmInstructions: {
-    //       title: `Read the documentation`,
-    //       body: `Take the time to take in all the information, so that you know what the data visualization is about. Don't worry, this information will also be available while giving feedback.`,
-    //     }
-    //   },
-    //   navigation: [{
-    //       label: `Finished`,
-    //       action: 'nextStep'
-    //     }
-    //   ]
-    // },
     {
       popUp: {
         title: `About giving feedback...`,
@@ -64,62 +49,6 @@ export default {
         ],
         buttonLabel: 'Got it',
       },
-      content: {
-        readInstructions: {
-          title: `Name areas for improvement`,
-          body: `Look for areas that could be improved to make the data visualisation more insightful or visually stronger.`,
-          legend: [
-            {
-              type: 'limit',
-              label: `Don't include this in your feedback`
-            }
-          ],
-        },
-        feedbackHelper: {
-          sections: {
-            zero: {
-              title: `Ask yourself this:`,
-              body: ``,
-              tips: [
-              `Was the correct visualisation type used or are there better suiting types?`,
-              `Is there anything that you don't understand?`,
-              `Are the labels and texts legible?`,
-              `Are there design or editorial choices that can mislead the interpreter?`,
-            ]},
-            interactive: {
-              title: `How to write valuable feedback`,
-              body: `Use the tips below to make your feedback clear and useful.`,
-              tips: [
-              {
-                heading: `Explain why it's a problem.`,
-                detail: `When you have found an area for improvement, explain why it needs to be changed. \u2192 "Make the lines thicker" should be "By making the line thicker you create more contrast".`
-              },
-              {
-                heading: `Keep it objective.`,
-                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". \u2192 "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
-              },
-              {
-                heading: `Suggest a solution.`,
-                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your solution by clicking the "ADD IMAGE" button.`
-              }
-            ]}
-          }
-        },
-        feedbackInput: true
-      },
-      navigation: [
-        // {
-        //   label: 'Previous',
-        //   action: 'previousStep'
-        // },
-        {
-          label: 'Next',
-          hasOutline: true,
-          action: 'nextStep'
-        }
-      ]
-    },
-    {
       content: {
         readInstructions: {
           title: `Answer the feedback questions`,
@@ -168,9 +97,60 @@ export default {
       },
       navigation: [
         {
+          label: 'Next',
+          hasOutline: true,
+          action: 'nextStep'
+        }
+      ]
+    },
+    {
+      content: {
+        readInstructions: {
+          title: `Name areas for improvement`,
+          body: `Look for areas that could be improved to make the data visualisation more insightful or visually stronger.`,
+          legend: [
+            {
+              type: 'limit',
+              label: `Don't include this in your feedback`
+            }
+          ],
+        },
+        feedbackHelper: {
+          sections: {
+            zero: {
+              title: `Ask yourself this:`,
+              body: ``,
+              tips: [
+              `Was the correct visualisation type used or are there better suiting types?`,
+              `Is there anything that you don't understand?`,
+              `Are the labels and texts legible?`,
+              `Are there design or editorial choices that can mislead the interpreter?`,
+            ]},
+            interactive: {
+              title: `How to write valuable feedback`,
+              body: `Use the tips below to make your feedback clear and useful.`,
+              tips: [
+              {
+                heading: `Explain why it's a problem.`,
+                detail: `When you have found an area for improvement, explain why it needs to be changed. \u2192 "Make the lines thicker" should be "By making the line thicker you create more contrast".`
+              },
+              {
+                heading: `Keep it objective.`,
+                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". \u2192 "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
+              },
+              {
+                heading: `Suggest a solution.`,
+                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your solution by clicking the "ADD IMAGE" button.`
+              }
+            ]}
+          }
+        },
+        feedbackInput: true
+      },
+      navigation: [
+        {
           label: 'Previous',
           action: 'previousStep'
-
         },
         {
           label: 'Next',
