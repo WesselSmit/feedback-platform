@@ -3,7 +3,8 @@
     <Menu :hasBack="true" :hasLogout="false" />
 
     <div v-if="!hideDocumentation" class="documentation__inner" :class="{ 'documentation__inner--centered': hideVisualisation }">
-      <h1>{{ title }}</h1>
+      <h1 class="documentation__title" >{{ title }}</h1>
+      <p class="documentation__metadata">{{ owner }} &mdash; group {{ group }}</p>
       <p class="documentation__explanation">{{ explanation }}</p>
     </div>
 
@@ -32,6 +33,12 @@ export default {
     }),
     title() {
       return this.content.project.data.title;
+    },
+    owner() {
+      return this.content.project.data.owner.name;
+    },
+    group() {
+      return this.content.project.data.group;
     },
     explanation() {
       return this.content.project.data.explanation;
@@ -64,10 +71,13 @@ export default {
     }
   }
 
-  &__subheading {
-    &:not(:first-of-type) {
-      margin-top: $space--lg;
-    }
+  &__title {
+    margin-bottom: $space--xsm;
+  }
+
+  &__metadata {
+    margin-bottom: $space--sm-md;
+    font-size: $font-size--sm-md;
   }
 
   &__explanation {
