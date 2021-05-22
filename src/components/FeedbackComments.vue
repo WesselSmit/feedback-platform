@@ -32,9 +32,6 @@
   </section>
 </template>
 
-//todo: backgroundcolor sidebar vs documentation
-//todo (documenteer in PB --> niet coderen): delete eigen comments feature (heeft geen prioriteit)
-
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Avatar from '@/components/Avatar';

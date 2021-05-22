@@ -80,14 +80,18 @@ export default {
           });
         }
 
+        const user = await rootGetters['user/user'];
+        const userProgress = await dispatch('project/getProgress', {}, { root: true });
+
         comments.push({
           id: uuid(),
           ts: Date.now(),
-          user: rootGetters['user/user'],
+          user,
           text: payload.comment,
           image,
           markers,
           agrees: [],
+          step: userProgress.progress,
         });
 
         await commentsRef.doc(payload.projectId).update({ comments });
