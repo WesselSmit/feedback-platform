@@ -4,8 +4,8 @@
       <h1 v-if="title">{{ title }}</h1>
       <p v-if="body">{{ body }}</p>
 
-      <div v-if="rules" class="confirm-sidebar__rules-container">
-        <p class="confirm-sidebar__rules">{{ rules }}</p>
+      <div v-if="disclaimer" class="confirm-sidebar__disclaimer-container">
+        <p class="confirm-sidebar__disclaimer">{{ disclaimer }}</p>
       </div>
 
       <div v-if="showImageSidebar">
@@ -68,8 +68,8 @@ export default {
     body() {
       return this.content.body;
     },
-    rules() {
-      return this.content.rules;
+    disclaimer() {
+      return this.content.disclaimer;
     },
     navigation() {
       return this.content.navigation;
@@ -230,7 +230,7 @@ export default {
   background-color: $gray--sidebar;
   border-left: $border--ui;
 
-  &__rules {
+  &__disclaimer {
     margin: $space--xsm 0;
 
     &-container {

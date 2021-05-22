@@ -236,7 +236,7 @@ export default {
   imageContent: {
     title: `Add an image to your feedback.`,
     body: `Visually support your feedback by adding an image. Images can be a visual explanation or sketch of a possible solution.`,
-    rules: `Only .png and .jpg files smaller than 5mb allowed`,
+    disclaimer: `Only .png and .jpg files smaller than 5mb allowed`,
     navigation: [
       {
         label: 'Cancel',
