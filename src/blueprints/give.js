@@ -19,6 +19,7 @@ export default {
         inputInstructions: {
           title: `Note your insights`,
           body: `What insights can you gather from the data visualisation? What conclusions can you draw? Write them down.`,
+          disclaimer: `You cannot go back to this question after submitting.`,
         }
       },
       navigation: [{
