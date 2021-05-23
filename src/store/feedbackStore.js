@@ -66,9 +66,11 @@ export default {
       try {
         dispatch('sidebar/updateActiveTipIndex', null, { root: true });
 
-        // declare image & markers as const to avoid proxies
+        // declare async getters/actions to avoid proxies
         const image = rootGetters['sidebar/feedbackImage']?.id || null;
         const markers = rootGetters['sidebar/markers'];
+        const user = await rootGetters['user/user'];
+        const userProgress = await dispatch('project/getProgress', {}, { root: true });
 
         const doc = await commentsRef.doc(payload.projectId).get();
         const comments = doc?.data()?.comments || [];
@@ -79,9 +81,6 @@ export default {
             comments: [],
           });
         }
-
-        const user = await rootGetters['user/user'];
-        const userProgress = await dispatch('project/getProgress', {}, { root: true });
 
         comments.push({
           id: uuid(),

@@ -3,6 +3,25 @@
     <h1 v-if="title && hasComments" class="feedback-comments__title">{{ title }}</h1>
     <p v-if="body && hasComments" class="feedback-comments__body">{{ body }}</p>
 
+    <div v-if="hasComments" class="feedback-comments__filter-container">
+      <div class="feedback-comments__filter-header" @click="toggleFilterVisibility">
+        <FilterIcon class="feedback-comments__filter-icon" />
+        <p class="feedback-comments__filter-label">showing <span class="feedback-comments__filter-label-highlight">"{{ activeFilter }}"</span> feedback.</p>
+      </div>
+
+      <form class="feedback-comments__filter-options" :class="{ 'feedback-comments__filter-options--collapsed': !showFilterOptions }">
+        <fieldset class="feedback-comments__filter-option">
+          <input type="radio" name="filter-option" checked :id="`filter-option--default`" :value="defaultFilterOption" class="feedback-comments__filter-option-input" v-model="activeFilter">
+          <label :for="`filter-option--default`" class="feedback-comments__filter-option-label">All</label>
+        </fieldset>
+
+        <fieldset v-for="(step, index) in feedbackSteps" :key="step" class="feedback-comments__filter-option">
+          <input type="radio" name="filter-option" :id="`filter-option--${index}`" :value="step.content.readInstructions.title" class="feedback-comments__filter-option-input" v-model="activeFilter">
+          <label :for="`filter-option--${index}`" class="feedback-comments__filter-option-label">{{ step.content.readInstructions.title }}</label>
+        </fieldset>
+      </form>
+    </div>
+
     <ul class="feedback-comments__list">
       <li v-for="comment in comments" :key="comment" class="feedback-comments__comment" :data-comment-id="comment.id">
         <div class="feedback-comments__comment-meta">
@@ -34,6 +53,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import FilterIcon from '@/assets/icons/FilterIcon';
+import GiveBluebrint from '@/blueprints/give';
 import Avatar from '@/components/Avatar';
 import MarkerIcon from '@/assets/icons/OverlayMarkerIcon';
 import FeedbackImage from '@/components/FeedbackImage';
@@ -43,6 +64,7 @@ import AgreeIconActive from '@/assets/icons/AgreeIconActive';
 export default {
   name: 'FeedbackComments',
   components: {
+    FilterIcon,
     Avatar,
     MarkerIcon,
     FeedbackImage,
@@ -53,6 +75,8 @@ export default {
   data() {
     return {
       previousHighlightedMarkerId: null,
+      showFilterOptions: false,
+      activeFilter: 'All',
     };
   },
   computed: {
@@ -66,11 +90,25 @@ export default {
       projectId: 'projectId',
       owner: 'owner',
     }),
+    defaultFilterOption() {
+      return 'All';
+    },
+    feedbackSteps() {
+      return GiveBluebrint.steps.filter((step) => step.content.readInstructions);
+    },
+    normalisedFilterOptionLabels() {
+      return this.feedbackSteps.map((step) => step.content.readInstructions.title);
+    },
     hasComments() {
       return this.projectComments.length > 0;
     },
     comments() {
-      return this.isOwner ? this.commentsByAgrees : this.commentsByTime;
+      const comments = this.isOwner ? this.commentsByAgrees : this.commentsByTime;
+
+      if (this.activeFilter !== 'All') {
+        return comments.filter((comment) => this.normalisedFilterOptionLabels[comment.step - 2] === this.activeFilter);
+      }
+      return comments;
     },
     commentsByAgrees() {
       const comments = this.projectComments; // prevent side effects by by assigning 'this.comments' to 'comments'
@@ -95,6 +133,12 @@ export default {
       getComments: 'getComments',
       updateAgrees: 'updateAgrees',
     }),
+    ...mapActions('project', {
+      getProgress: 'getProgress',
+    }),
+    toggleFilterVisibility() {
+      this.showFilterOptions = !this.showFilterOptions;
+    },
     getInitials(name) {
       const nameParts = name.split(' ');
       const hasMultipleParts = nameParts.length > 1;
@@ -120,8 +164,16 @@ export default {
       this.previousHighlightedMarkerId = comment.id;
     },
   },
-  created() {
+  watch: {
+    activeFilter() {
+      this.showFilterOptions = false;
+    },
+  },
+  async created() {
     this.getComments(this.projectId);
+
+    const progressObj = await this.getProgress();
+    this.activeFilter = progressObj.type === 'give' ? this.normalisedFilterOptionLabels[progressObj.progress - 2] : this.defaultFilterOption; // '-2' is to compensate for: index starting at 0 and progressObj.progress also contains 'insight' step while this step is removed out from this.normalisedFilterOptionLabels/feedbackSteps
   },
 };
 </script>
@@ -135,6 +187,104 @@ export default {
   &__title,
   &__body {
     padding: 0 $space--sm-md;
+  }
+
+  &__filter {
+    &-container {
+      padding: 0 $space--sm-md;
+    }
+
+    &-header {
+      display: flex;
+      cursor: pointer;
+
+      &:hover {
+        .feedback-comments__filter {
+          &-icon {
+            fill: $purple;
+          }
+
+          &-label {
+            color: $purple;
+          }
+        }
+      }
+    }
+
+    &-icon {
+      margin-right: $space--sm;
+      fill: $black;
+    }
+
+    &-label {
+      margin-bottom: 0;
+      color: $black;
+      font-size: $font-size--md;
+      text-transform: lowercase;
+
+      &-highlight {
+        color: $purple;
+      }
+    }
+
+    &-options {
+      overflow: hidden;
+      max-height: 200px; // is needed for the height transition (set the max-height to something bigger than the element will ever be)
+      transition: max-height 350ms ease;
+
+      &--collapsed {
+        max-height: 0;
+      }
+    }
+
+    &-option {
+      display: flex;
+
+      &-input {
+        display: none;
+
+        &:checked + label {
+          color: $purple;
+          background-color: $purple--opacity;
+          cursor: default;
+
+          &::before {
+            opacity: 1;
+            color: $purple;
+          }
+        }
+      }
+
+      &-label {
+        display: flex;
+        margin: $space--xsm 0 0;
+        padding-left: $space--xsm;
+        width: 100%;
+        color: $black;
+        border: 1px solid transparent;
+        border-radius: $border-radius;
+        cursor: pointer;
+        transition: all 350ms $ease--fast;
+
+        &::before {
+          content: ">";
+          display: block;
+          margin: 0 $space--sm 0 4px;
+          opacity: 0;
+          color: $gray--dark;
+          transition: opacity 350ms $ease--fast;
+        }
+
+        &:hover {
+          color: $purple;
+
+          &::before {
+            opacity: 1;
+            color: $purple;
+          }
+        }
+      }
+    }
   }
 
   &__list {
