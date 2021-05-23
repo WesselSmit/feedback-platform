@@ -1,24 +1,31 @@
 <template>
   <section class="feedback-input" id="input">
-      <div class="feedback-input__container">
-        <textarea rows="6" placeholder="Don't know what to do? Read the tips above." v-model.trim="textInput" class="feedback-input__input"></textarea>
-
-        <div class="feedback-input__actions">
-          <button class="feedback-input__action feedback-input__action-marker" :class="{ 'feedback-input__action--active': numberOfMarkers > 0 }" @click="addMarkers()">
-              <MarkerIcon class="feedback-input__action-marker-icon" />
-              {{ markerLabel }}
-            </button>
-          <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': feedbackImage }" @click="addImage()">
-              <ImageIconZero v-if="!feedbackImage" class="feedback-input__action-image-icon" />
-              <ImageIconActive v-if="feedbackImage" class="feedback-input__action-image-icon" />
-              {{ imageLabel }}
-          </button>
-          <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">
-            <SendIcon class="feedback-input__action-comment-icon" />
-            Comment
-          </button>
-        </div>
+    <transition name="short-slide-vertical" mode="out-in">
+      <div v-if="hasMessage" class="feedback-input__message-container">
+        <p :class="{ 'feedback-input__message--confirmation': hasMessage && messageMode === 'succes', 'feedback-input__message--error': hasMessage && messageMode === 'error' }"
+        class="feedback-input__message" @click="handleMessageClick()">{{ message.text }}</p>
       </div>
+    </transition>
+
+    <div class="feedback-input__container" :class="{ 'feedback-input__container--confirmation': hasMessage && messageMode === 'succes', 'feedback-input__container--error': hasMessage && messageMode === 'error' }">
+      <textarea rows="6" placeholder="Don't know what to do? Read the tips above." v-model.trim="textInput" class="feedback-input__input"></textarea>
+
+      <div class="feedback-input__actions">
+        <button class="feedback-input__action feedback-input__action-marker" :class="{ 'feedback-input__action--active': numberOfMarkers > 0 }" @click="addMarkers()">
+            <MarkerIcon class="feedback-input__action-marker-icon" />
+            {{ markerLabel }}
+          </button>
+        <button class="feedback-input__action feedback-input__action-image" :class="{ 'feedback-input__action--active': feedbackImage }" @click="addImage()">
+            <ImageIconZero v-if="!feedbackImage" class="feedback-input__action-image-icon" />
+            <ImageIconActive v-if="feedbackImage" class="feedback-input__action-image-icon" />
+            {{ imageLabel }}
+        </button>
+        <button class="feedback-input__action feedback-input__action-comment" :class="{ 'feedback-input__action-comment--disabled': !textInput }" @click="comment()">
+          <SendIcon class="feedback-input__action-comment-icon" />
+          Comment
+        </button>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -54,6 +61,9 @@ export default {
     ...mapGetters('project', {
       projectId: 'projectId',
     }),
+    ...mapGetters('message', {
+      message: 'message',
+    }),
     textInput: {
       get() {
         return this.$store.getters['sidebar/textInput'];
@@ -71,6 +81,12 @@ export default {
     imageLabel() {
       return this.feedbackImage ? this.labels.imageActive : this.labels.imageZero;
     },
+    hasMessage() {
+      return this.message && this.message?.hidePopUp;
+    },
+    messageMode() {
+      return this.message.mode;
+    },
   },
   methods: {
     ...mapActions('sidebar', {
@@ -82,12 +98,14 @@ export default {
       updateFeedbackImage: 'updateFeedbackImage',
       resetImageState: 'resetImageState',
       updateSelectedImagePreview: 'updateSelectedImagePreview',
+      updateActiveTab: 'updateActiveTab',
+      updateActiveTabIndex: 'updateActiveTabIndex',
     }),
     ...mapActions('feedback', {
       postComment: 'postComment',
     }),
     ...mapActions('message', {
-      message: 'message',
+      setMessage: 'message',
     }),
     addMarkers() {
       this.updateShowMarkerOverlay(true);
@@ -97,17 +115,23 @@ export default {
       this.updateShowImageSidebar(true);
       this.resetImageState();
     },
-    comment() {
+    async comment() {
       if (this.textInput) {
-        this.postComment({ projectId: this.projectId, comment: this.textInput });
+        await this.postComment({ projectId: this.projectId, comment: this.textInput });
         this.resetAllMarkers();
         this.updateFeedbackImage(null);
         this.resetImageState();
         this.updateSelectedImagePreview(null);
         this.textInput = '';
-        this.message({ message: 'Feedback saved', mode: 'succes' });
+        this.setMessage({ message: 'Feedback saved, find it back in the "view feedback" tab.', mode: 'succes', hidePopUp: true });
       } else {
-        this.message({ message: 'Don\'t forget to enter feedback' });
+        this.setMessage({ message: 'Don\'t forget to enter feedback', mode: 'error', hidePopUp: true });
+      }
+    },
+    handleMessageClick() {
+      if (this.messageMode === 'succes') {
+        this.updateActiveTab('view');
+        this.updateActiveTabIndex(1);
       }
     },
   },
@@ -118,9 +142,54 @@ export default {
 @import '@/styles';
 
 .feedback-input {
+  &__message {
+    margin-bottom: $space--xsm;
+    padding: $space--xsm;
+    text-align: center;
+    font-size: $font-size--md;
+    border: 1px solid transparent;
+    border-radius: $border-radius;
+    transition: all 500ms $ease--fast;
+
+    &--confirmation {
+      background-color: $green--light;
+      color: $green;
+      cursor: pointer;
+    }
+
+    &--error {
+      background-color: $red--light;
+      color: $red;
+      cursor: default;
+    }
+
+    &-container {
+      transition: height;
+    }
+  }
+
   &__container {
+    position: relative;
+    z-index: 10;
     border: 1px solid $black;
     border-radius: $border-radius;
+    transition: all 500ms $ease--fast;
+
+    &--confirmation {
+      border-color: $green;
+
+      .feedback-input__actions {
+        border-color: $green;
+      }
+    }
+
+    &--error {
+      border-color: $red;
+
+      .feedback-input__actions {
+        border-color: $red;
+      }
+    }
   }
 
   &__input {
@@ -137,6 +206,7 @@ export default {
     height: $feedbfack-actions-height;
     border-top: $border--ui;
     border-radius: 0 0 $border-radius $border-radius;
+    transition: all 500ms $ease--fast;
   }
 
   &__action {

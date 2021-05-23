@@ -6,7 +6,7 @@
     <div v-if="hasComments" class="feedback-comments__filter-container">
       <div class="feedback-comments__filter-header" @click="toggleFilterVisibility">
         <FilterIcon class="feedback-comments__filter-icon" />
-        <p class="feedback-comments__filter-label">showing <span class="feedback-comments__filter-label-highlight">"{{ activeFilter }}"</span> feedback.</p>
+        <p class="feedback-comments__filter-label">showing <span class="feedback-comments__filter-label-highlight">"{{ activeFilter }}"</span> comments.</p>
       </div>
 
       <form class="feedback-comments__filter-options" :class="{ 'feedback-comments__filter-options--collapsed': !showFilterOptions }">
@@ -105,7 +105,7 @@ export default {
     comments() {
       const comments = this.isOwner ? this.commentsByAgrees : this.commentsByTime;
 
-      if (this.activeFilter !== 'All') {
+      if (this.activeFilter !== this.defaultFilterOption) {
         return comments.filter((comment) => this.normalisedFilterOptionLabels[comment.step - 2] === this.activeFilter);
       }
       return comments;
@@ -174,6 +174,11 @@ export default {
 
     const progressObj = await this.getProgress();
     this.activeFilter = progressObj.type === 'give' ? this.normalisedFilterOptionLabels[progressObj.progress - 2] : this.defaultFilterOption; // '-2' is to compensate for: index starting at 0 and progressObj.progress also contains 'insight' step while this step is removed out from this.normalisedFilterOptionLabels/feedbackSteps
+
+    // if filtered comments are empty --> show 'All' (non-filtered) comments
+    if (this.comments.length === 0 && this.hasComments) {
+      this.activeFilter = this.defaultFilterOption;
+    }
   },
 };
 </script>

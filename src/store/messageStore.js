@@ -23,6 +23,7 @@ export default {
       const message = {
         text: payload.message,
         mode: payload?.mode || null,
+        hidePopUp: payload?.hidePopUp,
       };
 
       commit('setMessage', message);
