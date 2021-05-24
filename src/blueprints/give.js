@@ -53,7 +53,7 @@ export default {
       content: {
         readInstructions: {
           title: `Answer the feedback questions`,
-          body: `Make sure to answer the feedback questions below.`,
+          body: `Answer the feedback question(s) below.`,
           legend: [
             {
               type: 'question',
@@ -64,15 +64,15 @@ export default {
         feedbackHelper: {
           sections: {
             zero: {
-              title: `How to answer feedback questions`,
+              title: `How to answer feedback questions:`,
               body: ``,
               tips: [
-                `Strengthen your argument by explaining why, answers without substance are not useful.`,
-                `Also see the answers / feedback of others by clicking on the "view feedback" tab.`,
+                `Support your answers by explaining why, answers without arguments are not useful.`,
+                `You can see the anwers of others by clicking on the "view feedback" tab (top right corner).`,
               ]
             },
             interactive: {
-              title: `How to write valuable feedback`,
+              title: `How to write valuable feedback:`,
               body: `Use the tips below to make your feedback clear and useful.`,
               tips: [
               {
@@ -122,13 +122,13 @@ export default {
               title: `Ask yourself this:`,
               body: ``,
               tips: [
-              `Was the correct visualisation type used or are there better suiting types?`,
+              `Is the correct visualisation type used?`,
               `Is there anything that you don't understand?`,
               `Are the labels and texts legible?`,
               `Are there design or editorial choices that can mislead the interpreter?`,
             ]},
             interactive: {
-              title: `How to write valuable feedback`,
+              title: `How to write valuable feedback:`,
               body: `Use the tips below to make your feedback clear and useful.`,
               tips: [
               {
@@ -174,11 +174,11 @@ export default {
               tips: [
                 `What do you like about the visualisation?`,
                 `Do you understand the visualisation? If so, you should let the creator know.`,
-                `Also see the answers / feedback of others by clicking on the "view feedback" tab.`,
+                `Is the visualization aesthetically pleasing?`,
               ]
             },
             interactive: {
-              title: `How to write valuable feedback`,
+              title: `How to write valuable feedback:`,
               body: ``,
               tips: [
               {
