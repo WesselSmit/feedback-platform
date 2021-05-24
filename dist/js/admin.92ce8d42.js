@@ -1,2 +1,2 @@
 (window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["admin"],{3530:function(e,n,t){"use strict";t.r(n);var c=t("7a23"),i=Object(c["i"])("p",null,"admin",-1),r={key:0},u=Object(c["i"])("p",null,"you are a ADMIN!!",-1);function a(e,n,t,a,b,d){return Object(c["r"])(),Object(c["f"])(c["a"],null,[i,d.isAdmin?(Object(c["r"])(),Object(c["f"])("div",r,[u])):Object(c["g"])("",!0)],64)}var b=t("5530"),d=t("5502"),o={name:"Admin",computed:Object(b["a"])(Object(b["a"])({},Object(d["c"])("user",{userRole:"role"})),{},{isAdmin:function(){return"admin"===this.userRole}})};o.render=a;n["default"]=o}}]);
-//# sourceMappingURL=admin.d61193b6.js.map
+//# sourceMappingURL=admin.92ce8d42.js.map
