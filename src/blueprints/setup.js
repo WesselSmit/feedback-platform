@@ -27,7 +27,7 @@ export default {
     {
       required: true,
       title: 'What is your data visualisation about?',
-      body: 'Explain what the data visualisation is about. What data have you visualised and why? What are the most interesting findings of your visualisation?',
+      body: 'Explain what the poeple are looking at. What data have you visualised and why? What are the most interesting findings of your visualisation?',
       tips: [
         'What are the most interesting conclusions?',
         'Have you found any patterns or causes that can explain the conclusions?',
