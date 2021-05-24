@@ -37,15 +37,15 @@ export default {
         tips: [
           {
             type: 'normal',
-            label: `Respect the feedback limits.`
-          },
-          {
-            type: 'normal',
-            label: `Click the "view feedback" tab to view the feedback of group members.`
+            label: `You can post multiple comments.`
           },
           {
             type: 'normal',
             label: `Indicate the relevant data visualisation parts using markers.`
+          },
+          {
+            type: 'normal',
+            label: `You can see the feedback of others by clicking on the "view feedback" tab.`,
           },
         ],
         buttonLabel: 'Got it',
@@ -76,20 +76,16 @@ export default {
               body: `Use the tips below to make your feedback clear and useful.`,
               tips: [
               {
-                heading: `Explain why it's a problem.`,
-                detail: `When you have found an area for improvement, explain why it needs to be changed. \u2192 "Make the lines thicker" should be "By making the line thicker you create more contrast".`
-              },
-              {
                 heading: `Keep it objective.`,
                 detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". \u2192 "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
               },
               {
                 heading: `Suggest a solution.`,
-                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your solution by clicking the "ADD IMAGE" button.`
+                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your suggestion to your comment.`
               },
               {
                 heading: `Visually support your feedback.`,
-                detail: `Adding a visual aspect to your feedback (such as markers or an image) helps others interpret your feedback, making it easier to get your point across.`
+                detail: `Adding a visual aspect to your feedback (such as markers) helps others interpret your feedback, making it easier to get your point across.`
               }
             ]}
           }
@@ -141,7 +137,7 @@ export default {
               },
               {
                 heading: `Suggest a solution.`,
-                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your solution by clicking the "ADD IMAGE" button.`
+                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your suggestion to your comment.`
               }
             ]}
           }
@@ -191,7 +187,7 @@ export default {
               },
               {
                 heading: `Add markers.`,
-                detail: `Adding markers allows you to clearly show what part of the visualisation your feedback relates to, this makes it easier to understand your feedback.`
+                detail: `Adding markers allows you to clearly show what part of the visualisation your feedback relates to, this helps others to understand your feedback.`
               }
             ]}
           }
