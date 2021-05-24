@@ -97,7 +97,7 @@ export default {
       if (this.projectTitle) {
         this.addProject(this.projectTitle);
       } else {
-        this.message({ message: 'Enter a title' });
+        this.message({ message: 'Enter a title', mode: 'error' });
       }
     },
   },
