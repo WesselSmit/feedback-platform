@@ -25,8 +25,8 @@
   <div v-if="showProjectInput" class="dashboard__pop-up">
     <div class="dashboard__pop-up-inner">
       <h1 class="dashboard__pop-up-title">Enter a title</h1>
-      <p class="dashboard__pop-up-body">A to the point title of what you visualisation is about without revealing the conclusions.</p>
-      <input class="dashboard__pop-up-input" v-model.trim="projectTitle" type="text" placeholder="Enter a title" autocomplete="off" autofocus @keyup.enter="createProject()">
+      <p class="dashboard__pop-up-body">Enter a short and to-the-point title of what your visualisation is about.</p>
+      <input class="dashboard__pop-up-input" v-model.trim="projectTitle" type="text" placeholder="e.g. Richest european countries in 2021" autocomplete="off" autofocus @keyup.enter="createProject()">
 
       <div class="dashboard__pop-up-buttons">
         <button class="dashboard__pop-up-button" @click="togglePopUp()">Cancel</button>
