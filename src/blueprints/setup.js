@@ -49,10 +49,10 @@ export default {
     {
       required: true,
       title: 'What would you like feedback on?',
-      body: 'The key to receiving useful feedback is asking the right questions, your feedback providers will answer these questions.',
+      body: 'The key to receiving useful feedback is asking the right questions. Enter questions you want your feedback providers to answer.',
       tips: [
-        'Think about the problems and choices you faced.',
         'Are there specific parts you found difficult and want feedback on?',
+        'Think about the problems and choices you faced.',
       ],
       component: 'SetupQuestions',
       navigation: [
