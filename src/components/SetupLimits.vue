@@ -1,6 +1,6 @@
 <template>
   <section class="setup-limits">
-    <input type="text" placeholder="Enter a limit" v-model.trim="limits" class="setup-limits__input">
+    <input type="text" placeholder="e.g. The text still needs to be translated to English" v-model.trim="limits" class="setup-limits__input">
   </section>
 </template>
 
