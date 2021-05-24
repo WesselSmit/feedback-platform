@@ -104,6 +104,11 @@ export default {
     border-radius: $border-radius;
     border-style: dashed;
     cursor: pointer;
+    transition: background-color 500ms $ease--fast;
+
+    &:hover {
+      background-color: $gray--light-extra;
+    }
 
     &-input {
       display: none;
