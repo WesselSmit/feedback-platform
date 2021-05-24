@@ -1,7 +1,11 @@
 <template>
   <section class="input-instructions">
     <h1 v-if="title" class="input-instructions__header-title">{{ title }}</h1>
-    <p v-if="body" class="read-instructions__body">{{ body }}</p>
+    <p v-if="body" class="input-instructions__body">{{ body }}</p>
+
+    <div v-if="disclaimer" class="input-instructions__disclaimer-container">
+      <p class="input-instructions__disclaimer">{{ disclaimer }}</p>
+    </div>
 
     <ul  v-if="tips" class="input-instructions__tip-list">
       <li v-for="tip in tips" :key="tip" class="input-instructions__tip">{{ tip }}</li>
@@ -23,6 +27,9 @@ export default {
     },
     body() {
       return this.content.body;
+    },
+    disclaimer() {
+      return this.content.disclaimer;
     },
     tips() {
       return this.content.tips || null;
@@ -54,6 +61,21 @@ export default {
 @import '@/styles';
 
 .input-instructions {
+  &__disclaimer {
+    margin: $space--xsm 0;
+    font-size: $font-size--sm-md;
+
+    &-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 0 10px;
+      background-color: $gray--light-extra;
+      border: 1px solid transparent;
+      border-radius: $border-radius;
+    }
+  }
+
   &__tip {
     margin-left: $space--md;
 
@@ -65,6 +87,7 @@ export default {
   &__input {
     width: 100%;
     padding: $space--xsm;
+    background-color: $gray--sidebar;
     border: 1px solid $black;
     border-radius: $border-radius;
   }

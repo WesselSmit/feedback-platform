@@ -3,7 +3,7 @@
     <div class="setup-questions__questions">
       <transition-group name="short-slide-vertical" mode="in-out">
         <div v-for="(question, index) in showingQuestionInputs" :key="index" class="setup-questions__question question">
-          <textarea rows="1" placeholder="Enter a question" class="setup-questions__question-input question-input" @input="updateInput($event)"></textarea>
+          <textarea rows="1" placeholder="e.g. How can the legend be improved?" class="setup-questions__question-input question-input" @input="updateInput($event)"></textarea>
           <RemoveIcon v-if="index !== showingQuestionInputs - 1" class="setup-questions__question-remove" @click="removeInput(index)" />
         </div>
       </transition-group>

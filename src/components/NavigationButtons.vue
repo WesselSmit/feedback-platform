@@ -59,7 +59,6 @@ export default {
       } else if (action === 'saveInsights') {
         if (this.insightInput) {
           this.updateHideDocumentation(false);
-          // this.updateHideVisualisation(true);
           this.updateProgress({ instruction: 'nextStep', hideVisualisation: true });
           this.postInsight({ insight: this.insightInput, projectId: this.projectId });
           this.message({ message: 'Insight saved', mode: 'succes' });
@@ -91,7 +90,7 @@ export default {
   &__button {
     height: $button-height;
     width: $button-width;
-    background-color: $white;
+    background-color: $gray--sidebar;
     color: $purple;
     text-transform: uppercase;
     border: 2px solid transparent;
@@ -104,19 +103,15 @@ export default {
     }
 
     &--disabled {
-      background-color: $white;
+      background-color: $gray--sidebar;
       color: $gray--dark;
       cursor: default;
 
       &:hover {
-        background-color: $white;
+        background-color: $gray--sidebar;
         color: $gray--dark;
       }
     }
-
-    // &--outline {
-    //   border: $border--button;
-    // }
   }
 }
 </style>

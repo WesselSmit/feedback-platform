@@ -16,7 +16,7 @@
       <div class="visualisation__comment-markers" v-for="comment in markersPerComment" :key="comment">
         <MarkerIcon v-for="marker in comment" :key="marker" class="visualisation__marker" :style="{ left: `${marker.x}%`, top: `${marker.y}%` }"
         :class="{ 'visualisation__marker--has-hover--overlay': isMarkerOverlay, 'visualisation__marker--has-hover--sidebar': markerIsFeedbackInteractive, 'visualisation__marker--hidden-by-control': !showMarkers }"
-        :showColor="markerIsFeedbackInteractive" :color="marker.color" :data-marker-id="comment[0].commentId" @click="handleMarkerClick(marker)" />
+        :color="marker.color" :data-marker-id="comment[0].commentId" @click="handleMarkerClick(marker)" />
       </div>
     </div>
   </section>
@@ -54,11 +54,15 @@ export default {
     ...mapGetters('feedback', {
       comments: 'comments',
     }),
+    ...mapGetters('user', {
+      color: 'color',
+    }),
     hideTitle() {
       return !this.hideDocumentation;
     },
     showControl() {
-      return this.activeTab === 'view' && this.comments.length > 0 || this.activeTab === 'feedback' && this.comments.length > 0;
+      const hasMarkers = this.comments.some((comment) => comment.markers.length > 0);
+      return this.activeTab === 'view' && hasMarkers || this.activeTab === 'feedback' && hasMarkers;
     },
     controlLabel() {
       return this.showMarkers ? 'Shown' : 'Hidden';
@@ -79,7 +83,7 @@ export default {
       return comments.map((comment) => {
         const markers = this.cleanSource(comment.markers); // idk why, but somehow the comment.markers is still reactive so this.cleanSource() is needed
         markers.forEach((marker) => {
-          marker.color = comment?.user?.color || null;
+          marker.color = comment?.user?.color || this.color;
           marker.commentId = comment.id;
         });
         return markers;

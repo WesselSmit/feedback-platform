@@ -24,6 +24,7 @@ export default {
   computed: {
     ...mapGetters('sidebar', {
       activeTab: 'activeTab',
+      activeTabIndexFromStore: 'activeTabIndex',
     }),
     tabIndicatorPosition() {
       const position = this.activeTabIndex === 0 ? 'left' : 'right';
@@ -33,12 +34,21 @@ export default {
   methods: {
     ...mapActions('sidebar', {
       updateActiveTab: 'updateActiveTab',
+      updateActiveTabIndex: 'updateActiveTabIndex',
     }),
     handleClick(value, index) {
       this.activeTabIndex = index;
 
       if (this.activeTab !== value) {
         this.updateActiveTab(this.tabs[index].value);
+      }
+    },
+  },
+  watch: {
+    activeTabIndexFromStore(newVal) { // watch for manual state triggers (only use this when updating state from other components)
+      if (newVal === 0 || newVal === 1) {
+        this.activeTabIndex = this.activeTabIndexFromStore;
+        this.updateActiveTabIndex(null); // reset immediately
       }
     },
   },
@@ -59,7 +69,7 @@ export default {
     align-items: center;
     width: 50%;
     padding: 18px;
-    background-color: $white;
+    background-color: $gray--sidebar;
     color: $black;
     text-transform: uppercase;
     cursor: pointer;
@@ -73,7 +83,7 @@ export default {
       cursor: default;
 
       &:hover {
-        background-color: $white;
+        background-color: $gray--sidebar;
       }
     }
   }

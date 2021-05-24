@@ -12,7 +12,7 @@ import { mapActions } from 'vuex';
 
 export default {
   name: 'OverlayMarkerIcon',
-  props: ['color', 'showColor'],
+  props: ['color'],
   data() {
     return {
       markerColor: null,
@@ -27,7 +27,7 @@ export default {
     },
   },
   async created() {
-    if (this.color && this.showColor) {
+    if (this.color) {
       const hexColor = await this.getColorHex(this.color);
       this.markerColor = hexColor;
     }

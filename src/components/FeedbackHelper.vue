@@ -140,7 +140,7 @@ export default {
       cursor: default;
 
       &:hover {
-        background-color: $white;
+        background-color: $gray--sidebar;
         fill: $gray--light;
       }
     }

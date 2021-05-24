@@ -1,7 +1,7 @@
 <template>
   <div class="setup-upload">
-    <div v-if="rules && !visualisationPreview" class="setup-upload__rules-container">
-      <p class="setup-upload__rules">{{ rules }}</p>
+    <div v-if="disclaimer && !visualisationPreview" class="setup-upload__disclaimer-container">
+      <p class="setup-upload__disclaimer">{{ disclaimer }}</p>
     </div>
 
     <div>
@@ -35,8 +35,8 @@ export default {
       visualisation: 'visualisation',
       visualisationPreview: 'visualisationPreview',
     }),
-    rules() {
-      return this.content.rules;
+    disclaimer() {
+      return this.content.disclaimer;
     },
   },
   methods: {
@@ -82,7 +82,7 @@ export default {
 @import '@/styles';
 
 .setup-upload {
-  &__rules {
+  &__disclaimer {
     margin: $space--xsm 0;
 
     &-container {
@@ -104,6 +104,11 @@ export default {
     border-radius: $border-radius;
     border-style: dashed;
     cursor: pointer;
+    transition: background-color 500ms $ease--fast;
+
+    &:hover {
+      background-color: $gray--light-extra;
+    }
 
     &-input {
       display: none;

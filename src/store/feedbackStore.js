@@ -64,9 +64,13 @@ export default {
 
     async postComment({ dispatch, rootGetters }, payload) {
       try {
-        // declare image & markers as const to avoid proxies
+        dispatch('sidebar/updateActiveTipIndex', null, { root: true });
+
+        // declare async getters/actions to avoid proxies
         const image = rootGetters['sidebar/feedbackImage']?.id || null;
         const markers = rootGetters['sidebar/markers'];
+        const user = await rootGetters['user/user'];
+        const userProgress = await dispatch('project/getProgress', {}, { root: true });
 
         const doc = await commentsRef.doc(payload.projectId).get();
         const comments = doc?.data()?.comments || [];
@@ -81,11 +85,12 @@ export default {
         comments.push({
           id: uuid(),
           ts: Date.now(),
-          user: rootGetters['user/user'],
+          user,
           text: payload.comment,
           image,
           markers,
           agrees: [],
+          step: userProgress.progress,
         });
 
         await commentsRef.doc(payload.projectId).update({ comments });

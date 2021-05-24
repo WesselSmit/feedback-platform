@@ -2,7 +2,7 @@
   <router-view />
 
   <transition name="message">
-    <Message v-if="message" />
+    <Message v-if="message && !hidePopUp" />
   </transition>
 </template>
 
@@ -23,6 +23,9 @@ export default {
     ...mapGetters('message', {
       message: 'message',
     }),
+    hidePopUp() {
+      return this.message.hidePopUp;
+    },
   },
 };
 </script>

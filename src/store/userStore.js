@@ -136,7 +136,6 @@ export default {
 
 // map firebase errors to custom error messages
 function getErrorMessage(errorObj) {
-  console.log(errorObj, errorObj.code, errorObj.message);
   switch (errorObj.code) {
     case 'auth/invalid-email':
       return 'Email is invalid';

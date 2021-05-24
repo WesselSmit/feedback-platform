@@ -42,7 +42,7 @@ export default {
       if (this.isSetup) {
         this.$router.push(`/project/${this.projectId}`);
       } else {
-        this.message({ message: 'Project is not completely set up yet' });
+        this.message({ message: 'Project is not completely set up yet', mode: 'error' });
       }
     },
   },

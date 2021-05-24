@@ -21,7 +21,7 @@ export default {
       content: {
         readInstructions: {
           title: `About the insights`,
-          body: `Insights are a check to see if your data visualisation was correctly understood / interpreted without context. If the insights are similar to your personal conclusions it means your data visualisation is effective.`,
+          body: `When users give feedback on your data visualisation they're asked to write down their insights. You can use these to check if your data visualisation is correctly interpreted.`,
         },
         insights: {
           title: `All insights`,

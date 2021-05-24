@@ -73,6 +73,7 @@ export default {
   width: $sidebar-width;
   min-height: 100vh;
   max-height: 100vh;
+  background-color: $gray--sidebar;
   border-left: $border--ui;
 
   &__inner {

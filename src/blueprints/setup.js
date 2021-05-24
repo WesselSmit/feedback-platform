@@ -8,7 +8,7 @@ export default {
       body: 'Make sure the data visualisation is cropped correctly. A title in the image is not necessary.',
       tips: [],
       component: 'SetupVisualisation',
-      rules: 'Only .png and .jpg files smaller than 5mb allowed',
+      disclaimer: 'Only .png and .jpg files smaller than 5mb allowed',
       navigation: [
         {
           label: 'Dashboard',
@@ -27,7 +27,7 @@ export default {
     {
       required: true,
       title: 'What is your data visualisation about?',
-      body: 'Explain what the data visualisation is about. What data have you visualised and why? What are the most interesting findings of your visualisation?',
+      body: 'Explain what the poeple are looking at. What data have you visualised and why? What are the most interesting findings of your visualisation?',
       tips: [
         'What are the most interesting conclusions?',
         'Have you found any patterns or causes that can explain the conclusions?',
@@ -49,10 +49,10 @@ export default {
     {
       required: true,
       title: 'What would you like feedback on?',
-      body: 'The key to receiving useful feedback is asking the right questions, your feedback providers will answer these questions.',
+      body: 'The key to receiving useful feedback is asking the right questions. Enter questions you want your feedback providers to answer.',
       tips: [
-        'Think about the problems and choices you faced.',
         'Are there specific parts you found difficult and want feedback on?',
+        'Think about the problems and choices you faced.',
       ],
       component: 'SetupQuestions',
       navigation: [
@@ -70,10 +70,10 @@ export default {
     },
     {
       title: 'What don’t you want feedback on?',
-      body: 'Is there a part that needs to be changed, but haven’t had the time to do it? Write the ‘limit’ down to ensure your feedback providers exclude it from their feedback.',
+      body: 'Is there a part that needs to be changed, but haven’t had the time to do it? Write it down to ensure your feedback providers exclude it from their feedback.',
       tips: [
-        `You should only have a 'limit' if you have changes you know you\'ll guaranteed make in the future.`,
-        'Your limit should only be a small part / detail.',
+        `Only write down a change you know you\'re guaranteed make in the future.`,
+        'Be specific, don\'t use umbrella terms such as: design.',
       ],
       component: 'SetupLimits',
       navigation: [

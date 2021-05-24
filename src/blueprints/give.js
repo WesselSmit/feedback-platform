@@ -19,6 +19,7 @@ export default {
         inputInstructions: {
           title: `Note your insights`,
           body: `What insights can you gather from the data visualisation? What conclusions can you draw? Write them down.`,
+          disclaimer: `You cannot go back to this question after submitting.`,
         }
       },
       navigation: [{
@@ -28,21 +29,6 @@ export default {
         }
       ]
     },
-    // {
-    //   isCentered: true,
-    //   hideVisualisation: true,
-    //   content: {
-    //     confirmInstructions: {
-    //       title: `Read the documentation`,
-    //       body: `Take the time to take in all the information, so that you know what the data visualization is about. Don't worry, this information will also be available while giving feedback.`,
-    //     }
-    //   },
-    //   navigation: [{
-    //       label: `Finished`,
-    //       action: 'nextStep'
-    //     }
-    //   ]
-    // },
     {
       popUp: {
         title: `About giving feedback...`,
@@ -51,19 +37,70 @@ export default {
         tips: [
           {
             type: 'normal',
-            label: `Respect the feedback limits.`
-          },
-          {
-            type: 'normal',
-            label: `Click the "view feedback" tab to view the feedback of group members.`
+            label: `You can post multiple comments.`
           },
           {
             type: 'normal',
             label: `Indicate the relevant data visualisation parts using markers.`
           },
+          {
+            type: 'normal',
+            label: `You can see the feedback of others by clicking on the "view feedback" tab.`,
+          },
         ],
         buttonLabel: 'Got it',
       },
+      content: {
+        readInstructions: {
+          title: `Answer the feedback questions`,
+          body: `Answer the feedback question(s) below.`,
+          legend: [
+            {
+              type: 'question',
+              label: `Answer the questions below`
+            },
+          ],
+        },
+        feedbackHelper: {
+          sections: {
+            zero: {
+              title: `How to answer feedback questions:`,
+              body: ``,
+              tips: [
+                `Support your answers by explaining why, answers without arguments are not useful.`,
+                `You can see the anwers of others by clicking on the "view feedback" tab (top right corner).`,
+              ]
+            },
+            interactive: {
+              title: `How to write valuable feedback:`,
+              body: `Use the tips below to make your feedback clear and useful.`,
+              tips: [
+              {
+                heading: `Keep it objective.`,
+                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". \u2192 "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
+              },
+              {
+                heading: `Suggest a solution.`,
+                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your suggestion to your comment.`
+              },
+              {
+                heading: `Visually support your feedback.`,
+                detail: `Adding a visual aspect to your feedback (such as markers) helps others interpret your feedback, making it easier to get your point across.`
+              }
+            ]}
+          }
+        },
+        feedbackInput: true
+      },
+      navigation: [
+        {
+          label: 'Next',
+          hasOutline: true,
+          action: 'nextStep'
+        }
+      ]
+    },
+    {
       content: {
         readInstructions: {
           title: `Name areas for improvement`,
@@ -81,13 +118,13 @@ export default {
               title: `Ask yourself this:`,
               body: ``,
               tips: [
-              `Was the correct visualisation type used or are there better suiting types?`,
+              `Is the correct visualisation type used?`,
               `Is there anything that you don't understand?`,
               `Are the labels and texts legible?`,
               `Are there design or editorial choices that can mislead the interpreter?`,
             ]},
             interactive: {
-              title: `How to write valuable feedback`,
+              title: `How to write valuable feedback:`,
               body: `Use the tips below to make your feedback clear and useful.`,
               tips: [
               {
@@ -100,66 +137,7 @@ export default {
               },
               {
                 heading: `Suggest a solution.`,
-                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your solution by clicking the "ADD IMAGE" button.`
-              }
-            ]}
-          }
-        },
-        feedbackInput: true
-      },
-      navigation: [
-        // {
-        //   label: 'Previous',
-        //   action: 'previousStep'
-        // },
-        {
-          label: 'Next',
-          hasOutline: true,
-          action: 'nextStep'
-        }
-      ]
-    },
-    {
-      content: {
-        readInstructions: {
-          title: `Answer the feedback questions`,
-          body: `Make sure to answer the feedback questions below.`,
-          legend: [
-            {
-              type: 'question',
-              label: `Answer the questions below`
-            },
-          ],
-        },
-        feedbackHelper: {
-          sections: {
-            zero: {
-              title: `How to answer feedback questions`,
-              body: ``,
-              tips: [
-                `Strengthen your argument by explaining why, answers without substance are not useful.`,
-                `Also see the answers / feedback of others by clicking on the "view feedback" tab.`,
-              ]
-            },
-            interactive: {
-              title: `How to write valuable feedback`,
-              body: `Use the tips below to make your feedback clear and useful.`,
-              tips: [
-              {
-                heading: `Explain why it's a problem.`,
-                detail: `When you have found an area for improvement, explain why it needs to be changed. \u2192 "Make the lines thicker" should be "By making the line thicker you create more contrast".`
-              },
-              {
-                heading: `Keep it objective.`,
-                detail: `Feedback should be as objective as possible, so refrain from using opions or subjective words such as "beautiful" and "ugly". \u2192 "The yellow colors look beautiful" should be "The yellow colors make the legend stand out".`
-              },
-              {
-                heading: `Suggest a solution.`,
-                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your solution by clicking the "ADD IMAGE" button.`
-              },
-              {
-                heading: `Visually support your feedback.`,
-                detail: `Adding a visual aspect to your feedback (such as markers or an image) helps others interpret your feedback, making it easier to get your point across.`
+                detail: `Suggest a solution or alternative to fix the problem, make sure the suggestion is well explained. \u2192 add a sketch of your suggestion to your comment.`
               }
             ]}
           }
@@ -170,7 +148,6 @@ export default {
         {
           label: 'Previous',
           action: 'previousStep'
-
         },
         {
           label: 'Next',
@@ -193,11 +170,11 @@ export default {
               tips: [
                 `What do you like about the visualisation?`,
                 `Do you understand the visualisation? If so, you should let the creator know.`,
-                `Also see the answers / feedback of others by clicking on the "view feedback" tab.`,
+                `Is the visualization aesthetically pleasing?`,
               ]
             },
             interactive: {
-              title: `How to write valuable feedback`,
+              title: `How to write valuable feedback:`,
               body: ``,
               tips: [
               {
@@ -210,7 +187,7 @@ export default {
               },
               {
                 heading: `Add markers.`,
-                detail: `Adding markers allows you to clearly show what part of the visualisation your feedback relates to, this makes it easier to understand your feedback.`
+                detail: `Adding markers allows you to clearly show what part of the visualisation your feedback relates to, this helps others to understand your feedback.`
               }
             ]}
           }
@@ -256,7 +233,7 @@ export default {
   imageContent: {
     title: `Add an image to your feedback.`,
     body: `Visually support your feedback by adding an image. Images can be a visual explanation or sketch of a possible solution.`,
-    rules: `Only .png and .jpg files smaller than 5mb allowed`,
+    disclaimer: `Only .png and .jpg files smaller than 5mb allowed`,
     navigation: [
       {
         label: 'Cancel',

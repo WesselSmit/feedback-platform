@@ -9,6 +9,7 @@ export default {
     hideVisualisation: false,
     showPopUp: true,
     activeTab: null,
+    activeTabIndex: null, // only used when manually updating tab state
     showFeedbackHelperZero: true,
     textInput: '',
     activeTipIndex: null,
@@ -28,6 +29,7 @@ export default {
     hideVisualisation: (state) => state.hideVisualisation,
     showPopUp: (state) => state.showPopUp,
     activeTab: (state) => state.activeTab,
+    activeTabIndex: (state) => state.activeTabIndex,
     showFeedbackHelperZero: (state) => state.showFeedbackHelperZero,
     textInput: (state) => state.textInput,
     activeTipIndex: (state) => state.activeTipIndex,
@@ -59,6 +61,9 @@ export default {
     },
     setActiveTab(state, val) {
       state.activeTab = val;
+    },
+    setActiveTabIndex(state, val) {
+      state.activeTabIndex = val;
     },
     setShowFeedbackHelperZero(state, val) {
       state.showFeedbackHelperZero = val;
@@ -102,6 +107,7 @@ export default {
       commit('setHideVisualisation', false);
       commit('setShowPopUp', true);
       commit('setActiveTab', null);
+      commit('setActiveTabIndex', null);
       commit('setShowFeedbackHelperZero', true);
       commit('setTextInput', '');
       commit('setActiveTipIndex', null);
@@ -135,6 +141,10 @@ export default {
       commit('setActiveTab', payload);
     },
 
+    updateActiveTabIndex({ commit }, payload) {
+      commit('setActiveTabIndex', payload);
+    },
+
     updateShowFeedbackHelperZero({ commit, getters }, payload) {
       // pass new value or toggle current value
       if (typeof payload === 'undefined') {
@@ -144,10 +154,16 @@ export default {
       commit('setShowFeedbackHelperZero', payload);
     },
 
-    updateTextInput({ commit, dispatch }, payload) {
-      dispatch('updateShowFeedbackHelperZero', payload === '');
+    updateTextInput({ getters, commit, dispatch }, payload) {
+      // update FeedbackHelper state
+      if (getters.textInput === '' && payload !== '') { // first (character) input entered
+        dispatch('updateShowFeedbackHelperZero', false);
+      } else if (getters.textInput !== '' && payload === '') { // input is deleted / reset
+        dispatch('updateShowFeedbackHelperZero', true);
+        dispatch('updateActiveTipIndex', null);
+      }
+
       commit('setTextInput', payload);
-      dispatch('updateActiveTipIndex', null);
     },
 
     updateActiveTipIndex({ commit }, payload) {
