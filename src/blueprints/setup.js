@@ -70,10 +70,10 @@ export default {
     },
     {
       title: 'What don’t you want feedback on?',
-      body: 'Is there a part that needs to be changed, but haven’t had the time to do it? Write the ‘limit’ down to ensure your feedback providers exclude it from their feedback.',
+      body: 'Is there a part that needs to be changed, but haven’t had the time to do it? Write it down to ensure your feedback providers exclude it from their feedback.',
       tips: [
-        `You should only have a 'limit' if you have changes you know you\'ll guaranteed make in the future.`,
-        'Your limit should only be a small part / detail.',
+        `Only write down a change you know you\'re guaranteed make in the future.`,
+        'Be specific, don\'t use umbrella terms such as: design.',
       ],
       component: 'SetupLimits',
       navigation: [
