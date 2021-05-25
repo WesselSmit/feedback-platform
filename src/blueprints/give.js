@@ -104,7 +104,7 @@ export default {
       content: {
         readInstructions: {
           title: `Name areas for improvement`,
-          body: `Look for areas that could be improved to make the data visualisation more insightful or visually stronger.`,
+          body: `Look for other areas that could be improved to make the data visualisation more insightful or visually stronger.`,
           legend: [
             {
               type: 'limit',
