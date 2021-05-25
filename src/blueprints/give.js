@@ -19,7 +19,7 @@ export default {
         inputInstructions: {
           title: `Note your insights`,
           body: `What insights can you gather from the data visualisation? What conclusions can you draw? Write them down.`,
-          disclaimer: `You cannot go back to this question after submitting.`,
+          disclaimer: `Don't give feedback yet, you'll do that in the next steps.`,
         }
       },
       navigation: [{
@@ -104,7 +104,7 @@ export default {
       content: {
         readInstructions: {
           title: `Name areas for improvement`,
-          body: `Look for areas that could be improved to make the data visualisation more insightful or visually stronger.`,
+          body: `Look for other areas that could be improved to make the data visualisation more insightful or visually stronger.`,
           legend: [
             {
               type: 'limit',
@@ -115,8 +115,8 @@ export default {
         feedbackHelper: {
           sections: {
             zero: {
-              title: `Ask yourself this:`,
-              body: ``,
+              title: `Ask yourself this`,
+              body: `You can use the questions below if you're stuck.`,
               tips: [
               `Is the correct visualisation type used?`,
               `Is there anything that you don't understand?`,
@@ -166,7 +166,7 @@ export default {
           sections: {
             zero: {
               title: `Ask yourself this:`,
-              body: ``,
+              body: `You can use the questions below if you're stuck.`,
               tips: [
                 `What do you like about the visualisation?`,
                 `Do you understand the visualisation? If so, you should let the creator know.`,
@@ -175,7 +175,7 @@ export default {
             },
             interactive: {
               title: `How to write valuable feedback:`,
-              body: ``,
+              body: `Use the tips below to make your feedback clear and useful.`,
               tips: [
               {
                 heading: `Explain why it's good.`,
